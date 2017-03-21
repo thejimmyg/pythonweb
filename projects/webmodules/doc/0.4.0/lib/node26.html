@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node27.html">
+<LINK REL="prev" HREF="node25.html">
+<LINK REL="parent" HREF="node25.html">
+<LINK REL="next" HREF="node27.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Understanding Field Types">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.4.1 Understanding Field Types</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4 Using SQL Commands" 
+  HREF="node25.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node25.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.2 Selecting Data" 
+  HREF="node27.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node25.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node25.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node27.html">1.4.4.2 Selecting Data</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003441000000000000000">
+1.4.4.1 Understanding Field Types</A>
+</H3>
+
+<P>
+Traditional SQL databases usually have support for a number of different fields. Date fields behave differently to integer fields for example. All of the fields are set using an SQL representation of the data in the form of a string and all of the queries from the database return strings. 
+
+<P>
+The <tt class="module">web.database</tt> module provides eight field types and rather than passing information to and from the database as specially formatted strings, you pass it as a python data structure. For example to set an <code>Integer</code> field you would give the cursor an integer. To set a <code>Date</code> field you would give the cursor a <tt class="class">datetime.date</tt> object. The <tt class="module">web.database</tt> cursor would do all the conversion for you.
+
+<P>
+Furthermore when you retrieve information from the database the <code>cursor</code> will convert the strings recieved back into Python objects so that you never need to worry about the encodings.
+
+<P>
+This doesn't sound like too much of a big deal but because different databases handle different datatypes in slightly different ways your SQL could have different results on different databases. Programming with a <tt class="module">web.database</tt> <code>cursor</code> removes these inconsistencies. 
+
+<P>
+There are currently eight field types supported and these are listed below.
+
+<P>
+<table border align="center" style="border-collapse: collapse">
+  <thead>
+    <tr class="tableheader">
+      <th align="left"><b>Type</b>&nbsp;</th>
+      <th align="left"><b>Description</b>&nbsp;</th>
+      </tr>
+    </thead>
+  <tbody valign="baseline">
+    <tr><td align="left" valign="baseline"><code><code>Char</code></code></td>
+        <td align="left">A character field taking strings of length 1</td>
+    <tr><td align="left" valign="baseline"><code><code>String</code></code></td>
+        <td align="left">A string field taking strings of up to 255 characters</td>
+    <tr><td align="left" valign="baseline"><code><code>Text</code></code></td>
+        <td align="left">A text field for storing large amounts of text (up to 16k characters)</td>
+    <tr><td align="left" valign="baseline"><code><code>Integer</code></code></td>
+        <td align="left">An integer field taking any integer that is a valid Python integer (but <b>not</b> long)</td>
+    <tr><td align="left" valign="baseline"><code><code>Float</code></code></td>
+        <td align="left">A float field taking Python float values</td>
+    <tr><td align="left" valign="baseline"><code><code>Date</code></code></td>
+        <td align="left">A date field. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores days, months and years, any other information is trunkated. Dates from <code>0001-01-01</code> to <code>9999-12-31</code>.</td>
+    <tr><td align="left" valign="baseline"><code><code>Time</code></code></td>
+        <td align="left">A time field. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores hours, minutes and seconds, any other information is trunkated.</td>
+    <tr><td align="left" valign="baseline"><code><code>DateTime</code></code></td>
+        <td align="left">A datetime field. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores days, months, years, hours, minutes and seconds, any other information is trunkated.</td></tbody>
+</table>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4 Using SQL Commands" 
+  rel="prev" title="1.4.4 Using SQL Commands" 
+  HREF="node25.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node25.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.2 Selecting Data" 
+  rel="next" title="1.4.4.2 Selecting Data" 
+  HREF="node27.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node25.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node25.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node27.html">1.4.4.2 Selecting Data</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

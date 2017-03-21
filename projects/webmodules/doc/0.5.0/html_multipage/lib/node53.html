@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node54.html" />
+<link rel="prev" href="node52.html" />
+<link rel="parent" href="node51.html" />
+<link rel="next" href="node54.html" />
+<meta name='aesop' content='information' />
+<title>1.4.10.2 Inserting Data</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.10.1 Selecting Data"
+  href="node52.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.10 Cursor Abstraction Methods"
+  href="node51.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.10.3 Updating Data"
+  href="node54.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node52.html">1.4.10.1 Selecting Data</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node51.html">1.4.10 Cursor Abstraction Methods</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node54.html">1.4.10.3 Updating Data</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0034102000000000000000">
+1.4.10.2 Inserting Data</A>
+</H3>
+
+<P>
+The insert method looks like this:
+
+<P>
+The <tt class="method">insert()</tt> method of a <tt class="module">web.database</tt> cursor looks like this:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-76' xml:id='l2h-76' class="method">insert</tt></b>(</nobr></td>
+  <td><var><var>table</var>, <var>columns</var>, <var>values</var>, <var>sqlValues</var>, </var><big>[</big><var>execute</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Insert values into the columns in table. Either <var>values</var> or <var>sqlValues</var> can be specified but not both.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table to insert into
+</DD>
+<DT><STRONG><var>columns</var></STRONG></DT>
+<DD>A sequence of column names in the same order as the values which are going to be inserted into those columns. Can be a string if only one column is going to have values inserted
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A sequence of Python values to be inserted into the columns named in the <var>columns</var> variable. Can be the value rather than a list if there is only one value. If <var>values</var> is specified then <var>sqlValues</var> must be either an empty sequence or contain a list of all quoted SQL strings for the columns specified in which case <var>values</var> contains the Python values of the SQL strings to be substituted for <code>?</code> parameters in the <var>sqlValues</var> sequence.
+</DD>
+<DT><STRONG><var>sqlValues</var></STRONG></DT>
+<DD>A sequence of quoted SQL strings to be inserted into the columns named in the <var>columns</var> variable. Can be the value rather than a list if there is only one value. If <var>sqlValues</var> is specified and contains <code>?</code> parameters for substitution then <var>values</var> contains the values to be substituted. Otherwise <var>values</var> must be an empty sequence.
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>If <code>False</code> the method returns the SQL string to perform the desired operations. If <code>True</code> the SQL is executed. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+To insert data into a table using SQL you would use the following command:
+
+<P>
+<div class="verbatim"><pre>
+INSERT INTO table_name (column1, column2,...)
+VALUES (value1, value2,....)
+</pre></div>
+
+<P>
+For example consider the table used to demonstrate the <tt class="method">select()</tt> method:
+
+<P>
+<div class="verbatim"><pre>
++----------+-----------+---------+-------------+
+| LastName | FirstName | Address | DateOfBirth |
++----------+-----------+---------+-------------+
+</pre></div>
+
+<P>
+The SQL command to insert some information into the table might look like this:
+
+<P>
+<div class="verbatim"><pre>
+INSERT INTO Person (LastName, FirstName, Address, Age)
+VALUES ('Smith', 'John', '5 Friendly Place', '1980-01-01')
+</pre></div>
+
+<P>
+To insert the data using a <tt class="module">web.database</tt> cursor we would do the following:
+
+<P>
+<div class="verbatim"><pre>
+cursor.insert(
+    table   = 'Person',
+    columns = ['LastName', 'FirstName', 'Address', 'DateOfBirth'],
+    values  = ['Smith', 'John', '5 Friendly Place', datetime.date(1980,1,1)],
+)
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+We specify the field values as real Python objects. The date was specified as a <tt class="class">date</tt> object and was automatically converted. Python 2.2 users can also use <code>import datetime</code> if they have first used <code>import web</code> as the web modules come with a compatibility module.</span>
+
+<P>
+The table now looks like this:
+
+<P>
+<div class="verbatim"><pre>
++----------+-----------+------------------+-------------+
+| LastName | FirstName | Address          | DateOfBirth |
++----------+-----------+------------------+-------------+
+| Smith    | John      | 5 Friendly Place | 1980-01-01  |
++----------+-----------+------------------+-------------+
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.10.1 Selecting Data"
+  href="node52.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.10 Cursor Abstraction Methods"
+  href="node51.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.10.3 Updating Data"
+  href="node54.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node52.html">1.4.10.1 Selecting Data</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node51.html">1.4.10 Cursor Abstraction Methods</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node54.html">1.4.10.3 Updating Data</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="example-webserver-web-session-simple.html" />
+<link rel="prev" href="node140.html" />
+<link rel="parent" href="session.html" />
+<link rel="next" href="example-webserver-web-session-simple.html" />
+<meta name='aesop' content='information' />
+<title>1.11.7 Using Stores</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.6 Multiple Applications and"
+  href="node140.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.8 Using the session.start()"
+  href="example-webserver-web-session-simple.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node140.html">1.11.6 Multiple Applications and</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-session-simple.html">1.11.8 Using the session.start()</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031170000000000000000">
+1.11.7 Using Stores</A>
+</H2>
+
+<P>
+We can now use our <code>store</code> variable to set and retrieve values from our <code>testApp</code> application's session store. Below is a demonstration of the functional interface:
+
+<P>
+<div class="verbatim"><pre>
+store = session.store('testApp')
+&gt;&gt;&gt; store.set(key='first',value='This is the fist key to be set!')
+&gt;&gt;&gt; print store.get(key='first')
+This is the fist key to be set!
+&gt;&gt;&gt; print store.keys()
+['first']
+&gt;&gt;&gt; store.delete(key='first')
+&gt;&gt;&gt; store.has_key(key='first')
+0
+</pre></div>
+
+<P>
+Alternatively we can treat the <code>store</code> object as a dictionary:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; store['first'] = 'This is the fist key to be set!'
+&gt;&gt;&gt; print store['first']
+This is the fist key to be set!
+&gt;&gt;&gt; print store.keys()
+['first']
+&gt;&gt;&gt; del store['first']
+&gt;&gt;&gt; store.has_key('first')
+0
+</pre></div>
+
+<P>
+Both versions behave in exactly the same way and any Python value that can be pickled by the <tt class="module">pickle</tt> module can be set and retrieved from the store so you can store strings, numbers and even classes and all the information will be available for each request until you remove it or the session expires.
+
+<P>
+One other useful method of the <code>Store</code> object is the <tt class="method">empty()</tt> method. This is used to remove all information from an application's session store. This is a better way of removing information than using the <code>Manager</code>'s <tt class="method">destroy()</tt> method since <tt class="method">destroy()</tt> will also remove all the information from other application's stores which might cause those applications to crash if the store is currently being accessed.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.6 Multiple Applications and"
+  href="node140.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.8 Using the session.start()"
+  href="example-webserver-web-session-simple.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node140.html">1.11.6 Multiple Applications and</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-session-simple.html">1.11.8 Using the session.start()</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,78 @@
+import sys; sys.path.append('../')
+from web.wsgi import *
+
+# Sign In Application
+class simpleApp(base.BaseApplication):
+    def start(self):
+        # Create some sample data
+        if not self.environ['web.auth.manager'].applicationExists('app'):
+            self.environ['web.auth.manager'].addApplication('app')
+            self.environ['web.auth.manager'].addUser(
+                'john',
+                'bananas',
+                'John',
+                'Smith',
+                'johnsmith@example.com',
+            )
+            self.environ['web.auth.manager'].addUser(
+                'norights',
+                '123',
+            )
+            self.environ['web.auth.manager'].setAccessLevel('john', 'app', 1)
+        valid = False
+        if self.environ.has_key('web.auth.username') and \
+            self.environ['web.auth.manager'].userExists(self.environ['web.auth.username']):
+            user = self.environ['web.auth.manager'].getUser(self.environ['web.auth.username'])
+            if user.level.has_key('app') and user.level['app'] > 0:
+                self.output('Username %s is signed in'%user.username)
+                valid = True
+        if not valid:
+            self.environ['web.auth.session'].signOut()
+            # Try to login
+            import web.auth.handler.signIn
+            signInHandler = web.auth.handler.signIn.SignInHandler(
+                session = self.environ['web.auth.session'], 
+                manager = self.environ['web.auth.manager'],
+                cgi = self.environ['web.cgi'],
+            )
+            form = signInHandler.handle()
+            if form:  
+                # Display the error form
+                self.output('<html><body><h1>Please Sign In</h1>%s</body></html>'%form)
+            else:
+                # We have just signed in
+                username = self.environ['web.auth.session'].username()
+                valid = False
+                if username and self.environ['web.auth.manager'].userExists(username):
+                    user = self.environ['web.auth.manager'].getUser(username)
+                    if user.level.has_key('app') and  user.level['app'] > 0:
+                        self.output('Signed in successfully')
+                        valid = True
+                if not valid:
+                    self.output("You do not have suitable access rights to use this application")
+        self.environ['web.database.connection'].commit()
+
+# Middleware Setup
+application = error.Error(
+    database.Database(
+        environment.Environment(
+            session.Session(
+                cgi.CGI(
+                    auth.Auth(
+                        simpleApp(), 
+                        setupEnvironment=1,
+                        expire=30,
+                        idle=10,
+                    ),
+                ),
+                expire = 1000,
+                setupEnvironment = 1,
+            ),
+            name = 'testEnv',
+            storage = 'database',
+        ),
+        adapter = 'snakesql',
+        database = 'wsgi-auth',
+        autoCreate = 1,
+    ),
+)

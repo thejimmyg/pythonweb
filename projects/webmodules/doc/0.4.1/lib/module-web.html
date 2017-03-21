@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="module-web.auth.html">
+<LINK REL="prev" href="web.html">
+<LINK REL="parent" href="web.html">
+<LINK REL="next" href="module-web.auth.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="web -- Web modules">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.1 web -- Web modules</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1. Web Modules" 
+  href="web.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2 web.auth  " 
+  href="module-web.auth.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="web.html">1. Web Modules</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.auth.html">1.2 web.auth  </A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION003100000000000000000">
+1.1 <tt class="module">web</tt> -- Web modules</A>
+</H1>
+
+
+<P>
+The <tt class="module">web</tt> module provides some basic utility functions and objects which are used throughout the Web Modules.
+
+<P>
+<b>Version Information</b>
+
+<P>
+The <tt class="module">web</tt> module has the following variables:
+<DL>
+<DT><STRONG><code>web.version_info</code></STRONG></DT>
+<DD>A tuple similar to <code>sys.version_info</code> in the form <code>(major version, minor version, revision, release candidate, status)</code>
+</DD>
+<DT><STRONG><code>web.version</code></STRONG></DT>
+<DD>The version as a string eg <code>'0.4.0rc1'</code>
+</DD>
+<DT><STRONG><code>web.name</code></STRONG></DT>
+<DD>The name of the modules as a string
+</DD>
+<DT><STRONG><code>web.date</code></STRONG></DT>
+<DD>The date of the release as a string in the format <code>'yyyy-mm-dd'</code>.
+</DD>
+<DT><STRONG><code>web.status</code></STRONG></DT>
+<DD>The release status of the code. For example <code>'beta'</code>
+</DD>
+</DL>
+
+<P>
+<b>Useful Objects</b>
+
+<P>
+The <tt class="module">web</tt> module provides the following objects:
+<DL>
+<DT><STRONG><code>web.cgi</code></STRONG></DT>
+<DD>An object based on the cgi.FieldStorage() object. The <code>web.cgi</code> object is the main way in which you will gain access to information. <tt class="class">web.cgi</tt> provides a dictionary-like interface to all the sumbitted CGI variables. You should not create your own <tt class="class">cgi.FieldStorage</tt> object because your versions may not contain all submitted information because creating a <tt class="class">cgi.FieldStorage</tt> object can destroy data that would have been used in subsequent creations. By using the one <code>web.cgi</code> object you avoid this problem.
+
+<P>
+<div class="seealso">
+  <p class="heading"><b>See Also:</b></p>
+
+  <dl compact class="seetitle">
+    <dt><em class="citetitle"><a href="http://www.python.org/doc/current/lib/module-cgi.html"
+        ><tt class="module">cgi</tt> Module Documentation</a></em>
+    <dd>The <tt class="module">cgi</tt> module documentation distributed with Python has more information about <code>cgi.FieldStorage</code> objects and a full functional specification.
+  </dl>
+
+<P>
+</div>
+</DD>
+</DL>
+
+<P>
+<b>Useful Functions</b>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-2"><tt class="function">header</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>type='text/html'</var><big>]</big>)</td></tr></table>
+<dd>
+Returns a Content-type HTTP header
+<DL>
+<DT><STRONG><var>type</var></STRONG></DT>
+<DD>The content-type to output
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-3"><tt class="function">encode</tt></a></b>(</nobr></td>
+  <td><var><var>html</var></var><big>[</big><var>, mode='url'</var><big>]</big>)</td></tr></table>
+<dd>
+Encode a string for use in an HTML document
+<DL>
+<DT><STRONG><var>html</var></STRONG></DT>
+<DD>The string to encode
+</DD>
+<DT><STRONG><var>mode</var></STRONG></DT>
+<DD>If <var>mode</var> is <code>'url'</code> the <var>html</var> string is encoded for use in a URL. If <var>mode</var> is <code>'form'</code> <var>html</var> is encoded for use in a form field.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+The HTTP protocol doesn't specify the maximum length of URLs but to be absolutely safe try not to let them be longer than 256 characters. Internet Explorer supports URLs of up to 2,083 characters. Any long strings are better off encoded to be put as hidden values in a form with <code>method="POST"</code> rather than encoded and put in a link as they will then be sent in the HTTP header and there is no limit to their length. Creating links with huge amounts of text encoded in them may break result in strange results on different browsers.</span> 
+</DD>
+</DL>
+</dl>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1. Web Modules" 
+  rel="prev" title="1. Web Modules" 
+  href="web.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2 web.auth  " 
+  rel="next" title="1.2 web.auth  " 
+  href="module-web.auth.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="web.html">1. Web Modules</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.auth.html">1.2 web.auth  </A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

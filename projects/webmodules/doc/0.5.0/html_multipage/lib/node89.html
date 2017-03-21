@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node91.html" />
+<link rel="prev" href="node87.html" />
+<link rel="parent" href="object.html" />
+<link rel="next" href="example-command-web-database-object-related.html" />
+<meta name='aesop' content='information' />
+<title>1.5.4 Many-To-Many Mappings</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.3.1 Full Code Listing"
+  href="example-command-web-database-object-multiple.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5 web.database.object  "
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.4.1 Full Code Listing"
+  href="example-command-web-database-object-related.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-database-object-multiple.html">1.5.3.1 Full Code Listing</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-database-object-related.html">1.5.4.1 Full Code Listing</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003540000000000000000">
+1.5.4 Many-To-Many Mappings</A>
+</H2>
+
+<P>
+In a real life more than one person might live at the same address and each person might have multiple addresses. The relationship is actually a many-to-many mapping. Have a look at the code below:
+
+<P>
+<div class="verbatim"><pre>
+import web.database, web.database.object
+connection = web.database.connect(type="sqlite", database="object-multiple.db")
+cursor = connection.cursor() 
+
+person = web.database.object.Table("Person")
+person.addColumn(web.database.object.String(name="firstName"))
+person.addColumn(web.database.object.String(name="surname"))
+person.addRelated(name="addresses", foreignTable="Address")
+
+address = web.database.object.Table("Address")
+address.addColumn(web.database.object.String(name="firstLine"))
+address.addColumn(web.database.object.String(name="postcode"))
+address.addRelated(name="person", foreignTable="Person")
+
+database = web.database.object.Database()
+database.addTable(person)
+database.addTable(address)
+database.init(cursor)
+</pre></div>
+
+<P>
+We have now related the two tables using the <tt class="method">addRelated()</tt> method of each class instead of using <tt class="method">addMultiple()</tt> and <tt class="method">addSingle()</tt>. 
+
+<P>
+<span class="note"><b class="label">Note:</b>
+Because the two Classes use related joins the <tt class="method">database.createTables()</tt> method actually creates an intermediate table to store the relationships. The modules hide this table so you don't need to worry about it to use <tt class="module">web.database.object</tt>. If you are interested the table is named by taking the two tables in alphabetical order and joining thier names with an underscore. For example the table in the example above will create a table names <code>'Adrress_Person'</code>. This name can be customised by deriving a customised class from <tt class="class">web.database.object.Table</tt> and overriding the <tt class="method">_relatedTableName()</tt> method of both tables.</span>
+
+<P>
+Here is an example:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; john = database['Person'].insert(firstName='John', surname='Smith')
+&gt;&gt;&gt; owen = database['Person'].insert(firstName='Owen', surname='Jones')
+&gt;&gt;&gt; 
+&gt;&gt;&gt; friendlyPlace = database['Address'].insert(firstLine='12 Friendly Place', postcode='MK4 1AB')
+&gt;&gt;&gt; crazyGardens  = database['Address'].insert(firstLine='3a Crazy Gardens', postcode='OX1 2ZX')
+&gt;&gt;&gt; greatRoad     = database['Address'].insert(firstLine='124 Great Road', postcode='JG6 3TR')
+&gt;&gt;&gt; 
+&gt;&gt;&gt; john.relate(friendlyPlace)
+&gt;&gt;&gt; owen.relate(greatRoad)
+&gt;&gt;&gt; crazyGardens.relate(john)
+&gt;&gt;&gt; 
+&gt;&gt;&gt; print john['addresses'].keys()
+['MK4 1AB', 'OX1 2ZX']
+&gt;&gt;&gt; for address in john['addresses'].values():
+...     print address['postcode']
+...
+MK4 1AB
+OX1 2ZX
+&gt;&gt;&gt; print greatRoad['people'].keys()
+['Owen']
+&gt;&gt;&gt; print owen['addresses']['JG6 3TR']['people'].keys()
+['Owen']
+&gt;&gt;&gt; john['addresses']['MK4 1AB']['firstLine'] = 'The Cottage, 12 Friendly Place'
+&gt;&gt;&gt; print database['Person']['John']['addresses']['MK4 1AB']['firstLine']
+The Cottage, 12 Friendly Place
+</pre></div>
+
+<P>
+The code should be fairly self-explainatory. We are inserting some different people and addresses into the table and the relating them to each other. Each row from each table can be related to as many other rows from the other table as you like. Or a row might not be related to another one at all.
+
+<P>
+It should be noted that you cannot set the values of multiple columns like the <code>'addresses'</code> column directly. Instead you should set the values of each object induvidually.
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; john['addresses'] = something # XXX Doesn't work!
+</pre></div>
+
+<P>
+You can create fairly complex expressions as is demonstrated by the expression:
+<div class="verbatim"><pre>
+database['Person']['John']['addresses']['MK4 1AB']['firstLine']
+</pre></div>
+
+<P>
+Here we are selecting all the addresses from the row <code>'John'</code> from the <code>'Person'</code> table and then selecting the first line of the address with postcode <code>'MK4 1AB'</code>. It is actually possible to create circular references (although not very useful) as shown below.
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; john == database['Person']['John'] == \
+... database['Person']['John']['addresses']['MK4 1AB']['people']['John'] \
+... == database['Person']['John']['addresses']['MK4 1AB']['people']['John'] \
+... ['addresses']['MK4 1AB']['people']['John']
+True
+</pre></div>
+
+<P>
+Just for interest here is how the tables look after running the example. You can see that the Address_Person table contains the rowids of the related people and addresses.
+
+<P>
+<div class="verbatim"><pre>
+# Tables in the 'test' database
++----------------+
+| Tables_in_test |
++----------------+
+| Address        |
+| Person         |
+| Address_Person |
++----------------+
+
+# The Person table
++-------+-----------+---------+
+| rowid | firstName | surname |
++-------+-----------+---------+
+| 1     | John      | Smith   |
++-------+-----------+---------+
+| 2     | Owen      | Jones   |
++-------+-----------+---------+
+
+# The Address table
++-------+------------------------------------+----------+
+| rowid | firstLine                          | postcode |
++-------+------------------------------------+----------+
+| 1     | The Cottage, 12 Friendly Place     | MK4 1AB  |
++-------+------------------------------------+----------+
+| 2     | 3a Crazy Gardens                   | OX1 2ZX  |
++-------+------------------------------------+----------+
+| 2     | 124 Great Road                     | JG6 3TR  |
++-------+------------------------------------+----------+
+
+# The Address_Person table
+
++--------+-----------+
+| people | addresses |
++--------+-----------+
+| 1      | 1         | 
++--------+-----------+
+| 2      | 2         |
++--------+-----------+
+| 1      | 3         |
++--------+-----------+
+</pre></div>
+
+<P>
+It should be noted that each table can contain as many columns, multiple, related and single joins as you like.
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="example-command-web-database-object-related.html">1.5.4.1 Full Code Listing</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.3.1 Full Code Listing"
+  href="example-command-web-database-object-multiple.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5 web.database.object  "
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.4.1 Full Code Listing"
+  href="example-command-web-database-object-related.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-database-object-multiple.html">1.5.3.1 Full Code Listing</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-database-object-related.html">1.5.4.1 Full Code Listing</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node15.html" />
+<link rel="prev" href="node10.html" />
+<link rel="parent" href="module-web.auth.html" />
+<link rel="next" href="node15.html" />
+<meta name='aesop' content='information' />
+<title>1.2.6 Checking Who Is Signed In</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.5.3 Setting Access Levels"
+  href="node13.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.7 Automatically Handling Sign"
+  href="node15.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node13.html">1.2.5.3 Setting Access Levels</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node15.html">1.2.7 Automatically Handling Sign</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003260000000000000000">
+1.2.6 Checking Who Is Signed In</A>
+</H2>
+
+<P>
+Once we have created the <code>authSsessionManager</code> we can get the username of the current signed in user using <code>authSsessionManager.username()</code>. This method returns an empty string if no user is signed in. 
+
+<P>
+<div class="verbatim"><pre>
+username = authSsessionManager.username()
+</pre></div>
+
+<P>
+Usernames are case insensitive but are always stored in the driver as lowercase.
+
+<P>
+We then need to double check the user exists. We do this using the <code>AuthManager</code> object created in the section on administering the auth environment.
+
+<P>
+<div class="verbatim"><pre>
+if username and authManager.userExists(username):
+    user = authManager.getUser(username)
+    print 'Username %s is signed in'%user.username
+</pre></div>
+
+<P>
+The object returned by the <tt class="method">authManager.getUser()</tt> method has the following properties:
+
+<P>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-6' xml:id='l2h-6' class="class">User</tt></b>
+<dd>
+
+<P>
+Stores read only information about a user. You cannot set the values of the user with this class. Instead you should use the manager object described earlier in the documentation.
+
+<P>
+<dl><dt><b><tt id='l2h-7' xml:id='l2h-7' class="member">username</tt></b></dt>
+<dd>
+The username of the user. Usernames are case insensitive but are always stored and returned as lowercase. This means that if you want to compare a username from a database with a value entered by a user, you should first convert the value entered by a user to lowercase like this: <code>username = username.lower()</code>
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-8' xml:id='l2h-8' class="member">password</tt></b></dt>
+<dd>
+The user's password, 1-255 characters.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-9' xml:id='l2h-9' class="member">firstname</tt></b></dt>
+<dd>
+The user's firstname, 1-255 characters. Optional
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-10' xml:id='l2h-10' class="member">surname</tt></b></dt>
+<dd>
+The user's surname, 1-255 characters. Optional
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-11' xml:id='l2h-11' class="member">email</tt></b></dt>
+<dd>
+The user's email address, max 255 characters. Optional
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-12' xml:id='l2h-12' class="member">level</tt></b></dt>
+<dd>
+The access levels for the applications the user has access to as a dictionary with application names as keys.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-13' xml:id='l2h-13' class="member">accessLevel</tt></b></dt>
+<dd>
+The access level the user has to the current application.
+</dl>
+
+<P>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.5.3 Setting Access Levels"
+  href="node13.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.7 Automatically Handling Sign"
+  href="node15.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node13.html">1.2.5.3 Setting Access Levels</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node15.html">1.2.7 Automatically Handling Sign</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

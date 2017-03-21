@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="example-command-web-auth-create-file.html">
+<LINK REL="prev" href="example-command-web-auth-create.html">
+<LINK REL="parent" HREF="node13.html">
+<LINK REL="next" href="example-command-web-auth-create-file.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Password Protecting Code">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.2.3.2 Password Protecting Code</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.3.1 Creating the Auth" 
+  href="example-command-web-auth-create.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2.3 Examples" 
+  HREF="node13.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.3.3 Using Alternative Drivers" 
+  href="example-command-web-auth-create-file.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-auth-create.html">1.2.3.1 Creating the Auth</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node13.html">1.2.3 Examples</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-auth-create-file.html">1.2.3.3 Using Alternative Drivers</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003232000000000000000">&nbsp;</A>
+<BR>
+1.2.3.2 Password Protecting Code
+</H3>
+
+<P>
+The example below uses the auth database created in the example above and also uses a session file store. You can create a file store for the <tt class="module">web.auth</tt> and <code>web.session</code> modules by creating a script-writable directory. In this case the directory is <span class="file">../doc/src/lib/example-web-session</span>.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+In specifying the directory for the session file store we have to use the path relative to the <span class="file">webserver.py</span> script. With any other webserver this should be the path relative to the example itself ie just <span class="file">example-web-session</span>. This also applies to the path to the database file <span class="file">examle-web-auth.db</span>.</span>
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+"""Auth Example. Username=john and Password=bananas (Case sensitive)"""
+
+# show python where the web modules are
+import sys, os
+sys.path.append('../')
+sys.path.append('../../../') 
+
+import web, web.database, web.auth, web.session
+import web.error; web.error.handle() # Automatically display errors
+
+session = web.session.start(
+    storage='file',
+    dir='../doc/src/lib/example-web-session',
+    app='app'
+)
+connection = web.database.connect(
+    type='sqlite', 
+    database='../doc/src/lib/example-web-auth.db'
+)
+cursor = connection.cursor()
+user = web.auth.start(
+    session, storage='database', cursor=cursor, 
+    idle=100, expire=200
+)
+
+# No HTTP content-type headers should be printed before the user.valid() method
+# if the autoLogin feature is enabled as this will print its own header. 
+
+if user.valid():   # See if the User is signed in else present sign in form.
+    print web.header() 
+    if web.cgi.has_key('signOut'):
+        user.signOut()
+        print """&lt;html&gt;&lt;h1&gt;Signed Out Now&lt;/h1&gt;&lt;p&gt;&lt;a href="%s"&gt;Sign in again&lt;/a&gt;.
+              &lt;/p&gt;&lt;/html&gt;"""%os.environ['SCRIPT_NAME']
+    else:
+        
+        print """
+            &lt;html&gt;
+            &lt;h1&gt;Welcome - You Signed In&lt;/h1&gt;
+            &lt;p&gt; Visiting this page again will result in you 
+            seeing this page until you logout or the session expires.&lt;/p&gt;
+            &lt;p&gt; &lt;b&gt;Some Variables:&lt;/b&gt;&lt;br&gt;
+            
+            Username:       %s&lt;br&gt;
+            Access Level:   %s&lt;br&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+            &lt;a href="%s"&gt;Visit page again&lt;/a&gt; |
+            &lt;a href="%s?signOut=True"&gt;Sign Out&lt;/a&gt;
+            &lt;/p&gt;
+            &lt;/html&gt;"""%(
+                user.username, 
+                user.level['app'],
+                os.environ['SCRIPT_NAME'],
+                os.environ['SCRIPT_NAME']
+            )
+
+</pre>
+<div class="footer">
+<a href="webserver-web-auth.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-auth.py</span>).</a>
+</div></div>
+
+<P>
+This example requires <tt class="module">pysqlite</tt>. This comes with the binary distributions. If you are using the source distribution you can download it from <a class="url" href="http://pysqlite.sourceforge.net/">http://pysqlite.sourceforge.net/</a>.
+
+<P>
+You can test this example by starting the test webserver in <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-auth.py">http://localhost:8080/doc/src/lib/webserver-web-auth.py</a> on your local machine.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.3.1 Creating the Auth" 
+  rel="prev" title="1.2.3.1 Creating the Auth" 
+  href="example-command-web-auth-create.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2.3 Examples" 
+  rel="parent" title="1.2.3 Examples" 
+  HREF="node13.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.3.3 Using Alternative Drivers" 
+  rel="next" title="1.2.3.3 Using Alternative Drivers" 
+  href="example-command-web-auth-create-file.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-auth-create.html">1.2.3.1 Creating the Auth</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node13.html">1.2.3 Examples</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-auth-create-file.html">1.2.3.3 Using Alternative Drivers</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

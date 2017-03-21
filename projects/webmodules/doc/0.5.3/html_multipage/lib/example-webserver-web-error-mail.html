@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="example-command-web-error-debug.html" />
+<link rel="prev" href="node121.html" />
+<link rel="parent" href="module-web.error.html" />
+<link rel="next" href="example-command-web-error-debug.html" />
+<meta name='aesop' content='information' />
+<title>1.6.6 Example</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.5 Creating Custom Handlers"
+  href="node121.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.7 Debugging Code"
+  href="example-command-web-error-debug.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node121.html">1.6.5 Creating Custom Handlers</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-error-debug.html">1.6.7 Debugging Code</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003660000000000000000"></A><A NAME="example-webserver-web-error-mail"></A>
+<BR>
+1.6.6 Example
+</H2>
+
+<P>
+Take a look at the example below demonstrating a handler which emails information to a developer:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+# show python where the web modules are
+import sys; sys.path.append('../'); sys.path.append('../../../')
+
+# set your own email here
+email = 'james@example.com'
+
+# define our custom handler
+def mail(info, email, message, reply):
+    import web, web.mail
+    web.mail.send(
+        msg=info,
+        to=email,
+        reply=reply,
+        subject='Error in website',
+        sendmail='usr/bin/sendmail',
+        smtp='smtp.ntlworld.com',
+        method='smtp',# could use method='sendmail' to send using sendmail.
+        type='html',
+    )
+    print web.header()
+    print message
+    
+# setup our handler
+import web.error
+web.error.handle(
+    handler = mail, 
+    output  = 'debug',
+    email   = email,
+    message = """  &lt;html&gt;
+                   &lt;head&gt;&lt;title&gt;An Error Occured&lt;/title&gt;&lt;/head&gt;
+                   &lt;body&gt;&lt;h1&gt;Error Caught&lt;/h1&gt;
+                   &lt;p&gt;An HTML debug view of the error was sucessfully emailed to %s&lt;/p&gt;&lt;/body&gt;
+                   &lt;/html&gt;"""%email,
+    reply   = 'Developer &lt;%s&gt;'%email
+)
+
+# rasie a test exception and wait for the email to arrive
+raise Exception('This is a test exception')
+</pre>
+<div class="footer">
+<a href="webserver-web-error-mail.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-error-mail.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by starting the test webserver in <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-error-mail.py">http://localhost:8080/doc/src/lib/webserver-web-error-mail.py</a> on your local machine.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+ If you run this example please make sure you replace the email addresses with your own email address in. You may need to change the path of sendmail or use an SMTP server instead. See the <tt class="module">web.mail</tt> module documentation for help with this.</span>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ If an exception occurs in your custom error handling function it may be difficult to track down. You can put your code inside a <code>try</code> <code>except</code> block and make sure some sensible output is returned in the event of an Exception being raised.</span>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.5 Creating Custom Handlers"
+  href="node121.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.7 Debugging Code"
+  href="example-command-web-error-debug.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node121.html">1.6.5 Creating Custom Handlers</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-error-debug.html">1.6.7 Debugging Code</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

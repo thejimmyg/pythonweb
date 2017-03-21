@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node39.html">
+<LINK REL="parent" HREF="node38.html">
+<LINK REL="next" HREF="node41.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Field Information">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.8.2 Field Information</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.8.1 The Types Cache" 
+  HREF="node39.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.8 Developer Notes" 
+  HREF="node38.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.9 Database Specific Notes" 
+  HREF="node41.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node39.html">1.4.8.1 The Types Cache</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node38.html">1.4.8 Developer Notes</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node41.html">1.4.9 Database Specific Notes</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003482000000000000000">
+1.4.8.2 Field Information</A>
+</H3>
+
+<P>
+Each database cursor has a <tt class="class">Field</tt> object accessable from the <code>fields</code> attribute. 
+
+<P>
+Below is an example <tt class="class">Field</tt> object
+
+<P>
+<div class="verbatim"><pre>
+self.fields = base.Fields(
+    {
+        'Char':     base.CharConverter       ("CHAR(1)",        (254,)),
+        'String':   base.StringConverter     ("VARCHAR(255)",   (253,)),
+        'Text':     base.TextConverter       ("MEDIUMBLOB",     (252,)),
+        'Integer':  base.IntegerConverter    ("INT(11)",        (3,5,)),
+        'Float':    base.FloatConverter      ("FLOAT",          (4,)),
+        'Date':     base.DateConverter       ("DATE",           (10,)),
+        'Time':     base.TimeConverter       ("TIME",           (11,)),
+        'DateTime': base.DateTimeConverter   ("DATETIME",       (12,)),
+    }
+)
+</pre></div>
+
+<P>
+The <tt class="class">Field</tt> object is made up of an <tt class="class">SQLFieldConverter</tt> object for each field type the cursor supports. These <tt class="class">SQLFieldConverter</tt> objects take two parameters, <var>createSQL</var> is a string containing the SQL needed to create the field and <var>codes</var> is a tuple containing all the FieldCodes that can be used to for that particular field. (For example you may be able to store a <tt class="module">web.database.object</tt> Char field in a MySQL CHAR(1) or VARCHAR(255) field so both these fields may be available to use for the Char object.)
+
+<P>
+The <tt class="class">SQLFieldConverter</tt> objects may at a future date also contain information about the minimum or maximum values a field can take. This would be specified using the <var>params</var> parameter.
+
+<P>
+Each <tt class="class">SQLFieldConverter</tt> object has two methods, <tt class="method">object(field)</tt> and <tt class="method">sql(object)</tt>. <tt class="method">object(field)</tt> takes an SQL string representation of the field as returned by the underlying cursor and converts it into a Python object. <tt class="method">sql(object)</tt> takes a Python object and encodes it into an SQL string.
+
+<P>
+To add support for a new field type all you need to do is create a <tt class="class">SQLFieldConverter</tt> object for that field and then add the field to each Cursor's <tt class="class">Field</tt> object.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.8.1 The Types Cache" 
+  rel="prev" title="1.4.8.1 The Types Cache" 
+  HREF="node39.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.8 Developer Notes" 
+  rel="parent" title="1.4.8 Developer Notes" 
+  HREF="node38.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.9 Database Specific Notes" 
+  rel="next" title="1.4.9 Database Specific Notes" 
+  HREF="node41.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node39.html">1.4.8.1 The Types Cache</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node38.html">1.4.8 Developer Notes</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node41.html">1.4.9 Database Specific Notes</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

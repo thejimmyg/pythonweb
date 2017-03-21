@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node149.html" />
+<link rel="prev" href="node143.html" />
+<link rel="parent" href="session.html" />
+<link rel="next" href="node149.html" />
+<meta name='aesop' content='information' />
+<title>1.11.10 Custom Cookie Handling</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.9.4 Changing the Expire"
+  href="node147.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.11 Web Server Gateway"
+  href="node149.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node147.html">1.11.9.4 Changing the Expire</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node149.html">1.11.11 Web Server Gateway</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00311100000000000000000">
+1.11.10 Custom Cookie Handling</A>
+</H2>
+
+<P>
+To understand how cookies work you may want to first read <code>The HTTP Protocol and Cookie Handling</code> sub section of the <code>Background Information</code> section of this documentation.
+
+<P>
+If you don't want to have headers sent automatically when using the <tt class="method">create()</tt> and <tt class="method">destroy()</tt> methods you can set the <var>sendCookieHeaders</var> parameter to <code>False</code>. In this case the header is instead appended to the <code>response_headers</code> attribute in the form of a tuple <code>(type, info)</code> where <code>type</code> is the header type eg <code>Set-Cookie</code> and info is the header information. 
+
+<P>
+To send the headers you can use <tt class="method">sendCookieHeaders()</tt> to send all the headers. Once the headers are sent they are appended to the <code>response_headers</code> attribute for debugging purposes.
+
+<P>
+Alternatively you can retrieve the last header and turn it back into a usual HTTP header using this code:
+
+<P>
+<div class="verbatim"><pre>
+cookieHeader = "%s: %s"%manager.response_headers[-1]
+</pre></div>
+
+<P>
+If you want to build your own cookie headers you can use <tt class="method">setCookieString(<var>maxAge</var>)</tt> and <tt class="method">deleteCookieString()</tt> which return HTTP headers as strings suitable for printing directly.
+
+<P>
+Finally, cookies are read from the <code>HTTP_COOKIE</code> environmental variable. If you wish to provide your own environment dictionary instead of the default (if for example you are using a WSGI application) you can read a cookie like this:
+
+<P>
+<div class="verbatim"><pre>
+sessionID = manager.cookieSessionID(environ=environ)
+</pre></div>
+
+<P>
+See the API documentation for more information.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.9.4 Changing the Expire"
+  href="node147.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.11 Web Server Gateway"
+  href="node149.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node147.html">1.11.9.4 Changing the Expire</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node149.html">1.11.11 Web Server Gateway</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

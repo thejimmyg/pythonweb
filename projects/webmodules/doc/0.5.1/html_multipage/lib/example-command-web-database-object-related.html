@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node94.html" />
+<link rel="parent" href="node94.html" />
+<link rel="next" href="node96.html" />
+<meta name='aesop' content='information' />
+<title>1.5.4.1 Full Code Listing</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.4 Many-To-Many Mappings"
+  href="node94.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5.4 Many-To-Many Mappings"
+  href="node94.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.5 Building Queries"
+  href="node96.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node94.html">1.5.4 Many-To-Many Mappings</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node94.html">1.5.4 Many-To-Many Mappings</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node96.html">1.5.5 Building Queries</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003541000000000000000"></A><A NAME="example-command-web-database-object-related"></A>
+<BR>
+1.5.4.1 Full Code Listing
+</H3>
+
+<P>
+Here is a complete code listing so that you can experiment:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the modules are
+
+import web.database, web.database.object
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="database-object-related",
+    autoCreate = 1,
+)
+cursor = connection.cursor()
+
+person = web.database.object.Table("Person")
+person.addColumn(web.database.object.String(name="firstName", unique=True, required=True, key=True))
+person.addColumn(web.database.object.String(name="surname"))
+person.addRelated(name="addresses", foreignTable="Address")
+
+address = web.database.object.Table("Address")
+address.addColumn(web.database.object.String(name="firstLine"))
+address.addColumn(web.database.object.String(name="postcode", unique=True, required=True, key=True))
+address.addRelated(name="people", foreignTable="Person")
+
+database = web.database.object.Database()
+database.addTable(person)
+database.addTable(address)
+database.init(cursor)
+
+if not database.tablesExist():
+    database.createTables()
+    print "Created Table"
+
+john = database['Person'].insert(firstName='John', surname='Smith')
+owen = database['Person'].insert(firstName='Owen', surname='Jones')
+
+friendlyPlace = database['Address'].insert(firstLine='12 Friendly Place', postcode='MK4 1AB')
+crazyGardens  = database['Address'].insert(firstLine='3a Crazy Gardens', postcode='OX1 2ZX')
+greatRoad     = database['Address'].insert(firstLine='124 Great Road', postcode='JG6 3TR')
+
+john.relate(friendlyPlace)
+owen.relate(greatRoad)
+crazyGardens.relate(john)
+
+print john['addresses'].keys()
+for address in john['addresses'].values():
+   print address['postcode']
+
+print greatRoad['people'].keys()
+print owen['addresses']['JG6 3TR']['people'].keys()
+
+john['addresses']['MK4 1AB']['firstLine'] = 'The Cottage, 12 Friendly Place'
+print database['Person']['John']['addresses']['MK4 1AB']['firstLine']
+
+connection.close() # Close the connection without saving changes</pre>
+<div class="footer">
+<a href="command-web-database-object-related.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-database-object-related.py</span>).</a>
+</div></div>
+
+<P>
+The output is:
+
+<P>
+<div class="verbatim"><pre>
+Created Table
+['MK4 1AB', 'OX1 2ZX']
+MK4 1AB
+OX1 2ZX
+['Owen']
+['Owen']
+The Cottage, 12 Friendly Place
+</pre></div>
+
+<P>
+You will need to delete the database file <span class="file">object-related.db</span> each time you run the cose so that it can be recreated each time.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.4 Many-To-Many Mappings"
+  href="node94.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5.4 Many-To-Many Mappings"
+  href="node94.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.5 Building Queries"
+  href="node96.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node94.html">1.5.4 Many-To-Many Mappings</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node94.html">1.5.4 Many-To-Many Mappings</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node96.html">1.5.5 Building Queries</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

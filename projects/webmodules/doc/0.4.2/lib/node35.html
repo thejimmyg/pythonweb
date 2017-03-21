@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node34.html">
+<LINK REL="parent" HREF="node26.html">
+<LINK REL="next" HREF="node36.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Functions">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.4.9 Functions</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.8 Altering Tables" 
+  HREF="node34.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node26.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.5 Cursor Methods" 
+  HREF="node36.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node34.html">1.4.4.8 Altering Tables</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node26.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node36.html">1.4.5 Cursor Methods</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003449000000000000000">
+1.4.4.9 Functions</A>
+</H3>
+
+<P>
+The <tt class="class">cursor</tt> objects currently support two function methods: <tt class="method">max()</tt> and <tt class="method">min()</tt> as described below.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-83"><tt class="method">max</tt></a></b>(</nobr></td>
+  <td><var><var>field</var>, <var>table</var></var><big>[</big><var>,where=None</var><big>]</big>)</td></tr></table>
+<dd>
+Returns the highest value of the field.
+<DL>
+<DT><STRONG><var>field</var></STRONG></DT>
+<DD>The name of the field
+</DD>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>An optional where clause
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-84"><tt class="method">min</tt></a></b>(</nobr></td>
+  <td><var><var>field</var>, <var>table</var></var><big>[</big><var>,where=None</var><big>]</big>)</td></tr></table>
+<dd>
+Returns the lowest value of the field.
+<DL>
+<DT><STRONG><var>field</var></STRONG></DT>
+<DD>The name of the field
+</DD>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>An optional where clause
+</DD>
+</DL>
+</dl>
+
+<P>
+For example consider the table below:
+
+<P>
+<div class="verbatim"><pre>
+# Numbers
++--------+
+| Number |
++--------+
+| 1      |
++--------+
+| 2      |
++--------+
+| 3      | 
++--------+
+</pre></div>
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; cursor.max('Number', 'Numbers')
+3
+&gt;&gt;&gt; cursor.min('Number', 'Numbers')
+1
+&gt;&gt;&gt; cursor.max('Number', 'Numbers', where="Number&lt;3")
+2
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.8 Altering Tables" 
+  rel="prev" title="1.4.4.8 Altering Tables" 
+  HREF="node34.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node26.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.5 Cursor Methods" 
+  rel="next" title="1.4.5 Cursor Methods" 
+  HREF="node36.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node34.html">1.4.4.8 Altering Tables</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node26.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node36.html">1.4.5 Cursor Methods</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

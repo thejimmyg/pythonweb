@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node13.html" />
+<link rel="prev" href="node11.html" />
+<link rel="parent" href="node10.html" />
+<link rel="next" href="node13.html" />
+<meta name='aesop' content='information' />
+<title>1.2.5.2 Adding Users</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.5.1 Adding Applications"
+  href="node11.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.5 Administering The Auth"
+  href="node10.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.5.3 Setting Access Levels"
+  href="node13.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node11.html">1.2.5.1 Adding Applications</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node10.html">1.2.5 Administering The Auth</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node13.html">1.2.5.3 Setting Access Levels</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003252000000000000000">
+1.2.5.2 Adding Users</A>
+</H3>
+
+<P>
+To add a user to the auth environment you use the <tt class="method">addUser()</tt> method of the <code>authManager</code> object returned by <code>auth.setup()</code>. 
+
+<P>
+The <tt class="method">addUser()</tt> method takes the parameters <var>username</var>, <var>password</var>, <var>firstname</var>, <var>surname</var>, <var>email</var>. Only <var>username</var> and <var>password</var> are required.
+
+<P>
+using the <code>authManager</code> object created in the example above:
+
+<P>
+<div class="verbatim"><pre>
+authManager.addUser('test', '123')
+authManager.addUser(
+    'john',
+    'bananas',
+    'John', 
+    'Smith', 
+    'johnsmith@example.com'
+)
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.5.1 Adding Applications"
+  href="node11.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.5 Administering The Auth"
+  href="node10.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.5.3 Setting Access Levels"
+  href="node13.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node11.html">1.2.5.1 Adding Applications</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node10.html">1.2.5 Administering The Auth</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node13.html">1.2.5.3 Setting Access Levels</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

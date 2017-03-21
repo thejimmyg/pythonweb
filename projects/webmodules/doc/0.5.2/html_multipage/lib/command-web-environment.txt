@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+
+# Setup a database connection
+import web.database
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="environment",
+    autoCreate = 1,
+)
+cursor = connection.cursor() 
+
+import web.environment
+driver = web.environment.driver(
+    name='testEnv',
+    storage='database',
+    cursor=cursor,
+)
+if not driver.completeEnvironment():
+    driver.removeEnvironment(ignoreErrors=True)
+    driver.createEnvironment()
+    print "Environment created"
+else:
+    print "Environment already complete"
+
+connection.commit() # Save changes
+connection.close()  # Close the connection

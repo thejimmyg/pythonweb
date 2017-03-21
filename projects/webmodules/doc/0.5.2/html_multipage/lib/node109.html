@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node108.html" />
+<link rel="parent" href="node106.html" />
+<link rel="next" href="node110.html" />
+<meta name='aesop' content='information' />
+<title>1.5.9.3 The Row Object</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.9.2 The Table Object"
+  href="node108.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5.9 Class Reference"
+  href="node106.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.10 Future"
+  href="node110.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node108.html">1.5.9.2 The Table Object</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node106.html">1.5.9 Class Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node110.html">1.5.10 Future</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003593000000000000000">
+1.5.9.3 The Row Object</A>
+</H3>
+
+<P>
+You don't need to create <tt class="class">Row</tt> objects directly. Instead they should be created by using the appropriate methods of the <tt class="class">Table</tt> class.
+
+<P>
+<tt class="class">Row</tt> objects support the standard comparison operators <code>&lt;,&lt;=,&gt;,&gt;=,==,&lt;&gt;</code> as well as the <code>len()</code> function.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-190' xml:id='l2h-190' class="class">Row</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-191' xml:id='l2h-191' class="method">form</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>action=''</var><big>]</big><var></var><big>[</big><var>, method='post'</var><big>]</big><var></var><big>[</big><var>, stickyData={}</var><big>]</big><var></var><big>[</big><var>, enctype='multipart/form-data'</var><big>]</big><var></var><big>[</big><var>, submit='Submit'</var><big>]</big><var></var><big>[</big><var>, modeDict={'mode':'mode', 'table':'table', 'submode':'submode'}</var><big>]</big><var></var><big>[</big><var>,  submode='add'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Return a <tt class="module">web.form</tt> <tt class="class">Form</tt> object populated with the information from the <tt class="class">Row</tt>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-192' xml:id='l2h-192' class="method">relate</tt></b>(</nobr></td>
+  <td><var><var>row</var></var>)</td></tr></table></dt>
+<dd>
+Relate this <tt class="class">Row</tt> to another <tt class="class">Row</tt> object specified by <var>row</var>. Both <tt class="class">Row</tt>s must be from tables related with <tt class="method">addRelated()</tt> columns and must not alread be related.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-193' xml:id='l2h-193' class="method">unrelate</tt></b>(</nobr></td>
+  <td><var><var>row</var></var>)</td></tr></table></dt>
+<dd>
+Unrelate this <tt class="class">Row</tt> from another <tt class="class">Row</tt> object specified by <var>row</var>. Both <tt class="class">Row</tt>s must be from tables related with <tt class="method">addRelated()</tt> columns and must already be related.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-194' xml:id='l2h-194' class="method">isRelated</tt></b>(</nobr></td>
+  <td><var><var>row</var></var>)</td></tr></table></dt>
+<dd>
+Returns <code>True</code> if the <tt class="class">Row</tt>s are already related, otherwise returns <code>False</code>.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-195' xml:id='l2h-195' class="method">update</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>all=None</var><big>]</big><var>,</var><big>[</big><var>**params</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Set multiple values of this row in one go. This currently not optimised so it makes an SQL call for each column set. Set either <var>all</var> as a dictionary of <code>column:values</code> pairs or set <var>**params</var> by using <code>column=value</code> pairs.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-196' xml:id='l2h-196' class="method">keys</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Return a tuple containing the column names of the fields.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-197' xml:id='l2h-197' class="method">values</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Return a tuple containing values of each field for the current row.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-198' xml:id='l2h-198' class="method">items</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Return a tuple containing 2-tuples of <code>(<var>key</var>, <var>value</var>)</code> pairs where the <var>key</var> is the column name and the <var>value</var> is the value of each field for the current row.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-199' xml:id='l2h-199' class="method">has_key</tt></b>(</nobr></td>
+  <td><var><var>column</var></var>)</td></tr></table></dt>
+<dd>
+Returns <code>True</code> if the row has a column named <var>column</var>, <code>False</code> otherwise
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-200' xml:id='l2h-200' class="method">dict</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Return the row as a dictionary of column name : value pairs, except for single, multiple and related joins columns, since this could result in circular references.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-201' xml:id='l2h-201' class="member">rowid</tt></b></dt>
+<dd>
+The rowid of the row
+</dl>
+
+<P>
+</dl> 
+
+<P>
+Each column from the <tt class="class">Row</tt> can be accessed through a dictionary-like interface. For example to print the value of the column named <code>'firstName'</code> from the <tt class="class">Row</tt> with <code>rowid</code> <code>1</code> from the <code>'Person'</code> table in the database <code>database</code> you would use:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; print database['Person'][1]['firstName']
+John
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.9.2 The Table Object"
+  href="node108.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5.9 Class Reference"
+  href="node106.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.10 Future"
+  href="node110.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node108.html">1.5.9.2 The Table Object</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node106.html">1.5.9 Class Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node110.html">1.5.10 Future</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

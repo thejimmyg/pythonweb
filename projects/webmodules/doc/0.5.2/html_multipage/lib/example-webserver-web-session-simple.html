@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node149.html" />
+<link rel="prev" href="node147.html" />
+<link rel="parent" href="session.html" />
+<link rel="next" href="node149.html" />
+<meta name='aesop' content='information' />
+<title>1.11.8 Using the session.start() function</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.7 Using Stores"
+  href="node147.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.9 Managing Sessions"
+  href="node149.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node147.html">1.11.7 Using Stores</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node149.html">1.11.9 Managing Sessions</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031180000000000000000">
+1.11.8 Using the session.start() function</A>
+</H2>
+
+<P>
+If you are using cookies (which is the recommended way of using the <tt class="module">web.session</tt> module) you may prefer to use the <tt class="function">web.session.start()</tt> method to handle the loading or creation of the session automatically and return a store for the application specified. <span class="note"><b class="label">Note:</b>
+ This will print the cookie headers straight away so this method will not work with WSGI applications or other non CGI environments. If you are unsure it is better to use the longer method.</span>
+
+<P>
+<A NAME="example-webserver-web-session-simple"></A>
+<P>
+Below is an example which uses the <code>start()</code> method:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web.error; web.error.enable()
+import os, time
+import web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="webserver-session-simple",
+    autoCreate = 1,
+)
+cursor = connection.cursor() 
+
+# Create a session driver and make sure the database tables exist
+import web.session
+
+store = web.session.start(
+    app='test',
+    environmentName='testEnv',
+    environmentType='database',
+    expire=10, 
+    setupSessionEnvironment=1,
+    cursor = cursor,
+)
+manager = store.manager
+
+def printPage(title, url, link, url2, link2, data):
+    print """
+    &lt;html&gt;
+    &lt;h1&gt;%s&lt;/h1&gt;
+    &lt;p&gt;&lt;a href="%s"&gt;%s&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href="%s"&gt;%s&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;%s&lt;/p&gt;
+    &lt;/html&gt;"""%(title, url, link, url2, link2, data)
+                
+# Write a simple application
+if not manager.created:
+    if web.cgi.has_key('destroy') and web.cgi['destroy'].value == 'True':
+        manager.destroy(ignoreWarning=True, sendCookieHeaders=False) 
+        manager.sendCookieHeaders()
+        print web.header('text/html')
+        printPage(
+            'Session Destroyed', 
+            os.environ['SCRIPT_NAME'], 
+            'Start Again', '','',''
+        )
+    else:
+        manager.setExpire(manager.expireTime+5)
+        manager.setCookie(sendCookieHeaders=True)
+        print web.header('text/html')
+        data = []
+        data.append('SessionID:  ' +manager.sessionID)
+        data.append('Store Keys: '+str(store.keys()))
+        data.append('Store App:  '+store.app)
+        data.append('Variable1:  '+str(store['Variable1']))
+        data.append('ExpireTime: '+str(manager.expireTime))
+        printPage(
+            'Welcome back', 
+            os.environ['SCRIPT_NAME'], 
+            'Visit Again', 
+            os.environ['SCRIPT_NAME']+'?destroy=True', 
+            'Destroy Session', 
+            '&lt;p&gt;Every time you visit this page the expiry &#92;
+            time increases 5 seconds&lt;/p&gt;'+'&lt;/p&gt;&lt;p&gt;'.join(data)
+        )
+else:
+    print web.header('text/html')
+    store['Variable1'] = 'Python Rules!'
+    printPage(
+        'New Session Started',
+        os.environ['SCRIPT_NAME'], 
+        'Visit Again', '', '',
+        "Set variable1 to 'Python Rules!'"
+    )
+
+connection.commit() # Save changes
+connection.close()  # Close the database connection</pre>
+<div class="footer">
+<a href="webserver-web-session-simple.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-session-simple.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by running the webserver <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-session-simple.py">http://localhost:8080/doc/src/lib/webserver-web-session-simple.py</a>
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.7 Using Stores"
+  href="node147.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.9 Managing Sessions"
+  href="node149.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node147.html">1.11.7 Using Stores</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node149.html">1.11.9 Managing Sessions</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

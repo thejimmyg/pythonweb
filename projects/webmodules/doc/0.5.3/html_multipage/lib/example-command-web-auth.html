@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node20.html" />
+<link rel="parent" href="node17.html" />
+<link rel="next" href="node22.html" />
+<meta name='aesop' content='information' />
+<title>1.2.5.4 Example</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.5.3 Disabling Accounts using"
+  href="node20.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.5 Advanced Authorisation Options"
+  href="node17.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.6 Encryption"
+  href="node22.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node20.html">1.2.5.3 Disabling Accounts using</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node17.html">1.2.5 Advanced Authorisation Options</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node22.html">1.2.6 Encryption</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003254000000000000000">
+1.2.5.4 Example</A>
+</H3>
+
+<P>
+<A NAME="example-command-web-auth"></A>Putting together everything in the previous sections gives us this full authorisation example:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web, web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="command-auth"
+)
+cursor = connection.cursor() 
+
+# Obtain Auth objects
+import web.auth
+from web.errors import AuthError
+admin = web.auth.admin('database', cursor=cursor)
+
+# Setup the environment (destroying the existing environment)
+admin.removeAuthEnvironment(ignoreErrors=True)
+admin.createAuthEnvironment()
+
+# Setup the users and their access rights
+admin.addApp('cms')
+admin.addApp('news')
+
+admin.addGroup('butcher')
+admin.addGroup('fishmonger')
+
+admin.addRole('add')
+admin.addRole('edit')
+
+admin.addUser(username='james', group='butcher', password='password')
+admin.addUser(username='sally', group='butcher', password='password')
+admin.addUser(username='vicki', group='butcher', password='password', active=0)
+
+admin.addUser(username='anne',  group='fishmonger', password='password')
+admin.addUser(
+    username='john',  
+    group='fishmonger', 
+    password='password', 
+    firstname='John', 
+    surname='Smith', 
+    email='john@example.com'
+)
+
+admin.setLevel('anne', 'news', 2)
+admin.setLevel('john', 'news', 1)
+admin.setLevel('anne', 'cms', 1)
+admin.setLevel('john', 'cms', 2)
+
+admin.setRole(username='james', app='cms', role='add')
+admin.setRole(username='sally', app='cms', role='edit')
+admin.setRole(username='james', app='news', role='edit')
+
+print 'Active Option'
+print 'Sally: ', admin.user('sally').authorise()
+print 'Sally: ', admin.user('sally').authorise(active=0)
+print 'Sally: ', admin.user('sally').authorise(active=None)
+print 'Vicki: ', admin.user('vicki').authorise()
+print 'Vicki: ', admin.user('vicki').authorise(active=0)
+print 'Vicki: ', admin.user('vicki').authorise(active=None)
+print ''
+print 'Group Option'
+print 'Anne:  ', admin.user('anne').authorise(group='fishmonger')
+print 'James: ', admin.user('james').authorise(group='fishmonger')
+print ''
+print 'Access Levels'
+print 'Anne:  ', admin.user('anne').authorise(app='news', level=2)
+print 'John:  ', admin.user('john').authorise(app='news', level=2)
+print 'Anne:  ', admin.user('anne').authorise(app='cms',  level=2)
+print 'John:  ', admin.user('john').authorise(app='cms',  level=2)
+print ''
+print 'Roles'
+print 'James: ', admin.user('james').authorise(app='cms',  role='add')
+print 'Sally: ', admin.user('sally').authorise(app='cms',  role='add')
+print 'Sally: ', admin.user('sally').authorise(app='cms',  role='edit')
+print 'James: ', admin.user('james').authorise(app='news', role='add')
+print 'James: ', admin.user('james').authorise(app='news', role='edit')
+print 'Sally: ', admin.user('sally').authorise(app='news', role='edit')
+print admin.roles()
+print admin.roleExists('edit')
+print admin.roleExists('delete')
+admin.addApp('test')
+admin.addUser(username='test', password='password')
+admin.addRole('test')
+admin.setRole(username='test', app='test', role='test')
+admin.setLevel('test', 'test', 1)
+try:
+    admin.removeRole('test')
+except AuthError,e:
+    print str(e)
+else:
+    raise Exception('Failed to catch remove role error')
+admin.removeRole('test', force=1)
+print admin.roles(username='test')
+admin.addRole('test')
+admin.setRole(username='test', app='test', role='test')
+admin.setRole(username='test', app='cms', role='test')
+
+print admin.roles()
+print admin.roles(username='test')
+print admin.roles(username='test', app='test')
+print admin.user('test').roles
+admin.unsetRole('test','test','test')
+print admin.user('test').roles
+
+print ''
+print 'Groups'
+print admin.groups()
+print admin.groupExists('butcher')
+print admin.groupExists('newsagents')
+admin.addGroup('newsagents')
+admin.user('test').group = 'newsagents'
+print admin.user('test').group
+
+print admin.groups() 
+try:
+    admin.removeGroup('newsagents')
+except AuthError,e:
+    print str(e)
+else:
+    raise Exception('Failed to catch remove group error')
+admin.removeGroup('newsagents', force=1)
+print admin.groups() 
+
+print ''
+print 'Users'
+print admin.userExists('james')
+print admin.users()
+print admin.users(group='butcher')
+print admin.users(group='butcher', active=0)
+print admin.users(group='butcher', active=1)
+print admin.users(app='cms', role='add')
+print admin.users(group='butcher', app='cms', role='add', active=0)
+print admin.users(group='butcher', app='cms', role='add', active=1)
+print admin.users(group='fishmonger', app='cms', role='add')
+vicki = admin.user('vicki')
+print vicki.active
+vicki.active = 1
+print admin.user('vicki').active
+print vicki.firstname
+vicki.firstname = 'Victoria'
+print admin.user('vicki').firstname
+print ''
+print 'Apps'
+print admin.apps()
+print admin.appExists('cms')
+try:
+    admin.removeApp('test')
+except AuthError,e:
+    print str(e)
+else:
+    raise Exception('Failed to catch app in use error')
+print "App removed"
+print admin.roles(username='test')
+print admin.levels(username='test')
+admin.removeUser('test')
+print admin.userExists('test')
+print ''
+print 'Levels'
+print admin.levels('anne')
+admin.setLevel('anne', 'cms', None)
+print admin.user('anne').levels
+print
+print 'Authorise'
+print admin.user('james').authorise(group='butcher', app='cms', level=1)
+print admin.user('john').authorise(group='butcher', app='cms', level=1)
+print admin.user('john').authorise(group='fishmonger', app='cms', level=1)
+
+connection.rollback()
+connection.close()
+</pre>
+<div class="footer">
+<a href="command-web-auth.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-auth.py</span>).</a>
+</div></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+Since this example is very database intensive you may wish to change the first few lines to use a different database adapter rather than SnakeSQL which runs rather slowly.</span>
+
+<P>
+You can test this example by running <code>python doc/src/lib/command-web-auth.py</code>
+
+<P>
+The ouput produced is as follows:
+
+<P>
+<div class="verbatim"><pre>
+Active Option
+Sally:  True
+Sally:  False
+Sally:  True
+Vicki:  False
+Vicki:  True
+Vicki:  True
+
+Group Option
+Anne:   True
+James:  False
+
+Access Levels
+Anne:   True
+John:   False
+Anne:   False
+John:   True
+
+Roles
+James:  True
+Sally:  False
+Sally:  True
+James:  False
+James:  True
+Sally:  False
+('add', 'edit')
+True
+False
+The role 'test' is still in use by the following users: test
+{}
+('add', 'edit', 'test')
+{'test': 'test', 'cms': 'test'}
+('test',)
+{'test': 'test', 'cms': 'test'}
+{'cms': 'test'}
+
+Groups
+('butcher', 'fishmonger')
+True
+False
+newsagents
+('butcher', 'fishmonger', 'newsagents')
+The group 'newsagents' is still in use by the following users: test
+('butcher', 'fishmonger')
+
+Users
+True
+('james', 'sally', 'vicki', 'anne', 'john', 'test')
+('james', 'sally', 'vicki')
+('vicki',)
+('james', 'sally')
+('james',)
+()
+('james',)
+()
+0
+1
+
+Victoria
+
+Apps
+('cms',)
+True
+The app 'test' is still in use specifying access levels for the following users: test
+App removed
+{'cms': 'test'}
+{'test': 1}
+False
+
+Levels
+{'news': 2, 'cms': 1}
+{'news': 2}
+
+Authorise
+False
+False
+True
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.5.3 Disabling Accounts using"
+  href="node20.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.5 Advanced Authorisation Options"
+  href="node17.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.6 Encryption"
+  href="node22.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node20.html">1.2.5.3 Disabling Accounts using</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node17.html">1.2.5 Advanced Authorisation Options</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node22.html">1.2.6 Encryption</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

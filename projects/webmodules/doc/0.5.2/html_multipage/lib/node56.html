@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node57.html" />
+<link rel="prev" href="node55.html" />
+<link rel="parent" href="node47.html" />
+<link rel="next" href="node57.html" />
+<meta name='aesop' content='information' />
+<title>1.4.12.9 CREATE</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.8 NULL Values"
+  href="node55.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node47.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.10 DROP Table"
+  href="node57.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node55.html">1.4.12.8 NULL Values</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node47.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node57.html">1.4.12.10 DROP Table</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node56.html#SECTION0034129100000000000000">1.4.12.9.1 REQUIRED</a>
+<LI><A href="node56.html#SECTION0034129200000000000000">1.4.12.9.2 UNIQUE</a>
+<LI><A href="node56.html#SECTION0034129300000000000000">1.4.12.9.3 PRIMARY KEY</a>
+<LI><A href="node56.html#SECTION0034129400000000000000">1.4.12.9.4 DEFAULT</a>
+<LI><A href="node56.html#SECTION0034129500000000000000">1.4.12.9.5 FOREIGN KEY</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+<HR>
+
+<H3><A NAME="SECTION0034129000000000000000">
+1.4.12.9 CREATE</A>
+</H3>
+
+<P>
+To create a table in a database:
+
+<P>
+Syntax
+<div class="verbatim"><pre>
+CREATE TABLE table_name
+(
+column_name1 data_type options,
+column_name2 data_type options,
+.......
+)
+</pre></div>
+
+<P>
+<strong>Example</strong>
+
+<P>
+This example demonstrates how you can create a table named <code>Person</code>, with four columns. The column names will be <code>LastName</code>, <code>FirstName</code>, <code>Number</code>, and <code>DateOfBirth</code>:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE Person (LastName String, FirstName String, Number String, DateOfBirth Date)
+</pre></div>
+
+<P>
+The data_type specifies what type of data the column can hold. The table below contains the data types supported by <tt class="module">web.database</tt>:
+
+<P>
+<div class="center"><table class="realtable">
+  <thead>
+    <tr>
+      <th class="left"  >Type</th>
+      <th class="left"  >Description</th>
+      </tr>
+    </thead>
+  <tbody>
+    <tr><td class="left"   valign="baseline"><code><code>Bool</code></code></td>
+        <td class="left"  >True or False</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Integer</code></code></td>
+        <td class="left"  >Any Python integer (not Python Long or Decimal)</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Long</code></code></td>
+        <td class="left"  >Any Python long integer between -9223372036854775808 and 9223372036854775807</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Float</code></code></td>
+        <td class="left"  >Any Python floating point number</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>String</code></code></td>
+        <td class="left"  >A string of 255 characters or less (Not unicode?) [a]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Text</code></code></td>
+        <td class="left"  >A 24-bit string                                    [b]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Binary</code></code></td>
+        <td class="left"  >A 24-bit binary string                             [b]]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Date</code></code></td>
+        <td class="left"  >Any valid Python <code>datetime.date</code> object. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores days, months and years, any other information is truncated. Dates from <code>0001-01-01</code> to <code>9999-12-31</code>. [c]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Time</code></code></td>
+        <td class="left"  >Any valid Python <code>datetime.time</code> object. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores hours, minutes and seconds, any other information is truncated. [c]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Datetime</code></code></td>
+        <td class="left"  >Any valid Python <code>datetime.datetime</code> object. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores days, months, years, hours, minutes and seconds, any other information is truncated. [c]</td></tr>
+    </tbody>
+</table></div>
+
+<P>
+[a] Some databases make a distinction between short strings (often named VARCHAR) and long strings (often TEXT). Short string fields are normally faster and so a distinction is also made in this specification.
+
+<P>
+[b] Although Python supports strings of greater than 24 bit, a lot of databases do not and so in order to be compatible with those databases Binary and String objects should be no longer than 24 bit.
+
+<P>
+[c] Although Python &lt; 2.3 does not support datetime objects, pure Python compatible libraries exist for Python &lt; 2.3 and these can be used instead so it makes sense to use the standard Python types where possible.
+The options can be used to further specify what values the field can take. They are described in the next sections.
+
+<P>
+
+<H4><A NAME="SECTION0034129100000000000000">
+1.4.12.9.1 REQUIRED</A>
+</H4>
+
+<P>
+In <tt class="module">web.database</tt>, <code>REQUIRED</code> simply means that the field cannot contain a <code>NULL</code> value. If you insert a row into a table with a <code>REQUIRED</code> field, you must specify a value for the field unless you have also specified the field to have a <code>DEFAULT</code> value which is not <code>NULL</code> in which case the default value will be used. If you try to set the field to <code>NULL</code> an error will be raised.
+
+<P>
+To create a table with <code>LastName</code> and <code>FirstName</code> columns where <code>LastName</code> could not take a <code>NULL</code> value you would use:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE Person (LastName String REQUIRED, FirstName String)
+</pre></div>
+
+<P>
+
+<H4><A NAME="SECTION0034129200000000000000">
+1.4.12.9.2 UNIQUE</A>
+</H4>
+
+<P>
+In <tt class="module">web.database</tt>, a <code>UNIQUE</code> field is one in which all values in the table must be different. An error occurs if you try to add a new row with a value that matches an existing row. The exception to this is that if a column is not specified as <code>REQUIRED</code>, i.e. it is allowed to contain <code>NULL</code> values, it can contain multiple <code>NULL</code> values.
+
+<P>
+To create a table with <code>LastName</code> and <code>FirstName</code> columns where all the values of <code>LastName</code> had to be different or <code>NULL</code> you would use:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE Person (LastName String UNIQUE, FirstName String)
+</pre></div>
+
+<P>
+If a field is specified as <code>UNIQUE</code>, <tt class="module">web.database</tt> will not also let you specify a <code>DEFAULT</code> value.
+
+<P>
+Bool, Float, Text and Binary fields cannot be unique.
+
+<P>
+
+<H4><A NAME="SECTION0034129300000000000000">
+1.4.12.9.3 PRIMARY KEY</A>
+</H4>
+
+<P>
+<code>PRIMARY KEY</code> columns are unique and cannot take <code>NULL</code> values. Each table can only have one field specified as <code>PRIMARY KEY</code>.
+
+<P>
+Primary keys can sometimes be used by <tt class="module">web.database</tt>'s drivers to speed up database queries. A <code>PRIMARY KEY</code> column is a column where the value is used to uniquely identify the row. 
+
+<P>
+To create a table with <code>LastName</code> and <code>FirstName</code> columns where <code>LastName</code> is a primary key use:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE Person (LastName String PRIMARY KEY, FirstName String)
+</pre></div>
+
+<P>
+Bool, Float, Text and Binary fields cannot be primary keys.
+
+<P>
+
+<H4><A NAME="SECTION0034129400000000000000">
+1.4.12.9.4 DEFAULT</A>
+</H4>
+
+<P>
+The <code>DEFAULT</code> option is used to specify a default value for a field to be used if a value is not specified when a new row is added to a table.
+
+<P>
+To create a table with <code>LastName</code> and <code>FirstName</code> columns where the default value for <code>LastName</code> is <code>'Smith'</code> we would use:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE Person (LastName String DEFAULT='Smith', FirstName String)
+</pre></div>
+
+<P>
+You cannot specify a <code>DEFAULT</code> if the column is a <code>PRIMARY KEY</code> or <code>UNIQUE</code>.
+
+<P>
+If no <code>DEFAULT</code> is specified the <code>DEFAULT</code> is <code>NULL</code>.
+
+<P>
+Binary and Text fields cannot have default values.
+
+<P>
+
+<H4><A NAME="SECTION0034129500000000000000"></A><A NAME="ForeignKeys"></A>
+<BR>
+1.4.12.9.5 FOREIGN KEY
+</H4>
+
+<P>
+The final option is <code>FOREIGN KEY</code>. If a column is specified <code>FOREIGN KEY</code> it cannot have any other options. The table specified as providing the foreign key must have a primary key. It is the primary key value which is used as a foreign key in the other table.
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE Houses (House Integer, Owner String FOREIGN KEY=People)
+</pre></div>
+
+<P>
+Bool, Float, Text and Binary fields cannot be foreign key fields.
+
+<P>
+Foreign keys are described in more detail in the section on joins.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.8 NULL Values"
+  href="node55.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node47.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.10 DROP Table"
+  href="node57.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node55.html">1.4.12.8 NULL Values</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node47.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node57.html">1.4.12.10 DROP Table</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

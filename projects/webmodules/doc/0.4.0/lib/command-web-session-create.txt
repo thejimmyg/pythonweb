@@ -1,0 +1,15 @@
+import sys; sys.path.append('../../../') # show python where the web modules are
+
+import web
+import web.database
+import web.session
+
+connection = web.database.connect(type='sqlite', database='example-web-session.db')
+cursor = connection.cursor()
+
+sessionSetup = web.session.setup(storage='database', cursor=cursor)
+errors = sessionSetup.createTables()
+if errors:
+    print '\n'.join(errors)
+        
+connection.commit() 

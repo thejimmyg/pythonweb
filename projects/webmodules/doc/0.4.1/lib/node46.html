@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node45.html">
+<LINK REL="parent" HREF="node42.html">
+<LINK REL="next" href="example-command-web-database.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Complicaitons with Gadfly">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.9.4 Complicaitons with Gadfly</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.9.3 ODBC" 
+  HREF="node45.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.9 Database Specific Notes" 
+  HREF="node42.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.10 Test Code" 
+  href="example-command-web-database.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node45.html">1.4.9.3 ODBC</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node42.html">1.4.9 Database Specific Notes</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-database.html">1.4.10 Test Code</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node46.html#SECTION003494100000000000000">1.4.9.4.1 Creating a Gadfly Database</a>
+<LI><A href="node46.html#SECTION003494200000000000000">1.4.9.4.2 Lack of NULL Support</a>
+<LI><A href="node46.html#SECTION003494300000000000000">1.4.9.4.3 FTP Transfer</a>
+</ul>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H3><A NAME="SECTION003494000000000000000">
+1.4.9.4 Complicaitons with Gadfly</A>
+</H3>
+
+<P>
+
+<H4><A NAME="SECTION003494100000000000000">
+1.4.9.4.1 Creating a Gadfly Database</A>
+</H4>
+
+<P>
+Because Gadlfy does not come with its own database management program, databases have to be created from within the Python code. Gadfly does this by using a special startup connection which actually creates the database it is connecting to. Once connected you can create tables as usual.
+
+<P>
+To create a Gadfly database named <code>TestDB</code> in the directory <span class="file">C:/TestDirectory</span> you would use the following code:
+
+<P>
+<div class="verbatim"><pre>
+connection = web.database.connect(
+    type="gadfly",
+    database="TestDB",
+    dir="C:/TestDirectory",
+    startup=True
+)
+</pre></div>
+
+<P>
+You can then create a <tt class="class">Cursor</tt> object and create tables as decribed later. You should finish by calling the cursor's <tt class="method">commit()</tt> method to save your changes. Agian, this will be described later.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+Once your database has been created you should always use a normal Gadfly connection (ie don't use <code>startup=True</code>). If you use a statup conneciton in a directory which already has a database in it you are likely to destroy the contents of that database.</span>
+
+<P>
+
+<H4><A NAME="SECTION003494200000000000000">
+1.4.9.4.2 Lack of NULL Support</A>
+</H4>
+
+<P>
+Unfortunatly Gadfly lacks one very important feature. It has no support for <code>NULL</code> values. This means that if you set and column values to <code>None</code> then you will get unpredictable results but Gadfly will not rasie an Exception. THIS CAN BE VERY TRICKY TO SPOT SO YOU ARE ADVISED TO USE A DIFFERENT DATABASE.
+
+<P>
+
+<H4><A NAME="SECTION003494300000000000000">
+1.4.9.4.3 FTP Transfer</A>
+</H4>
+
+<P>
+Gadfly databases are are stored in files. If you are transferring these files using FTP software remember to transfer them in Binary mode rather than Text or Auto modes as the types of the files can sometimes be detected incorrectly by the FTP software. If you get strange errors with the values of certain field types this may be your problem.
+
+<P>
+<div class="seealso">
+  <p class="heading"><b>See Also:</b></p>
+
+  <dl compact class="seetitle">
+    <dt><em class="citetitle"><a href="http://gadfly.sourceforge.net/"
+        >Gadfly Homepage</a></em>
+    <dd>The Gadfly homepage has full documentation for using Gadfly and explains what Gadfly does and doesn't support. Extra features have been added to Gadfly through the use of the wrapper functions described in this module but it is helpful to understand Gadfly's limitations.
+  </dl>
+
+<P>
+</div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.9.3 ODBC" 
+  rel="prev" title="1.4.9.3 ODBC" 
+  HREF="node45.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.9 Database Specific Notes" 
+  rel="parent" title="1.4.9 Database Specific Notes" 
+  HREF="node42.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.10 Test Code" 
+  rel="next" title="1.4.10 Test Code" 
+  href="example-command-web-database.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node45.html">1.4.9.3 ODBC</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node42.html">1.4.9 Database Specific Notes</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-database.html">1.4.10 Test Code</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

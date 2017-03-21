@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node8.html">
+<LINK REL="prev" href="module-web.auth.html">
+<LINK REL="parent" href="module-web.auth.html">
+<LINK REL="next" HREF="node7.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Password Protecting Your Code">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.2.1 Password Protecting Your Code</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2 web.auth  " 
+  href="module-web.auth.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2 web.auth  " 
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.1.1 Function Reference" 
+  HREF="node7.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node7.html">1.2.1.1 Function Reference</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003210000000000000000">
+1.2.1 Password Protecting Your Code</A>
+</H2>
+
+<P>
+At the heart of the module is the single fucntion <tt class="function">start()</tt>. This is where all the options are specified. 
+
+<P>
+Here is an example program:
+<div class="verbatim"><pre>
+import web, web.database, web.auth, web.session
+
+connection = web.database.connect(type='mysql', database='test')
+cursor     = connection.cursor()
+session    = web.session.start(storage='database', cursor=cursor, app='test')
+user       = web.auth.start(
+                 session, storage='database', cursor=cursor, 
+                 idle=100, expire=200
+             )
+if user.valid():
+    print "Content-type: text/plain\n\n"
+    print user.username, ' is signed in with access level ', user.accessLevel
+    
+connection.commit()
+</pre></div>
+
+<P>
+As you can see from the code the <tt class="function">start</tt> function takes a <tt class="module">web.session</tt> object as its first parameter. This is because the <tt class="module">web.auth</tt> module stores certain variables, such as the last time a page was accessed by the user, in the session store. 
+
+<P>
+The <tt class="function">start</tt> function also needs to know where all the information about the users is stored. In this case it is stored in a datbase which can be accessed through the <tt class="module">web.database</tt> cursor named <code>cursor</code>. The module also supports the use of a file store for the information. You use the <tt class="function">setup()</tt> function to actually setup applications and users. The <tt class="function">start()</tt> function is used to create a user object.
+
+<P>
+The <var>idle</var> parameter specifies the maximum number of seconds that the user can take between visiting two pages before they are signed out. The <var>expire</var> parameter is the maximum number of seconds the user can stay signed in before they are signed out, regardless of how frequently they visit the pages.
+
+<P>
+There is actually a lot going on behind the scenes in this example and it is worth spending some time going through it in detail.
+
+<P>
+The <code>user.valid()</code> method determins if the user is logged in and has a sufficiently high accessLevel to use the application. If the user is valid information about the user is populated into the variables <code>user.username</code>, <code>user.firstname</code>, <code>user.surname</code>,<code>user.password</code>,<code>user.accessLevel</code> and <code>user.email</code>.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+that in the example above no <var>app</var> name was specified in the <tt class="function">web.auth.start</tt> function. If this is the case the <code>auth</code> object is given the same app name as the <code>session</code> object. In this case the <code>auth</code> object therefore has the app name <code>'test'</code>.</span>
+
+<P>
+The <tt class="module">web.auth</tt> module allows a user to have different access to different applications. Each application is named using the <var>app</var> parameter which is why it is so important.
+
+<P>
+The <tt class="function">start()</tt> function takes many parameters which can customise the templates used, the behaviour on successful sign in and even provide functionality for password reminders to be sent if the user cannot sign in. All these features are handled automatically by the <code>valid()</code> method demonstrated above. This means that you can add a serious amount of power to your code in just two lines.
+
+<P>
+
+<p><hr>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node7.html">1.2.1.1 Function Reference</a>
+</ul>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2 web.auth  " 
+  rel="prev" title="1.2 web.auth  " 
+  href="module-web.auth.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2 web.auth  " 
+  rel="parent" title="1.2 web.auth  " 
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.1.1 Function Reference" 
+  rel="next" title="1.2.1.1 Function Reference" 
+  HREF="node7.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node7.html">1.2.1.1 Function Reference</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,11 @@
+import web.wsgi
+
+class simpleApp(web.wsgi.base.BaseApplication):
+    def start(self):
+        import web.error
+        value = 5
+        raise web.error.Breakpoint('Test Exception')
+
+application = simpleApp()
+
+

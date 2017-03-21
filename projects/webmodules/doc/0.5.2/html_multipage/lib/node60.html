@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node61.html" />
+<link rel="prev" href="node59.html" />
+<link rel="parent" href="node59.html" />
+<link rel="next" href="node61.html" />
+<meta name='aesop' content='information' />
+<title>1.4.13.1 Selecting Data</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.13 Cursor Abstraction Methods"
+  href="node59.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.13 Cursor Abstraction Methods"
+  href="node59.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13.2 Inserting Data"
+  href="node61.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node59.html">1.4.13 Cursor Abstraction Methods</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node59.html">1.4.13 Cursor Abstraction Methods</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node61.html">1.4.13.2 Inserting Data</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node60.html#SECTION0034131100000000000000">1.4.13.1.1 The where Parameter</a>
+<LI><A href="node60.html#SECTION0034131200000000000000">1.4.13.1.2 The order Parameter</a>
+<LI><A href="node60.html#SECTION0034131300000000000000">1.4.13.1.3 Disabling Execute</a>
+<LI><A href="node60.html#SECTION0034131400000000000000">1.4.13.1.4 Using Joins</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+<HR>
+
+<H3><A NAME="SECTION0034131000000000000000">
+1.4.13.1 Selecting Data</A>
+</H3>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-81' xml:id='l2h-81' class="method">select</tt></b>(</nobr></td>
+  <td><var><var>tables</var>, <var>columns</var>, </var><big>[</big><var>values=[], </var><big>]</big><var></var><big>[</big><var>where=None, </var><big>]</big><var></var><big>[</big><var>order=None, </var><big>]</big><var></var><big>[</big><var>execute=None, </var><big>]</big><var></var><big>[</big><var>fetch=None, </var><big>]</big><var></var><big>[</big><var>**params</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+Build an SQL string according to the options specified and optionally execute the SQL and return the results in the format specified. No error checking on field names if the SQL string is only being built. Strict error checking is only performed when executing the code.
+
+<P>
+<DL>
+<DT><STRONG><var>tables</var></STRONG></DT>
+<DD>A string containing the name of the table to select from or if selecting from multiple tables, a sequence of table names.
+</DD>
+<DT><STRONG><var>columns</var></STRONG></DT>
+<DD>A sequence of column names to select. Can be a string if only one column is being selected. If selecting from multiple tables, all column names should be in the form <code>'tableName.columnName'</code>
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A list of values to substitute for <code>?</code> in the <code>WHERE</code> clause specified by <var>where</var>.
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>The WHERE clause as a <tt class="module">web.database</tt>  list as returned by <code>cursor.where()</code>. If <var>where</var> is a string it is converted to the correct format.
+</DD>
+<DT><STRONG><var>order</var></STRONG></DT>
+<DD>The ORDER BY clause as a <tt class="module">web.database</tt>  list as returned by <code>cursor.order()</code>. If <var>order</var> is a string it is converted to the correct format.
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>If <code>False</code> the method returns the SQL string needed to perform the desired operations. If <code>True</code> the SQL is executed and the results converted and returned in the appropriate form. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+<DT><STRONG><var>fetch</var></STRONG></DT>
+<DD>Whether or not to fetch the results. If <code>True</code> and <var>execute</var> is not specified <var>execute</var> is set to <code>True</code>. If <code>True</code> and <var>execute</var> <code>False</code> an error is raised.
+</DD>
+<DT><STRONG><var>**params</var></STRONG></DT>
+<DD>The parameters to be passed to the <tt class="method">fetchall()</tt> method if <var>fetch</var> is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+To select some information from a database using an SQL string you would use the following command:
+
+<P>
+<div class="verbatim"><pre>
+SELECT column_name(s) FROM table_name
+</pre></div>
+
+<P>
+For example consider the table below:
+
+<P>
+<div class="verbatim"><pre>
+# Table Person
++----------+-----------+---------+-------------+
+| LastName | FirstName | Address | DateOfBirth |
++----------+-----------+---------+-------------+
+| Smith    | John      | Bedford | 1980-01-01  |
++----------+-----------+---------+-------------+
+| Doe      | John      | Oxford  | 1981-12-25  |
++----------+-----------+---------+-------------+
+</pre></div>
+
+<P>
+To retrieve a list of the surnames and dates of birth of all the people in the table you would use the following code:
+
+<P>
+<div class="verbatim"><pre>
+rows = cursor.select(
+    columns = ['LastName', 'DateOfBirth'], 
+    tables  = ['Person'],
+    format  = 'object',
+)
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ If you have specified <var>fetch</var> as <code>False</code> in the cursor constructor you would need to specify <var>fetch</var> as <code>True</code> here to fetch the results, otherwise you would need to use <code>rows = cursor.fetchall()</code> to actually fetch the results.</span>
+
+<P>
+Since we have specified <var>format</var> as <code>'object'</code>, the result from this call would be a tuple of TupleDescriptor objects which can be treated as a tuple or a dictionary:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; for record in rows:
+...    print record[0], record[1]
+...    print record['LastName'], record['DateOfBirth']
+...
+Smith 1980-01-01
+Smith 1980-01-01
+Doe 1981-12-25
+Doe 1981-12-25
+</pre></div>
+
+<P>
+Using the <tt class="method">select()</tt> method, information you select from a field is automatically converted to the correct Python type. Integer fields return Integers, Date fields return <code>datetime.date</code> objects.
+
+<P>
+
+<H4><A NAME="SECTION0034131100000000000000">
+1.4.13.1.1 The where Parameter</A>
+</H4>
+
+<P>
+The example above selected every <code>LastName</code> and <code>DateOfBirth</code> field from the table. To limit the information selected you need to specify the <code>where</code> parameter in the same way you would for any SQL query.
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; rows=cursor.select(columns=['LastName'],tables=['Person'],where="LastName='Smith'")
+&gt;&gt;&gt; for record in rows:
+...    print record['LastName'], record['DateOfBirth']
+...
+'Smith'
+</pre></div>
+
+<P>
+We had to specify the value <code>Smith</code> as properly encoded SQL since we specified the where clause as a string. Alternatively we could have used the <code>cursor.where()</code> method to help instead.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-82' xml:id='l2h-82' class="method">where</tt></b>(</nobr></td>
+  <td><var><var>where</var>, </var><big>[</big><var>values=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Return a parsed <code>WHERE</code> clause suitable for use in the <tt class="method">select()</tt>, <tt class="method">update()</tt> and <tt class="method">delete()</tt> methods of the <code>cursor</code> object.
+<DL>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>A string containing the <code>WHERE</code> clause. Can include the <code>LIKE</code> operator which is used as follows:
+
+<P>
+<div class="verbatim"><pre>
+WHERE columnName LIKE %s1%s2%s
+</pre></div>
+
+<P>
+Every % sign is matched against zero or more characters.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ <var>where</var> should not include the string <code>'WHERE'</code> at the beginning.</span>
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A list of values to substitute for <code>?</code> parameters in the <code>WHERE</code> clause
+</DD>
+</DL>
+</dl>
+
+<P>
+More complex expressions can also be built into where clauses. See the SQL Reference section for full information.
+
+<P>
+
+<H4><A NAME="SECTION0034131200000000000000">
+1.4.13.1.2 The order Parameter</A>
+</H4>
+
+<P>
+You can specify the order in which the results are sorted using the <code>order</code> parameter. It is used as follows:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; for record in cursor.select('LastName', 'Person', order="'LastName'"):
+...    print record['LastName']
+...
+'Doe'
+'Smith'
+&gt;&gt;&gt; for record in cursor.select('LastName', 'Person', order="LastName DESC"):
+...    print record['LastName']
+...
+'Smith'
+'Doe'
+</pre></div>
+Note that by placing the word <code>DESC</code> after the column to order by, the order is reversed.
+
+<P>
+You can place a number of Columns after each other. For example <code>order="LastName DESC DateOfBirth"</code> could be used to order the results in decending order by <code>LastName</code> and if any results have the same last name, order them by <code>DateOfBirth</code>.
+
+<P>
+Alternatively we could have used the <code>cursor.order()</code> method to help instead.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-83' xml:id='l2h-83' class="method">order</tt></b>(</nobr></td>
+  <td><var><var>order</var></var>)</td></tr></table></dt>
+<dd>
+Return a parsed <code>ORDER BY</code> clause suitable for use in the <tt class="method">select()</tt> method of the <code>cursor</code> object.
+<DL>
+<DT><STRONG><var>order</var></STRONG></DT>
+<DD>A string containing the <code>ORDER BY</code> clause. <span class="note"><b class="label">Note:</b>
+ <var>order</var> should not include the string <code>'ORDER BY'</code> at the beginning.</span>
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<H4><A NAME="SECTION0034131300000000000000">
+1.4.13.1.3 Disabling Execute</A>
+</H4>
+
+<P>
+If you do not want the SQL to actually be executed you can set the <code>execute</code> parameter of the <tt class="method">select()</tt> method to <code>False</code>. You can then manually execute it using <code>cursor.execute()</code>.
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; sql = cursor.select(columns=['LastName', 'DateOfBirth'], tables=['Person'], execute=False)
+&gt;&gt;&gt; sql
+'SELECT LastName, DateOfBirth FROM Person'
+&gt;&gt;&gt; cursor.execute(sql)
+&gt;&gt;&gt; cursor.fetchall()
+(('Smith','1980-01-01'),('Doe','1981-12-25'))
+</pre></div>
+
+<P>
+
+<H4><A NAME="SECTION0034131400000000000000">
+1.4.13.1.4 Using Joins</A>
+</H4>
+
+<P>
+The <tt class="method">select()</tt> allows you to select information from multiple tables. In order to do this you must specify the tables you wish to select from as a list or tuple and use the fully qualified column name for each table you want to column you want to select from.
+
+<P>
+For example:
+<div class="verbatim"><pre>
+&gt;&gt;&gt; rows = cursor.select(
+...     columns = ['table1.LastName', 'table2.Surname'],
+...     tables  = ['table1','table2'], 
+...     where   = "table1.Surname = table2.Surname",
+...     format  = 'dict',
+... )
+&gt;&gt;&gt; print rows[0]['table2.Surname']
+'Smith'
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.13 Cursor Abstraction Methods"
+  href="node59.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.13 Cursor Abstraction Methods"
+  href="node59.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13.2 Inserting Data"
+  href="node61.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node59.html">1.4.13 Cursor Abstraction Methods</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node59.html">1.4.13 Cursor Abstraction Methods</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node61.html">1.4.13.2 Inserting Data</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

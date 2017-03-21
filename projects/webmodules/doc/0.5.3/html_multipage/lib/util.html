@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="wsgi.html" />
+<link rel="prev" href="template.html" />
+<link rel="parent" href="web.html" />
+<link rel="next" href="example-command-web-util-table.html" />
+<meta name='aesop' content='information' />
+<title>1.13 web.util -- Useful utility functions that don't fit elsewhere</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.12.3 Dreamweaver MX"
+  href="example-file-web-template-dreamweaverMX.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.13.1 Creating Tables"
+  href="example-command-web-util-table.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-file-web-template-dreamweaverMX.html">1.12.3 Dreamweaver MX</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-util-table.html">1.13.1 Creating Tables</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0031300000000000000000"></A><A NAME="util"></A>
+<BR>
+1.13 <tt class="module">web.util</tt> -- Useful utility functions that don't fit elsewhere
+</H1>
+<A NAME="module-web.template"></A>
+
+<P>
+This module provides a number of functions which come in handy when programming web applications but that don't fit in elsewhere. It is a catch all module for useful leftovers.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-318' xml:id='l2h-318' class="function">wrap</tt></b>(</nobr></td>
+  <td><var><var>text</var>, <var>width</var></var>)</td></tr></table></dt>
+<dd>
+A word-wrap function that preserves existing line breaks and most spaces in the text. Expects that existing line breaks are posix newlines. (ie backslash n)
+<DL>
+<DT><STRONG><var>text</var></STRONG></DT>
+<DD>The text to wrap
+</DD>
+<DT><STRONG><var>width</var></STRONG></DT>
+<DD>The maximum number of characters in a line
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-319' xml:id='l2h-319' class="function">strip</tt></b>(</nobr></td>
+  <td><var><var>html</var>, </var><big>[</big><var>validTags=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Strip illegal HTML tags from string
+<DL>
+<DT><STRONG><var>html</var></STRONG></DT>
+<DD>The HTML which needs some tags stripping
+</DD>
+<DT><STRONG><var>validTags</var></STRONG></DT>
+<DD>A list or tuple of tags to leave in place
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-320' xml:id='l2h-320' class="function">runWebServer</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>root='../', cgi='/cgi-bin', </var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Run a simple webserver on port 8080 on localhost. The root of the website corresponds to the directory <var>root</var>. <var>cgi</var> is URL of the the cgi-bin where files can be executed. Once this command is run code execution stops as the webserver listens for requests so there is no point in writing code after this command as it will not be run.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+NOT SUITABLE FOR COMMERCIAL USE.</span>
+
+<P>
+<DL>
+<DT><STRONG><var>dir</var></STRONG></DT>
+<DD>The only directory where scripts are allowed to run. Directory names should be the full URL path from the root of the webserver and therefore should begin with <code>/</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="example-command-web-util-table.html">1.13.1 Creating Tables</a>
+<LI><A href="example-webserver-web-util-calendar.html">1.13.2 Calendar Tools</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.12.3 Dreamweaver MX"
+  href="example-file-web-template-dreamweaverMX.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.13.1 Creating Tables"
+  href="example-command-web-util-table.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-file-web-template-dreamweaverMX.html">1.12.3 Dreamweaver MX</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-util-table.html">1.13.1 Creating Tables</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

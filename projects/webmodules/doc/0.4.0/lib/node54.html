@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node55.html">
+<LINK REL="prev" href="example-command-web-database-object-simple.html">
+<LINK REL="parent" HREF="node52.html">
+<LINK REL="next" HREF="node55.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Using Alternative Keys">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.5.2.2 Using Alternative Keys</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.2.1 Full Code Listing" 
+  href="example-command-web-database-object-simple.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.2 Introductory Example" 
+  HREF="node52.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.2.3 Available Columns" 
+  HREF="node55.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-database-object-simple.html">1.5.2.1 Full Code Listing</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node52.html">1.5.2 Introductory Example</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node55.html">1.5.2.3 Available Columns</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003522000000000000000">
+1.5.2.2 Using Alternative Keys</A>
+</H3>
+
+<P>
+In the example above we could access John Smith's information as follows:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; row1 = database['Person'][1]
+&gt;&gt;&gt; row2 = database['Person'].row(1)
+</pre></div>
+
+<P>
+We could have defined the <code>surname</code> column differently and added it like this instead:
+
+<P>
+<div class="verbatim"><pre>
+person.addColumn(web.database.object.String(name="surname", unique=True, required=True, key=True))
+</pre></div>
+
+<P>
+This defines the surname as a unique, required field. <var>unique</var> means that there cannot be two people with the same surname in the database. If you try to add two people with the same name an Exception will be raised. <var>required</var> means that you must always enter a surname, although in out example, because <var>required</var> is not specified for the firstName column, you would not have to enter a firstName.
+
+<P>
+Specifying <var>key</var> as <code>True</code> for the surname tells the table that you want to be able to retrieve data from the database based on the surname column rather than the rowid. We can now try the following:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; row1 = database['Person']['Smith']
+&gt;&gt;&gt; row2 = database['Person'].row(1)
+&gt;&gt;&gt; print row1 == row2
+True
+</pre></div>
+
+<P>
+You can still access the information by rowid using the <tt class="method">row()</tt> method.
+
+<P>
+Any column can be specified as a key but there can only be one column in each table specified as a key. Any column specified as a key must also be specified as unique and required.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.2.1 Full Code Listing" 
+  rel="prev" title="1.5.2.1 Full Code Listing" 
+  href="example-command-web-database-object-simple.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.2 Introductory Example" 
+  rel="parent" title="1.5.2 Introductory Example" 
+  HREF="node52.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.2.3 Available Columns" 
+  rel="next" title="1.5.2.3 Available Columns" 
+  HREF="node55.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-database-object-simple.html">1.5.2.1 Full Code Listing</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node52.html">1.5.2 Introductory Example</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node55.html">1.5.2.3 Available Columns</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

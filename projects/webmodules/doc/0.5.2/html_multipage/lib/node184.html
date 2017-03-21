@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node185.html" />
+<link rel="prev" href="node183.html" />
+<link rel="parent" href="node179.html" />
+<link rel="next" href="node185.html" />
+<meta name='aesop' content='information' />
+<title>1.15.4.5 web.wsgi.error - Error Handling</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.4.4 web.wsgi.session - Session"
+  href="node183.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.4 The PythonWeb Middleware"
+  href="node179.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.4.6 web.wsgi.auth - User"
+  href="node185.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node183.html">1.15.4.4 web.wsgi.session - Session</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node179.html">1.15.4 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node185.html">1.15.4.6 web.wsgi.auth - User</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031545000000000000000">
+1.15.4.5 <tt class="module">web.wsgi.error</tt> - Error Handling</A>
+</H3>
+
+<P>
+Error handling middleware is designed to catch any exception which happened lower down the execution chain and handle the exception in an appropriate way. The WSGI server or <code>runCGI</code> application will handle any exception left uncaught, usually by displaying an HTML page with a message such as "Server Error 500" so error handling middleware is not essential.
+
+<P>
+The <tt class="module">web.wsgi.error</tt> module provides one class <code>Error</code> which does not alter the <code>environ</code> dictionary but does catch any exception and print an HTML display of the traceback information. It can be used like this:
+
+<P>
+<div class="verbatim"><pre>
+import web.wsgi.base, web.wsgi.error
+
+class Application(web.wsgi.base.BaseApplication):
+    def start(self):
+        raise Exception('Test error is caught and displayed')
+        
+application = web.wsgi.error.Error(
+    Application(),
+)
+</pre></div>
+
+<P>
+You can also create your own error handling class by deriving a middleware class from <code>web.wsgi.error.Error</code>. In this example a text traceback is displayed instead:
+
+<P>
+<div class="verbatim">
+<pre>from web.wsgi import *
+
+class simpleApp(base.BaseApplication):
+    def start(self):
+        raise Exception('Test Exception')
+
+class myError(error.Error):
+    def error(self):
+        "Generate an error report"
+        return (
+            '200 Error Handled', 
+            [('Content-type','text/html')], 
+            [web.error.info()]
+        )
+
+application = myError(
+    simpleApp(),
+)
+
+</pre>
+<div class="footer">
+<a href="wsgiError.txt" type="text/plain">Download as text (original file name: <span class="file">wsgiError.py</span>).</a>
+</div></div>
+
+<P>
+The <tt class="method">error</tt> method should return the values <code>status</code>, <code>headers</code>, <code>iterable</code>. 
+
+<P>
+You can test this example by running the WSGI server <span class="file">scripts/WSGIServer.py</span> and visiting <a class="url" href="http://localhost:8000/auth">http://localhost:8000/auth</a>
+<P>
+<span class="note"><b class="label">Note:</b>
+ We do not need the <code>#!/usr/bin/env python</code> line or modifications to <code>sys.path</code> for WSGI applications since the relevant objects are imported from the files, the files are not executed as scripts.</span>
+
+<P>
+Errors along the lines of the one shown below may be due to incorrectly formed headers with tuples of the wrong length and can be hard to track down. 
+
+<P>
+<div class="verbatim"><pre>
+ValueError: unpack list of wrong size
+      args = ('unpack list of wrong size',)
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.4.4 web.wsgi.session - Session"
+  href="node183.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.4 The PythonWeb Middleware"
+  href="node179.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.4.6 web.wsgi.auth - User"
+  href="node185.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node183.html">1.15.4.4 web.wsgi.session - Session</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node179.html">1.15.4 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node185.html">1.15.4.6 web.wsgi.auth - User</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

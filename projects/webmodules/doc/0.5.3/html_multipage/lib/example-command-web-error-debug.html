@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="example-webserver-web-error-mail.html" />
+<link rel="parent" href="module-web.error.html" />
+<link rel="next" href="module-web.environment.html" />
+<meta name='aesop' content='information' />
+<title>1.6.7 Debugging Code</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.6 Example"
+  href="example-webserver-web-error-mail.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.7 web.environment  "
+  href="module-web.environment.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-error-mail.html">1.6.6 Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.environment.html">1.7 web.environment  </A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003670000000000000000"></A><A NAME="example-command-web-error-debug"></A>
+<BR>
+1.6.7 Debugging Code
+</H2>
+
+<P>
+If you are using the <tt class="module">web.error</tt> module from a command line or supporting webserver such as <span class="file">scripts/webserver.py</span> in the source directory you can raise a <code>web.error.Breakpoint</code> Exception and it will be caught and provide a prompt from which you can debug your code.
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+
+import web.error; web.error.handle('debug')
+
+print "Setting value to 5"
+value = 5
+print "Raising a Breakpoint so you can inspect value"
+raise web.error.Breakpoint
+print "The program has exited so this will not be printed"</pre>
+<div class="footer">
+<a href="command-web-error-debug.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-error-debug.py</span>).</a>
+</div></div>
+
+<P>
+This code provides a prompt that can be used as follows:
+
+<P>
+<div class="verbatim"><pre>
+&gt; python "command-web-error-debug.py"
+Setting value to 5
+Raising a Breakpoint so you can inspect value
+&gt; y:\doc\src\lib\command-web-error-debug.py(11)?()
+-&gt; raise web.error.Breakpoint
+(Pdb) value
+5
+(Pdb) exit
+</pre></div>
+
+<P>
+The prompt uses the <tt class="module">pdb</tt> module. To exit the debugger type <code>exit</code> and press Return. Code after the <code>web.error.Breakpoint</code> Exception was raised is not executed.
+
+<P>
+<div class="seealso">
+  <p class="heading">See Also:</p>
+
+<P>
+The Python Debugger 
+    To find out more about the Python Debugger see the documentation for the <tt class="module">pdb</tt> module distributed with Python.
+
+<P>
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.6 Example"
+  href="example-webserver-web-error-mail.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.7 web.environment  "
+  href="module-web.environment.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-error-mail.html">1.6.6 Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.environment.html">1.7 web.environment  </A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

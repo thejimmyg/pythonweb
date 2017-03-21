@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node25.html" />
+<link rel="prev" href="node23.html" />
+<link rel="parent" href="node23.html" />
+<link rel="next" href="node25.html" />
+<meta name='aesop' content='information' />
+<title>1.2.7.1 AuthAdmin Object</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.7 API Reference"
+  href="node23.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.7 API Reference"
+  href="node23.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.7.2 AuthSession Object"
+  href="node25.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node23.html">1.2.7 API Reference</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node23.html">1.2.7 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node25.html">1.2.7.2 AuthSession Object</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003271000000000000000">
+1.2.7.1 AuthAdmin Object</A>
+</H3>
+
+<P>
+The <code>AuthAdmin</code> object is aliased as <code>web.auth.admin</code> and should be used as <code>web.auth.admin</code>.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-6' xml:id='l2h-6' class="class">AuthAdmin</tt></b>(</nobr></td>
+  <td><var><var>driver</var>, </var><big>[</big><var>autoCreate=0</var><big>]</big><var>, </var><big>[</big><var>encryption=None</var><big>]</big><var>, </var><big>[</big><var>**driverParams</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Auth Manager for creating modifying and removing users and applications.
+
+<P>
+<DL>
+<DT><STRONG><var>driver</var></STRONG></DT>
+<DD>The type of driver being used. Currently only <code>'database'</code> is allowed
+
+<P>
+</DD>
+<DT><STRONG><var>autoCreate</var></STRONG></DT>
+<DD>If set to <code>True</code> the necessary tables will be created (removing any existing tables) if any of the tables are missing and a user named <code>john</code> with a password <code>bananas</code> will be set up with an access level of <code>1</code> to the application <code>app</code>. This is designed for easy testing of the module.
+
+<P>
+</DD>
+<DT><STRONG><var>encryption</var></STRONG></DT>
+<DD>The encryption method used to encrypt the password. Can be <code>None</code> or <code>'md5'</code>. <code>Warning you cannot change the encryption method once a user is added without resetting the password.</code>
+
+<P>
+</DD>
+<DT><STRONG><var>**driverParams</var></STRONG></DT>
+<DD>Any parameters to be specified in the format <var>name=value</var> which are needed by the driver specified by <var>driver</var>
+
+<P>
+</DD>
+</DL>
+
+<P>
+<dl><dt><b><tt id='l2h-7' xml:id='l2h-7' class="member">autoCreated</tt></b></dt>
+<dd>
+Will be <code>True</code> if the tables and user were autoCreated, <code>False</code> otherwise.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-8' xml:id='l2h-8' class="member">enycryption</tt></b></dt>
+<dd>
+The encryption method used
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-9' xml:id='l2h-9' class="method">completeAuthEnvironment</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Returns <code>True</code> if the environment is correctly setup, <code>False</code> otherwise. In the case of the database driver this method simply checks that all the necessary tables exist.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-10' xml:id='l2h-10' class="method">createAuthEnvironment</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Creates the necessary environment. In the case of the database driver this method creates all the required tables. If any of the tables already exist an <code>AuthError</code> is raised.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-11' xml:id='l2h-11' class="method">removeAuthEnvironment</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>ignoreErrors=False</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Removes the environment. In the case of the database driver this method drops all the tables. If any of the tables are not present an <code>AuthError</code> is raised unless <var>ignoreErrors</var> is <code>True</code>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-12' xml:id='l2h-12' class="method">apps</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Return a list of application names.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-13' xml:id='l2h-13' class="method">appExists</tt></b>(</nobr></td>
+  <td><var><var>app</var></var>)</td></tr></table></dt>
+<dd>
+Return <code>True</code> if there is an application named <var>app</var>, <code>False</code> otherwise.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-14' xml:id='l2h-14' class="method">addApp</tt></b>(</nobr></td>
+  <td><var><var>app</var></var>)</td></tr></table></dt>
+<dd>
+Adds an application named <var>app</var>.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-15' xml:id='l2h-15' class="method">removeApp</tt></b>(</nobr></td>
+  <td><var><var>app</var>,</var><big>[</big><var>force=0</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Remove the application named <var>app</var>. If <var>force=1</var>, the application is removed even if access levels or roles are specified for users using the application.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-16' xml:id='l2h-16' class="method">user</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Return an <code>AuthUser</code> object for the user specified.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-17' xml:id='l2h-17' class="method">users</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>group=[]</var><big>]</big><var>, </var><big>[</big><var>active=None</var><big>]</big><var>, </var><big>[</big><var>app=None</var><big>]</big><var>, </var><big>[</big><var>role=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Return a list of usernames.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-18' xml:id='l2h-18' class="method">userExists</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Returns <code>True</code> if there is a user with the username <var>username</var>, <code>False</code> otherwise.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-19' xml:id='l2h-19' class="method">addUser</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>password</var></var><big>[</big><var>,firstname=''</var><big>]</big><var></var><big>[</big><var>,surname=''</var><big>]</big><var></var><big>[</big><var>email=''</var><big>]</big><var>, </var><big>[</big><var>active=1</var><big>]</big><var>, </var><big>[</big><var>group=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Adds a user with the username <var>username</var> and password <var>password</var> to the system. You can optionally also specify the firstname, surname and email address of the user. You can choose a group for the user and whether or not the user is active. If encryption is used the password is encrypted.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-20' xml:id='l2h-20' class="method">removeUser</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Removes the user with the username <var>username</var>.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-21' xml:id='l2h-21' class="method">levels</tt></b>(</nobr></td>
+  <td><var><var>username</var>, </var><big>[</big><var>app=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns the access level of the user <var>username</var> for the application named <var>app</var>. If <var>app</var> is not specified or <code>None</code>, a dictionary of application name, access level pairs is returned.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-22' xml:id='l2h-22' class="method">setLevel</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>app</var>, <var>level</var></var>)</td></tr></table></dt>
+<dd>
+Sets the access level of the user <var>username</var> for the application named <var>app</var> to <var>level</var>.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-23' xml:id='l2h-23' class="method">roles</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>username=None</var><big>]</big><var>, </var><big>[</big><var>app=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns the roles based on the options specified. If <var>username</var> and <var>app</var> are not specified, the available roles are returned as a sequence. If <var>username</var> is specified, a dictionary of application namd role pairs are returned for that user, if <var>username</var> and <var>app</var> are both specified, the roles for the particular user and application are returned.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-24' xml:id='l2h-24' class="method">roleExists</tt></b>(</nobr></td>
+  <td><var><var>role</var></var>)</td></tr></table></dt>
+<dd>
+Returns <code>True</code> if there is a role named <var>role</var>, <code>False</code> otherwise.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-25' xml:id='l2h-25' class="method">addRole</tt></b>(</nobr></td>
+  <td><var><var>role</var></var>)</td></tr></table></dt>
+<dd>
+Adds the new role <var>role</var> to the database. If it already exists an <code>AuthError</code> is raised.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-26' xml:id='l2h-26' class="method">removeRole</tt></b>(</nobr></td>
+  <td><var><var>role</var>, </var><big>[</big><var>force=0</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Remove the role named <var>role</var>. If <var>force=1</var>, the role is removed even if it is being used by any users.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-27' xml:id='l2h-27' class="method">setRole</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>app</var>, <var>role</var></var>)</td></tr></table></dt>
+<dd>
+Give the role <var>role</var> to the user <var>username</var> for the application <var>app</var>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-28' xml:id='l2h-28' class="method">setRole</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>app</var>, <var>role</var></var>)</td></tr></table></dt>
+<dd>
+Remove the role <var>role</var> from the user <var>username</var> for the application <var>app</var>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-29' xml:id='l2h-29' class="method">groups</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Returns a sequence of available group names
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-30' xml:id='l2h-30' class="method">groupExists</tt></b>(</nobr></td>
+  <td><var><var>group</var></var>)</td></tr></table></dt>
+<dd>
+Returns <code>True</code> if there is a group named <var>group</var>, <code>False</code> otherwise. <code>None</code> is a valid group since a user can have no group.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-31' xml:id='l2h-31' class="method">addGroup</tt></b>(</nobr></td>
+  <td><var><var>group</var></var>)</td></tr></table></dt>
+<dd>
+Adds the new group <var>group</var> to the database. If it already exists an <code>AuthError</code> is raised.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-32' xml:id='l2h-32' class="method">removeGroup</tt></b>(</nobr></td>
+  <td><var><var>group</var>, </var><big>[</big><var>force=0</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Remove the group named <var>group</var>. If <var>force=1</var>, the group is removed even if it is being used by any users.
+</dl>
+
+<P>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.7 API Reference"
+  href="node23.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.7 API Reference"
+  href="node23.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.7.2 AuthSession Object"
+  href="node25.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node23.html">1.2.7 API Reference</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node23.html">1.2.7 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node25.html">1.2.7.2 AuthSession Object</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

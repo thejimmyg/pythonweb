@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node178.html" />
+<link rel="prev" href="node170.html" />
+<link rel="parent" href="wsgi.html" />
+<link rel="next" href="node178.html" />
+<meta name='aesop' content='information' />
+<title>1.15.2 Writing Applications</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.1.6 The runCGI() Method"
+  href="node176.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15 web.wsgi  "
+  href="wsgi.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.3 Writing Middleware"
+  href="node178.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node176.html">1.15.1.6 The runCGI() Method</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="wsgi.html">1.15 web.wsgi  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node178.html">1.15.3 Writing Middleware</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031520000000000000000">
+1.15.2 Writing Applications</A>
+</H2>
+
+<P>
+It can be slightly complicated to write your own WSGI applications so the <tt class="module">web.wsgi.base</tt> provides a  sample class from which you can derive your own application class. The class has the following API:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-329' xml:id='l2h-329' class="class">BaseApplication</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>status='200 OK'</var><big>]</big><var>, </var><big>[</big><var>headers=[('Content-type','text/html')]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+The class defines the following attributes:
+
+<P>
+<dl><dt><b><tt id='l2h-330' xml:id='l2h-330' class="member">environ</tt></b></dt>
+<dd>
+A dictionary of environment variables similar to <code>os.environ</code> but also containing entries from the WSGI server and any middleware being used. The <code>environ</code> dictionary is the main way your application will have access to the environment. You should not need to change <code>environ</code>.
+</dl>
+<dl><dt><b><tt id='l2h-331' xml:id='l2h-331' class="member">status</tt></b></dt>
+<dd>
+A string of the form <code>'error_code messgae'</code> which can be used to set the HTTP status code of the application. For example <code>'200 OK'</code> for a normal application, <code>'500 Error'</code> if there was a server error.
+</dl>
+<dl><dt><b><tt id='l2h-332' xml:id='l2h-332' class="member">headers</tt></b></dt>
+<dd>
+A list of <code>(field-name, field-value)</code> tuples suitable for use in the WSGI <tt class="function">start_response</tt> function. Any headers your application needs to send should be specified by this list in the order they should be sent. <span class="note"><b class="label">Note:</b>
+ The default value of the <code>headers</code> attribute is set to be <code>[('Content-type','text/html')]</code> in the class constructor, so if you do not want this HTTP header you should set a different value in the constrcutor or in your application. </span>
+
+<P>
+The <code>(field-name, field-value)</code> format could be easily made into HTTP header messages suitable for direct printing:
+
+<P>
+<div class="verbatim"><pre>
+messages = []
+for header in self.headers:
+    messages.append("%s: %s"%header)
+</pre></div>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+ WSGI applications and middleware should not normally use the <code>print</code> statement in the same way as in CGI scripts. Instead strings should be sent to the <tt class="method">output()</tt> method where they will be returned at the end of execution of the class in accordance with the WSGI specification.</span>
+
+<P>
+</dl>
+<dl><dt><b><tt id='l2h-333' xml:id='l2h-333' class="member">_output</tt></b></dt>
+<dd>
+A list of strings to be returned at the end of the application. The class defines the <tt class="method">output()</tt> method which is used to directly append strings to <code>_output</code> so there should be no need to access <code>_output</code> directly.
+</dl>
+
+<P>
+The class defines the following methods:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-334' xml:id='l2h-334' class="method">start</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+This method should be over-ridden in derived classes to provide your application's functionality.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-335' xml:id='l2h-335' class="method">output</tt></b>(</nobr></td>
+  <td><var><var>*text</var></var>)</td></tr></table></dt>
+<dd>
+Takes one or more strings and appends them to the <code>_output</code> attribute when they will be returned at the end of program execution to display the program output. For example:
+
+<P>
+<div class="verbatim"><pre>
+self.output('one')
+self.output('one', 'two')
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ If the values are not strings, they are convertes to strings using the builtin function <tt class="function">str()</tt>.</span>
+
+<P>
+</dl>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-336' xml:id='l2h-336' class="method">__call__</tt></b>(</nobr></td>
+  <td><var><var>environ</var>, <var>start_response</var></var>)</td></tr></table></dt>
+<dd>
+You should not need to modify this method but is documented here for a complete understanding as it provides the functionality which makes derived classes WSGI applications. This method sets up the <code>environ</code> attribute and calls <tt class="method">start()</tt>. Once <tt class="method">start()</tt> returns, it calls <tt class="function">start_response(self.status, self.headers)</tt> to set the status and headers and returns <code>self._output</code>.
+</dl>
+
+<P>
+</dl>
+
+<P>
+To create the <code>'Hello World!'</code> example used at the start of the documentation with the <code>BaseApplication</code> class we could do the following:
+
+<P>
+<div class="verbatim"><pre>
+import web.wsgi.base
+
+class Application(web.wsgi.base.BaseApplication):
+    def start(self):
+        self.output('Hello World!')
+        
+application = Application()
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ In this example we have used a class instance as the application whereas we previously used a function definition. Class instances must be initialised.</span>
+
+<P>
+To use different HTTP headers we could do the following:
+
+<P>
+<div class="verbatim"><pre>
+application = Application(headers=[('Content-type','text/plain')])
+</pre></div>
+
+<P>
+For application to always be treated as having failed we could set the status to <code>'500 Error'</code>
+
+<P>
+<div class="verbatim"><pre>
+application = Application(status='500 Error')
+</pre></div>
+
+<P>
+To allow be able to set the text of the <code>'Hello World!'</code> message from the class constructor we need to modify the class:
+
+<P>
+<div class="verbatim"><pre>
+import web.wsgi.base
+
+class Application(web.wsgi.base.BaseApplication):
+
+    def __init__(self, status='200 OK', headers=[('Content-type','text/html'), text='Hello World!']):
+        self.text = text
+        web.wsgi.base.BaseApplication.__init__(self, status, headers)
+    
+    def start(self):
+        self.output(self.text)
+        
+application = Application(text='Hello World Again!')
+</pre></div>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+ When deriving your own classes it is important you do not accidently over-write any of the attributes or methods of the base class, otherwise your class may not function as you intended.</span>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.1.6 The runCGI() Method"
+  href="node176.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15 web.wsgi  "
+  href="wsgi.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.3 Writing Middleware"
+  href="node178.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node176.html">1.15.1.6 The runCGI() Method</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="wsgi.html">1.15 web.wsgi  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node178.html">1.15.3 Writing Middleware</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

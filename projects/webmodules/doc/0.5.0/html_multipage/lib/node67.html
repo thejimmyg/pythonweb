@@ -1,0 +1,613 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node68.html" />
+<link rel="prev" href="node66.html" />
+<link rel="parent" href="node64.html" />
+<link rel="next" href="node68.html" />
+<meta name='aesop' content='information' />
+<title>1.4.13.3 Cursor Objects</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.13.2 Connection Objects"
+  href="node66.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.13 API Reference"
+  href="node64.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13.4 Table Objects"
+  href="node68.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node66.html">1.4.13.2 Connection Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node64.html">1.4.13 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node68.html">1.4.13.4 Table Objects</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node67.html#SECTION0034133100000000000000">1.4.13.3.1 Execute SQL</a>
+<LI><A href="node67.html#SECTION0034133200000000000000">1.4.13.3.2 Fetch Results</a>
+<LI><A href="node67.html#SECTION0034133300000000000000">1.4.13.3.3 Cursor Abstraction Methods</a>
+<LI><A href="node67.html#SECTION0034133400000000000000">1.4.13.3.4 Helper Methods</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+<HR>
+
+<H3><A NAME="SECTION0034133000000000000000">
+1.4.13.3 Cursor Objects</A>
+</H3>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-87' xml:id='l2h-87' class="method">close</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Close the cursor now (rather than whenever __del__ is called).  The cursor will be unusable from this point forward; an Error (or subclass) exception will be raised if any operation is attempted with the cursor.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-88' xml:id='l2h-88' class="method">export</tt></b>(</nobr></td>
+  <td><var><var>tables</var>, </var><big>[</big><var>includeCreate=True</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Export the tables specified by <var>tables</var> as portable SQL including statements to create the tables if <var>includeCreate</var> is <code>True</code>.
+
+<P>
+Importing the SQL is then simply a matter of executing the SQL. Here is an example:
+
+<P>
+<div class="verbatim"><pre>
+backup = cursor.export(tables=['testTable'])
+cursor.drop(table='testTable')
+for sql in backup.split('\n'):
+    cursor.execute(sql, mode='portable')
+</pre></div>
+
+<P>
+The <code>testTable</code> should be exactly the same as it was before the code was executed.
+</dl>
+
+<P>
+<code>Cursor</code> objects have the following attributes:
+
+<P>
+<dl><dt><b><tt id='l2h-89' xml:id='l2h-89' class="member">connection</tt></b></dt>
+<dd>
+This read-only attribute return a reference to the Connection object on which the cursor was created. The attribute simplifies writing polymorph code in multi-connection environments.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-90' xml:id='l2h-90' class="member">info</tt></b></dt>
+<dd>
+A list of <code>Column</code> objects for in the order of the fields from the last <code>SELECT</code> or <code>None</code> if the last SQL operation was not a <code>SELECT</code>. <code>Column</code> objects contain all the information about a particular field and provide conversion methods for that field.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-91' xml:id='l2h-91' class="member">baseCursor</tt></b></dt>
+<dd>    
+The DB-API 2.0 <code>Cursor</code> object
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-92' xml:id='l2h-92' class="member">sql</tt></b></dt>
+<dd>    
+A list of tuples of parameters passed to the <tt class="method">execute()</tt> methods
+</dl>
+
+<P>
+
+<H4><A NAME="SECTION0034133100000000000000">
+1.4.13.3.1 Execute SQL</A>
+</H4>
+
+<P>
+<tt class="module">web.database</tt> compliant databases support qmark style parameters for substitutions as follows:
+
+<P>
+<div class="verbatim"><pre>
+cursor.execute('SELECT * FROM Test WHERE columnName=?',['textEntry'])
+</pre></div>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-93' xml:id='l2h-93' class="method">execute</tt></b>(</nobr></td>
+  <td><var><var>sql</var></var><big>[</big><var>, parameters</var><big>]</big><var></var><big>[</big><var>,mode</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Prepare and execute a database operation. Parameters are provided as a sequence and will be bound to <code>?</code> variables in the operation. <var>mode</var> can be <code>'direct'</code> to pass the parameters to the underlying DB-API 2.0 cursor or <code>'portable'</code> to execute the code in a portable fashion.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-94' xml:id='l2h-94' class="method">executemany</tt></b>(</nobr></td>
+  <td><var><var>sql</var>, <var>manyParameters</var></var><big>[</big><var>,mode</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Similar to <tt class="method">execute()</tt> but the operation is executed for each sequence in <var>manyParameters</var>.
+</dl>
+
+<P>
+
+<H4><A NAME="SECTION0034133200000000000000">
+1.4.13.3.2 Fetch Results</A>
+</H4>
+
+<P>
+All these methods take the parameters <var>format</var> and <var>convert</var>. If they are not specified the values set in the <tt class="method">cursor()</tt> method of the <code>Connection</code> object is used. 
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-95' xml:id='l2h-95' class="method">fetchone</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>format</var><big>]</big><var>,</var><big>[</big><var>convert</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Fetch the next row of a query result set, returning a single sequence, or None when no more data is available. [6]
+
+<P>
+An Error (or subclass) exception is raised if the previous call to executeXXX() did not produce any result set or no call was issued yet.
+
+<P>
+<DL>
+<DT><STRONG><var>format</var></STRONG></DT>
+<DD>The format of the results returned. Can be <code>'dict'</code> to return them as a tuple of dictionary objects, <code>'tuple'</code> to return them as a tuple of tuples, <code>'object'</code> to return them as a tuple of <code>dtuple</code> objects which can be treated as a tuple or a dictionary (or via attribute access for the majority of column names) or <code>'text'</code> to return tables designed to be displayed in a terminal 80 characters wide. If not specified takes the value specified in the cursor which by default is <code>'tuple'</code>
+
+<P>
+</DD>
+<DT><STRONG><var>convert</var></STRONG></DT>
+<DD>Can be <code>True</code> to convert the results to the correct types, <code>False</code> to leave the results as they are returned from the base cursor. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-96' xml:id='l2h-96' class="method">fetchall</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>format</var><big>]</big><var>,</var><big>[</big><var>convert</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Fetch all (remaining) rows of a query result, returning them as a sequence of sequences (e.g. a list of tuples). 
+
+<P>
+An Error (or subclass) exception is raised if the previous call to an <tt class="method">execute()</tt> method did not produce any result set or no call was issued yet.
+
+<P>
+The values <var>format</var> and <var>convert</var> are as specified in <tt class="method">fetchone()</tt>
+</dl>
+
+<P>
+
+<H4><A NAME="SECTION0034133300000000000000">
+1.4.13.3.3 Cursor Abstraction Methods</A>
+</H4>
+
+<P>
+It is assumed that if <var>execute</var> is <code>True</code> in the following methods then you wish to be executing the code in portable mode, otherwise it is unlikely you would be using abstraction methods.
+
+<P>
+If you did wish to execute code in direct mode (through the DB-API 2.0 cursor) you could do the following:
+
+<P>
+<div class="verbatim"><pre>
+sql = cusror.select(columns=['*'], tables=['table'], execute=False)
+cursor.execute(sql, mode='direct')
+</pre></div>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+It is possible to get the cursor abstraction methods to perform operations they were not designed for. For example, in <code>cursor.select()</code> you could specify one of the columns as <code>'AVG(columnName)'</code>. This would produce an SQL statement which would return the mean value of the column <code>columnName</code> on some databases but certainly not on all and therefore breaks the specification which states that columns should be a list of column names. To ensure database portability please stick to the published API.</span>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-97' xml:id='l2h-97' class="method">select</tt></b>(</nobr></td>
+  <td><var><var>tables</var>, <var>columns</var>, </var><big>[</big><var>values=[], </var><big>]</big><var></var><big>[</big><var>where=None, </var><big>]</big><var></var><big>[</big><var>order=None, </var><big>]</big><var></var><big>[</big><var>execute=None, </var><big>]</big><var></var><big>[</big><var>fetch=None, </var><big>]</big><var></var><big>[</big><var>**params</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+Build an SQL string according to the options specified and optionally execute the SQL and return the results in the format specified. No error checking on field names if the SQL string is only being built. Strict error checking is only performed when executing the code.
+
+<P>
+<DL>
+<DT><STRONG><var>tables</var></STRONG></DT>
+<DD>A string containing the name of the table to select from or if selecting from multiple tables, a sequence of table names.
+</DD>
+<DT><STRONG><var>columns</var></STRONG></DT>
+<DD>A sequence of column names to select. Can be a string if only one column is being selected. If selecting from multiple tables, all column names should be in the form <code>'tableName.columnName'</code>
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A list of values to substitute for <code>?</code> in the <code>WHERE</code> clause specified by <var>where</var>.
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>The WHERE clause as a <tt class="module">web.database</tt>  list as returned by <code>cursor.where()</code>. If <var>where</var> is a string it is converted to the correct format.
+</DD>
+<DT><STRONG><var>order</var></STRONG></DT>
+<DD>The ORDER BY clause as a <tt class="module">web.database</tt>  list as returned by <code>cursor.order()</code>. If <var>order</var> is a string it is converted to the correct format.
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>If <code>False</code> the method returns the SQL string needed to perform the desired operations. If <code>True</code> the SQL is executed and the results converted and returned in the appropriate form. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+<DT><STRONG><var>fetch</var></STRONG></DT>
+<DD>Whether or not to fetch the results. If <code>True</code> and <var>execute</var> is not specified <var>execute</var> is set to <code>True</code>. If <code>True</code> and <var>execute</var> <code>False</code> an error is raised.
+</DD>
+<DT><STRONG><var>**params</var></STRONG></DT>
+<DD>The parameters to be passed to the <tt class="method">fetchall()</tt> method if <var>fetch</var> is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-98' xml:id='l2h-98' class="method">insert</tt></b>(</nobr></td>
+  <td><var><var>table</var>, <var>columns</var>, <var>values</var>, <var>sqlValues</var>, </var><big>[</big><var>execute</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Insert values into the columns in table. Either <var>values</var> or <var>sqlValues</var> can be specified but not both.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table to insert into
+</DD>
+<DT><STRONG><var>columns</var></STRONG></DT>
+<DD>A sequence of column names in the same order as the values which are going to be inserted into those columns. Can be a string if only one column is going to have values inserted
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A sequence of Python values to be inserted into the columns named in the <var>columns</var> variable. Can be the value rather than a list if there is only one value. If <var>values</var> is specified then <var>sqlValues</var> must be either an empty sequence or contain a list of all quoted SQL strings for the columns specified in which case <var>values</var> contains the Python values of the SQL strings to be substituted for <code>?</code> parameters in the <var>sqlValues</var> sequence.
+</DD>
+<DT><STRONG><var>sqlValues</var></STRONG></DT>
+<DD>A sequence of quoted SQL strings to be inserted into the columns named in the <var>columns</var> variable. Can be the value rather than a list if there is only one value. If <var>sqlValues</var> is specified and contains <code>?</code> parameters for substitution then <var>values</var> contains the values to be substituted. Otherwise <var>values</var> must be an empty sequence.
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>If <code>False</code> the method returns the SQL string to perform the desired operations. If <code>True</code> the SQL is executed. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-99' xml:id='l2h-99' class="method">insertMany</tt></b>(</nobr></td>
+  <td><var><var>table</var>, <var>columns</var>, <var>values</var>, <var>sqlValues</var>, </var><big>[</big><var>execute</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Same as <tt class="method">insert()</tt> except that <var>values</var> or <var>sqlValues</var> contain a sequence of sequences of values to be inserted.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-100' xml:id='l2h-100' class="method">update</tt></b>(</nobr></td>
+  <td><var> <var>table</var>, <var>columns</var>, <var>values</var>, <var>sqlValues</var> </var><big>[</big><var>, where</var><big>]</big><var> </var><big>[</big><var>, execute</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Update the columns in table with the values. Either <var>values</var> or <var>sqlValues</var> can be specified but not both.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>A string containing the name of the table to update
+</DD>
+<DT><STRONG><var>columns</var></STRONG></DT>
+<DD>A sequence of column names in the same order as the values which are going to be updated in those columns. Can be a string if only one column is going to have values inserted
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A sequence of Python values to be inserted into the columns named in the <var>columns</var> variable. Can be the value rather than a list if there is only one value. If <var>values</var> is specified then <var>sqlValues</var> must be either an empty sequence or contain a list of all quoted SQL strings for the columns specified in which case <var>values</var> contains the Python values of the SQL strings to be substituted for <code>?</code> parameters in the <var>sqlValues</var> sequence. If there are more values specified in <var>values</var> than <var>sqlValues</var> the remaining values are used to substitute for <code>?</code> parameters in <var>where</var>.
+</DD>
+<DT><STRONG><var>sqlValues</var></STRONG></DT>
+<DD>A sequence of quoted SQL strings to be inserted into the columns named in the <var>columns</var> variable. Can be the value rather than a list if there is only one value. If <var>sqlValues</var> is specified and contains <code>?</code> parameters for substitution then <var>values</var> contains the values to be substituted. Otherwise <var>values</var> must be an empty sequence.
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>The WHERE clause as a <tt class="module">web.database</tt>  list as returned by <code>cursor.where()</code>. If <var>where</var> is a string it is converted to the correct format.
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>If <code>False</code> the method returns the SQL string to perform the desired operations. If <code>True</code> the SQL is executed. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-101' xml:id='l2h-101' class="method">delete</tt></b>(</nobr></td>
+  <td><var> <var>table</var>, </var><big>[</big><var>values=[]</var><big>]</big><var></var><big>[</big><var>, where</var><big>]</big><var> </var><big>[</big><var>, execute</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Delete records from the table according to <var>where</var>.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>A string containing the name of the table to select from or if selecting from multiple tables, a sequence of table names.
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A list of values to substitute for <code>?</code> in the <code>WHERE</code> clause specified by <var>where</var>.
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>The WHERE clause as a <tt class="module">web.database</tt>  list as returned by <code>cursor.where()</code>. If <var>where</var> is a string it is converted to the correct format.
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>If <code>False</code> the method returns the SQL string to perform the desired operations. If <code>True</code> the SQL is executed. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-102' xml:id='l2h-102' class="method">create</tt></b>(</nobr></td>
+  <td><var> <var>table</var>, <var>columns</var> </var><big>[</big><var>, values=[]</var><big>]</big><var> </var><big>[</big><var>, execute</var><big>]</big><var> </var>)</td></tr></table></dt>
+<dd>
+<P>
+Create table with fields specified by fields. fields is a tuple of field tuples which can be obtained as follows:
+<div class="verbatim"><pre>
+columns = [
+    cursor.column( field options... ),
+    cursor.column( field options... ),
+    cursor.column( field options... ),
+    cursor.column( field options... ),
+]
+</pre></div>
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The table name as a string. 
+</DD>
+<DT><STRONG><var>columns</var></STRONG></DT>
+<DD>A sequence of field tuples returned by <code>cursor.column()</code>
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A sequence of values to substitute for default values in the columns
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>If <code>False</code> the method returns the SQL string to perform the desired operations. If <code>True</code> the SQL is executed. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-103' xml:id='l2h-103' class="method">drop</tt></b>(</nobr></td>
+  <td><var> <var>table</var></var><big>[</big><var>, execute</var><big>]</big><var> </var>)</td></tr></table></dt>
+<dd>
+Remove a table
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>A string containing the name of the table to drop.
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>If <code>False</code> the method returns the SQL string to perform the desired operations. If <code>True</code> the SQL is executed. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-104' xml:id='l2h-104' class="method">_function</tt></b>(</nobr></td>
+  <td><var><var>function</var>, <var>table</var>, <var>column</var>, </var><big>[</big><var>,where=None</var><big>]</big><var></var><big>[</big><var>, values=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns the result of applying the specified function to the field
+<DL>
+<DT><STRONG><var>function</var></STRONG></DT>
+<DD>The function to be applied, can be <code>'max'</code>, <code>'min'</code>, <code>'sum'</code> or <code>'count'</code>
+</DD>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table
+</DD>
+<DT><STRONG><var>column</var></STRONG></DT>
+<DD>The name of the field
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>An optional where clause
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A list of values to substitute for <code>?</code> parameters in the <code>WHERE</code> clause
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-105' xml:id='l2h-105' class="method">max</tt></b>(</nobr></td>
+  <td><var><var>table</var>, <var>column</var> </var><big>[</big><var>,where=None</var><big>]</big><var></var><big>[</big><var>,values=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns the highest value of the column.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table
+</DD>
+<DT><STRONG><var>column</var></STRONG></DT>
+<DD>The name of the column
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>An optional where clause
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>Values to substitute for <code>?</code> parameters in the where clause.
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-106' xml:id='l2h-106' class="method">min</tt></b>(</nobr></td>
+  <td><var><var>table</var>, <var>column</var> </var><big>[</big><var>,where=None</var><big>]</big><var></var><big>[</big><var>,values=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns the lowest value of the column.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table
+</DD>
+<DT><STRONG><var>column</var></STRONG></DT>
+<DD>The name of the column
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>An optional where clause
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>Values to substitute for <code>?</code> parameters in the where clause.
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-107' xml:id='l2h-107' class="method">count</tt></b>(</nobr></td>
+  <td><var><var>table</var>, <var>column</var> </var><big>[</big><var>,where=None</var><big>]</big><var></var><big>[</big><var>,values=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Count the number of rows in the table matching <var>where</var>. If <var>where</var> is not specified, count all rows.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table
+</DD>
+<DT><STRONG><var>column</var></STRONG></DT>
+<DD>The name of the column
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>An optional where clause
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>Values to substitute for <code>?</code> parameters in the where clause.
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<H4><A NAME="SECTION0034133400000000000000">
+1.4.13.3.4 Helper Methods</A>
+</H4>
+
+<P>
+Helper methods build the data structures which should be passed to the <code>Cursor</code> abstraction methods.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-108' xml:id='l2h-108' class="method">column</tt></b>(</nobr></td>
+  <td><var><var>name</var>, <var>type</var></var><big>[</big><var>, required=0</var><big>]</big><var></var><big>[</big><var>, unique=0</var><big>]</big><var></var><big>[</big><var>, primaryKey=0</var><big>]</big><var></var><big>[</big><var>, foreignKey=None</var><big>]</big><var></var><big>[</big><var>, default=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Return a column tuple suitable for use in the columns tuple used in the <tt class="method">create()</tt> method. 
+
+<P>
+<code>Bool</code>, <code>Float</code>, <code>Binary</code> and <code>Text</code> columns cannot be used as primary keys or unique columns. <code>Binary</code> and <code>Text</code> columns cannot have default values.
+
+<P>
+<DL>
+<DT><STRONG><var>name</var></STRONG></DT>
+<DD>The name of the field as a string.
+</DD>
+<DT><STRONG><var>type</var></STRONG></DT>
+<DD>The field type. This can take one of the values: <code>'Bool'</code>, <code>'String'</code>, <code>'Text'</code>, <code>'Binary'</code>, <code>'Long'</code>, <code>'Integer'</code>, <code>'Float'</code>, <code>'Date'</code>, <code>'Time'</code>, <code>'Datetime'</code>
+</DD>
+<DT><STRONG><var>required</var></STRONG></DT>
+<DD>Whether or not the field is required. Setting to <code>True</code> means the field cannot have <code>NULL</code> values.
+</DD>
+<DT><STRONG><var>unique</var></STRONG></DT>
+<DD>Set to <code>True</code> if the value must be unique. Two fields in the column cannot have the same value unless that value is NULL
+</DD>
+<DT><STRONG><var>primaryKey</var></STRONG></DT>
+<DD>The field is to be used as a primary key, the field has the same behaviour as being unique and required but no default value can be set
+</DD>
+<DT><STRONG><var>foreignKey</var></STRONG></DT>
+<DD>The field is to be used as a foreign key, the value should be the name of the table for which this is a child table. <span class="note"><b class="label">Note:</b>
+There is no need to specify the column name as tables can only have one primary key.</span>
+</DD>
+<DT><STRONG><var>default</var></STRONG></DT>
+<DD>The default value for the field to be set to. If not specified the default is NULL 
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-109' xml:id='l2h-109' class="method">where</tt></b>(</nobr></td>
+  <td><var><var>where</var>, </var><big>[</big><var>values=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Return a parsed <code>WHERE</code> clause suitable for use in the <tt class="method">select()</tt>, <tt class="method">update()</tt> and <tt class="method">delete()</tt> methods of the <code>cursor</code> object.
+<DL>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>A string containing the <code>WHERE</code> clause. Can include the <code>LIKE</code> operator which is used as follows:
+
+<P>
+<div class="verbatim"><pre>
+WHERE columnName LIKE %s1%s2%s
+</pre></div>
+
+<P>
+Every % sign is matched against zero or more characters.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ <var>where</var> should not include the string <code>'WHERE'</code> at the beginning.</span>
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A list of values to substitute for <code>?</code> parameters in the <code>WHERE</code> clause
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-110' xml:id='l2h-110' class="method">order</tt></b>(</nobr></td>
+  <td><var><var>order</var></var>)</td></tr></table></dt>
+<dd>
+Return a parsed <code>ORDER BY</code> clause suitable for use in the <tt class="method">select()</tt> method of the <code>cursor</code> object.
+<DL>
+<DT><STRONG><var>order</var></STRONG></DT>
+<DD>A string containing the <code>ORDER BY</code> clause. <span class="note"><b class="label">Note:</b>
+ <var>order</var> should not include the string <code>'ORDER BY'</code> at the beginning.</span>
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.13.2 Connection Objects"
+  href="node66.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.13 API Reference"
+  href="node64.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13.4 Table Objects"
+  href="node68.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node66.html">1.4.13.2 Connection Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node64.html">1.4.13 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node68.html">1.4.13.4 Table Objects</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

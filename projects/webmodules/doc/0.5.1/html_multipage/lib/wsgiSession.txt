@@ -1,0 +1,74 @@
+from web.wsgi import *
+
+class simpleApp(base.BaseApplication):
+
+    def printPage(self, title, url, link, url2, link2, data):
+        self.output("""
+            <html>
+            <h1>%s</h1>
+            <p><a href="%s">%s</a></p>
+            <p><a href="%s">%s</a></p>
+            <p>%s</p>
+            </html>"""%(title, url, link, url2, link2, data)
+        )
+    def start(self):
+        # Write a simple application
+        if not self.environ['web.session.manager'].created:
+            if self.environ['web.cgi'].has_key('destroy') and self.environ['web.cgi']['destroy'].value == 'True':
+                self.environ['web.session.manager'].destroy(ignoreWarning=True, sendCookieHeaders=False) 
+                self.headers.append(self.environ['web.session.manager'].response_headers[-1])
+                self.printPage(
+                    'Session Destroyed', 
+                    self.environ['SCRIPT_NAME'], 
+                    'Start Again', '','',''
+                )
+            else:
+                self.environ['web.session.manager'].setExpire(self.environ['web.session.manager'].expireTime+5)
+                self.environ['web.session.manager'].setCookie()
+                self.headers.append(self.environ['web.session.manager'].response_headers[-1])
+                data = []
+                data.append('SessionID:  ' +self.environ['web.session.manager'].sessionID)
+                data.append('Store Keys: '+str(self.environ['web.session.store'].keys()))
+                data.append('Store App:  '+self.environ['web.session.store'].app)
+                data.append('Variable1:  '+str(self.environ['web.session.store']['Variable1']))
+                data.append('ExpireTime: '+str(self.environ['web.session.manager'].expireTime))
+                self.printPage(
+                    'Welcome back', 
+                    self.environ['SCRIPT_NAME'], 
+                    'Visit Again', 
+                    self.environ['SCRIPT_NAME']+'?destroy=True', 
+                    'Destroy Session', '<p>Every time you visit this page the expiry time increases 5 seconds</p>'+
+                    '</p><p>'.join(data)
+                )
+        else:
+            self.environ['web.session.store']['Variable1'] = 'Python Rules!'
+            self.printPage(
+                'New Session Started',
+                self.environ['SCRIPT_NAME'], 
+                'Visit Again', '', '',
+                "Set variable1 to 'Python Rules!'"
+            )
+        # Save changes
+        self.environ['web.database.connection'].commit()
+
+application = error.Error(
+    database.Database(
+        environment.Environment(
+            session.Session(
+                cgi.CGI(
+                    simpleApp(),
+                ),
+                app = 'testApp',
+                expire = 10,
+                setupEnvironment = 1
+            ),
+            name = 'testEnv',
+            storage = 'database',
+        ),
+        adapter = 'snakesql',
+        database = 'wsgi-session',
+        autoCreate = 1
+    ),
+)
+
+

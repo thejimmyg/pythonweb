@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="object.html" />
+<link rel="prev" href="module-datetime.html" />
+<link rel="parent" href="web.html" />
+<link rel="next" href="node28.html" />
+<meta name='aesop' content='information' />
+<title>1.4 web.database -- SQL database layer</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.3.2 Compatibility with Python"
+  href="node26.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.1 Background"
+  href="node28.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node26.html">1.3.2 Compatibility with Python</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node28.html">1.4.1 Background</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION003400000000000000000"></A><A NAME="database"></A>
+<BR>
+1.4 <tt class="module">web.database</tt> -- SQL database layer
+</H1>
+<A NAME="module-web.database"></A>
+
+<P>
+The <tt class="module">web.database</tt> module is a simple SQL abstraction layer which sits on top of a DB-API 2.0 cursor to implement data type conversions, provide database independance and offer a more Python-like interface to the data returned from queries. This is achieved by implementing common field types, a portable SQL dialect and a standard API for all supported databases.
+
+<P>
+Here are the main features of the module:
+
+<P>
+
+<UL>
+<LI>100% compatible with the underlying DB-API 2.0 cursor. A <tt class="module">web.database</tt> cursor provides access to the underlying DB-API 2.0 cursor.
+</LI>
+<LI>Provides methods including <tt class="method">select()</tt>, <tt class="method">insert()</tt>, <tt class="method">update()</tt>, <tt class="method">delete()</tt>, <tt class="method">create()</tt>, <tt class="method">alter()</tt> and <tt class="method">drop()</tt> which build and customise the SQL depending on the database being used providing database independance.
+</LI>
+<LI>Provides strong typing for the data being used. No need to deal with SQL strings, the module automatically encodes and decodes data for the approriate column.
+</LI>
+</UL>
+
+<P>
+This module has a number of different layers of increasing complexity and decreasing portability. It is important you understand which layer you wish to use for a particular task. If for example you are only going to work with one database you do not need to be concerned about portability and so might use the <code>cursor</code> object in direct mode. If you don't know any SQL you might choose to use the <tt class="module">web.database.object</tt> module to treat the database as a Python dictionary and allow portable access.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+The <tt class="module">web.database</tt> module provides total database portability by converting SQL and data types to an appropriate form for a limited subset of functions and data types of the underlying database engine. There are two drawbacks to this approach. Firstly the <tt class="module">web.database</tt> layer needs to know the structure of the database. It does this by mainting a special table which it hides. The second drawback is that if you access the database outside the <code>web.database</code> module it is possible that the changes you make will not be compatible with the <code>web.database</code> module.
+
+<P>
+Having said all that, if you only access your databases through the <code>web.database</code> module in protable mode (the default) these drawbacks will not be an issue.
+
+<P>
+If you are looking for a database abstraction module to get away from using DB-API methods, and to pick up features such as results that are returned by field name but are not so worried about the complete portability provided by portable mode, perhaps because you only intend to use one database, you could instead use these modules in direct mode.</span>
+
+<P>
+<div class="seealso">
+  <p class="heading">See Also:</p>
+
+  <dl compact="compact" class="seetitle">
+    <dt><em class="citetitle"><a href="http://www.python.org/topics/database/"
+        >Python DB-SIG Pages</a></em></dt>
+    <dd>To find out more about the DB-API 2.0 or how to program using DB-API 2.0 methods, please visit <a class="url" href="http://www.python.org/topics/database/">http://www.python.org/topics/database/</a>. The rest of this documentation will assume you are not interested in using the cursor as a DB-API 2.0 cursor and that you want to know the additional features available.</dd>
+  </dl>
+
+<P>
+</div>
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node28.html">1.4.1 Background</a>
+<UL>
+<LI><A href="node29.html">1.4.1.1 Example Code</a>
+</ul>
+<LI><A href="node30.html">1.4.2 Introduction</a>
+<UL>
+<LI><A href="node31.html">1.4.2.1 Understanding Field Types</a>
+</ul>
+<LI><A href="node32.html">1.4.3 Connecting to a Database</a>
+<LI><A href="node33.html">1.4.4 Using a Table Prepend</a>
+<LI><A href="node34.html">1.4.5 Cursor Options</a>
+<LI><A href="node35.html">1.4.6 Executing SQL</a>
+<LI><A href="node36.html">1.4.7 Retrieving Results</a>
+<LI><A href="node37.html">1.4.8 Transactions, Rollbacks and Committing Changes</a>
+<LI><A href="node38.html">1.4.9 Using the Interactive Prompt</a>
+<UL>
+<LI><A href="node39.html">1.4.9.1 Starting the Prompt</a>
+<LI><A href="node40.html">1.4.9.2 Using the Prompt</a>
+</ul>
+<LI><A href="node41.html">1.4.10 Special Characters</a>
+<UL>
+<LI><A href="node42.html">1.4.10.1 In Python</a>
+<LI><A href="node43.html">1.4.10.2 Interactive Prompt</a>
+<LI><A href="node44.html">1.4.10.3 In SQL</a>
+<LI><A href="node45.html">1.4.10.4 The Easy Way</a>
+</ul>
+<LI><A href="node46.html">1.4.11 SQL Reference</a>
+<UL>
+<LI><A href="node46.html#SECTION0034110100000000000000">1.4.11.0.1 Database Tables</a>
+<LI><A href="node46.html#SECTION0034110200000000000000">1.4.11.0.2 Queries</a>
+<LI><A href="node47.html">1.4.11.1 The SELECT Statement</a>
+<UL>
+<LI><A href="node47.html#SECTION0034111100000000000000">1.4.11.1.1 Select Some Columns</a>
+<LI><A href="node47.html#SECTION0034111200000000000000">1.4.11.1.2 Select All Columns</a>
+</ul>
+<LI><A href="node48.html">1.4.11.2 The WHERE Clause</a>
+<UL>
+<LI><A href="node48.html#SECTION0034112100000000000000">1.4.11.2.1 Using the WHERE Clause</a>
+<LI><A href="node48.html#SECTION0034112200000000000000">1.4.11.2.2 Using Quotes</a>
+<LI><A href="node48.html#SECTION0034112300000000000000">1.4.11.2.3 The LIKE Condition</a>
+</ul>
+<LI><A href="node49.html">1.4.11.3 The INSERT INTO Statement</a>
+<UL>
+<LI><A href="node49.html#SECTION0034113100000000000000">1.4.11.3.1 Insert a New Row</a>
+</ul>
+<LI><A href="node50.html">1.4.11.4 The UPDATE Statement</a>
+<UL>
+<LI><A href="node50.html#SECTION0034114100000000000000">1.4.11.4.1 Update one Column in a Row</a>
+<LI><A href="node50.html#SECTION0034114200000000000000">1.4.11.4.2 Update several Columns in a Row</a>
+</ul>
+<LI><A href="node51.html">1.4.11.5 The DELETE Statement</a>
+<UL>
+<LI><A href="node51.html#SECTION0034115100000000000000">1.4.11.5.1 Delete a Row</a>
+<LI><A href="node51.html#SECTION0034115200000000000000">1.4.11.5.2 Delete All Rows</a>
+</ul>
+<LI><A href="node52.html">1.4.11.6 ORDER BY</a>
+<UL>
+<LI><A href="node52.html#SECTION0034116100000000000000">1.4.11.6.1 Sort the Rows</a>
+</ul>
+<LI><A href="node53.html">1.4.11.7 AND &amp; OR</a>
+<LI><A href="node54.html">1.4.11.8 NULL Values</a>
+<LI><A href="node55.html">1.4.11.9 CREATE</a>
+<UL>
+<LI><A href="node55.html#SECTION0034119100000000000000">1.4.11.9.1 REQUIRED</a>
+<LI><A href="node55.html#SECTION0034119200000000000000">1.4.11.9.2 UNIQUE</a>
+<LI><A href="node55.html#SECTION0034119300000000000000">1.4.11.9.3 PRIMARY KEY</a>
+<LI><A href="node55.html#SECTION0034119400000000000000">1.4.11.9.4 DEFAULT</a>
+<LI><A href="node55.html#SECTION0034119500000000000000">1.4.11.9.5 FOREIGN KEY</a>
+</ul>
+<LI><A href="node56.html">1.4.11.10 DROP Table</a>
+<UL>
+<LI><A href="node56.html#SECTION00341110100000000000000">1.4.11.10.1 Delete a Table</a>
+</ul>
+<LI><A href="ForeignKeys.html">1.4.11.11 FOREIGN KEY and Joins</a>
+<UL>
+<LI><A href="ForeignKeys.html#SECTION00341111100000000000000">1.4.11.11.1 FOREIGN KEY</a>
+</ul>
+</ul>
+<LI><A href="node58.html">1.4.12 Cursor Abstraction Methods</a>
+<UL>
+<LI><A href="node59.html">1.4.12.1 Selecting Data</a>
+<UL>
+<LI><A href="node59.html#SECTION0034121100000000000000">1.4.12.1.1 The where Parameter</a>
+<LI><A href="node59.html#SECTION0034121200000000000000">1.4.12.1.2 The order Parameter</a>
+<LI><A href="node59.html#SECTION0034121300000000000000">1.4.12.1.3 Disabling Execute</a>
+<LI><A href="node59.html#SECTION0034121400000000000000">1.4.12.1.4 Using Joins</a>
+</ul>
+<LI><A href="node60.html">1.4.12.2 Inserting Data</a>
+<LI><A href="node61.html">1.4.12.3 Updating Data</a>
+<LI><A href="node62.html">1.4.12.4 Deleting Data</a>
+<LI><A href="node63.html">1.4.12.5 Creating Tables</a>
+<LI><A href="node64.html">1.4.12.6 Dropping Tables</a>
+<LI><A href="node65.html">1.4.12.7 Functions</a>
+</ul>
+<LI><A href="node66.html">1.4.13 Supported Databases</a>
+<UL>
+<LI><A href="node67.html">1.4.13.1 MySQL</a>
+<LI><A href="node68.html">1.4.13.2 SQLite</a>
+<LI><A href="node69.html">1.4.13.3 ODBC</a>
+</ul>
+<LI><A href="example-command-web-database.html">1.4.14 Example Code</a>
+<LI><A href="node71.html">1.4.15 API Reference</a>
+<UL>
+<LI><A href="node72.html">1.4.15.1 Module Interface</a>
+<LI><A href="node73.html">1.4.15.2 Connection Objects</a>
+<LI><A href="node74.html">1.4.15.3 Cursor Objects</a>
+<UL>
+<LI><A href="node74.html#SECTION0034153100000000000000">1.4.15.3.1 Execute SQL</a>
+<LI><A href="node74.html#SECTION0034153200000000000000">1.4.15.3.2 Fetch Results</a>
+<LI><A href="node74.html#SECTION0034153300000000000000">1.4.15.3.3 Cursor Abstraction Methods</a>
+<LI><A href="node74.html#SECTION0034153400000000000000">1.4.15.3.4 Helper Methods</a>
+</ul>
+<LI><A href="node75.html">1.4.15.4 Table Objects</a>
+<LI><A href="node76.html">1.4.15.5 Column Objects</a>
+<LI><A href="node77.html">1.4.15.6 Converter Objects</a>
+</ul>
+<LI><A href="node78.html">1.4.16 Developer's Guide</a>
+<UL>
+<LI><A href="node79.html">1.4.16.1 Implementing the Classes</a>
+<LI><A href="node80.html">1.4.16.2 Creating the Dictionary</a>
+</ul>
+<LI><A href="node81.html">1.4.17 Tools Under Development</a>
+<UL>
+<LI><A href="node82.html">1.4.17.1 Web Based Admin</a>
+</ul>
+<LI><A href="node83.html">1.4.18 Future Additions</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.3.2 Compatibility with Python"
+  href="node26.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.1 Background"
+  href="node28.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node26.html">1.3.2 Compatibility with Python</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node28.html">1.4.1 Background</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

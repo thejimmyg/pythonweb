@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node43.html" />
+<link rel="prev" href="node41.html" />
+<link rel="parent" href="node41.html" />
+<link rel="next" href="node43.html" />
+<meta name='aesop' content='information' />
+<title>1.4.10.1 In Python</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.10 Special Characters"
+  href="node41.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.10 Special Characters"
+  href="node41.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.10.2 Interactive Prompt"
+  href="node43.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node41.html">1.4.10 Special Characters</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node41.html">1.4.10 Special Characters</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node43.html">1.4.10.2 Interactive Prompt</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0034101000000000000000">
+1.4.10.1 In Python</A>
+</H3>
+
+<P>
+Within a Python string, certain sequences have special meaning. Each of these sequences begins with a backslash <code>&#92;</code>, known as the escape character. The values (and different escape methods) allowed in string literals are described in the Python documentation at <a class="url" href="http://www.python.org/doc/current/ref/strings.html">http://www.python.org/doc/current/ref/strings.html</a>. This is a brief summary.
+
+<P>
+Python recognizes the following escape sequences:
+<div class="verbatim"><pre>
+\\  	Backslash (\)  	
+\' 	Single quote (') 	
+\" 	Double quote (") 	
+\a 	ASCII Bell (BEL) 	
+\b 	ASCII Backspace (BS) 	
+\f 	ASCII Formfeed (FF) 	
+\n 	ASCII Linefeed (LF) 	
+\N{name} 	Character named name in the Unicode database (Unicode only) 	
+\r 	ASCII Carriage Return (CR) 	
+\t 	ASCII Horizontal Tab (TAB) 	
+\uxxxx 	Character with 16-bit hex value xxxx (Unicode only)
+\Uxxxxxxxx 	Character with 32-bit hex value xxxxxxxx (Unicode only)
+\v 	ASCII Vertical Tab (VT) 	
+\ooo 	Character with octal value ooo 
+\xhh 	Character with hex value hh
+</pre></div>
+These sequences are case sensitive. For example, <code>&#92;b</code> is interpreted as a backspace, but <code>&#92;B</code> is not. 
+
+<P>
+You can use these characters in SQL exactly the same way as you would in Python. For example <code>'end of one line&#92;nstart of new line'</code> is a valid SQL string containing a line break in the middle and could be used like this:
+
+<P>
+<div class="verbatim"><pre>
+cursor.execute("INSERT INTO table (columnOne) VALUES ('end of one line\nstart of new line')")
+</pre></div>
+
+<P>
+There is one important point to note about how Python (and hence <tt class="module">web.database</tt> ) deals with these escape characters. If a string contains a backslash <code>&#92;</code> but the character after the backslash is not a character which can be escaped then the single backslash is treated as a single backslash. If the character can be used in an escape sequence then the backslash is treated as an escape character and the character is escaped.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+All examples in this section are from the Python prompt not the <tt class="module">web.database</tt>  one.</span>
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+Python 2.4 (#60, Nov 30 2004, 11:49:19) [MSC v.1310 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; print 'hello\%world'
+hello\%world
+&gt;&gt;&gt; print 'hello\nworld'
+hello
+world
+&gt;&gt;&gt;
+</pre></div>
+
+<P>
+If a string contains both escaped and non-escaped characters Python guesses which are backslashes and which are escape characters:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; print 'hello\nworld\%again'
+hello
+world\%again
+&gt;&gt;&gt;
+</pre></div>
+
+<P>
+If a string contains a double backslash <code>&#92;&#92;</code> it is always treated as an escaped backslash character and printed as <code>&#92;</code>. 
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; print '\\%'
+\%
+&gt;&gt;&gt; print '\%'
+\%
+</pre></div>
+
+<P>
+This means that the following expression is True:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; print '\\%' == '\%'
+True
+&gt;&gt;&gt;
+</pre></div>
+
+<P>
+But the following is not:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; print '\\\\%' == '\\%'
+False
+&gt;&gt;&gt;
+</pre></div>
+
+<P>
+When writing Python strings you have to be very careful how the backslash character is being used and then you will have no problems.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.10 Special Characters"
+  href="node41.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.10 Special Characters"
+  href="node41.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.10.2 Interactive Prompt"
+  href="node43.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node41.html">1.4.10 Special Characters</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node41.html">1.4.10 Special Characters</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node43.html">1.4.10.2 Interactive Prompt</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

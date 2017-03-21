@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node64.html" />
+<link rel="parent" href="node58.html" />
+<link rel="next" href="node66.html" />
+<meta name='aesop' content='information' />
+<title>1.4.12.7 Functions</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.6 Dropping Tables"
+  href="node64.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 Cursor Abstraction Methods"
+  href="node58.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13 Supported Databases"
+  href="node66.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node64.html">1.4.12.6 Dropping Tables</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node58.html">1.4.12 Cursor Abstraction Methods</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node66.html">1.4.13 Supported Databases</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0034127000000000000000">
+1.4.12.7 Functions</A>
+</H3>
+
+<P>
+The <tt class="class">cursor</tt> objects currently support two function methods: <tt class="method">max()</tt>, <tt class="method">min()</tt> and <tt class="method">count()</tt> as described below.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-90' xml:id='l2h-90' class="method">max</tt></b>(</nobr></td>
+  <td><var><var>table</var>, <var>column</var> </var><big>[</big><var>,where=None</var><big>]</big><var></var><big>[</big><var>,values=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns the highest value of the column.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table
+</DD>
+<DT><STRONG><var>column</var></STRONG></DT>
+<DD>The name of the column
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>An optional where clause
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>Values to substitute for <code>?</code> parameters in the where clause.
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-91' xml:id='l2h-91' class="method">min</tt></b>(</nobr></td>
+  <td><var><var>table</var>, <var>column</var> </var><big>[</big><var>,where=None</var><big>]</big><var></var><big>[</big><var>,values=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns the lowest value of the column.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table
+</DD>
+<DT><STRONG><var>column</var></STRONG></DT>
+<DD>The name of the column
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>An optional where clause
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>Values to substitute for <code>?</code> parameters in the where clause.
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-92' xml:id='l2h-92' class="method">count</tt></b>(</nobr></td>
+  <td><var><var>table</var>, <var>column</var> </var><big>[</big><var>,where=None</var><big>]</big><var></var><big>[</big><var>,values=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Count the number of rows in the table matching <var>where</var>. If <var>where</var> is not specified, count all rows.
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The name of the table
+</DD>
+<DT><STRONG><var>column</var></STRONG></DT>
+<DD>The name of the column
+</DD>
+<DT><STRONG><var>where</var></STRONG></DT>
+<DD>An optional where clause
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>Values to substitute for <code>?</code> parameters in the where clause.
+</DD>
+</DL>
+</dl>
+
+<P>
+For example consider the table below:
+
+<P>
+<div class="verbatim"><pre>
+# Numbers
++--------+
+| Number |
++--------+
+| 1      |
++--------+
+| 2      |
++--------+
+| 3      | 
++--------+
+</pre></div>
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; cursor.max(table='Numbers', column='Number')
+3
+&gt;&gt;&gt; cursor.min(table='Numbers', column='Number')
+1
+&gt;&gt;&gt; cursor.max(table='Numbers', column='Number', where="Number&lt;?", values=[3])
+2
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.6 Dropping Tables"
+  href="node64.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 Cursor Abstraction Methods"
+  href="node58.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13 Supported Databases"
+  href="node66.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node64.html">1.4.12.6 Dropping Tables</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node58.html">1.4.12 Cursor Abstraction Methods</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node66.html">1.4.13 Supported Databases</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

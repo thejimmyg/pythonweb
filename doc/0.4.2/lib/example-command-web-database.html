@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node48.html">
+<LINK REL="prev" HREF="node42.html">
+<LINK REL="parent" href="module-web.database.html">
+<LINK REL="next" HREF="node48.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Test Code">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.10 Test Code</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.9.4 Complicaitons with Gadfly" 
+  HREF="node46.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.11 Future" 
+  HREF="node48.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node46.html">1.4.9.4 Complicaitons with Gadfly</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node48.html">1.4.11 Future</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0034100000000000000000">&nbsp;</A>
+<BR>
+1.4.10 Test Code
+</H2>
+
+<P>
+Below is a script to test the database layer. It demonstrates the use of some of the commands:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../')
+
+import web, web.database, datetime
+import web.error, web.error.handler;  web.error.handle(web.error.handler.htmlfile,  file='error.html')
+import copy
+useage = "Useage: &#92;npython db.py &lt;database type&gt;&#92;n&#92;neg:&#92;npython db.py gadfly"
+
+def generateValues():
+    return (
+        "'",
+        "STRINi'G",
+        """BIN678ARY0BIN678ARY0BIN678ARY0BIN678ARY0B
+        IN678ARY0BIN678ARY0BIN678ARY0BIN678ARY0BIN678
+        ARY0BIN678ARY0BIN678ARY0BIN678ARY0BIN678ARY0B
+        IN678ARY0BIN678ARY0BIN678ARY0BIN678ARY0BIN678ARY
+        0BIN678ARY0BIN678ARY0BIN678ARY0BIN678ARY0BIN678
+        ARY0BIN678ARY0BIN678ARY0BIN678ARY0BIN678ARY0
+        BIN678ARY0BIN678ARY0BIN678ARY0""",
+        230,
+        0.000768,
+        datetime.date(2003,6,1),#2,2,2
+        datetime.time(12,22,3),
+        datetime.datetime(2003,6,1,12,22,3),
+    )
+                    
+def same(tuple1, tuple2):
+    if len(tuple1) &lt;&gt; len(tuple2):
+        print "FAILED: tuples different lengths"
+        return False
+    else:
+        errors = []
+        for i in range(len(tuple1)):
+            if type(tuple1[i]) &lt;&gt; type(tuple2[i]):
+                errors.append('%s different type to %s'%(tuple1[i],tuple2[i]))
+            if tuple1[i] &lt;&gt; tuple2[i]:
+                errors.append('%s &lt;&gt; to %s'%(tuple1[i],tuple2[i]))
+        if errors:
+            print '&#92;n'.join(errors)
+            return False
+        return True
+        
+if __name__ == '__main__':
+
+    if len(sys.argv) &lt;&gt; 2:
+        db = raw_input('Database type [mysql, gadfly, odbc, sqlite]: ')
+    else:
+        db = sys.argv[1]
+    if db == 'gadfly':
+        conn = web.database.connect(type="gadfly", database="test", dir=".", startup=True)
+        cursor = conn.cursor()
+    elif db == 'sqlite':
+        conn = web.database.connect(type='sqlite', database='test.db')
+        cursor = conn.cursor()
+    elif db == 'mysql':
+        conn = web.database.connect(type='mysql', database='test')
+        cursor = conn.cursor()
+    elif db == 'odbc':
+        conn = web.database.connect(type='odbc', database='Test')
+        cursor = conn.cursor()
+    else:
+        raise Exception("Database type '%s' not recognised."%db)
+        
+    # Delete the old table ready to run the test again.
+    if cursor.tableExists('test'):
+        cursor.drop('test')
+        conn.commit()
+        print "Table test dropped."
+    else:
+        print "Couldn't delete the test table. Perhaps this is the first time the script has been run."
+
+#
+# Test 1: Check Column Types
+#
+
+    print "&#92;n-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;"
+    print "Test 1: Making sure each column type can be created."
+    print "-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;&#92;n"
+    
+    cursor.create('test',(('TestCHAR', "Char"),))
+    cursor.drop('test')
+    print "CHAR     Passed"
+    
+    cursor.create('test',(('TestSTRING', "String"),) )
+    cursor.drop('test')
+    print "STRING   Passed"
+    
+    cursor.create('test',(('TestTEXT', "Text"),) )
+    cursor.drop('test')
+    print "TEXT     Passed"
+    
+    cursor.create('test',(('TestINTEGER', "Integer"),) )
+    cursor.drop('test')
+    print "INTEGER  Passed"
+    
+    cursor.create('test',(('TestFLOAT', "Float"),))
+    cursor.drop('test')
+    print "FLOAT    Passed"
+    
+    cursor.create('test',(('TestDATE', "Date"),))
+    cursor.drop('test')
+    print "DATE     Passed"
+    
+    cursor.create('test',(('TestTIME', "Time"),) )
+    cursor.drop('test')
+    print "TIME     Passed"
+    
+    cursor.create('test',(('TestDATETIME', "DateTime"),))
+    cursor.drop('test')
+    print "DATETIME Passed"
+
+#
+# Test 2: Check Encoding/Decoding
+#
+
+    print "&#92;n-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;"
+    print "Test 2: Check Encoding/Decoding."
+    print "-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;&#92;n"
+    
+    cursor.create(
+        'test',
+        (  
+            ('TestCHAR', "Char"),
+            ('TestSTRING', "String"),
+            ('TestTEXT', "Text"),
+            ('TestINTEGER', "Integer"),
+            ('TestFLOAT', "Float"),
+            ('TestDATE', "Date"),
+            ('TestTIME', "Time"),
+            ('TestDATETIME', "DateTime"),
+        ) 
+    )
+    conn.commit()    
+    
+    values = generateValues()
+    
+    cursor.insert(
+        'test', 
+        ('TestCHAR','TestSTRING','TestTEXT','TestINTEGER','TestFLOAT','TestDATE','TestTIME','TestDATETIME'),
+        copy.copy(values),
+    )
+
+    newValues = cursor.select(
+        ('TestCHAR','TestSTRING','TestTEXT','TestINTEGER','TestFLOAT','TestDATE','TestTIME','TestDATETIME'),
+        'test', 
+    )[0]
+    if not same(values,newValues):
+        print "FAILED INSERT  Values do not match"
+    else:
+        print "PASSED INSERT"
+        
+    cursor.update(
+        'test', 
+        ('TestCHAR','TestSTRING','TestTEXT','TestINTEGER','TestFLOAT','TestDATE','TestTIME','TestDATETIME'),
+        copy.copy(values),
+    )
+    newValues = cursor.select(
+        ('TestCHAR','TestSTRING','TestTEXT','TestINTEGER','TestFLOAT','TestDATE','TestTIME','TestDATETIME'),
+        'test', 
+    )[0]
+    
+    if not same(values,newValues):
+        print "FAILED UPDATE  Values do not match"
+    else:
+        print "PASSED UPDATE"
+
+#
+# Test 3: FetchModes
+#
+
+    print "&#92;n-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;"
+    print "Test 3: FetchModes."
+    print "-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;&#92;n"
+
+    result = cursor.select('*',"test", fetchMode = 'dtuple')
+    if result[0][3] == result[0]['TestINTEGER'] == 230:
+        print 'dtuple Passed'
+
+    result = cursor.select('*',"test",fetchMode = 'tuple')
+    if result[0][3] == 230:
+        print 'tuple  Passed'
+        
+    result = cursor.select('*',"test", fetchMode = 'dict')
+    if result[0]['TestINTEGER'] == 230:
+        print 'dict   Passed'
+
+#
+# Test 4: Alter/Drop Code
+#
+
+    print "&#92;n-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;"
+    print "Test 4: Alter/Drop Code."
+    print "-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;&#92;n"
+    
+    conn.commit()
+    
+    if cursor.type in ['mysql']:
+        cursor.alter('test', 'add', 'TestColumn','String')
+        print "Added Column"
+    
+        cursor.alter('test', 'drop', 'TestColumn')
+        print "Dropped Column"
+
+    else:
+        print "No ALTER support.. skipping"
+
+#
+# Test 5: NULL Handling
+#
+
+    print "&#92;n-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;"
+    print "Test 5: NULL Handling."
+    print "-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;&#92;n"
+    
+    if cursor.type in ['mysql']:
+        "Gadfly doesn't support NULLs.. skipping."
+    else:
+        cursor.delete('test')
+        cursor.insert (
+            'test', 
+            ('TestCHAR','TestSTRING','TestTEXT','TestINTEGER','TestFLOAT','TestDATE','TestTIME','TestDATETIME'),
+            (None,None,None,None,None,None,None,None),
+        )
+        newValues = cursor.select(
+            ('TestCHAR','TestSTRING','TestTEXT','TestINTEGER','TestFLOAT','TestDATE','TestTIME','TestDATETIME'),
+            'test'
+        )[0]
+        if not same((None,None,None,None,None,None,None,None,),newValues):
+            print "FAILED NULLS  Values do not match"
+        else:
+            print "PASSED NULLS"
+
+#
+# Test 6: Min and Max Test
+#
+
+    print "&#92;n-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;"
+    print "Test 6: Min and Max Test."
+    print "-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;-&#45;&#92;n"
+    
+    cursor.delete('test')
+    v = list(generateValues())
+    v[3] = 10
+    v[4] = 10.06
+    v[5] = datetime.date(2004,07,11)
+    v[6] = datetime.time(23,25,38)
+    v[7] = datetime.datetime(2004,07,11,23,25,38)
+    cursor.insert (
+        'test', 
+        ('TestCHAR','TestSTRING','TestTEXT','TestINTEGER','TestFLOAT','TestDATE','TestTIME','TestDATETIME'),
+        v,
+    )
+    v[3] = 11
+    v[4] = 11.06
+    v[5] = datetime.date(2004,07,12)
+    v[6] = datetime.time(23,25,39)
+    v[7] = datetime.datetime(2004,07,11,23,25,39)
+    cursor.insert (
+        'test', 
+        ('TestCHAR','TestSTRING','TestTEXT','TestINTEGER','TestFLOAT','TestDATE','TestTIME','TestDATETIME'),
+        v,
+    )
+
+    if 11 == cursor.max('TestINTEGER','test'):
+        print "PASSED Integer MAX"
+    else:
+        print "FAILED Integer MAX"
+    if 10 == cursor.min('TestINTEGER','test'):
+        print "PASSED Integer MIN"
+    else:
+        print "FAILED Integer MIN"
+    if 11.06 == cursor.max('TestFLOAT','test'):
+        print "PASSED Float MAX"
+    else:
+        print "FAILED Float MAX"
+    if 10.06 == cursor.min('TestFLOAT','test'):
+        print "PASSED Float MIN"
+    else:
+        print "FAILED Float MIN"
+    if datetime.date(2004,07,12) == cursor.max('TestDATE','test'):
+        print "PASSED Date MAX"
+    else:
+        print "FAILED Date MAX"
+    if datetime.date(2004,07,11) == cursor.min('TestDATE','test'):
+        print "PASSED Date MIN"
+    else:
+        print "FAILED Date MIN"
+    if datetime.time(23,25,39) == cursor.max('TestDATE','test'):
+        print "PASSED Time MAX"
+    else:
+        print "FAILED Time MAX"
+    if datetime.time(23,25,38) == cursor.min('TestDATE','test'):
+        print "PASSED Time MIN"
+    else:
+        print "FAILED Time MIN"
+    if datetime.datetime(2004,07,11,23,25,39) == cursor.max('TestDATE','test'):
+        print "PASSED DateTime MAX"
+    else:
+        print "FAILED DateTime MAX"
+    if datetime.datetime(2004,07,11,23,25,38) == cursor.min('TestDATE','test'):
+        print "PASSED DateTime MIN"
+    else:
+        print "FAILED DateTime MIN"
+
+    # XXX WARNING, Do database have different interpretaions for string fields?
+    
+    raw_input("&#92;nAll done! [Press ENTER]")
+else:
+    print useage
+
+    </pre>
+<div class="footer">
+<a href="command-web-database.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-database.py</span>).</a>
+</div></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.9.4 Complicaitons with Gadfly" 
+  rel="prev" title="1.4.9.4 Complicaitons with Gadfly" 
+  HREF="node46.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.11 Future" 
+  rel="next" title="1.4.11 Future" 
+  HREF="node48.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node46.html">1.4.9.4 Complicaitons with Gadfly</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node48.html">1.4.11 Future</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

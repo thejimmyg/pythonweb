@@ -1,0 +1,121 @@
+import sys; sys.path.append('../')
+from web.wsgi import *
+import web.database.object, os
+
+links = """<p><a href="example?mode=signOut">Sign out</a> | 
+<a href="example?mode=view">View</a> | 
+<a href="example?mode=add">Add</a></p>"""
+
+def simpleApp(environ, start_response):
+
+    person = web.database.object.Table("Person")
+    person.add(column="String", name='firstName', required=True)
+    person.addColumn(web.database.object.String(name="surname"))
+    person.addColumn(
+        web.database.object.StringSelect(
+            name="profession", 
+            options=[None, 'Developer', 'Web Developer'], 
+            displayNoneAs='Not Specified'
+        )
+    )
+    person.add(column="Bool", name='sex', displayTrueAs='Male', displayFalseAs='Female')
+    database = web.database.object.Database()
+    database.addTable(person)
+    
+    # Initialise the database
+    database.init(environ['web.database.cursor'])
+
+    if not database.tablesExist():
+        database.createTables()
+
+    mode = 'view'
+    if environ['web.cgi'].has_key('mode'):
+        mode = environ['web.cgi']['mode'].value
+
+    # signIn mode needed to allow for sign in handling
+    # you will be redirected to the correct place eventually
+    if mode == 'signIn':
+        start_response('403 User not signed in', [])
+        environ['web.database.connection'].commit()
+        return []
+    elif mode == 'signOut':
+        start_response('403 User not signed in', [])
+        environ['web.database.connection'].commit()
+        return []
+    elif mode == 'add':
+        if not environ.has_key('web.auth.user'): # No user signed in
+            start_response('403 User not signed in', [])
+            environ['web.database.connection'].commit()
+            return []
+        else:
+            result = []
+            form = database['Person'].form(stickyData={'mode':'add'}) 
+            if len(environ['web.cgi']) > 1:             # Assume form submitted
+                form.populate(environ['web.cgi'])
+                if form.valid():      
+                    entry = database['Person'].insert(all=form.dict())
+                    result.append('''<html><h1>Entry Added</h1>%s
+                        <p><a href="example">Go Back</a></html>'''%(form.frozen())
+                    )
+                else:
+                    result.append( """<html>%s<h1>Error</h1><p>There were some invalid fields. 
+                        Please correct them.</p>%s</html>"""%(links, form.html())
+                    )
+            else:
+                result.append("""<html>%s<h1>Add Entry</h1>%s</html>"""%(links, form.html()))
+            start_response('200 OK', [('Content-type','text/html')])
+            environ['web.database.connection'].commit()
+            return result
+    else:
+        entries = '<table border="1"><tr style="font-weight: bold;"><td>Firstname</td>'
+        entries += '<td>Surname</td><td>Profession</td><td>Sex</td></tr>'
+        for row in database['Person'].values():
+            entries += '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>'%(
+                row['firstName'],
+                row['surname'],
+                row['profession'],
+                row['sex']
+            )
+        entries += '</table>'
+        info = """The table above shows people entries. To add an entry, click the add link above
+        but you will need to sign in using the username <tt>john</tt> and the password <tt>bananas</tt>. 
+        If you don't visit a page you will be signed out after 20 seconds and have to sign in again."""
+        start_response('200 OK', [('Content-type','text/html')])
+        environ['web.database.connection'].commit()
+        return ["<html>%s<h1>Entries</h1><p>%s</p><p>%s</p></html>"%(links, entries,info)]
+
+
+# Middleware Setup
+application = error.Error(
+    database.Database(
+        session.Session(
+            cgi.CGI(
+                auth.Auth(
+                    simpleApp, 
+                    driver='database',
+                    autoCreate=1,
+                    expire=0,
+                    idle=20,
+                    template = """
+                        <html>
+                        <head><title>Sign In</title></head>
+                        <body>
+                        %s
+                        <h1>Sign In</h1>
+                        %%(form)s
+                        <p>%%(message)s</p>
+                        </body>
+                        </html>
+                    """%links,
+                    redirectMethod='metaRefresh'
+                ),
+            ),
+            expire = 1000,
+            autoCreate = 1,
+            driver='database',
+        ),
+        adapter = 'snakesql',
+        database = 'wsgi-example',
+        autoCreate = 1
+    ),
+)

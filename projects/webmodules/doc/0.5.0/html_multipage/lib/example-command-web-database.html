@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node64.html" />
+<link rel="prev" href="node59.html" />
+<link rel="parent" href="module-web.database.html" />
+<link rel="next" href="node64.html" />
+<meta name='aesop' content='information' />
+<title>1.4.12 Example Code</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.11.3 ODBC"
+  href="node62.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13 API Reference"
+  href="node64.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node62.html">1.4.11.3 ODBC</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node64.html">1.4.13 API Reference</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0034120000000000000000"></A><A NAME="example-command-web-database"></A>
+<BR>
+1.4.12 Example Code
+</H2>
+
+<P>
+Below is a script to test the database layer. It demonstrates the use of some of the commands:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the modules are
+
+import web.database
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="database",
+    autoCreate = 1,
+)
+cursor = connection.cursor()
+
+import datetime
+
+# Crete a table using the DB-API 2.0 interface and inset some information
+cursor.execute('CREATE TABLE test( columnDate Date,  columnString String)')
+cursor.execute(
+    "INSERT INTO test ( columnDate, columnString) VALUES (?, 'This i&#92;&#92;s a str''ing with some awkward quoting')",
+    datetime.date(2005,01,27)
+)
+# Retrieve the information
+cursor.execute("SELECT * from test WHERE columnDate = '2005-01-27'")
+print cursor.fetchall(format='dict')
+
+# Update the row using the abstraction interface and retrieve the information
+cursor.update(
+    table = 'test',
+    columns = ['columnString'],
+    values = ["James's New String conta&#92;&#92;&#92;&#92;ining an apostrophe and awkward quoting"],
+)
+print cursor.select(columns='*', tables=['test'])
+
+connection.close() # Close the connection without saving changes</pre>
+<div class="footer">
+<a href="command-web-database.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-database.py</span>).</a>
+</div></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.11.3 ODBC"
+  href="node62.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13 API Reference"
+  href="node64.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node62.html">1.4.11.3 ODBC</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node64.html">1.4.13 API Reference</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

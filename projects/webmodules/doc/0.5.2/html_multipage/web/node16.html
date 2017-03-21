@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="web.css" type='text/css' />
+<link rel="first" href="web.html" title='Beginner's Guide' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node17.html" />
+<link rel="prev" href="node15.html" />
+<link rel="parent" href="node15.html" />
+<link rel="next" href="node17.html" />
+<meta name='aesop' content='information' />
+<title>3.1.1 Apache</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="3.1 What Do I"
+  href="node15.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="3.1 What Do I"
+  href="node15.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="3.1.2 webserver.py"
+  href="node17.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node15.html">3.1 What Do I</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node15.html">3.1 What Do I</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node17.html">3.1.2 webserver.py</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004110000000000000000">
+3.1.1 Apache</A>
+</H2>
+
+<P>
+<a class="ulink" href="http://httpd.apache.org"
+  >Apache</a> is the reference web server for the Web Modules and it is available for many platforms including Windows.
+
+<P>
+Apache can be configured to support Python. You may need to edit you <span class="file">httpd.conf</span> file adding something similar to <code>addhandler py /usr/bin/python</code>. <code>/usr/bin/python</code> should be relpaced with the correct path to the Python interpreter on your system. This can usually be found by typing the following at a command prompt:
+
+<P>
+<div class="verbatim"><pre>
+&gt; whereis python
+</pre></div>
+
+<P>
+Alternatively you could start python and type the following to obtain the <code>sys.prefix</code>. This is often the directory in which the python interpreter is.
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; print sys.prefix
+/usr/local/bin/python
+</pre></div>
+
+<P>
+You should consult the Apache documentation at <a class="url" href="http://httpd.apache.org">http://httpd.apache.org</a> for full information.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="3.1 What Do I"
+  href="node15.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="3.1 What Do I"
+  href="node15.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="3.1.2 webserver.py"
+  href="node17.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node15.html">3.1 What Do I</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node15.html">3.1 What Do I</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node17.html">3.1.2 webserver.py</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

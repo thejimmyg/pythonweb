@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node17.html" />
+<link rel="prev" href="node12.html" />
+<link rel="parent" href="module-web.auth.html" />
+<link rel="next" href="node17.html" />
+<meta name='aesop' content='information' />
+<title>1.2.4 Simple Example</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.3.3 Authenticating the Signed"
+  href="node15.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.5 Advanced Authorisation Options"
+  href="node17.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node15.html">1.2.3.3 Authenticating the Signed</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node17.html">1.2.5 Advanced Authorisation Options</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003240000000000000000">
+1.2.4 Simple Example</A>
+</H2>
+
+<P>
+<A NAME="example-webserver-web-auth"></A>Putting together everything in the previous sections gives us this full (but not very useful) application:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+"""Auth Example. Username=john and Password=bananas (Case sensitive)"""
+
+# show python where the modules are and enable error displays
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web.error; web.error.enable()
+import web, web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="webserver-auth",
+    autoCreate=1
+)
+cursor = connection.cursor() 
+
+# Obtain a session manager
+import web.session
+session = web.session.manager(
+    driver='database', 
+    autoCreate=1,
+    cursor=cursor
+)
+if not session.load():
+    session.create()
+
+# Obtain Auth objects
+import web.auth
+auth = web.auth.manager(
+    session.store('auth'), 
+    'database', 
+    idle=20, 
+    autoCreate=1,
+    encryption='md5',
+    cursor=cursor
+) 
+
+# Authentication and Authorisation code
+if auth.signedInUser != None and auth.signedInUser.authorise(app='app', level=1):
+    print web.header('text/plain'), "Authorised"
+else:
+    print web.header()
+    # Sign in however you like.. but you could use this signIn handler
+    import web.auth.handler.signIn
+    signInHandler = web.auth.handler.signIn.SignInHandler(
+        manager=auth,
+        encryption='md5'
+    )
+    form = signInHandler.handle()
+    if form: # ie there is a problem and the sign in form needs displaying
+        print """&lt;html&gt;&lt;body&gt;&lt;h1&gt;Please Sign In&lt;/h1&gt;
+        %(form)s&lt;p&gt;%(message)s&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"""%form
+    else:
+        # We have just signed in, but we have not authorised the user
+        if auth.signedInUser.authorise(app='app', level=1):
+            print "Signed in successfully"
+        else:
+            print "Not authorised to use this application"
+
+connection.commit()
+connection.close()
+</pre>
+<div class="footer">
+<a href="webserver-web-auth.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-auth.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by starting the test webserver in <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-auth.py">http://localhost:8080/doc/src/lib/webserver-web-auth.py</a> on your local machine. The username is <code>john</code> and the password is <code>bananas</code>.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.3.3 Authenticating the Signed"
+  href="node15.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.5 Advanced Authorisation Options"
+  href="node17.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node15.html">1.2.3.3 Authenticating the Signed</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node17.html">1.2.5 Advanced Authorisation Options</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,18 @@
+import web.wsgi
+
+class simpleApp(web.wsgi.base.BaseApplication):
+    def start(self):
+        raise Exception('Test Exception')
+
+application = web.wsgi.error.Error(
+    simpleApp(),
+    emailTo=['james@example.com'], # Enter your email address
+    replyName='WSGI Error Example', 
+    replyEmail='none@example.com', 
+    subject='Error Report',
+    sendmail = '/usr/bin/sendmail',  # Specify your sendmail path
+    smtp = 'smtp.ntlworld.com',      # or specify an SMTP server and change method to 'smtp'
+    method = 'smtp',
+)
+
+

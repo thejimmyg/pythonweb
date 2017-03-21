@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+
+"""Auth Example. Username=john and Password=bananas (Case sensitive)"""
+
+# show python where the modules are and enable error displays
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web.error; web.error.enable()
+import web, web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="webserver-auth",
+    autoCreate=1
+)
+cursor = connection.cursor() 
+
+# Obtain a session manager
+import web.session
+session = web.session.manager(
+    driver='database', 
+    autoCreate=1,
+    cursor=cursor
+)
+if not session.load():
+    session.create()
+
+# Obtain Auth objects
+import web.auth
+auth = web.auth.manager(
+    session.store('auth'), 
+    'database', 
+    idle=20, 
+    autoCreate=1,
+    encryption='md5',
+    cursor=cursor
+) 
+
+# Authentication and Authorisation code
+if auth.signedInUser != None and auth.signedInUser.authorise(app='app', level=1):
+    print web.header('text/plain'), "Authorised"
+else:
+    print web.header()
+    # Sign in however you like.. but you could use this signIn handler
+    import web.auth.handler.signIn
+    signInHandler = web.auth.handler.signIn.SignInHandler(
+        manager=auth,
+        encryption='md5'
+    )
+    form = signInHandler.handle()
+    if form: # ie there is a problem and the sign in form needs displaying
+        print """<html><body><h1>Please Sign In</h1>
+        %(form)s<p>%(message)s</p></body></html>"""%form
+    else:
+        # We have just signed in, but we have not authorised the user
+        if auth.signedInUser.authorise(app='app', level=1):
+            print "Signed in successfully"
+        else:
+            print "Not authorised to use this application"
+
+connection.commit()
+connection.close()

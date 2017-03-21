@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node44.html">
+<LINK REL="prev" HREF="node42.html">
+<LINK REL="parent" HREF="node42.html">
+<LINK REL="next" HREF="node44.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="MySQL">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.9.1 MySQL</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.9 Database Specific Notes" 
+  HREF="node42.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.9 Database Specific Notes" 
+  HREF="node42.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.9.2 SQLite" 
+  HREF="node44.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node42.html">1.4.9 Database Specific Notes</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node42.html">1.4.9 Database Specific Notes</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node44.html">1.4.9.2 SQLite</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003491000000000000000">
+1.4.9.1 MySQL</A>
+</H3>
+
+<P>
+The MySQL implementation doesn't really have any complicaitons. It works extremely well and is the most tested implementation of the <tt class="module">web.database</tt> specification.
+
+<P>
+One point to note is that is doesn't use a <code>ColTypes</code> table in the same way the other implementations do because the <code>cursor.description</code> contains all the information needed by the <tt class="module">web.database</tt> module so there is no need to store it in an extra table. The other implementaions do not give adequate information in the  <code>cursor.description</code>.
+
+<P>
+The MySQL implemenation is the only one to support the <tt class="method">alter()</tt> method.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+The <tt class="module">MySQLdb</tt> module on which the MySQL driver is based automatically commits any changes you have made to the database when the script exits, regardless of whether you have explicitly committed the changes in the code. This is different to the behaviour of the other databases and may catch you out so please be aware it is going on. (If anyone knows how to fix this please, please let the authour know!)</span>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.9 Database Specific Notes" 
+  rel="prev" title="1.4.9 Database Specific Notes" 
+  HREF="node42.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.9 Database Specific Notes" 
+  rel="parent" title="1.4.9 Database Specific Notes" 
+  HREF="node42.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.9.2 SQLite" 
+  rel="next" title="1.4.9.2 SQLite" 
+  HREF="node44.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node42.html">1.4.9 Database Specific Notes</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node42.html">1.4.9 Database Specific Notes</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node44.html">1.4.9.2 SQLite</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

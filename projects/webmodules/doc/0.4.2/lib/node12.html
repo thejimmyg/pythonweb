@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node11.html">
+<LINK REL="parent" HREF="node8.html">
+<LINK REL="next" HREF="node13.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Function Reference">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.2.2.4 Function Reference</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.2.3 Setting Access Levels" 
+  HREF="node11.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2.2 Administering The Auth" 
+  HREF="node8.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.3 Examples" 
+  HREF="node13.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node11.html">1.2.2.3 Setting Access Levels</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node8.html">1.2.2 Administering The Auth</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node13.html">1.2.3 Examples</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003224000000000000000">
+1.2.2.4 Function Reference</A>
+</H3>
+
+<P>
+The <tt class="function">web.auth.setup()</tt> function has the following parameters and returns an <tt class="class">AuthAdmin</tt> object:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-25"><tt class="function">start</tt></a></b>(</nobr></td>
+  <td><var><var>storage</var></var><big>[</big><var>,cursor=None</var><big>]</big><big>[</big><var>,dir=None</var><big>]</big><big>[</big><var>,table='Auth'</var><big>]</big>)</td></tr></table>
+<dd>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+Because more options may be specified in future versions of this function you should not rely on the order of these parameters. Instead they should be specified with the parameter name and an <code>=</code> sign as is used in the examples in this documentation.</span>
+
+<P>
+<DL>
+<DT><STRONG><var>storage</var></STRONG></DT>
+<DD>The storage driver to use for the auth user, level and app information. <var>storage</var> can be <code>'database'</code> or <code>'file'</code>. 
+
+<P>
+If <var>storage</var> is <code>'database'</code> you must also specify <var>cursor</var> to be a valid <tt class="class">web.database</tt> cursor. By default the necessary database tables beign with <code>'Auth'</code>. If you want them to begin with something else, perhaps if you want two lots of auth storage in the same database, you can specify the table prepend string using <var>table</var>. For example <code>table='Auth2'</code> would create the tables <code>Auth2Level</code>, <code>Auth2User</code> and <code>Auth2App</code>. 
+
+<P>
+If <var>storage</var> is <code>'file'</code> you must also specify a directory <var>dir</var> which allows read and write access where the auth information is stored.
+
+<P>
+</DD>
+</DL>
+</dl>
+
+<P>
+The <code>AuthAdminFile</code> object returned by the <tt class="function">setup()</tt> function when <code>storage='file'</code> has the following methods and attributes:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-26"><tt class="class">AuthAdminFile</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-27"><tt class="method">applicationExists</tt></a></b>(</nobr></td>
+  <td><var><var>app</var></var>)</td></tr></table>
+<dd>
+Return <code>True</code> if there is an application named <var>app</var>, <code>False</code> otherwise.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-28"><tt class="method">addApplication</tt></a></b>(</nobr></td>
+  <td><var><var>app</var></var>)</td></tr></table>
+<dd>
+Adds an application named <var>app</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-29"><tt class="method">removeApplication</tt></a></b>(</nobr></td>
+  <td><var><var>app</var></var>)</td></tr></table>
+<dd>
+Removes the application named <var>app</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-30"><tt class="method">apps</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a list of application names.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-31"><tt class="method">userExists</tt></a></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table>
+<dd>
+Return <code>True</code> if there is a user with the username <var>username</var>, <code>False</code> otherwise.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-32"><tt class="method">addUser</tt></a></b>(</nobr></td>
+  <td><var><var>username</var>, <var>password</var></var><big>[</big><var>,firstname=''</var><big>]</big><big>[</big><var>,surname=''</var><big>]</big><big>[</big><var>email=''</var><big>]</big>)</td></tr></table>
+<dd>
+Adds a user with the username <var>username</var> and password <var>password</var> to the system. You can optionally also specify the firstname, surname and email address of the user.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-33"><tt class="method">removeUser</tt></a></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table>
+<dd>
+Removes the user with the username <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-34"><tt class="method">getFirstname</tt></a></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table>
+<dd>
+Returns the firstname of the user <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-35"><tt class="method">setFirstname</tt></a></b>(</nobr></td>
+  <td><var><var>username</var>, <var>value</var></var>)</td></tr></table>
+<dd>
+Sets the firstname of the user <var>username</var> to <var>value</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-36"><tt class="method">getSurname</tt></a></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table>
+<dd>
+Returns the surname of the user <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-37"><tt class="method">setSurname</tt></a></b>(</nobr></td>
+  <td><var><var>username</var>, <var>value</var></var>)</td></tr></table>
+<dd>
+Sets the surname of the user <var>username</var> to <var>value</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-38"><tt class="method">getPassword</tt></a></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table>
+<dd>
+Returns the password of the user <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-39"><tt class="method">setPassword</tt></a></b>(</nobr></td>
+  <td><var><var>username</var>, <var>value</var></var>)</td></tr></table>
+<dd>
+Sets the password of the user <var>username</var> to <var>value</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-40"><tt class="method">getEmail</tt></a></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table>
+<dd>
+Returns the email address of the user <var>username</var>.
+
+<P>
+</dl>      
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-41"><tt class="method">setEmail</tt></a></b>(</nobr></td>
+  <td><var><var>username</var>, <var>value</var></var>)</td></tr></table>
+<dd>
+Sets the email address of the user <var>username</var> to <var>value</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-42"><tt class="method">users</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a list of usernames.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-43"><tt class="method">getAccessLevel</tt></a></b>(</nobr></td>
+  <td><var><var>username</var>, <var>app</var></var>)</td></tr></table>
+<dd>
+Returns the access level of the user <var>username</var> for the application named <var>app</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-44"><tt class="method">setAccessLevel</tt></a></b>(</nobr></td>
+  <td><var><var>username</var>, <var>app</var>, <var>level</var></var>)</td></tr></table>
+<dd>
+Sets the access level of the user <var>username</var> for the application named <var>app</var> to <var>level</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-45"><tt class="method">getAccessLevels</tt></a></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table>
+<dd>
+Returns a dictionary of application name, access level pairs for the user with the username <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+</dl>
+
+<P>
+The <code>AuthManagerDatabase</code> object returned by the <tt class="function">setup()</tt> function when <code>storage='database'</code> has the all the methods and attributes of the <tt class="class">AuthAdminFile</tt> object as well as the following methods:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-46"><tt class="class">AuthAdminFile</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-47"><tt class="method">createTables</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Try to create the tables necessary for the auth module using the value specified earlier by <var>table</var> as the prepend for the table names. Returns a list of any errors encountered.
+
+<P>
+</dl>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-48"><tt class="method">dropTables</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Try to drop the auth tables, returning a list of any errors encountered.
+
+<P>
+</dl>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-49"><tt class="method">tablesExist</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+If all the tables exist returns <code>True</code>. If any are missing returns <code>False</code>.
+
+<P>
+</dl>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.2.3 Setting Access Levels" 
+  rel="prev" title="1.2.2.3 Setting Access Levels" 
+  HREF="node11.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2.2 Administering The Auth" 
+  rel="parent" title="1.2.2 Administering The Auth" 
+  HREF="node8.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.3 Examples" 
+  rel="next" title="1.2.3 Examples" 
+  HREF="node13.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node11.html">1.2.2.3 Setting Access Levels</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node8.html">1.2.2 Administering The Auth</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node13.html">1.2.3 Examples</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node113.html" />
+<link rel="prev" href="module-web.error.html" />
+<link rel="parent" href="module-web.error.html" />
+<link rel="next" href="node113.html" />
+<meta name='aesop' content='information' />
+<title>1.6.1 Basic Usage</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.2 Using The info()"
+  href="node113.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node113.html">1.6.2 Using The info()</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003610000000000000000">
+1.6.1 Basic Usage</A>
+</H2>
+
+<P>
+The easiest way of catching and handling errors in Python is to use a <code>try:.. except:.. </code> block around all your code as shown below:
+
+<P>
+<div class="verbatim"><pre>
+try:
+    raise Exception('This error will be caught')
+except:
+    print "An error occured"
+</pre></div>    
+
+<P>
+If you want to produce more detailed error reports you can do something like this:
+
+<P>
+<div class="verbatim"><pre>
+try:
+    raise Exception('This error will be caught and nicely displayed')
+except:
+    import web.error
+    print web.error.info(output='traceback', format='text')
+</pre></div>   
+
+<P>
+This will produce a text format output of the traceback information.
+
+<P>
+If no parameters are specified in the <code>web.error.info()</code> function the result returned is a full HTML debug representation of the error similar to that produced by the <tt class="module">cgitb</tt> module.
+
+<P>
+Often a more convenient way to catch errors is by using the <tt class="function">web.error.handle()</tt> method. If an error is raised it will be automatically handled. The default behaviour is to print a <code>Content-type</code> header followed by HTML information about the error suitable for display in a web browser. This can be done as follows:
+
+<P>
+<div class="verbatim"><pre>
+import web.error
+web.error.handle()
+
+raise Exception('This error will be caught and nicely displayed for a web browser')
+</pre></div>
+
+<P>
+This will produce a full HTML page giving the debug traceback of the error.
+
+<P>
+Python allows you to put both lines of code on one line to make things look neater if you use a <code>;</code> so in some of the following samples the error handling initialising will look like this:
+
+<P>
+<div class="verbatim"><pre>
+import web.error; web.error.handle()
+</pre></div>
+
+<P>
+Agian a full HTML page giving the tracback of the error is displayed together with the HTTP header for display in a browser. You can specify the information displayed by the <tt class="function">web.error.handle()</tt> function by passing any parameters that can be passed to the <tt class="function">web.error.info()</tt> function, but if you do this you should also specify the handler you wish to use. The example below prints a text representation of the code which caused the error to a web browser:
+
+<P>
+<div class="verbatim"><pre>
+import web.error
+web.error.handle(
+    handler  = 'browser',
+    output   = 'code', 
+    format   = 'text',
+)
+</pre></div>
+
+<P>
+Finally, you may wish to use a different error handler, for example you may wish to log the error to a file rather than displaying it. You can specify the <var>handler</var> parameter as a string representing the name of the handler you wish to use. Any extra parameters the handler takes can also be specified in the <tt class="function">handle()</tt> function. In this example <var>filename</var> is a parameter used by the <code>file</code> handler and <var>output</var> and <var>format</var> are used by the <tt class="function">web.error.info()</tt> function to create a representation of the error:
+
+<P>
+<div class="verbatim"><pre>
+import web.error
+web.error.handle(
+    handler  = 'file',
+    filename = 'test.html',
+    output   = 'traceback', 
+    format   = 'text',
+)
+
+raise Exception('This error will be caught appended to the test.html file as a text format traceback')
+</pre></div>
+
+<P>
+This time the error will be logged to the file <span class="file">test.html</span> and no output will be printed. 
+
+<P>
+The next sections describe the options for the <tt class="function">error()</tt> and <tt class="function">info()</tt> functions and the various error handlers you can use with the <tt class="function">handle()</tt> function provided in the <tt class="module">web.error.handler</tt> module. The final section describes how you can create custom error handlers for even more advanced error handling.
+
+<P>
+There is a section in the documentation for the <tt class="module">web.wsgi</tt> module describing how error handling could be performed in a Web Server Gateway Interface application.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.2 Using The info()"
+  href="node113.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node113.html">1.6.2 Using The info()</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

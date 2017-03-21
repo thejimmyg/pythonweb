@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="module-web.database.html">
+<LINK REL="prev" href="module-web.auth.html">
+<LINK REL="parent" href="web.html">
+<LINK REL="next" HREF="node18.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="datetime -- Compatibility code providing date and time classes for Python 2.2 users">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.3 datetime -- Compatibility code providing date and time classes for Python 2.2 users</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.3.3 Using Alternative Drivers" 
+  href="example-command-web-auth-create-file.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.3.1 Module-Level Functionality" 
+  HREF="node18.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-auth-create-file.html">1.2.3.3 Using Alternative Drivers</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node18.html">1.3.1 Module-Level Functionality</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION003300000000000000000">&nbsp;</A>
+<BR>
+1.3 <tt class="module">datetime</tt> -- Compatibility code providing date and time classes for Python 2.2 users
+</H1>
+
+
+<a name="l2h-70">&nbsp;</a>
+<P>
+The following classes provide a subset of the functionality of the Python 2.3 <tt class="class">date</tt>, <tt class="class">time</tt> and <tt class="class">datetime</tt> Objects. If you want to do sophisticated date and time classes is it is reccommended that you use Python 2.3. These classes are designed only so that Python 2.2 users can still use date and time functionality in the <tt class="module">web.database</tt> module.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+It should be noted that although the <tt class="class">time</tt> and <tt class="class">datetime</tt> classes have the ability to support microseconds, the <tt class="module">web.database</tt> module only deals in whole seconds since some of the underlying databases do not support microseconds.</span>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-50"><tt class="class">date</tt></a></b>(</nobr></td>
+  <td><var><var>year</var>, <var>month</var>, <var>day</var></var>)</td></tr></table>
+<dd>
+
+<P>
+A <tt class="class">date</tt> object represents a date (year, month and day) in an idealized calendar, the current Gregorian calendar indefinitely extended in both directions. January 1 of year 1 is called day number 1, January 2 of year 1 is called day number 2, and so on. This matches the definition of the "proleptic Gregorian" calendar in Dershowitz and Reingold's book <i>Calendrical Calculations</i>, where it's the base calendar for all computations. See the book for algorithms for converting between proleptic Gregorian ordinals and many other calendar systems. 
+
+<P>
+All arguments are required. Arguments may be ints or longs, in the following ranges: 
+
+<P>
+
+<UL>
+<LI><code>MINYEAR &lt;= </code><var>year</var><code> &lt;= MAXYEAR</code>
+</LI>
+<LI><code>1 &lt;= </code><var>month</var><code> &lt;= 12</code>
+</LI>
+<LI><code>1 &lt;= </code><var>day</var><code> &lt;= number of days in the given month and year </code>
+</LI>
+</UL>
+
+<P>
+If an argument outside those ranges is given, <code>ValueError</code> is raised. 
+
+<P>
+Instance Attributes:
+
+<P>
+<dl><dt><b><a name="l2h-51"><tt class="member">year</tt></a></b>
+<dd>
+Between <code>MINYEAR</code> and <code>MAXYEAR</code> inclusive.
+</dl>
+<dl><dt><b><a name="l2h-52"><tt class="member">month</tt></a></b>
+<dd>
+Between 1 and 12 inclusive. 
+</dl>
+<dl><dt><b><a name="l2h-53"><tt class="member">day</tt></a></b>
+<dd>
+Between 1 and the number of days in the given month of the given year. 
+</dl>
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-54"><tt class="class">time</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>hour=0</var><big>]</big><big>[</big><var>,minute=0</var><big>]</big><big>[</big><var>,second=0</var><big>]</big><big>[</big><var>,microsecond=0</var><big>]</big>)</td></tr></table>
+<dd>
+
+<P>
+A <tt class="class">time</tt> object represents a (local) time of day, independent of any particular day.
+
+<P>
+All arguments are required. Arguments may be ints or longs, in the following ranges: 
+
+<P>
+
+<UL>
+<LI><code>0 &lt;= </code><var>hour</var><code> &lt; 24 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>minute</var><code> &lt; 60 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>second</var><code> &lt; 60 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>microsecond</var><code> &lt; 1000000 </code>
+</LI>
+</UL>
+
+<P>
+If an argument outside those ranges is given, <code>ValueError</code> is raised. 
+
+<P>
+Instance Attributes:
+
+<P>
+<dl><dt><b><a name="l2h-55"><tt class="member">hour</tt></a></b>
+<dd>
+In <code>range(24)</code>. 
+</dl>
+<dl><dt><b><a name="l2h-56"><tt class="member">minute</tt></a></b>
+<dd>
+In <code>range(60)</code>. 
+</dl>
+<dl><dt><b><a name="l2h-57"><tt class="member">second</tt></a></b>
+<dd>
+In <code>range(60)</code>. 
+</dl>
+<dl><dt><b><a name="l2h-58"><tt class="member">microsecond</tt></a></b>
+<dd>
+In <code>range(1000000)</code>. 
+</dl>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-59"><tt class="class">datetime</tt></a></b>(</nobr></td>
+  <td><var><var>year</var>, <var>month</var>, <var>day</var></var><big>[</big><var>,hour=0</var><big>]</big><big>[</big><var>,minute=0</var><big>]</big><big>[</big><var>,second=0</var><big>]</big><big>[</big><var>,microsecond=0</var><big>]</big>)</td></tr></table>
+<dd>
+
+<P>
+A <tt class="class">datetime</tt> object is a single object containing all the information from a <tt class="class">date</tt> object and a <tt class="class">time</tt> object. Like a <tt class="class">date</tt> object, <tt class="class">datetime</tt> assumes the current Gregorian calendar extended in both directions; like a <tt class="class">time</tt> object, <tt class="class">datetime</tt> assumes there are exactly 3600*24 seconds in every day. 
+
+<P>
+All arguments are required. Arguments may be ints or longs, in the following ranges: 
+
+<P>
+
+<UL>
+<LI><code>MINYEAR &lt;= </code><var>year</var><code> &lt;= MAXYEAR</code>
+</LI>
+<LI><code>1 &lt;= </code><var>month</var><code> &lt;= 12</code>
+</LI>
+<LI><code>1 &lt;= </code><var>day</var><code> &lt;= number of days in the given month and year </code>
+</LI>
+<LI><code>0 &lt;= </code><var>hour</var><code> &lt; 24 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>minute</var><code> &lt; 60 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>second</var><code> &lt; 60 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>microsecond</var><code> &lt; 1000000 </code>
+</LI>
+</UL>
+
+<P>
+If an argument outside those ranges is given, <code>ValueError</code> is raised. 
+
+<P>
+Instance Attributes:
+
+<P>
+<dl><dt><b><a name="l2h-60"><tt class="member">year</tt></a></b>
+<dd>
+Between <code>MINYEAR</code> and <code>MAXYEAR</code> inclusive.
+</dl>
+<dl><dt><b><a name="l2h-61"><tt class="member">month</tt></a></b>
+<dd>
+Between 1 and 12 inclusive. 
+</dl>
+<dl><dt><b><a name="l2h-62"><tt class="member">day</tt></a></b>
+<dd>
+Between 1 and the number of days in the given month of the given year. 
+</dl>
+<dl><dt><b><a name="l2h-63"><tt class="member">hour</tt></a></b>
+<dd>
+In <code>range(24)</code>. 
+</dl>
+<dl><dt><b><a name="l2h-64"><tt class="member">minute</tt></a></b>
+<dd>
+In <code>range(60)</code>. 
+</dl>
+<dl><dt><b><a name="l2h-65"><tt class="member">second</tt></a></b>
+<dd>
+In <code>range(60)</code>. 
+</dl>
+<dl><dt><b><a name="l2h-66"><tt class="member">microsecond</tt></a></b>
+<dd>
+In <code>range(1000000)</code>. 
+</dl>
+</dl>
+
+<P>
+All classes have the following class methods:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-67"><tt class="method">strftime</tt></a></b>(</nobr></td>
+  <td><var><var>format</var></var>)</td></tr></table>
+<dd>
+Format the date using standard time module string format strings:
+<div class="verbatim"><pre>
+%a Locale's abbreviated weekday name.   
+%A Locale's full weekday name.   
+%b Locale's abbreviated month name.   
+%B Locale's full month name.   
+%c Locale's appropriate date and time representation.   
+%d Day of the month as a decimal number [01,31].   
+%H Hour (24-hour clock) as a decimal number [00,23].   
+%I Hour (12-hour clock) as a decimal number [01,12].   
+%j Day of the year as a decimal number [001,366].   
+%m Month as a decimal number [01,12].   
+%M Minute as a decimal number [00,59].   
+%p Locale's equivalent of either AM or PM.   
+%S Second as a decimal number [00,61]. (1) 
+%U Week number of the year (Sunday as the first day of the week) as a decimal number [00,53]. All days in a new year preceding the first Sunday are considered to be in week 0.   
+%w Weekday as a decimal number [0(Sunday),6].   
+%W Week number of the year (Monday as the first day of the week) as a decimal number [00,53]. All days in a new year preceding the first Monday are considered to be in week 0.   
+%x Locale's appropriate date representation.   
+%X Locale's appropriate time representation.   
+%y Year without century as a decimal number [00,99].   
+%Y Year with century as a decimal number.   
+%Z Time zone name (no characters if no time zone exists).   
+%% A literal "%" character. 
+</pre></div>
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; datetime.datetime(2004,5,3,10,30,50).strftime('%x-%X')
+'05/03/04-10:30:50'
+</pre></div>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-68"><tt class="method">timetuple</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Returns a basic time tuple for the date. <span class="warning"><b class="label">Warning:</b>
+The last 6 entries in the tuple returned from this function are obtained from <code>time.localtime()</code> and do not represent anything.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-69"><tt class="method">isoformat</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return the date as a standard SQL string of the format. <span class="warning"><b class="label">Warning:</b>
+<code>microseconds</code> are ignored.</span>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; import web, datetime
+&gt;&gt;&gt; datetime.date(2004,5,3).isoformat()
+'2004-05-03'
+&gt;&gt;&gt; datetime.time(10,30,50,9).isoformat() # Microseconds are ignored
+'10:30:50'
+&gt;&gt;&gt; datetime.datetime(2004,5,3,10,30,50).isoformat()
+'2004-05-03 10:30:50'
+</pre></div>
+</dl>
+
+<P>
+
+<p><hr>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node18.html">1.3.1 Module-Level Functionality</a>
+</ul>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.3.3 Using Alternative Drivers" 
+  rel="prev" title="1.2.3.3 Using Alternative Drivers" 
+  href="example-command-web-auth-create-file.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.3.1 Module-Level Functionality" 
+  rel="next" title="1.3.1 Module-Level Functionality" 
+  HREF="node18.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-auth-create-file.html">1.2.3.3 Using Alternative Drivers</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node18.html">1.3.1 Module-Level Functionality</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

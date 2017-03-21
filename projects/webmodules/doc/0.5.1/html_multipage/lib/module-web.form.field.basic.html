@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="module-web.form.field.typed.html" />
+<link rel="prev" href="node124.html" />
+<link rel="parent" href="node124.html" />
+<link rel="next" href="module-web.form.field.typed.html" />
+<meta name='aesop' content='information' />
+<title>1.8.4.1 web.form.field.basic -- Various fields for use with web.form</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.8.4 Fields"
+  href="node124.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.8.4 Fields"
+  href="node124.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.8.4.2 web.form.field.typed  "
+  href="module-web.form.field.typed.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node124.html">1.8.4 Fields</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node124.html">1.8.4 Fields</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.form.field.typed.html">1.8.4.2 web.form.field.typed  </A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003841000000000000000"></A><A NAME="form-field-basic"></A>
+<BR>
+1.8.4.1 <tt class="module">web.form.field.basic</tt> -- Various fields for use with <tt class="module">web.form</tt>
+</H3>
+<A NAME="module-web.form.field.basic"></A>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-244' xml:id='l2h-244' class="class">Field</tt></b>(</nobr></td>
+  <td><var><var>name</var>,</var><big>[</big><var>default=''</var><big>]</big><var>,</var><big>[</big><var>description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please enter a value'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+basic.Field is an abstract class from which other classes are derived.
+    <DL>
+<DT><STRONG><var>name</var></STRONG></DT>
+<DD>The name of the field.
+    
+</DD>
+<DT><STRONG><var>default</var></STRONG></DT>
+<DD>The default value of the field
+    
+</DD>
+<DT><STRONG><var>description</var></STRONG></DT>
+<DD>A description of the field for use as part of a form
+    
+</DD>
+<DT><STRONG><var>error</var></STRONG></DT>
+<DD>The error message to initialise the field with
+    
+</DD>
+<DT><STRONG><var>required</var></STRONG></DT>
+<DD>If <code>True</code> a value must be entered. A string <code>''</code> is not a valid value. If <var>required=<code>True</code></var> <var>default</var> cannot be <code>''</code>.
+    
+</DD>
+<DT><STRONG><var>requiredError</var></STRONG></DT>
+<DD>A string containing the error to display if no value is entered.
+    
+</DD>
+</DL>
+    <dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-245' xml:id='l2h-245' class="method">populate</tt></b>(</nobr></td>
+  <td><var><var>values</var></var>)</td></tr></table></dt>
+<dd>
+    Populates the field from a <tt class="class">web.cgi</tt> object.
+        <DL>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>The <tt class="class">web.cgi</tt> object to use.
+        
+</DD>
+</DL>
+    </dl>
+    <dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-246' xml:id='l2h-246' class="method">valid</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>value=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    Populates the field from a <tt class="class">web.cgi</tt> object.
+        <DL>
+<DT><STRONG><var>value</var></STRONG></DT>
+<DD>The value to validate. If <var>value</var>=<code>None</code> then the current value of the field if validated instead. Returns <code>True</code> or <code>False</code>.
+        
+</DD>
+</DL>
+    </dl>
+    <dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-247' xml:id='l2h-247' class="method">html</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Returns the object as an HTML string
+    </dl>
+    <dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-248' xml:id='l2h-248' class="method">frozen</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Returns a string representation of the field
+    </dl>
+    <dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-249' xml:id='l2h-249' class="method">hidden</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Returns the field as a hidden field
+    </dl>
+    <dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-250' xml:id='l2h-250' class="method">error</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Returns the contents of the error string
+    </dl>
+    <dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-251' xml:id='l2h-251' class="method">setError</tt></b>(</nobr></td>
+  <td><var><var>error</var></var>)</td></tr></table></dt>
+<dd>
+    Set the error of the field to <var>error</var>
+    </dl>
+    <dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-252' xml:id='l2h-252' class="method">description</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Returns the contents of the description string
+    </dl>
+    <dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-253' xml:id='l2h-253' class="method">name</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Returns the name of the field
+    </dl>
+    <dl><dt><b><tt id='l2h-254' xml:id='l2h-254' class="member">value</tt></b></dt>
+<dd>
+    The value of the field
+    </dl>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-255' xml:id='l2h-255' class="class">Input</tt></b>(</nobr></td>
+  <td><var><var>name</var></var><big>[</big><var>,default=''</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please enter a value'</var><big>]</big><var>,</var><big>[</big><var>,size=40</var><big>]</big><var></var><big>[</big><var>,maxlength=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    <DL>
+<DT><STRONG><var>size</var></STRONG></DT>
+<DD>Size of the filed. The number of characters that are displayed 
+    
+</DD>
+<DT><STRONG><var>maxlength</var></STRONG></DT>
+<DD>The maximum number of characters which can be entered into the field. <code>None</code> means there is no limit.
+    
+</DD>
+</DL>
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-256' xml:id='l2h-256' class="class">Password</tt></b>(</nobr></td>
+  <td><var><var>name</var></var><big>[</big><var>,default=''</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please enter a value'</var><big>]</big><var>,</var><big>[</big><var>,size=40</var><big>]</big><var></var><big>[</big><var>,maxlength=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    <DL>
+<DT><STRONG><var>size</var></STRONG></DT>
+<DD>Size of the filed. The number of characters that are displayed 
+    
+</DD>
+<DT><STRONG><var>maxlength</var></STRONG></DT>
+<DD>The maximum number of characters which can be entered into the field. <code>None</code> means there is no limit.
+    
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-257' xml:id='l2h-257' class="class">Hidden</tt></b>(</nobr></td>
+  <td><var><var>name</var>,</var><big>[</big><var>default=''</var><big>]</big><var>,</var><big>[</big><var>description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please enter a value'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    <span class="note"><b class="label">Note:</b>
+Although you can, it makes little sense to set or read an error on a hidden field.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-258' xml:id='l2h-258' class="class">Checkbox</tt></b>(</nobr></td>
+  <td><var><var>name</var></var><big>[</big><var>,default=''</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please enter a value'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    <DL>
+<DT><STRONG><var>default</var></STRONG></DT>
+<DD>The default can only be <code>'on'</code> or <code>''</code>
+    
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-259' xml:id='l2h-259' class="class">Submit</tt></b>(</nobr></td>
+  <td><var><var>name</var></var><big>[</big><var>,default=''</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please enter a value'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    Creates a submit button. Same methods and attributes as <tt class="class">basic.Field</tt>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-260' xml:id='l2h-260' class="class">Reset</tt></b>(</nobr></td>
+  <td><var><var>name</var></var><big>[</big><var>,default=''</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please enter a value'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    Creates a reset button. Same methods and attributes as <tt class="class">basic.Field</tt>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-261' xml:id='l2h-261' class="class">TextArea</tt></b>(</nobr></td>
+  <td><var><var>name</var></var><big>[</big><var>,default=''</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please enter a value'</var><big>]</big><var></var><big>[</big><var>,cols=None</var><big>]</big><var></var><big>[</big><var>,rows=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    <DL>
+<DT><STRONG><var>cols</var></STRONG></DT>
+<DD>The number of columns in the field. (The number of characters that are displayed in each row). <code>None</code> means not set.
+    
+</DD>
+<DT><STRONG><var>rows</var></STRONG></DT>
+<DD>The number of rows of text on display before the box has to scroll. <code>None</code> means not set.
+    
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-262' xml:id='l2h-262' class="class">File</tt></b>(</nobr></td>
+  <td><var><var>name</var></var><big>[</big><var>,default=''</var><big>]</big><var>,</var><big>[</big><var>description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please enter a value'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    For file uploads.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+If a <tt class="class">web.form.Form</tt> object has a <tt class="class">web.form.field.basic.File</tt> field, the <var>method</var> parameter should be set to <code>'POST'</code> and the <var>enctype</var> should be set to <code>'multipart/form-data'</code> for file uploads to work.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-263' xml:id='l2h-263' class="class">Select</tt></b>(</nobr></td>
+  <td><var><var>name</var>,<var>options</var></var><big>[</big><var>,default=''</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please choose an option'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    <DL>
+<DT><STRONG><var>options</var></STRONG></DT>
+<DD>Should be a list or tuple of <code>[value, label]</code> pairs. Each <code>value</code> or <code>label</code> should be a string. Each <code>value</code> should be unique.
+    
+</DD>
+<DT><STRONG><var>default</var></STRONG></DT>
+<DD>A string equal to the <code>value</code> of the default option.
+    
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-264' xml:id='l2h-264' class="class">RadioGroup</tt></b>(</nobr></td>
+  <td><var><var>name</var>,<var>options</var></var><big>[</big><var>,default=''</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please choose an option'</var><big>]</big><var></var><big>[</big><var>,align='horiz'</var><big>]</big><var></var><big>[</big><var>,cols=4</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    <DL>
+<DT><STRONG><var>options</var></STRONG></DT>
+<DD>Should be a list or tuple of <code>[value, label]</code> pairs. Each <code>value</code> or <code>label</code> should be a string. Each <code>value</code> should be unique.
+    
+</DD>
+<DT><STRONG><var>default</var></STRONG></DT>
+<DD>A string equal to the <code>value</code> of the default option.
+    
+</DD>
+<DT><STRONG><var>align</var></STRONG></DT>
+<DD>Can be <code>'horiz'</code>, <code>'vert'</code> or <code>'table'</code>
+    
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-265' xml:id='l2h-265' class="class">Menu</tt></b>(</nobr></td>
+  <td><var><var>name</var>,<var>options</var></var><big>[</big><var>,default=[]</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please choose at least one option'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    <DL>
+<DT><STRONG><var>options</var></STRONG></DT>
+<DD>Should be a list or tuple of <code>[value, label]</code> pairs. Each <code>value</code> or <code>label</code> should be a string. Each <code>value</code> should be unique.
+    
+</DD>
+<DT><STRONG><var>default</var></STRONG></DT>
+<DD>A list or tuple of strings for all the default values to be selected.
+    
+</DD>
+</DL>
+    <dl><dt><b><tt id='l2h-266' xml:id='l2h-266' class="member">value</tt></b></dt>
+<dd>
+    The value of the field returned as a List.
+    </dl>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-267' xml:id='l2h-267' class="class">CheckBoxGroup</tt></b>(</nobr></td>
+  <td><var><var>name</var>,<var>options</var></var><big>[</big><var>,default=[]</var><big>]</big><var></var><big>[</big><var>,description=''</var><big>]</big><var></var><big>[</big><var>,error=''</var><big>]</big><var></var><big>[</big><var>,required=False</var><big>]</big><var></var><big>[</big><var>,requiredError='Please choose at least one option'</var><big>]</big><var></var><big>[</big><var>,align='vert'</var><big>]</big><var></var><big>[</big><var>,cols=4</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+    <DL>
+<DT><STRONG><var>options</var></STRONG></DT>
+<DD>Should be a list or tuple of <code>[value, label]</code> pairs. Each <code>value</code> or <code>label</code> should be a string. Each <code>value</code> should be unique.
+    
+</DD>
+<DT><STRONG><var>default</var></STRONG></DT>
+<DD>A list or tuple of strings for all the default values to be selected.
+    
+</DD>
+<DT><STRONG><var>align</var></STRONG></DT>
+<DD>Can be <code>'horiz'</code>, <code>'vert'</code> or <code>'table'</code>
+    
+</DD>
+<DT><STRONG><var>cols</var></STRONG></DT>
+<DD>If <var>align='table'</var>, <var>cols</var> should be an integer specifying the number of columns in the table.
+    
+</DD>
+</DL>
+    <dl><dt><b><tt id='l2h-268' xml:id='l2h-268' class="member">value</tt></b></dt>
+<dd>
+    The value of the field returned as a List.
+    </dl>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.8.4 Fields"
+  href="node124.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.8.4 Fields"
+  href="node124.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.8.4.2 web.form.field.typed  "
+  href="module-web.form.field.typed.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node124.html">1.8.4 Fields</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node124.html">1.8.4 Fields</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.form.field.typed.html">1.8.4.2 web.form.field.typed  </A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

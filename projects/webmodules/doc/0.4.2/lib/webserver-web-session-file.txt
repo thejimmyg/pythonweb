@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+# show python where the web modules are
+import sys
+sys.path.append('../')
+sys.path.append('../../../') 
+
+import web, web.session, os
+
+session = web.session.start(
+    storage='file',
+    app='test', 
+    dir='../doc/src/lib/example-web-session', 
+    expire=10,
+)
+
+print "Content-type: text/html\n\n"
+
+if session.created:
+    print """<html>
+                <h1>This is your first visit</h1>
+                <p>Setting variable1 to 'Python Rules!'.</p>
+                <p>Refresh this page...</p>
+            </html>"""
+    session['variable1'] = 'Python Rules!'
+else:
+    if web.cgi.has_key('destroy'):
+        session.destroy()
+        print """<html><h1>Session Deleted</h1>
+                <p><a href="%s">Start again</a>.
+                </p></html>"""%(os.environ['SCRIPT_NAME'])
+    else:
+        print """<html><h1>Welcome back</h1><p>variable1: %s</p>
+                <p><a href="%s?destroy=True">Destroy session</a>.
+                </p></html>"""%(session['variable1'],os.environ['SCRIPT_NAME'])

@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="object.html">
+<LINK REL="prev" href="module-datetime.html">
+<LINK REL="parent" href="web.html">
+<LINK REL="next" HREF="node20.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="web.database -- SQL database layer">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4 web.database -- SQL database layer</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.3.1 Module-Level Functionality" 
+  HREF="node18.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.1 Introduction" 
+  HREF="node20.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node18.html">1.3.1 Module-Level Functionality</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node20.html">1.4.1 Introduction</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION003400000000000000000">&nbsp;</A>
+<BR>
+1.4 <tt class="module">web.database</tt> -- SQL database layer
+</H1>
+
+
+<P>
+The <tt class="module">web.database</tt> module is a simple SQL abstraction layer which sits on top of a DB-API 2.0 cursor to implement data type conversions, provide database independance and offer a more Python-like interface to the data returned from queries. 
+
+<P>
+Here are the main features of the module:
+
+<P>
+
+<UL>
+<LI>100% compatible with the underlying DB-API 2.0 cursor. A <tt class="module">web.database</tt> cursor is also a DB-API 2.0 cursor.
+</LI>
+<LI>Provides methods including <tt class="method">select()</tt>, <tt class="method">insert()</tt>, <tt class="method">update()</tt>, <tt class="method">delete()</tt>, <tt class="method">create()</tt>, <tt class="method">alter()</tt> and <tt class="method">drop()</tt> which build and customise the SQL depending on the database being used providing database independance.
+</LI>
+<LI>Provides strong typing for the data being used. No need to deal with SQL strings, the module automatically encodes and decodes data for the approriate column.
+</LI>
+</UL>
+
+<P>
+<div class="seealso">
+  <p class="heading"><b>See Also:</b></p>
+
+  <dl compact class="seetitle">
+    <dt><em class="citetitle"><a href="http://www.python.org/topics/database/"
+        >Python DB-SIG Pages</a></em>
+    <dd>To find out more about the DB-API 2.0 or how to program using DB-API 2.0 methods, please visit <a class="url" href="http://www.python.org/topics/database/">http://www.python.org/topics/database/</a>. The rest of this documentation will assume you are not interested in using the cursor as a DB-API 2.0 cursor and that you want to know the additional features available.
+  </dl>
+
+<P>
+</div>
+
+<P>
+
+<p><hr>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node20.html">1.4.1 Introduction</a>
+<UL>
+<LI><A href="node21.html">1.4.1.1 Overview of Approach</a>
+<LI><A href="node22.html">1.4.1.2 Supported Databases</a>
+</ul>
+<LI><A href="node23.html">1.4.2 Connecting to a Database</a>
+<LI><A href="node24.html">1.4.3 Cursor Options</a>
+<LI><A href="node25.html">1.4.4 Using SQL Commands</a>
+<UL>
+<LI><A href="node26.html">1.4.4.1 Understanding Field Types</a>
+<LI><A href="node27.html">1.4.4.2 Selecting Data</a>
+<UL>
+<LI><A href="node27.html#SECTION003442100000000000000">1.4.4.2.1 The where Parameter</a>
+<LI><A href="node27.html#SECTION003442200000000000000">1.4.4.2.2 The order Parameter</a>
+<LI><A href="node27.html#SECTION003442300000000000000">1.4.4.2.3 The rest Parameter</a>
+<LI><A href="node27.html#SECTION003442400000000000000">1.4.4.2.4 Disabling autoExecute</a>
+<LI><A href="node27.html#SECTION003442500000000000000">1.4.4.2.5 Using Aliases</a>
+<LI><A href="node27.html#SECTION003442600000000000000">1.4.4.2.6 Using Joins</a>
+</ul>
+<LI><A href="node28.html">1.4.4.3 Inserting Data</a>
+<LI><A href="node29.html">1.4.4.4 Updating Data</a>
+<LI><A href="node30.html">1.4.4.5 Deleting Data</a>
+<LI><A href="node31.html">1.4.4.6 Creating Tables</a>
+<LI><A href="node32.html">1.4.4.7 Dropping Tables</a>
+<LI><A href="node33.html">1.4.4.8 Altering Tables</a>
+<LI><A href="node34.html">1.4.4.9 Functions</a>
+</ul>
+<LI><A href="node35.html">1.4.5 Cursor Methods</a>
+<LI><A href="node36.html">1.4.6 Debugging</a>
+<LI><A href="node37.html">1.4.7 Utility Methods</a>
+<LI><A href="node38.html">1.4.8 Developer Notes</a>
+<UL>
+<LI><A href="node39.html">1.4.8.1 The Types Cache</a>
+<LI><A href="node40.html">1.4.8.2 Field Information</a>
+</ul>
+<LI><A href="node41.html">1.4.9 Database Specific Notes</a>
+<UL>
+<LI><A href="node42.html">1.4.9.1 MySQL</a>
+<LI><A href="node43.html">1.4.9.2 SQLite</a>
+<LI><A href="node44.html">1.4.9.3 ODBC</a>
+<LI><A href="node45.html">1.4.9.4 Complicaitons with Gadfly</a>
+<UL>
+<LI><A href="node45.html#SECTION003494100000000000000">1.4.9.4.1 Creating a Gadfly Database</a>
+<LI><A href="node45.html#SECTION003494200000000000000">1.4.9.4.2 Lack of NULL Support</a>
+<LI><A href="node45.html#SECTION003494300000000000000">1.4.9.4.3 FTP Transfer</a>
+</ul>
+</ul>
+<LI><A href="example-command-web-database.html">1.4.10 Test Code</a>
+<LI><A href="node47.html">1.4.11 Future</a>
+</ul>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.3.1 Module-Level Functionality" 
+  rel="prev" title="1.3.1 Module-Level Functionality" 
+  HREF="node18.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.1 Introduction" 
+  rel="next" title="1.4.1 Introduction" 
+  HREF="node20.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node18.html">1.3.1 Module-Level Functionality</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node20.html">1.4.1 Introduction</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

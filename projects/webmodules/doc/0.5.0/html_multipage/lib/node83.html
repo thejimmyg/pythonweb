@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node87.html" />
+<link rel="prev" href="node80.html" />
+<link rel="parent" href="object.html" />
+<link rel="next" href="example-command-web-database-object-simple.html" />
+<meta name='aesop' content='information' />
+<title>1.5.2 Introductory Example</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.1.2 Compared To Other"
+  href="node82.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5 web.database.object  "
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.2.1 Full Code Listing"
+  href="example-command-web-database-object-simple.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node82.html">1.5.1.2 Compared To Other</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-database-object-simple.html">1.5.2.1 Full Code Listing</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003520000000000000000">
+1.5.2 Introductory Example</A>
+</H2>
+
+<P>
+Below is about the simplest possible example where a database object named <code>MyDatabase</code> is created. The database object is connected to an SQLite database named <code>object-simple.db</code> but could equally well be a MySQL database or ODBC supported database like MS Access.
+
+<P>
+<div class="verbatim"><pre>
+import web.database, web.database.object                                    
+                                                                            
+connection = web.database.connect(type="sqlite",database="object-simple.db")
+cursor = connection.cursor()                                                
+                                                                            
+person = web.database.object.Table("Person")                                
+person.addColumn(web.database.object.String(name="firstName"))              
+person.addColumn(web.database.object.String(name="surname"))                
+
+database = web.database.object.Database()                                   
+database.addTable(person)                                                   
+database.init(cursor)
+</pre></div>
+
+<P>
+This first lines import the modules we need and make the <tt class="module">web.database</tt> connection. We could have made any database connection supported by the <tt class="module">web.database</tt> module. Below are some other examples for the 3rd line.
+
+<P>
+<div class="verbatim"><pre>
+connection = web.database.connect(type="odbc", database="AccessDatabase")
+connection = web.database.connect(type="mysql", host="pythonweb.org", user="james", password="hello")
+</pre></div>
+
+<P>
+The database will contain one table named <code>Person</code>. The <code>Person</code> table has two columns, both of which are String columns. One is named <code>firstName</code> and the other <code>surname</code>. All <tt class="module">web.database.object</tt> column objects must take a <var>name</var> parameter and this is used as the column name. 
+
+<P>
+Once we have finished defining our table we create a <code>web.database.object.Database()</code> which will be the object we use to manipulate the database. We add out table definition to the database definition using <code>database.addTable(person)</code> and then initilise the database to associate it with the live databaseusing <code>database.init(cursor)</code>.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+Once a database object is initialised you cannot add any more tables or modify the database's structure in any way.</span>
+
+<P>
+Now we have defined and initialised out database we can start using it. If the table does not already exist in the live database we need to create it as follows:
+
+<P>
+<div class="verbatim"><pre>
+if not database.tablesExist():
+    database.createTables()
+    print "Created Table"
+</pre></div>
+
+<P>
+This command creates every table the database needs (in our case just the one). If you decide to change the structure of the tables at a later date after you have created the tables in the live database you will need to remove them all using <code>database.dropTables()</code> and recreate them from scratch. This means you would loose all the information so it is important to decide on the correct structure before creating the tables.
+
+<P>
+All information in the database can be accessed through a dictionary-like interface. For example the database object acts like a dictionary of tables and each table acts like a dictionary of rows. Each row acts like a dictionary of field values. 
+
+<P>
+Now we have created the table we are free to add, edit and remove data. Following on from the previous example. 
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; john = database['Person'].insert(firstName="John", surname="Smith")
+&gt;&gt;&gt; print john['firstName']
+John
+&gt;&gt;&gt; print john['surname']
+Smith
+&gt;&gt;&gt; john['surname'] = 'Doe'
+&gt;&gt;&gt; print john['surname']
+Doe
+&gt;&gt;&gt; print john['rowid']
+1
+</pre></div>
+
+<P>
+In this way you can create and modify the table information. Take note of the line <code>&#187;&gt; john['rowid']</code>. Each new object (which is equivalent to a row in the table) is given a unique integer number named the <code>rowid</code> by which it can be identified.
+
+<P>
+We can use this rowid to retrieve John Smith's information from the database at a later time. There are two ways to retrieve rows from the table using the rowid:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; row1 = database['Person'][1]
+&gt;&gt;&gt; row2 = database['Person'].row(1)
+&gt;&gt;&gt; print row1 == row2 == john
+True
+</pre></div>
+
+<P>
+Once you have made changes to the database you will need to commit your changes using <code>connection.commit()</code> otherwise your changes may be lost. By the end of this session our database table looks like this:
+
+<P>
+<div class="verbatim"><pre>
+# Tables in the 'test' database
++----------------+
+| Tables_in_test |
++----------------+
+| Person         |
++----------------+
+
+# The Person table
++-------+-----------+---------+
+| rowid | firstName | surname |
++-------+-----------+---------+
+| 1     | John      | Doe     |
++-------+-----------+---------+
+</pre></div>
+
+<P>
+Thats about all there is to it!
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="example-command-web-database-object-simple.html">1.5.2.1 Full Code Listing</a>
+<LI><A href="node85.html">1.5.2.2 Using Alternative Keys</a>
+<LI><A href="node86.html">1.5.2.3 Available Columns</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.1.2 Compared To Other"
+  href="node82.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5 web.database.object  "
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.2.1 Full Code Listing"
+  href="example-command-web-database-object-simple.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node82.html">1.5.1.2 Compared To Other</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-database-object-simple.html">1.5.2.1 Full Code Listing</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

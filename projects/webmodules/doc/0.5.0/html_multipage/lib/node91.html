@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node96.html" />
+<link rel="prev" href="node89.html" />
+<link rel="parent" href="object.html" />
+<link rel="next" href="node92.html" />
+<meta name='aesop' content='information' />
+<title>1.5.5 Building Queries</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.4.1 Full Code Listing"
+  href="example-command-web-database-object-related.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5 web.database.object  "
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.5.1 How It Works"
+  href="node92.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-database-object-related.html">1.5.4.1 Full Code Listing</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node92.html">1.5.5.1 How It Works</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003550000000000000000">
+1.5.5 Building Queries</A>
+</H2>
+
+<P>
+You can build complex data structures because each table can contain as many columns, multiple, related and single joins as you like. This isn't a lot of use if you cannot then select the information you want. So far you know how to select data using a series of keys or rowids but the power of SQL is in being able to perform complex queries on that information. The <tt class="module">web.database.object</tt> module has a facility for doing just that. 
+
+<P>
+For this example we create two tables:
+
+<P>
+<div class="verbatim"><pre>
+import web.database, web.database.object, datetime                                 
+ 
+connection = web.database.connect(type="sqlite",database="object-query.db")
+cursor = connection.cursor()                                                
+
+person = web.database.object.Table("Person")                                
+person.addColumn(web.database.object.String(name="firstName"))              
+person.addColumn(web.database.object.String(name="surname", unique=True, required=True, key=True))                
+
+queryExample = web.database.object.Table('QueryExample')
+queryExample.addColumn(web.database.object.Date(name="testDate"))
+queryExample.addColumn(web.database.object.Integer(name="testInteger"))
+queryExample.addColumn(web.database.object.Integer(name="testNumber"))
+queryExample.addColumn(web.database.object.Email(name="email"))
+
+database = web.database.object.Database()  
+database.addTable(person)  
+database.addTable(queryExample)                                                   
+database.init(cursor)
+
+database['Person'].insert(firstName="John", surname="Smith")
+database['Person'].insert(firstName="Owen", surname="Jones")
+database['QueryExample'].insert(
+    testDate=datetime.date(2004,7,11),
+    testInteger = 10,
+    testNumber = 15,
+    email = 'james@example.com'
+)
+</pre></div>
+
+<P>
+To match any rows where the <code>firstName</code> is 'John' we make use of the <code>column</code> attribute of each table. The column attribute is a magic dictionary which allows you to compare columns to objects in natural Python code to produce a where clause string. It is best explained by an example:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; where = database['Person'].column['firstName'] == "John"
+&gt;&gt;&gt; print where
+(Person.firstName = 'John')
+&gt;&gt;&gt; rows = database['Person'].select(where=where)
+&gt;&gt;&gt; print rows
+{'Smith': &lt;web.database.object.Row from Person table, rowid=1, firstName='John', surname='Smith'&gt;}
+</pre></div>
+
+<P>
+Here are some more examples.
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; column = database['queryExample'].column
+&gt;&gt;&gt; column.date == datetime.date(2003,12,12)
+"(QueryExample.testDate = '2003-12-12')"
+&gt;&gt;&gt; column.integer &lt; 5
+"(QueryExample.testInteger &lt; 5)"
+</pre></div>
+
+<P>
+You can also do more complex queries using AND, OR or NOT. There are two ways of doing this. Both methods are equivalent so please use whichever one you prefer.
+
+<P>
+<DL>
+<DT><STRONG>Using Methods</STRONG></DT>
+<DD><code>AND</code>, <code>OR</code> or <code>NOT</code> are methods of the <code>QueryBuilder</code> class. 
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; where = column.AND(column.email == 'james@jimmyg.org', column.integer &lt; 5)
+"QueryExample.email = 'james@jimmyg.org') AND (QueryExample.testInteger &lt; 5)"
+&gt;&gt;&gt; where = column.NOT(column.email == 'james@jimmyg.org')
+"NOT (QueryExample.email = 'james@jimmyg.org')"
+</pre></div>
+
+<P>
+</DD>
+<DT><STRONG>Using Operators</STRONG></DT>
+<DD>The operators <code>&amp;</code>, <code>|</code> or <code>~</code> are defined to mean AND, OR or NOT respectively. You can use them to achieve the same result as above like this:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; where = (column.email == 'james@jimmyg.org') &amp; (column.integer &lt; 5)
+"QueryExample.email = 'james@jimmyg.org') AND (QueryExample.testInteger &lt; 5)"
+&gt;&gt;&gt; where = ~(column.email == 'james@jimmyg.org')
+"NOT (QueryExample.email = 'james@jimmyg.org')"
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+The brackets <strong>are required</strong> for queries using the <code>&amp;</code>, <code>|</code> or <code>~</code> operators because the operators have the same precedence as other Python operators.</span>
+
+<P>
+</DD>
+</DL>
+
+<P>
+The QueryBuilder is not suitable for all queries. For example it does not currently support the multiple, single or related joins. If you try to access these columns you will get an error saying the key is not found. 
+
+<P>
+However, all is not lost. Since this is an SQL database after all you can use an SQL <tt class="method">cursor.select()</tt> method to get the rowids of the rows you are after and then convert them to objects using the <tt class="method">row()</tt> method of the appropriate table object.
+
+<P>
+This situation may change with later versions of the module.
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node92.html">1.5.5.1 How It Works</a>
+<LI><A href="node93.html">1.5.5.2 Supported Operators</a>
+<LI><A href="node94.html">1.5.5.3 Supported Functions</a>
+<LI><A href="example-command-web-database-object-query.html">1.5.5.4 Full Code Listing</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.5.4.1 Full Code Listing"
+  href="example-command-web-database-object-related.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.5 web.database.object  "
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.5.5.1 How It Works"
+  href="node92.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-database-object-related.html">1.5.4.1 Full Code Listing</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node92.html">1.5.5.1 How It Works</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

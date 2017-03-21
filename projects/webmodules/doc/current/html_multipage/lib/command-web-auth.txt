@@ -1,0 +1,172 @@
+#!/usr/bin/env python
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web, web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="command-auth"
+)
+cursor = connection.cursor() 
+
+# Obtain Auth objects
+import web.auth
+from web.errors import AuthError
+admin = web.auth.admin('database', cursor=cursor)
+
+# Setup the environment (destroying the existing environment)
+admin.removeAuthEnvironment(ignoreErrors=True)
+admin.createAuthEnvironment()
+
+# Setup the users and their access rights
+admin.addApp('cms')
+admin.addApp('news')
+
+admin.addGroup('butcher')
+admin.addGroup('fishmonger')
+
+admin.addRole('add')
+admin.addRole('edit')
+
+admin.addUser(username='james', group='butcher', password='password')
+admin.addUser(username='sally', group='butcher', password='password')
+admin.addUser(username='vicki', group='butcher', password='password', active=0)
+
+admin.addUser(username='anne',  group='fishmonger', password='password')
+admin.addUser(
+    username='john',  
+    group='fishmonger', 
+    password='password', 
+    firstname='John', 
+    surname='Smith', 
+    email='john@example.com'
+)
+
+admin.setLevel('anne', 'news', 2)
+admin.setLevel('john', 'news', 1)
+admin.setLevel('anne', 'cms', 1)
+admin.setLevel('john', 'cms', 2)
+
+admin.setRole(username='james', app='cms', role='add')
+admin.setRole(username='sally', app='cms', role='edit')
+admin.setRole(username='james', app='news', role='edit')
+
+print 'Active Option'
+print 'Sally: ', admin.user('sally').authorise()
+print 'Sally: ', admin.user('sally').authorise(active=0)
+print 'Sally: ', admin.user('sally').authorise(active=None)
+print 'Vicki: ', admin.user('vicki').authorise()
+print 'Vicki: ', admin.user('vicki').authorise(active=0)
+print 'Vicki: ', admin.user('vicki').authorise(active=None)
+print ''
+print 'Group Option'
+print 'Anne:  ', admin.user('anne').authorise(group='fishmonger')
+print 'James: ', admin.user('james').authorise(group='fishmonger')
+print ''
+print 'Access Levels'
+print 'Anne:  ', admin.user('anne').authorise(app='news', level=2)
+print 'John:  ', admin.user('john').authorise(app='news', level=2)
+print 'Anne:  ', admin.user('anne').authorise(app='cms',  level=2)
+print 'John:  ', admin.user('john').authorise(app='cms',  level=2)
+print ''
+print 'Roles'
+print 'James: ', admin.user('james').authorise(app='cms',  role='add')
+print 'Sally: ', admin.user('sally').authorise(app='cms',  role='add')
+print 'Sally: ', admin.user('sally').authorise(app='cms',  role='edit')
+print 'James: ', admin.user('james').authorise(app='news', role='add')
+print 'James: ', admin.user('james').authorise(app='news', role='edit')
+print 'Sally: ', admin.user('sally').authorise(app='news', role='edit')
+print admin.roles()
+print admin.roleExists('edit')
+print admin.roleExists('delete')
+admin.addApp('test')
+admin.addUser(username='test', password='password')
+admin.addRole('test')
+admin.setRole(username='test', app='test', role='test')
+admin.setLevel('test', 'test', 1)
+try:
+    admin.removeRole('test')
+except AuthError,e:
+    print str(e)
+else:
+    raise Exception('Failed to catch remove role error')
+admin.removeRole('test', force=1)
+print admin.roles(username='test')
+admin.addRole('test')
+admin.setRole(username='test', app='test', role='test')
+admin.setRole(username='test', app='cms', role='test')
+
+print admin.roles()
+print admin.roles(username='test')
+print admin.roles(username='test', app='test')
+print admin.user('test').roles
+admin.unsetRole('test','test','test')
+print admin.user('test').roles
+
+print ''
+print 'Groups'
+print admin.groups()
+print admin.groupExists('butcher')
+print admin.groupExists('newsagents')
+admin.addGroup('newsagents')
+admin.user('test').group = 'newsagents'
+print admin.user('test').group
+
+print admin.groups() 
+try:
+    admin.removeGroup('newsagents')
+except AuthError,e:
+    print str(e)
+else:
+    raise Exception('Failed to catch remove group error')
+admin.removeGroup('newsagents', force=1)
+print admin.groups() 
+
+print ''
+print 'Users'
+print admin.userExists('james')
+print admin.users()
+print admin.users(group='butcher')
+print admin.users(group='butcher', active=0)
+print admin.users(group='butcher', active=1)
+print admin.users(app='cms', role='add')
+print admin.users(group='butcher', app='cms', role='add', active=0)
+print admin.users(group='butcher', app='cms', role='add', active=1)
+print admin.users(group='fishmonger', app='cms', role='add')
+vicki = admin.user('vicki')
+print vicki.active
+vicki.active = 1
+print admin.user('vicki').active
+print vicki.firstname
+vicki.firstname = 'Victoria'
+print admin.user('vicki').firstname
+print ''
+print 'Apps'
+print admin.apps()
+print admin.appExists('cms')
+try:
+    admin.removeApp('test')
+except AuthError,e:
+    print str(e)
+else:
+    raise Exception('Failed to catch app in use error')
+print "App removed"
+print admin.roles(username='test')
+print admin.levels(username='test')
+admin.removeUser('test')
+print admin.userExists('test')
+print ''
+print 'Levels'
+print admin.levels('anne')
+admin.setLevel('anne', 'cms', None)
+print admin.user('anne').levels
+print
+print 'Authorise'
+print admin.user('james').authorise(group='butcher', app='cms', level=1)
+print admin.user('john').authorise(group='butcher', app='cms', level=1)
+print admin.user('john').authorise(group='fishmonger', app='cms', level=1)
+
+connection.rollback()
+connection.close()

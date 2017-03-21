@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node114.html" />
+<link rel="prev" href="node112.html" />
+<link rel="parent" href="module-web.error.html" />
+<link rel="next" href="node114.html" />
+<meta name='aesop' content='information' />
+<title>1.6.3 Using The handler() Function</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.2 Using The info()"
+  href="node112.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.4 Using The error()"
+  href="node114.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node112.html">1.6.2 Using The info()</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node114.html">1.6.4 Using The error()</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003630000000000000000">
+1.6.3 Using The handler() Function</A>
+</H2>
+
+<P>
+If you want more control over the format of the error messages you can use one of the handlers in <tt class="module">web.error.handler</tt>.
+
+<P>
+The <tt class="function">web.error.handle()</tt> function has the following parameters:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-204' xml:id='l2h-204' class="function">handle</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>handler</var><big>]</big><var>, </var><big>[</big><var>**params</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+<var>handler</var> should be a string representing the name of a default handler to use or a custom handler function. The parameters specified by <var>params</var> are a combination of parameters used by the handler function chosen and any of the parameters <var>output</var>, <var>format</var> and <var>context</var> used to specify how the error information is displayed.
+
+<P>
+For example: 
+
+<P>
+<div class="verbatim"><pre>
+web.error.handle(
+    handler  = 'file',
+    filename = 'test.html',
+    output   = 'traceback', 
+    format   = 'text'
+)
+</pre></div>
+
+<P>
+This would append a text format traceback of the error to the <span class="file">test.html</span> file.
+
+<P>
+The default value for <var>handler</var> is <code>'browser'</code> and the default display options produce a full HTML debug report so most of the time the following code is sufficient to add at the top of a CGI script:
+
+<P>
+<div class="verbatim"><pre>
+import web.error; web.error.handle()
+</pre></div>
+
+<P>
+</dl>
+
+<P>
+In the example below we specify <var>format</var> as <code>'text'</code> handler to ouput a text representation of the error:
+
+<P>
+<div class="verbatim"><pre>
+import web.error; web.error.handle(handler='browser', output='debug', format='text')
+# This is line 2
+# This is line 3
+# This is line 4
+# This is line 5
+raise Exception('This error will be caught and nicely displayed')
+# This is line 7
+# This is line 8
+# This is line 9
+# This is line 10
+</pre></div>
+
+<P>
+This produces the output:
+
+<P>
+<div class="verbatim"><pre>
+Content-type: text/plain
+
+exceptions.Exception
+Python 2.2.3 : C:\WINDOWS\Python22\pythonw.exe
+Tue Jan 18 20:43:21 2005
+
+    A problem occurred in a Python script.  Here is the sequence of
+    function calls leading up to the error, in the order they occurred.
+    
+ C:\Work\PythonWeb.org\CVS Branches\Web Modules 0.5\test.py 
+    4 # This is line 4
+    5 # This is line 5
+    6 raise Exception('This error will be caught and nicely displayed')
+    7 # This is line 7
+    8 # This is line 8
+Exception undefined
+exceptions.Exception: This error will be caught and nicely displayed
+    args = ('This error will be caught and nicely displayed',)
+    
+    The above is a description of an error in a Python program.  Here is
+    the original traceback:
+    
+    Traceback (most recent call last):
+  File "test.py", line 6, in ?
+    raise Exception('This error will be caught and nicely displayed')
+Exception: This error will be caught and nicely displayed
+</pre></div>
+
+<P>
+Note that the handler printed <code>Content-type</code> HTTP header. This is so that the output could be displayed in a web browser. If this header wasn't displayed you would see an <code>Internal Server Error 500</code> message in the browser.
+
+<P>
+If you are not writing a web application you might choose to use the <code>'print'</code> handler instead of the <code>'browser'</code> handler so that the <code>Content-type</code> HTTP header is not displayed.
+
+<P>
+If you want to control the number of lines of code displayed in the error output you can set the <var>context</var> parameter. This is the number of lines to be displayed around each line of the traceback. In the example below we set <code>context=3</code> to reduce the amount of output:
+
+<P>
+<div class="verbatim"><pre>
+import web.error; web.error.handle(handler='print', output='debug', format='text', context=3)
+</pre></div>
+
+<P>
+The output is:
+
+<P>
+<div class="verbatim"><pre>
+exceptions.Exception
+Python 2.2.3 : C:\WINDOWS\Python22\pythonw.exe
+Tue Jan 18 20:45:02 2005
+
+    A problem occurred in a Python script.  Here is the sequence of
+    function calls leading up to the error, in the order they occurred.
+    
+ C:\Work\PythonWeb.org\CVS Branches\Web Modules 0.5\test.py 
+    5 # This is line 5
+    6 raise Exception('This error will be caught and nicely displayed')
+    7 # This is line 7
+Exception undefined
+exceptions.Exception: This error will be caught and nicely displayed
+    args = ('This error will be caught and nicely displayed',)
+    
+    The above is a description of an error in a Python program.  Here is
+    the original traceback:
+    
+    Traceback (most recent call last):
+  File "test.py", line 6, in ?
+    raise Exception('This error will be caught and nicely displayed')
+Exception: This error will be caught and nicely displayed
+</pre></div>
+
+<P>
+Note that there are fewer lines of code in the code display of the traceback than before. 
+
+<P>
+If <var>info</var> is not specified in the <tt class="function">handler()</tt> function, information can be produced in any of the formats supported by <tt class="function">info()</tt> simply by passing the <tt class="function">handler()</tt> function the parameters you would normally pass to <tt class="function">info()</tt> and not specifying the <var>info</var> parameter. The exception to this rule it that <tt class="function">handler()</tt> does not accept the <var>output='class'</var> option as this does not produce text output.
+
+<P>
+There are three built-in handlers each of which handle the error information generated in different ways.
+
+<P>
+<DL>
+<DT><STRONG><code>'print'</code> (<tt class="function">web.error.handler.send()</tt>)</STRONG></DT>
+<DD><P>
+Simply prints the error information to the standard output.
+
+<P>
+</DD>
+<DT><STRONG><code>'browser'</code> (<tt class="function">web.error.handler.browser()</tt>)</STRONG></DT>
+<DD><P>
+Sends the error information to the standard output after first sending an HTTP <code>Content-type</code> header for display in a web browser. You can over-ride the default header to be sent by specifying <var>header</var>. For example <code>header='text/plain'</code> would send a <code>Content-type: text/plain</code> HTTP header.
+
+<P>
+</DD>
+<DT><STRONG><code>'file'</code> (<tt class="function">web.error.handler.file()</tt>)</STRONG></DT>
+<DD>Writes the error information to the file specified by <var>filename</var>. 
+
+<P>
+If no <var>filename</var> is specified, the error information is written to a file in the format <code>2005-01-18.log</code>. If <var>append</var> is specified <code>False</code> the file is overwritten, the default is <code>True</code> meaning that error information is appended to the file. If <var>dir</var> is specified, files are logged to that directory, the default is to log to the script directory. <span class="warning"><b class="label">Warning:</b>
+ It is good practice, but not enforced, to specify <var>dir</var> otherwise it is possible a logfile will overwrite a file of the same name.</span>
+
+<P>
+If <var>message</var> is specified that message is sent to the standard output. Usually you should set <var>message</var> to be something like <code>web.header('text/plain')+'An error occured and has been logged.'</code>. Obviously you would not need to specify <code>web.header('text/plain')</code> if you are not outputting the error message to a web browser.
+
+<P>
+</DD>
+</DL>
+
+<P>
+All of the handlers are used in the same way.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.2 Using The info()"
+  href="node112.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.4 Using The error()"
+  href="node114.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node112.html">1.6.2 Using The info()</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node114.html">1.6.4 Using The error()</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="example-webserver-web-auth.html">
+<LINK REL="prev" HREF="node13.html">
+<LINK REL="parent" HREF="node13.html">
+<LINK REL="next" href="example-webserver-web-auth.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Creating the Auth Environment">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.2.3.1 Creating the Auth Environment</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.3 Examples" 
+  HREF="node13.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2.3 Examples" 
+  HREF="node13.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.3.2 Password Protecting Code" 
+  href="example-webserver-web-auth.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node13.html">1.2.3 Examples</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node13.html">1.2.3 Examples</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-auth.html">1.2.3.2 Password Protecting Code</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003231000000000000000">&nbsp;</A>
+<BR>
+1.2.3.1 Creating the Auth Environment
+</H3>
+
+<P>
+Below is a sample program which can be used to create an auth environment in an SQLite database named <span class="file">example-web-auth.db</span>. You will be need to delete the <span class="file">example-web-auth.db</span> file created if you have already run the script before.
+
+<P>
+<div class="verbatim">
+<pre>import sys
+sys.path.append('../../../') # show python where the web modules are
+
+import web.database, web.auth
+
+# Make cursor connection
+connection = web.database.connect(
+    type='sqlite',
+    database='example-web-auth.db'
+)
+cursor = connection.cursor()
+
+# Create authManager object and setup the environment
+authManager = web.auth.setup(storage='database', cursor=cursor)
+errors = authManager.createTables()
+connection.commit()
+if errors:
+    print '&#92;n'.join(errors)
+else:
+    authManager.addApplication('app')
+    authManager.addUser('test', '123')
+    authManager.addUser(
+        'john',
+        'bananas',
+        'John',
+        'Smith',
+        'johnsmith@example.com'
+    )
+    authManager.setAccessLevel('john', 'app', 1)
+    print "All done!"
+
+connection.commit()</pre>
+<div class="footer">
+<a href="command-web-auth-create.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-auth-create.py</span>).</a>
+</div></div>
+
+<P>
+What we have created is an application named <code>app</code> and two users, <code>test</code> and <code>john</code>. <code>test</code> has a password <code>'123'</code> and <code>john</code> has a password <code>'bananas'</code>. We have also specified that <code>john</code> has a firstname <code>'John'</code>, a surname <code>'Smith'</code> and an email address <code>'johnsmith@example.com'</code> but we haven't specified any extra information for <code>test</code>. The user <code>john</code> has access rights to the <code>app</code> but the user <code>test</code> does not.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+You must commit your changes to the database at the end.</span>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+<code>'123'</code> and <code>'bananas'</code> aren't particularly secure passwords so please use something more sensible yourself!</span>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+example.com is not a real domain. It is reserved for use in exmaples such as this one so that no-one gets irritated by people trying to send email to johnsmith@example.com.</span>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.3 Examples" 
+  rel="prev" title="1.2.3 Examples" 
+  HREF="node13.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2.3 Examples" 
+  rel="parent" title="1.2.3 Examples" 
+  HREF="node13.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.3.2 Password Protecting Code" 
+  rel="next" title="1.2.3.2 Password Protecting Code" 
+  href="example-webserver-web-auth.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node13.html">1.2.3 Examples</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node13.html">1.2.3 Examples</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-auth.html">1.2.3.2 Password Protecting Code</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

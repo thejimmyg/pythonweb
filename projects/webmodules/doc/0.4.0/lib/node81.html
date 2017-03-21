@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node82.html">
+<LINK REL="prev" HREF="node80.html">
+<LINK REL="parent" href="module-web.form.html">
+<LINK REL="next" HREF="node82.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Form Objects">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.7.2 Form Objects</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.7.1 Introduction" 
+  HREF="node80.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.7.3 Creating Custom Forms" 
+  HREF="node82.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node80.html">1.7.1 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.form.html">1.7 web.form  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node82.html">1.7.3 Creating Custom Forms</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003720000000000000000">
+1.7.2 Form Objects</A>
+</H2>
+
+<P>
+<tt class="class">Form</tt> objects have the following class structure and methods:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-151"><tt class="class">Form</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>name='form'</var><big>]</big><big>[</big><var>, action=''</var><big>]</big><big>[</big><var>, method='get'</var><big>]</big><big>[</big><var>, stickyData=</var><big>]</big><big>[</big><var>, enctype=''</var><big>]</big><big>[</big><var>, populate=None</var><big>]</big><big>[</big><var>, includeName=None</var><big>]</big>)</td></tr></table>
+<dd>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-152"><tt class="method">valid</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+tries to vaildate each field. If any of them contain invalid values returns <code>False</code> otherwise 
+returns <code>True</code>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-153"><tt class="method">populate</tt></a></b>(</nobr></td>
+  <td><var><var>form</var></var>)</td></tr></table>
+<dd>
+Populates each field from the value of <var>form</var>. <var>form</var> should be a <code>web.cgi</code> object.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-154"><tt class="method">addField</tt></a></b>(</nobr></td>
+  <td><var><var>field</var></var>)</td></tr></table>
+<dd>
+Add the field object <var>field</var> to the form.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-155"><tt class="method">addAction</tt></a></b>(</nobr></td>
+  <td><var><var>name</var></var>)</td></tr></table>
+<dd>
+Add a Submit button named <var>name</var> to the form. XXX May remove this function in future versions.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-156"><tt class="method">field</tt></a></b>(</nobr></td>
+  <td><var><var>name</var></var>)</td></tr></table>
+<dd>
+Returns the field object named <var>name</var>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-157"><tt class="method">__getitem__</tt></a></b>(</nobr></td>
+  <td><var><var>name</var></var>)</td></tr></table>
+<dd>
+Returns the field object named <var>name</var>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-158"><tt class="method">delete</tt></a></b>(</nobr></td>
+  <td><var><var>name</var></var>)</td></tr></table>
+<dd>
+Remove the field named <var>name</var> from the form
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-159"><tt class="method">has_key</tt></a></b>(</nobr></td>
+  <td><var><var>name</var></var>)</td></tr></table>
+<dd>
+Returns <code>True</code> if the form has a field named <var>name</var>, <code>False</code> otherwise
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-160"><tt class="method">values</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple containing the values of the form fields in the order they were added. The values of the field can be accessed from the <code>value</code> attribute of each item in the tuple.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-161"><tt class="method">keys</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple containing the names of the form fields in the order they were added
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-162"><tt class="method">dict</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a dictionary containing the names and values of the fields as <code>key:value</code> pairs
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-163"><tt class="method">items</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple containing 2-tuples of <code>(<var>key</var>, <var>value</var>)</code> pairs where the <var>key</var> is the field name and the <var>value</var> is the field object.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-164"><tt class="method">html</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return an HTML representation of the form
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-165"><tt class="method">hidden</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return the form as hidden fields
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-166"><tt class="method">frozen</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>action=None</var><big>]</big>)</td></tr></table>
+<dd>
+Return the form as HTML with the values displayed as text and hidden fields instead of the fields. If <var>action</var> is specified a Submit button with the value specified by <var>action</var> is added to the form
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-167"><tt class="method">templateDict</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return the form as a dictionary suitable for use in a template. 
+
+<P>
+The keys include: <code>'name'</code>,<code>'action'</code>,<code>'method'</code>,<code>'enctype'</code>,<code>'fields'</code>,<code>'actions'</code> and <code>'stickyData'</code>. <code>'fields'</code> is the key to an array dictionarys containg field information with the keys: <code>'name'</code>,<code>'error'</code>,<code>'description'</code>,<code>'value'</code> and <code>'html'</code>. <code>'stickyData'</code> is the stickyData as hidden fields.
+</dl>
+
+<P>
+</dl> 
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.7.1 Introduction" 
+  rel="prev" title="1.7.1 Introduction" 
+  HREF="node80.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.7 web.form  " 
+  rel="parent" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.7.3 Creating Custom Forms" 
+  rel="next" title="1.7.3 Creating Custom Forms" 
+  HREF="node82.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node80.html">1.7.1 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.form.html">1.7 web.form  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node82.html">1.7.3 Creating Custom Forms</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

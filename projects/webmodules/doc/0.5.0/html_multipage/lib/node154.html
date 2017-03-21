@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node155.html" />
+<link rel="prev" href="node153.html" />
+<link rel="parent" href="node152.html" />
+<link rel="next" href="node155.html" />
+<meta name='aesop' content='information' />
+<title>1.11.14.2 Manager Objects</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.14.1 Driver Objects"
+  href="node153.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11.14 API Reference"
+  href="node152.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.14.3 Store Objects"
+  href="node155.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node153.html">1.11.14.1 Driver Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node152.html">1.11.14 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node155.html">1.11.14.3 Store Objects</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00311142000000000000000">
+1.11.14.2 Manager Objects</A>
+</H3>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-274' xml:id='l2h-274' class="function">manager</tt></b>(</nobr></td>
+  <td><var><var>driver</var>, </var><big>[</big><var>expire=86400</var><big>]</big><var>, </var><big>[</big><var>path</var><big>]</big><var>, </var><big>[</big><var>domain</var><big>]</big><var>, </var><big>[</big><var>comment</var><big>]</big><var>, </var><big>[</big><var>maxAge</var><big>]</big><var>, </var><big>[</big><var>seed</var><big>]</big><var>, </var><big>[</big><var>cleanupProbability</var><big>]</big><var>, </var><big>[</big><var>**driverParams</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+Used to return a session <code>Manager</code> object. 
+
+<P>
+Manager Parameters:
+
+<P>
+<DL>
+<DT><STRONG><var>driver</var> and <var>**driverParams</var></STRONG></DT>
+<DD>If <var>driver</var> is a string, any extra parameters passed to the <tt class="function">web.session.manager()</tt> function are passed onto the <tt class="function">web.session.driver()</tt> function to create a driver. Alternatively <code>driver</code> can be a <code>Driver</code> object as returned by <tt class="function">web.session.driver()</tt> and no <var>**driverParams</var> need to be specified.
+
+<P>
+</DD>
+<DT><STRONG><var>expire</var></STRONG></DT>
+<DD>The number of seconds a newly created session should be valid for. If not specified the default is 86400 seconds which is 24 hours.
+
+<P>
+</DD>
+<DT><STRONG><var>seed</var></STRONG></DT>
+<DD>When generating session IDs it is important a hacker cannot guess what the next session ID will be otherwise they could make a cookie so that the application thinks they are someone else. You can specify a <var>seed</var> which is simply a string to make the generation of session IDs even more random. The default is <code>'PythonWeb'</code>.
+
+<P>
+</DD>
+<DT><STRONG><var>cleanupProbability</var></STRONG></DT>
+<DD>Every so often expired sessions and their corresponding data need to be removed from the session store. There is a probability specified by <var>cleanupProbability</var> that this cleanup will occur when a <code>Manager</code> object is created. If <var>cleanupProbability</var> is <code>1</code> cleanup is done every time a <code>Manager</code> is created. If <var>cleanupProbability</var> is <code>0</code> no automatic cleanup is done and cleanup is left to the administrator. The default is <code>0.05</code> which means old session information is removed roughly every 20 times a <code>Manager</code> object is created.
+</DD>
+</DL>
+
+<P>
+Cookie Parameters:
+
+<P>
+<DL>
+<DT><STRONG><var>path</var></STRONG></DT>
+<DD>The path of the domain specified by <var>domain</var> for which the cookie is valid. If not specified the default is <code>'/'</code> which means the whole website. XXX is this correct?
+
+<P>
+</DD>
+<DT><STRONG><var>domain</var></STRONG></DT>
+<DD>The domain for which the cookie is valid. If not specified the default is <code>''</code> which means any domain. XXX is this correct?
+
+<P>
+</DD>
+<DT><STRONG><var>comment</var></STRONG></DT>
+<DD>An optional comment for your cookie to explain what it does or who set it
+
+<P>
+</DD>
+<DT><STRONG><var>maxAge</var></STRONG></DT>
+<DD>The length of time in seconds the cookie should be valid for. If set to <code>0</code> the cookie will last until the web browser is closed. If not set it will take the value of the <var>expire</var> parameter.
+
+<P>
+</DD>
+</DL>
+
+<P>
+</dl>
+
+<P>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-275' xml:id='l2h-275' class="class">Manager</tt></b>
+<dd>
+
+<P>
+All session <code>Manager</code> objects have the <strong>read only</strong> member variables which you should not set:
+
+<P>
+<dl><dt><b><tt id='l2h-276' xml:id='l2h-276' class="member">sessionID</tt></b></dt>
+<dd>
+The session ID for the current session. This is a unique 32 character string set after a session is created or loaded. It is <code>None</code> before that time.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-277' xml:id='l2h-277' class="member">expire</tt></b></dt>
+<dd>
+The expire length in seconds (the minimum length of the session) 
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-278' xml:id='l2h-278' class="member">seed</tt></b></dt>
+<dd>
+The default seed used to generate the session ID
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-279' xml:id='l2h-279' class="member">cookie</tt></b></dt>
+<dd>
+A dictionary containing the cookie parameters.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-280' xml:id='l2h-280' class="member">error</tt></b></dt>
+<dd>
+If an error occurred loading a session, for example the session ID did not exist or had expired, the error is available through this attribute. If no error occurred the value is <code>None</code>.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-281' xml:id='l2h-281' class="member">cleanupProbability</tt></b></dt>
+<dd>
+The probability of checking for, and removing expired sessions
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-282' xml:id='l2h-282' class="member">response_headers</tt></b></dt>
+<dd>
+A list of cookie headers in the WSGI format <code>(type, value)</code>
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-283' xml:id='l2h-283' class="member">sent_headers</tt></b></dt>
+<dd>
+A list of the cookie headers printed after <tt class="method">sendCookieHeaders()</tt> has been called. Useful for debugging
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-284' xml:id='l2h-284' class="method">load</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>sessionID=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Attempt to load the session with the session ID <var>sessionID</var>. If <var>sessionID</var> is not specified the session ID is obtained from a cookie using <code>os.environ</code>. If your environment doesn't support loading of a cookie in this way <var>seesionID</var> should be specified.
+If the session exists and is valid it is loaded and the method returns <code>True</code> otherwise it returns <code>False</code> and you should create a new session using <tt class="method">create()</tt>. The reason the session could not be loaded is set to the <code>error</code> attribute.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-285' xml:id='l2h-285' class="method">create</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>sendCookieHeaders=True</var><big>]</big><var>, </var><big>[</big><var>expire</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Generate a new session ID and start a new session with it. If <var>sendCookieHeaders</var> is <code>True</code> a <code>Set-Cookie</code> HTTP header is immediately printed. If <code>False</code> a WSGI <code>(type, info)</code> header is appended to <code>response_headers</code> so the application can handle the header itself. If <var>expire</var> is the number of seconds the session should be valid for. If not specified the value of the <code>expire</code> attribute is used. Returns the new session ID.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-286' xml:id='l2h-286' class="method">store</tt></b>(</nobr></td>
+  <td><var><var>app</var></var>)</td></tr></table></dt>
+<dd>
+Return a session <code>Store</code> object for manipulating values in the application's store. <var>app</var> is the application name as a string made up of the characters <code>a-z</code>, <code>A-Z</code>, <code>0-9</code> and <code>-_.</code>. The application name must be between 1 and 255 characters in length. The application names do not have to be the same as application names used by the <tt class="module">web.auth</tt> module, although these are the most appropriate choices. If you are not using multiple applications you should still give your application a name, perhaps <code>'default'</code> for example.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-287' xml:id='l2h-287' class="method">destroy</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>sessionID</var><big>]</big><var>, </var><big>[</big><var>sendCookieHeaders=True</var><big>]</big><var>, </var><big>[</big><var>ignoreWarning=False</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Remove all session information for the session. If <var>sessionID</var> is specified all session information for  <var>sessionID</var> is removed. If <var>sendCookieHeaders</var> is <code>True</code> a <code>Set-Cookie</code> HTTP header is immediately printed. If <code>False</code> a WSGI <code>(type, info)</code> header is appended to <code>response_headers</code> so the application can handle the header itself. If <var>ignoreWarning</var> is not set to <code>True</code> a <code>SessionWarning</code> is raised explaining why destroying sessions is not a good idea.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+ Destroying sessions is strongly not recommended since any other application currently using the session store may crash as the session information will have been removed. If you wish to remove all data from the session store it would be better to use the <code>Store</code> object's <tt class="method">empty()</tt> method, emptying the store but leaving the session intact. If you must remove a session use <code>setExpire(time.time())</code> to make the session expire immediately or send a cookie built with <tt class="method">deleteCookieString()</tt>. Any applications using the session will still be able to access the information if they have already loaded the session but will not be able to load the session again.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-288' xml:id='l2h-288' class="method">genSessionID</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>seed</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Obtain a new session ID based on <code>md5</code>. If after 100 attempts no new session ID has been created because the IDs generated already exist, a <code>SessionError</code> is raised. If <var>seed</var> is specified it is used to make the generation of session ID more random, otherwise the value <code>seed</code> is used.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-289' xml:id='l2h-289' class="method">cookieSessionID</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>environ=None</var><big>]</big><var>, </var><big>[</big><var>noSessionID=''</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Obtain a session ID from the <code>HTTP_COOKIE</code> environmental variable. The default <code>environ</code> dictionary is <code>os.environ</code>. If you wish to provide your own environment dictionary (for example you are using a WSGI application) you can specify <var>environ</var>. If the session ID cannot be loaded <var>noSessionID</var> is returned which by default is an empty string.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-290' xml:id='l2h-290' class="method">cleanup</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>min</var><big>]</big><var>, </var><big>[</big><var>max</var><big>]</big><var>, </var><big>[</big><var>ignoreWarning=False</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Remove and information related to sessions which have expired between the times <var>min</var> and <var>max</var>. All times are in seconds since the epoch (00:00:00 UTC, January 1, 1970). If <var>min</var> is not specified it is assumed to be <code>0</code> (the beginning of the epoch), if <var>max</var> is not specified it is assumed to be the current time. If you specify a value <var>max</var> greater than the current time returned bt <code>time.time()</code> a <code>SessionWarning</code> is raised. To ignore the warning set <var>ignoreWarning</var> to <code>True</code>.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+ You should not set a value of <var>max</var> greater than the current time unless you understand the risk since doing so will remove sessions which haven't yet expired. If an application is using the session store and its session is cleaned up, that application may crash.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-291' xml:id='l2h-291' class="method">setExpire</tt></b>(</nobr></td>
+  <td><var><var>expireTime</var>, </var><big>[</big><var>sessionID</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+The method is used to change the time an existing session will expire or to set a new expiry date if it has already expired. <var>expireTime</var> is the time you want the session to expire in seconds since the epoch (00:00:00 UTC, January 1, 1970). <var>expireTime</var> is NOT the extra number of seconds to allow the session to exist for. If <var>sessionID</var> is specified the expire time of the session with ID <var>sessionID</var> is updated, otherwise the current session expire time is modified.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-292' xml:id='l2h-292' class="method">valid</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>sessionID</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+If <var>sessionID</var> is specified the validity of the session with ID <var>sessionID</var> is checked. Otherwise the current session is checked. Returns <code>True</code> if the session is valid, <code>False</code> if the session has expired. A <code>SessionError</code> is raised if the session does not exist. Whether or not a session exists can be checked with the <tt class="method">exists()</tt> method.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-293' xml:id='l2h-293' class="method">exists</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>sessionID</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+If <var>sessionID</var> is specified the session with ID <var>sessionID</var> is checked. Otherwise the current session is checked. Returns <code>True</code> if the session is exists, <code>False</code> if the session does not exist. No comment is made on whether or not the session is still valid, instead this can be checked with the <tt class="method">valid()</tt> method.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-294' xml:id='l2h-294' class="method">sendCookieHeaders</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Uses Python's <code>print</code> statement to send any headers in the <code>response_headers</code> attribute to the standard output, appending the exact strings printed to the <code>send_headers</code> attribute for debugging purposes. Used by the <tt class="method">create()</tt> and <tt class="method">destroy()</tt> methods to send cookie headers so could be over-ridden in derived classes to change cookie handling behaviour.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-295' xml:id='l2h-295' class="method">setCookie</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>maxAge</var><big>]</big><var>, </var><big>[</big><var>sendCookieHeaders=False</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Get a cookie string from <tt class="method">setCookieString()</tt> to set a new cookie, parse the string into a WSGI <code>(type, info)</code> pair and append it to the <code>response_headers</code> attribute. If <var>maxAge</var> is not specified the default specified in the class creation is used. A <var>maxAge</var> of <code>0</code> means the cookie expires when the browser is closed otherwise <var>maxAge</var> should be the length of time in seconds the cookie should remain valid for. If <var>sendCookieHeaders</var> is <code>True</code>, <tt class="method">sendCookieHeaders()</tt> is called to send the cookie header.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-296' xml:id='l2h-296' class="method">setCookieString</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>maxAge</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns an HTTP header to set a cookie using the default cookie values set in the class constructor. If <var>maxAge</var> is not specified the default specified in the class creation is used. A <var>maxAge</var> of <code>0</code> means the cookie expires when the browser is closed otherwise <var>maxAge</var> should be the length of time in seconds the cookie should remain valid for.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-297' xml:id='l2h-297' class="method">deleteCookie</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>sendCookieHeaders=False</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Get a cookie string from <tt class="method">deleteCookieString()</tt> to set the expire time of the cookie to one second, parse it into a WSGI <code>(type, info)</code> pair and append it to the <code>response_headers</code> attribute. If <var>sendCookieHeaders</var> is <code>True</code>, <tt class="method">sendCookieHeaders()</tt> is called to send the cookie header.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-298' xml:id='l2h-298' class="method">deleteCookieString</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Returns an HTTP header to set the expire time of the session cookie to 1 second, effectively forcing it to expire.
+</dl>
+
+<P>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.14.1 Driver Objects"
+  href="node153.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11.14 API Reference"
+  href="node152.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.14.3 Store Objects"
+  href="node155.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node153.html">1.11.14.1 Driver Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node152.html">1.11.14 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node155.html">1.11.14.3 Store Objects</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

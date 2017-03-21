@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+
+import web.error; web.error.enable()
+import web, web.database, web.database.object, os
+
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="database-object-form",
+    autoCreate = 1,
+)
+cursor = connection.cursor() 
+
+person = web.database.object.Table("Person")
+person.add(column="String", name='firstName', required=True)
+person.addColumn(web.database.object.String(name="surname"))
+person.addColumn(
+    web.database.object.StringSelect(
+        name="profession", 
+        options=[None, 'Developer', 'Web Developer'], 
+        displayNoneAs='Not Specified'
+    )
+)
+person.add(column="Bool", name='sex', displayTrueAs='Male', displayFalseAs='Female')
+database = web.database.object.Database()
+database.addTable(person)
+database.init(cursor)
+
+if not database.tablesExist():
+    database.createTables()
+
+form = database['Person'].form() 
+print web.header()               # Print the content-type information
+if len(web.cgi) > 1:             # Assume form submitted
+    form.populate(web.cgi)
+    if form.valid():      
+        entry = database['Person'].insert(all=form.dict())
+        print '<html>%s<p><a href="%s">Go Back</a></html>'%(
+            '<h1>Entry Added</h1>' + form.frozen(),
+            os.environ['SCRIPT_NAME']
+        )
+    else:
+        print """<html><h1>Error</h1><p>There were some invalid fields. 
+            Please correct them.</p>%s</html>"""%(form.html())
+else:
+    entries = '<table border="0"><tr><td>Firstname</td>'
+    entries += '<td>Surname</td><td>Profession</td><td>Sex</td></tr>'
+    for row in database['Person'].values():
+        entries += '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>'%(
+            row['firstName'],
+            row['surname'],
+            row['profession'],
+            row['sex']
+        )
+    entries += '</table>'
+    print "<html>%s<h4>Entries</h4><p>%s</p></html>"%(
+        '<h1>Enter Data</h1>'+form.html(),
+        entries
+    )
+
+connection.commit() # Save the changes
+connection.close()  # Close the connection

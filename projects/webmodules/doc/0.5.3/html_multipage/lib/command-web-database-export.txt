@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the modules are
+
+import web.database
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="database-export",
+    autoCreate = 1,
+)
+cursor = connection.cursor()
+originalSQL = """CREATE TABLE People( LastName String PRIMARY KEY, FirstName String , Number Integer, DateOfBirth Date )
+CREATE TABLE Houses( House Integer, Owner String REQUIRED FOREIGN KEY=People)
+INSERT INTO People ( LastName, FirstName, Number, DateOfBirth) VALUES ('Smith', 'John', 10, '1980-01-01')
+INSERT INTO People ( LastName, FirstName, Number, DateOfBirth) VALUES ('Doe', 'James', 3, '1981-12-25')
+INSERT INTO Houses ( House, Owner ) VALUES (1, 'Smith')
+INSERT INTO Houses ( House, Owner ) VALUES (2, 'Smith')
+INSERT INTO Houses ( House, Owner ) VALUES (3, 'Doe')"""
+for sql in sqls.split('\n'):
+    cursor.execute(sql)
+exportedSQL = cursor.export()
+if exportedSQL == originalSQL:
+    print "The exported SQL exaclty matches the original"
+    print exportedSQL
+else:
+    print "The SQL is different"
+    print exportedSQL
+
+connection.close() # Close the connection without saving changes

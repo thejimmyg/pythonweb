@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="example-wsgiSession.html" />
+<link rel="parent" href="node183.html" />
+<link rel="next" href="example-wsgiExample.html" />
+<meta name='aesop' content='information' />
+<title>1.14.3.6 web.wsgi.auth - User Permission Handling</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.3.5 web.wsgi.session - Session"
+  href="example-wsgiSession.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14.3 The PythonWeb Middleware"
+  href="node183.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.4 Writing Applications"
+  href="example-wsgiExample.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiSession.html">1.14.3.5 web.wsgi.session - Session</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node183.html">1.14.3 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-wsgiExample.html">1.14.4 Writing Applications</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031436000000000000000">
+1.14.3.6 <tt class="module">web.wsgi.auth</tt> - User Permission Handling</A>
+</H3>
+
+<P>
+Auth handling middleware. If an application returns a <code>'403 Forbidden'</code> status message, the middleware intercepts it and instead provides a sign in form and sign in functionality.
+
+<P>
+Once a user is signed in, the user's information is added to the <var>environ</var> dictionary as <code>environ['web.auth.user']</code> for authorisation.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-329' xml:id='l2h-329' class="class">Session</tt></b>(</nobr></td>
+  <td><var><var>application</var>, <var>driver</var>, </var><big>[</big><var>store=None</var><big>]</big><var>, </var><big>[</big><var>expire=0</var><big>]</big><var>, </var><big>[</big><var>idle=0</var><big>]</big><var>, </var><big>[</big><var>autoCreate=0</var><big>]</big><var>, </var><big>[</big><var>app='auth'</var><big>]</big><var>, </var><big>[</big><var>template='&lt;html&gt;&lt;body&gt;&lt;h1&gt;Please Sign In&lt;/h1&gt;%(form)s&lt;p&gt;%(message)s&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;'</var><big>]</big><var>,</var><big>[</big><var>redirectMethod='http'</var><big>]</big><var>, </var><big>[</big><var>**driverParams</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+<DL>
+<DT><STRONG><var>application</var></STRONG></DT>
+<DD>A WSGI application or middleware component
+
+<P>
+</DD>
+<DT><STRONG><var>driver</var></STRONG></DT>
+<DD>The type of driver being used. Currently only <code>'database'</code> is allowed
+
+<P>
+</DD>
+<DT><STRONG><var>**driverParams</var></STRONG></DT>
+<DD>Any parameters to be specified in the format <var>name=value</var> which are needed by the driver specified by <var>driver</var>
+
+<P>
+</DD>
+<DT><STRONG><var>autoCreate</var></STRONG></DT>
+<DD>If set to <code>True</code> the necessary tables will be created (removing any existing tables) if any of the tables are missing and a user named <code>john</code> with a password <code>bananas</code> will be set up with an access level of <code>1</code> to the application <code>app</code>. This is designed for easy testing of the module.
+
+<P>
+</DD>
+<DT><STRONG><var>encryption</var></STRONG></DT>
+<DD>The encryption method used to encrypt the password. Can be <code>None</code> or <code>'md5'</code>. <code>Warning you cannot change the encryption method once a user is added without resetting the password.</code>
+
+<P>
+</DD>
+<DT><STRONG><var>store</var> or <var>app</var></STRONG></DT>
+<DD>Store should be a valid <tt class="module">web.session</tt> <code>Store</code> object for storing the auth session information. If not specified, a store can be obtained from the <code>environ['web.session']</code> object if the name of the store to used is specified by <var>app</var>.
+
+<P>
+</DD>
+<DT><STRONG><var>expire</var></STRONG></DT>
+<DD>An integer specifying the number of seconds before the user is signed out. A value of 0 disables the expire functionality and the user will be signed in until they sign out. <span class="note"><b class="label">Note:</b>
+If the underlying session expires, the cookie is removed or the sign in idles before the expire time specified in <var>expire</var> the user will be signed out.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>idle</var></STRONG></DT>
+<DD>An integer specifying the maximum number of seconds between requests before the user is automatically signed out. A value of 0 disables the idle functionality allowing an unlimited amount of time between user requests. <span class="note"><b class="label">Note:</b>
+If the underlying session expires, the cookie is removed or the sign in expires before the idle time specified in <var>idle</var> the user will be signed out.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>template</var></STRONG></DT>
+<DD>A string containing <code>%(form)s</code> and <code>%(message)s</code> for dictionary replacement of the sign in form and error message respectively.
+
+<P>
+</DD>
+<DT><STRONG><var>redirectMethod</var></STRONG></DT>
+<DD>Determines how the application should redirect back to the original code once a user is signed in. The default is HTTP redirection specified with <var>redirectMethod='http'</var> but alternatively a META refresh can be used, <var>redirectMethod='metaRefresh'</var> <span class="warning"><b class="label">Warning:</b>
+There currently appears to be a bug in the WSGI Server preventing HTTP redirection from working so META refresh redirection should be used.</span>
+</DD>
+</DL>
+
+<P>
+Entries added to <var>environ</var>:
+
+<P>
+<DL>
+<DT><STRONG><code>environ['web.auth']</code> </STRONG></DT>
+<DD>An <code>AuthManager</code> object as returned by web.auth.manager()
+
+<P>
+</DD>
+<DT><STRONG><code>environ['web.auth.user']</code> </STRONG></DT>
+<DD>A user object for the current signed in user
+
+<P>
+</DD>
+<DT><STRONG><code>environ['REMOTE_USER']</code> </STRONG></DT>
+<DD>The username of the signed in user
+
+<P>
+</DD>
+</DL>
+
+<P>
+</dl>
+
+<P>
+The example below demonstrates how to check if a user is signed in and if they are not signed in, provide them with a sign in form and handle the submissions until they are signed in.
+
+<P>
+<A NAME="example-wsgiAuth"></A><div class="verbatim">
+<pre>import sys; sys.path.append('../')
+from web.wsgi import *
+
+def simpleApp(environ, start_response):
+    if not environ.has_key('web.auth.user'): # No user signed in
+        start_response('403 User not signed in', [])
+        return []
+    elif not environ['web.auth.user'].authorise(app='app', level=1):
+        start_response('403 The user does not have permission to access this application', [])
+        return []
+    else:
+        start_response('200 OK', [('Content-type','text/html')])
+        if environ['web.cgi'].has_key('mode') and environ['web.cgi']['mode'].value == 'signOut':
+            environ['web.auth'].signOut()
+            return ["""&lt;html&gt;
+                &lt;head&gt;&lt;title&gt;Auth Example&lt;/title&gt;&lt;/head&gt;
+                &lt;body bgcolor="#ffffcc"&gt;&lt;h1&gt;Signed Out&lt;/h1&gt;&lt;p&gt;&lt;a href="auth"&gt;Sign in&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;
+                &lt;/html&gt;"""]
+        else:
+            return ["""&lt;html&gt;
+                &lt;head&gt;&lt;title&gt;Auth Example&lt;/title&gt;&lt;/head&gt;
+                &lt;body bgcolor="#ffffcc"&gt;&lt;h1&gt;Congratulations!&lt;/h1&gt;
+                &lt;p&gt;Signed in!&lt;/p&gt;
+                &lt;p&gt;&lt;a href="auth?mode=signOut"&gt;Sign out&lt;/a&gt;, &lt;a href="auth"&gt;Visit again&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;"""]
+
+# Middleware Setup
+application = error.Error(
+    database.Database(
+        session.Session(
+            cgi.CGI(
+                auth.Auth(
+                    simpleApp, 
+                    driver='database',
+                    autoCreate=1,
+                    expire=0,
+                    idle=10,
+                    template = """
+                        &lt;html&gt;
+                        &lt;head&gt;&lt;title&gt;Auth Example&lt;/title&gt;&lt;/head&gt;
+                        &lt;body bgcolor="#ffffcc"&gt;
+                        &lt;h1&gt;Sign In&lt;/h1&gt;
+                        %(form)s
+                        &lt;p&gt;%(message)s&lt;/p&gt;
+                        &lt;/body&gt;
+                        &lt;/html&gt;
+                    """,
+                    redirectMethod='metaRefresh'
+                ),
+            ),
+            expire = 1000,
+            autoCreate = 1,
+            driver='database',
+        ),
+        adapter = 'snakesql',
+        database = 'wsgi-auth',
+        autoCreate = 1
+    ),
+)</pre>
+<div class="footer">
+<a href="wsgiAuth.txt" type="text/plain">Download as text (original file name: <span class="file">wsgiAuth.py</span>).</a>
+</div></div>
+
+<P>
+The message displayed under the sign in box is whatever you specify as the message after <code>403</code> in the <code>status</code> of <code>start_response()</code>.
+
+<P>
+You can test this example by running the WSGI server <span class="file">scripts/WSGIServer.py</span> and visiting <a class="url" href="http://localhost:8000/auth">http://localhost:8000/auth</a>
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.3.5 web.wsgi.session - Session"
+  href="example-wsgiSession.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14.3 The PythonWeb Middleware"
+  href="node183.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.4 Writing Applications"
+  href="example-wsgiExample.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiSession.html">1.14.3.5 web.wsgi.session - Session</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node183.html">1.14.3 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-wsgiExample.html">1.14.4 Writing Applications</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

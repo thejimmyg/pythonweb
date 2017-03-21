@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+
+import sys; sys.path.append('../../../')
+import web.wsgi.base, time
+
+class Application(web.wsgi.base.BaseApplication):
+    def start(self):
+        self.output('Environ Order:\n')
+        self.environ['Application'] = time.time()
+        time.sleep(1)
+        self.headers.append(('Appliction',str(time.time())))
+        self.output('Middleware1 ',self.environ['Middleware1'])
+        self.output('\n')
+        self.output('Middleware2 ',self.environ['Middleware2'])
+        self.output('\n')
+        self.output('Application ', self.environ['Application'])
+        self.output('\n')
+        
+class Middleware1(web.wsgi.base.BaseMiddleware):
+    def environ(self, environ):
+        time.sleep(1)
+        environ['Middleware1'] = time.time()
+        return environ
+        
+    def headers(self, headers):
+        time.sleep(1)
+        headers.append(('Middleware1',str(time.time())))
+        return headers
+        
+    def transform(self, output):
+        return output + ['Middleware1\n']
+
+        
+class Middleware2(web.wsgi.base.BaseMiddleware):
+    def environ(self, environ):
+        time.sleep(1)
+        environ['Middleware2'] = time.time()
+        return environ
+        
+    def headers(self, headers):
+        time.sleep(1)
+        headers.append(('Middleware2',str(time.time())))
+        return headers
+
+    def transform(self, output):
+        return output + ['Middleware2\n']
+        
+print "Running test..."
+application = web.wsgi.runCGI(Middleware1(Middleware2(Application())))

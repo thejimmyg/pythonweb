@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node162.html" />
+<link rel="prev" href="node160.html" />
+<link rel="parent" href="node158.html" />
+<link rel="next" href="node162.html" />
+<meta name='aesop' content='information' />
+<title>1.11.14.3 Store Objects</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.14.2 Manager Objects"
+  href="node160.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11.14 API Reference"
+  href="node158.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.14.4 The start() Function"
+  href="node162.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node160.html">1.11.14.2 Manager Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node158.html">1.11.14 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node162.html">1.11.14.4 The start() Function</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00311143000000000000000">
+1.11.14.3 Store Objects</A>
+</H3>
+
+<P>
+The <code>Store</code> object is obtained from the <tt class="method">store()</tt> method of the <code>Manager</code> object. It is used to manipulate the session store of the application specified in the <tt class="method">store()</tt> method. 
+
+<P>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-308' xml:id='l2h-308' class="class">Store</tt></b>
+<dd>
+
+<P>
+<code>Store</code> objects have the following attribute:
+
+<P>
+<dl><dt><b><tt id='l2h-309' xml:id='l2h-309' class="member">app</tt></b></dt>
+<dd>
+This is the name of the application whose store we are manipulating. <code>app</code> can be set to another application's name in order to manipulate a different session store. Application names are strings made up of the characters <code>a-z</code>, <code>A-Z</code>, <code>0-9</code> and <code>-_.</code> and are between 1 and 255 characters in length.
+</dl>
+
+<P>
+<code>Store</code> objects have the following methods:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-310' xml:id='l2h-310' class="method">set</tt></b>(</nobr></td>
+  <td><var><var>key</var>, <var>value</var></var>)</td></tr></table></dt>
+<dd>
+Set the value of <var>key</var> to the value <var>value</var> in the session store. <var>value</var> can be any Python object capable of being pickled. See Python's <tt class="module">pickle</tt> module for more information.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-311' xml:id='l2h-311' class="method">get</tt></b>(</nobr></td>
+  <td><var><var>key</var></var>)</td></tr></table></dt>
+<dd>
+Get the value of <var>key</var> from the session store.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-312' xml:id='l2h-312' class="method">delete</tt></b>(</nobr></td>
+  <td><var><var>key</var></var>)</td></tr></table></dt>
+<dd>
+Remove <var>key</var> and its associated value from the session store.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-313' xml:id='l2h-313' class="method">empty</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Empty this application's session store of all information removing all keys and values but leaving the session itself and other application's stores intact.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-314' xml:id='l2h-314' class="method">has_key</tt></b>(</nobr></td>
+  <td><var><var>key</var></var>)</td></tr></table></dt>
+<dd>
+Returns <code>True</code> if <var>key</var> exists on the session store otherwise <code>False</code>.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-315' xml:id='l2h-315' class="method">keys</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Returns a sequence of store keys. The order of the keys is not defined. Keys obtained from this method cannot be set directly. Instead the <tt class="method">set()</tt> method should be used.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-316' xml:id='l2h-316' class="method">items</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Returns a tuple of <code>(key, value)</code> pairs for each key in the store. The order of the values is not defined. Values and keys obtained from this method cannot be set directly. Instead the <tt class="method">set()</tt> method should be used.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-317' xml:id='l2h-317' class="method">values</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Returns a sequence of store values. The order of the values is not defined. Values obtained from this method cannot be set directly. Instead the <tt class="method">set()</tt> method should be used.
+</dl>
+
+<P>
+<code>Store</code> objects also implement the following methods: <tt class="method">__getitem__(key)</tt>, <tt class="method">__setitem__(key, value)</tt> and <tt class="method">__delitem__(key)</tt> which map directly to the <tt class="method">get(key)</tt>, <tt class="method">set(key)</tt> and <tt class="method">delete(key)</tt> methods respectively and allow the <code>Store</code> object to be treated similarly to a dictionary as demonstrated earlier in the documentation.
+
+<P>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.14.2 Manager Objects"
+  href="node160.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11.14 API Reference"
+  href="node158.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.14.4 The start() Function"
+  href="node162.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node160.html">1.11.14.2 Manager Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node158.html">1.11.14 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node162.html">1.11.14.4 The start() Function</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

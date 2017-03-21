@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="example-wsgiExample.html" />
+<link rel="parent" href="wsgi.html" />
+<link rel="next" href="reporting-bugs.html" />
+<meta name='aesop' content='information' />
+<title>1.14.5 Writing Your Own Middleware</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.4 Writing Applications"
+  href="example-wsgiExample.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14 web.wsgi  "
+  href="wsgi.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="A. Reporting Bugs"
+  href="reporting-bugs.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiExample.html">1.14.4 Writing Applications</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="wsgi.html">1.14 web.wsgi  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="reporting-bugs.html">A. Reporting Bugs</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031450000000000000000">
+1.14.5 Writing Your Own Middleware</A>
+</H2>
+
+<P>
+See first the WSGI Middleware Introduction earlier in this document.
+
+<P>
+Eariler in this document we saw some simple middleware components and learned that for an object to be valid WSGI middleare it must take a WSGI application object as parameter and behave exaclty like a WSGI application itself. 
+
+<P>
+With long middleware chains and functions being passed as parameters down the chain it can get a bit confusing to keep track of program flow.
+
+<P>
+Program flow is actually very straightfoward. The first piece of middleware is run first, any changes to the <code>environ</code> dictionary are passed on to the next piece of middleware and so on down the chain. Once the <tt class="function">start_response</tt> function is called by the application at the end of the chain, the <code>status</code>, <code>headers</code> and application output are sent back up the chain to the server where they are sent to the web browser. 
+
+<P>
+Here is a test application demonstrating middleware and program flow (the headers are not valid HTTP headers obviously):
+<A NAME="example-command-program-flow"></A><div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../')
+import web.wsgi.base, time
+
+class Application(web.wsgi.base.BaseApplication):
+    def start(self):
+        self.output('Environ Order:&#92;n')
+        self.environ['Application'] = time.time()
+        time.sleep(1)
+        self.headers.append(('Appliction',str(time.time())))
+        self.output('Middleware1 ',self.environ['Middleware1'])
+        self.output('&#92;n')
+        self.output('Middleware2 ',self.environ['Middleware2'])
+        self.output('&#92;n')
+        self.output('Application ', self.environ['Application'])
+        self.output('&#92;n')
+        
+class Middleware1(web.wsgi.base.BaseMiddleware):
+    def environ(self, environ):
+        time.sleep(1)
+        environ['Middleware1'] = time.time()
+        return environ
+        
+    def headers(self, headers):
+        time.sleep(1)
+        headers.append(('Middleware1',str(time.time())))
+        return headers
+        
+    def transform(self, output):
+        return output + ['Middleware1&#92;n']
+
+class Middleware2(web.wsgi.base.BaseMiddleware):
+    def environ(self, environ):
+        time.sleep(1)
+        environ['Middleware2'] = time.time()
+        return environ
+        
+    def headers(self, headers):
+        time.sleep(1)
+        headers.append(('Middleware2',str(time.time())))
+        return headers
+
+    def transform(self, output):
+        return output + ['Middleware2&#92;n']
+        
+print "Running test..."
+application = web.wsgi.runCGI(Middleware1(Middleware2(Application())))</pre>
+<div class="footer">
+<a href="command-program-flow.txt" type="text/plain">Download as text (original file name: <span class="file">command-program-flow.py</span>).</a>
+</div></div>
+
+<P>
+The program will not run from a WSGI server because of the incorrect HTTP headers but you can run it from the command line. The output should look something like this:
+
+<P>
+<div class="verbatim"><pre>
+Status: 200 OK
+Content-type: text/html
+Appliction: 1105847968.69
+Middleware2: 1105847969.69
+Middleware1: 1105847970.69
+
+Environ Order:
+Middleware1 1105847966.68
+Middleware2 1105847967.69
+Application 1105847967.69
+
+Transform Order:
+Middleware2
+Middleware1
+</pre></div>
+
+<P>
+You can see that <code>environ</code> is modified by <code>Middleware1</code> then <code>Middleware2</code> then <code>Application</code>. Headers and return transforms are made in exactly the opposite order.
+
+<P>
+At each stage of the application and middleware chain the component can either return an list of strings in one go or return an iterable. 
+
+<P>
+We also learned earlier that WSGI middleware can be implemented as a class and usually performs one of the following actions or a combination of them.
+
+<P>
+
+<UL>
+<LI>Change the <code>environ</code> dictionary
+</LI>
+<LI>Change the application's <code>status</code>
+</LI>
+<LI>Change the HTTP <code>headers</code>
+</LI>
+<LI>Change the return value of the application
+</LI>
+</UL>
+
+<P>
+The <tt class="module">web.wsgi.base</tt> module provides a base Middleware class with methods to accomplish these tasks so that you don't need to worry quite so much about program flow or how to implement your middleware.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-330' xml:id='l2h-330' class="class">BaseMiddleware</tt></b>(</nobr></td>
+  <td><var><var>application</var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+<var>application</var> should always be the first parameter to a derived middleware class, but you may also wish to have other parameters in derived classes to allow the middleware to be configured. 
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+It is important you carefully read the documentation for the <tt class="method">__init__()</tt> and <tt class="method">setup()</tt> methods to understand where to configure variables.</span>
+
+<P>
+The class defines the following attributes:
+
+<P>
+<dl><dt><b><tt id='l2h-331' xml:id='l2h-331' class="member">application</tt></b></dt>
+<dd>
+The WSGI application (or middleware stack) to which this middleware should be added. 
+</dl>
+
+<P>
+The class defines the following methods:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-332' xml:id='l2h-332' class="method">__init__</tt></b>(</nobr></td>
+  <td><var><var>application</var></var>)</td></tr></table></dt>
+<dd>
+You can override the <tt class="method">__init__()</tt> method but the first parameter should always be for the application object. Parameters used to configure the class at load time can be specified in the <tt class="method">__init__()</tt> method but any variables which need to be reset every time the middleware is used should be specified in the <tt class="method">setup()</tt> method. This is because a WSGI server only loads the middleware once but runs it lots of times so if a variable is specified in the  <tt class="method">__init__()</tt> method it would only be set once and on subsequent calls would retain the value from the previous call.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-333' xml:id='l2h-333' class="method">setup</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+The <tt class="method">setup()</tt> method is used to configure any class attributes which need to be configured every time the middleare is run and not just when the middleare is loaded. See the documentation for the <tt class="method">__init__()</tt> method too.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-334' xml:id='l2h-334' class="method">__call__</tt></b>(</nobr></td>
+  <td><var><var>environ</var>, <var>start_response</var></var>)</td></tr></table></dt>
+<dd>
+You should not need to modify this method but is documented here for a complete understanding as it provides the functionality which makes derived classes WSGI middleware. 
+
+<P>
+The fitst task of this method is to call <tt class="method">setup()</tt> to re-initialise any variables which need to be set every time the class is run. It then intercepts the <code>environ</code> dictionary as well as the <code>headers</code> and <code>status</code> parameters sent by the WSGI server to the <tt class="function">start_response()</tt> function. It then sends the <code>environ</code> dictionary to the <tt class="method">environ()</tt> method for modification. The <code>status</code>, <code>headers</code> and <code>exc_info</code> parameters are sent to the <tt class="method">response()</tt> method which controls the order in which the different parameters are modified. The <tt class="method">response()</tt> method sends the parameters to the <tt class="method">status()</tt>, <tt class="method">headers</tt> and <tt class="method">exc_info()</tt> methods for modification. The new values are then returned to the <tt class="method">__call__</tt> where a modified application object is returned.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-335' xml:id='l2h-335' class="method">response</tt></b>(</nobr></td>
+  <td><var><var>status</var>, <var>headers</var>, </var><big>[</big><var>exc_info=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Calls the <tt class="method">status()</tt>, <tt class="method">headers</tt> and <tt class="method">exc_info()</tt> methods to modify the respective parameters then returns the modified values in the order <var>status</var>, <var>headers</var>, <var>exc_info</var> to the <tt class="method">__call__()</tt> method. Can be over-ridden to change the order in which the parameters are modified.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-336' xml:id='l2h-336' class="method">environ</tt></b>(</nobr></td>
+  <td><var><var>environ</var></var>)</td></tr></table></dt>
+<dd>
+Provides the dictionary <var>environ</var> for modification. Must return the <code>environ</code> dictionary to be passed on down the middleware chain.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-337' xml:id='l2h-337' class="method">status</tt></b>(</nobr></td>
+  <td><var><var>status</var></var>)</td></tr></table></dt>
+<dd>
+Provides the <var>status</var> string for modification. Must return the <code>status</code> string to be passed on down the middleware chain.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-338' xml:id='l2h-338' class="method">headers</tt></b>(</nobr></td>
+  <td><var><var>headers</var></var>)</td></tr></table></dt>
+<dd>
+Provides the <var>headers</var> list for modification. Must return the <code>headers</code> list to be passed on down the middleware chain.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-339' xml:id='l2h-339' class="method">exc_info</tt></b>(</nobr></td>
+  <td><var><var>exc_info</var></var>)</td></tr></table></dt>
+<dd>
+Provides the <var>exc_info</var> tuple object generated by a previous error (if one exists) for modification. Must return the <code>exc_info</code> tuple to be passed on down the middleware chain.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-340' xml:id='l2h-340' class="method">result</tt></b>(</nobr></td>
+  <td><var><var>result</var></var>)</td></tr></table></dt>
+<dd>
+Used to transform the body of output returned from the previous item in the middleware stack. 
+
+<P>
+Be aware that you may need to have checked content-type headers and change the content length header if it is set if you intend to change the length of the returned information. 
+
+<P>
+<var>result</var> is an iterable and an iterable should be returned from the output.
+</dl>
+
+<P>
+</dl>
+
+<P>
+To produce your own middleware class, simply over-ride the appropriate methods in your class derived from the <code>BaseMiddleware</code> class. If you wish to pass information between the various methods, you should set member variables of the class which can then be read by all the methods. You can change the order in which some of the methods are called by overriding <tt class="method">response()</tt> and calling the methods in the order you wish.
+
+<P>
+For some examples of how to write middleware comonents using this class look at the source code of the <tt class="module">web.wsgi</tt> middleware classes.
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.4 Writing Applications"
+  href="example-wsgiExample.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14 web.wsgi  "
+  href="wsgi.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="A. Reporting Bugs"
+  href="reporting-bugs.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiExample.html">1.14.4 Writing Applications</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="wsgi.html">1.14 web.wsgi  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="reporting-bugs.html">A. Reporting Bugs</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

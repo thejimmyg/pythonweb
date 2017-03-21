@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="web.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="web.html" title='Beginner's Guide'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node10.html">
+<LINK REL="prev" HREF="node8.html">
+<LINK REL="parent" HREF="node2.html">
+<LINK REL="next" HREF="node10.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Design Principles">
+<META NAME="keywords" CONTENT="web">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.7 Design Principles</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.6 Philosophy" 
+  HREF="node8.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Introduction" 
+  HREF="node2.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.8 Alternatives" 
+  HREF="node10.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node8.html">1.6 Philosophy</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node2.html">1. Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node10.html">1.8 Alternatives</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002700000000000000000">
+1.7 Design Principles</A>
+</H1>
+
+<P>
+The Web Modules are built on a number of popular design patterns. It addresses the following problems typically encountered in the development of complex sites:
+
+<P>
+<DL COMPACT>
+<DT>Use Anywhere</DT>
+<DD>The Web Modules are designed to work with any Python system. They can be used with Zope and Webware but also can be used on a shared hosting account without needing administrator priveldges. This makes the modules especially useful as they can be used to write CGI scripts on Apache servers.
+</DD>
+<DT>Separating design from logic</DT>
+<DD>The Web Modules include a number of templating systems including Cheetah, XYAPTU and others, which allow for a clean divide between the HTML page design and the program data.
+</DD>
+<DT>Extreme Programming</DT>
+<DD>The Web Modules are built on the methadology of Extreme Programming. By writing simple clean modules we avoid unncecesary features and offer a very flexible toolkit for the development of advanced applications.
+</DD>
+<DT>Form and Field Mangement</DT>
+<DD>The Web Modules provide a <tt class="module">form</tt> module to allow the simple display of data through an HTML form. Complex fields can be created with typed return values.
+</DD>
+<DT>Managing users and their access permissions</DT>
+<DD>The Web Modules include an <tt class="module">auth</tt> module which can use md5 encryption to store users' usernames and passwords in a database. It also offers a very simple interface for user management and permision checking as well as a persistance mechanism.
+</DD>
+<DT>Database independence</DT>
+<DD>The web modules come with a database abstraction layer supporting ODBC, MySQL and SQLite. The database layer can be used to program database independant SQL
+</DD>
+<DT>Object Relation Mapper</DT>
+<DD>The Modules come with an advanced ORM called <tt class="module">object</tt> which makes database programming simple with no knowledge of SQL. It supports a query builder, one-to-many and many-to-many mappings and integrates with the <tt class="module">form</tt> module to provide an HTML interface to the data structures.
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.6 Philosophy" 
+  rel="prev" title="1.6 Philosophy" 
+  HREF="node8.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Introduction" 
+  rel="parent" title="1. Introduction" 
+  HREF="node2.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.8 Alternatives" 
+  rel="next" title="1.8 Alternatives" 
+  HREF="node10.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node8.html">1.6 Philosophy</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node2.html">1. Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node10.html">1.8 Alternatives</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

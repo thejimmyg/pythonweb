@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="example-file-web-template-xyaptu.html" />
+<link rel="parent" href="template.html" />
+<link rel="next" href="util.html" />
+<meta name='aesop' content='information' />
+<title>1.12.3 Dreamweaver MX</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.12.2 XYAPTU Templating"
+  href="example-file-web-template-xyaptu.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.12 web.template  "
+  href="template.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.13 web.util  "
+  href="util.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-file-web-template-xyaptu.html">1.12.2 XYAPTU Templating</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="template.html">1.12 web.template  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="util.html">1.13 web.util  </A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031230000000000000000"></A><A NAME="example-file-web-template-dreamweaverMX"></A>
+<BR>
+1.12.3 Dreamweaver MX
+</H2>
+
+<P>
+The web modules can also parse Dreamweaver MX templates as long as they only use standard Editable Regions and the regions are empty so that the tags look like this:
+
+<P>
+<div class="verbatim"><pre>
+&lt;!-- TemplateBeginEditable name="content" --&gt;&lt;!-- TemplateEndEditable --&gt;
+</pre></div>
+
+<P>
+DreamweaverMX templates are passed just like the others except you set <var>type</var> to <code>'dreamweaverMX'</code>. 
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+If you set the <code>doctitle</code> editable region please remembe to include <code>&lt;title&gt;</code> and <code>&lt;/title&gt;</code> tags around the title you set as the template doesn't include these for you.</span>
+
+<P>
+Here is an example Dreamweaver MX template:
+
+<P>
+<div class="verbatim">
+<pre>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+&lt;!-&#45; TemplateBeginEditable name="doctitle" -&#45;&gt;
+&lt;title&gt;PythonWeb.org - Dreamweaver MX Example&lt;/title&gt;
+&lt;!-&#45; TemplateEndEditable -&#45;&gt; 
+&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /&gt;
+&lt;!-&#45; TemplateBeginEditable name="head" -&#45;&gt;&lt;!-&#45; TemplateEndEditable -&#45;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;h1&gt;&lt;!-&#45; TemplateBeginEditable name="Title" -&#45;&gt;Web Modules&lt;!-&#45; TemplateEndEditable -&#45;&gt;&lt;/h1&gt;
+            &lt;!-&#45; TemplateBeginEditable name="Content" -&#45;&gt;
+            &lt;p&gt;&amp;nbsp;&lt;/p&gt;
+            &lt;!-&#45; TemplateEndEditable -&#45;&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<div class="footer">
+<a href="file-web-template-dreamweaverMX.txt" type="text/plain">Download as text (original file name: <span class="file">file-web-template-dreamweaverMX.dwt</span>).</a>
+</div></div>
+
+<P>
+Here is a program to manipulate it:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the web modules are
+import web.template
+
+dict =  {
+    'Content':'Welcome to the test page!',
+    'doctitle':'Dreamweaver MX Example',
+    'Title':'Dreamweaver MX Example',
+}
+
+print web.template.parse(
+    type='dreamweaverMX', 
+    file='file-web-template-dreamweaverMX.dwt', 
+    dict=dict
+)</pre>
+<div class="footer">
+<a href="command-web-template-dreamweaverMX.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-template-dreamweaverMX.py</span>).</a>
+</div></div>
+
+<P>
+And here is the output produced:
+
+<P>
+<div class="verbatim"><pre>
+&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+&lt;!-- InstanceBeginEditable name="doctitle" --&gt;Dreamweaver MX Example&lt;!-- InstanceEndEditable --&gt; 
+&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /&gt;
+&lt;!-- InstanceBeginEditable name="head" --&gt;&lt;!-- InstanceEndEditable --&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;h1&gt;&lt;!-- InstanceBeginEditable name="Title" --&gt;Dreamweaver MX Example&lt;!-- InstanceEndEditable --&gt;&lt;/h1&gt;
+            &lt;!-- InstanceBeginEditable name="Content" --&gt;Welcome to the test page!&lt;!-- InstanceEndEditable --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.12.2 XYAPTU Templating"
+  href="example-file-web-template-xyaptu.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.12 web.template  "
+  href="template.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.13 web.util  "
+  href="util.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-file-web-template-xyaptu.html">1.12.2 XYAPTU Templating</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="template.html">1.12 web.template  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="util.html">1.13 web.util  </A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

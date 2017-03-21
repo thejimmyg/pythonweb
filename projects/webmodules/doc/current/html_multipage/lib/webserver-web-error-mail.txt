@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+# show python where the web modules are
+import sys; sys.path.append('../'); sys.path.append('../../../')
+
+# set your own email here
+email = 'james@example.com'
+
+# define our custom handler
+def mail(info, email, message, reply):
+    import web, web.mail
+    web.mail.send(
+        msg=info,
+        to=email,
+        reply=reply,
+        subject='Error in website',
+        sendmail='usr/bin/sendmail',
+        smtp='smtp.ntlworld.com',
+        method='smtp',# could use method='sendmail' to send using sendmail.
+        type='html',
+    )
+    print web.header()
+    print message
+    
+# setup our handler
+import web.error
+web.error.handle(
+    handler = mail, 
+    output  = 'debug',
+    email   = email,
+    message = """  <html>
+                   <head><title>An Error Occured</title></head>
+                   <body><h1>Error Caught</h1>
+                   <p>An HTML debug view of the error was sucessfully emailed to %s</p></body>
+                   </html>"""%email,
+    reply   = 'Developer <%s>'%email
+)
+
+# rasie a test exception and wait for the email to arrive
+raise Exception('This is a test exception')

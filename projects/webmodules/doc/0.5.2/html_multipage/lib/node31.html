@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node30.html" />
+<link rel="parent" href="node30.html" />
+<link rel="next" href="node32.html" />
+<meta name='aesop' content='information' />
+<title>1.4.2.1 Understanding Field Types</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.2 Introduction"
+  href="node30.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.2 Introduction"
+  href="node30.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.3 Connecting to a"
+  href="node32.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node30.html">1.4.2 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node30.html">1.4.2 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node32.html">1.4.3 Connecting to a</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003421000000000000000">
+1.4.2.1 Understanding Field Types</A>
+</H3>
+
+<P>
+The information you send to the database and the information retrieved from the database will be automatically converted to the correct formats so that you can treat the values as normal Python objects.
+
+<P>
+Traditional SQL databases usually have support for a number of different fields. Date fields behave differently to integer fields for example. All of the fields are set using an SQL representation of the data in the form of a string and all of the queries from the database return strings. 
+
+<P>
+The <tt class="module">web.database</tt> module provides ten field types and rather than passing information to and from the database as specially SQL encoded strings, you can also pass it as a python data structure. For example to set an <code>Integer</code> field you could give the cursor an integer. To set a <code>Date</code> field you would give the cursor a <tt class="class">datetime.date</tt> object. The <tt class="module">web.database</tt> cursor would do all the conversion for you.
+
+<P>
+Furthermore when you retrieve information from the database the <code>cursor</code> will convert the strings recieved back into Python objects so that you never need to worry about the encodings.
+
+<P>
+This doesn't sound like too much of a big deal but because different databases handle different datatypes in slightly different ways your SQL could have different results on different databases. Programming with a <tt class="module">web.database</tt> <code>cursor</code> removes these inconsistencies. 
+
+<P>
+Here are the supported datatypes:
+
+<P>
+<div class="center"><table class="realtable">
+  <thead>
+    <tr>
+      <th class="left"  >Type</th>
+      <th class="left"  >Description</th>
+      </tr>
+    </thead>
+  <tbody>
+    <tr><td class="left"   valign="baseline"><code><code>Bool</code></code></td>
+        <td class="left"  >True or False</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Integer</code></code></td>
+        <td class="left"  >Any Python integer (not Python Long or Decimal)</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Long</code></code></td>
+        <td class="left"  >Any Python long integer between -9223372036854775808 and 9223372036854775807</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Float</code></code></td>
+        <td class="left"  >Any Python floating point number</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>String</code></code></td>
+        <td class="left"  >A string of 255 characters or less (Not unicode?) [a]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Text</code></code></td>
+        <td class="left"  >A 24-bit string                                    [b]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Binary</code></code></td>
+        <td class="left"  >A 24-bit binary string                             [b]]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Date</code></code></td>
+        <td class="left"  >Any valid Python <code>datetime.date</code> object. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores days, months and years, any other information is truncated. Dates from <code>0001-01-01</code> to <code>9999-12-31</code>. [c]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Time</code></code></td>
+        <td class="left"  >Any valid Python <code>datetime.time</code> object. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores hours, minutes and seconds, any other information is truncated. [c]</td></tr>
+    <tr><td class="left"   valign="baseline"><code><code>Datetime</code></code></td>
+        <td class="left"  >Any valid Python <code>datetime.datetime</code> object. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores days, months, years, hours, minutes and seconds, any other information is truncated. [c]</td></tr>
+    </tbody>
+</table></div>
+
+<P>
+[a] Some databases make a distinction between short strings (often named VARCHAR) and long strings (often TEXT). Short string fields are normally faster and so a distinction is also made in this specification.
+
+<P>
+[b] Although Python supports strings of greater than 24 bit, a lot of databases do not and so in order to be compatible with those databases Binary and String objects should be no longer than 24 bit.
+
+<P>
+[c] Although Python &lt; 2.3 does not support datetime objects, pure Python compatible libraries exist for Python &lt; 2.3 and these can be used instead so it makes sense to use the standard Python types where possible.
+
+<P>
+The values you pass to the <tt class="method">cursor.execute()</tt> method should be of the correct type for the field they are representing. The values returned by the <tt class="method">cursor.fetchall()</tt> method will automatically be returned as the appropriate Python type.
+
+<P>
+For example, <code>Bool</code> fields should have the Python values <code>True</code> or <code>False</code>, <code>Long</code> fields should be a valid Python <code>long</code> etc. 
+
+<P>
+There are some exceptions:
+
+<P>
+<code>String</code> fields should contain Python strings of 255 characters of less. <code>Text</code> fields should contain 24 bit strings less. For strings longer than this length you should consider saving the string in a file and saving the filename in the database instead.
+
+<P>
+<code>Date</code>, <code>Datetime</code> and <code>Time</code> fields take Python <code>datetime.date</code>, <code>datetime.datetime</code> and <code>datetime.time</code> objects respectively. 
+
+<P>
+Unfortunately Python 2.2 and below do not support the <tt class="module">datetime</tt> module. However <tt class="module">web.database</tt>  uses a compatibility module that behaves closely enough for most purposes. Simply import <tt class="module">web.database</tt>  and then you can import the datetime module automatically. This is what it looks like at the Python prompt: 
+
+<P>
+<div class="verbatim"><pre>
+Python 2.2.3 (#42, May 30 2003, 18:12:08) [MSC 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import \module{web.database} 
+&gt;&gt;&gt; import datetime
+&gt;&gt;&gt; print datetime.date(2004,11,24)
+2004-11-24
+&gt;&gt;&gt;
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.2 Introduction"
+  href="node30.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.2 Introduction"
+  href="node30.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.3 Connecting to a"
+  href="node32.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node30.html">1.4.2 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node30.html">1.4.2 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node32.html">1.4.3 Connecting to a</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="example-webserver-web-session-file.html">
+<LINK REL="prev" href="session.html">
+<LINK REL="parent" href="session.html">
+<LINK REL="next" href="example-webserver-web-session-file.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.10.1 Introduction</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.2 Example" 
+  href="example-webserver-web-session-file.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-session-file.html">1.10.2 Example</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031010000000000000000">
+1.10.1 Introduction</A>
+</H2>
+
+<P>
+You add session handling to your application like this:
+
+<P>
+<div class="verbatim"><pre>
+import web
+import web.session
+
+session = web.session.start(
+    storage='file',
+    app='test',
+    dir='/home/james/session',
+    expire=600
+)
+</pre></div>
+
+<P>
+Every time a script calls the <tt class="method">session.start()</tt> function a new session is begun unless one already exists. If a new session is created it will last for at least the time set by the expire parameter but may last longer. The default is 14400 seconds or 4 hours. You can set the expire length by setting the <var>expire</var> parameter of the function.
+
+<P>
+Each application which uses the <tt class="module">seession</tt> module has its own name. This means that many applications can use the same session without risk of over-writing each others variables. This is useful if a user visits a site which uses the session module for multiple applications as all the applications can use the same cookie.
+
+<P>
+The <tt class="module">session</tt> module is implemented in a way which makes it easy to write drivers for more ways of storing session information whilst the user still uses the same interface regardless of the storge driver they are using. In the example above we are using the file driver to store session information in files in the directory <span class="file">/home/james/session</span>. We could have used a database driver in which case we would have passed a <tt class="module">web.database</tt> cursor to the <tt class="method">start()</tt> method by specifying the <var>cursor</var> parameter.
+
+<P>
+The full function specification of the <tt class="method">start</tt> function is given below:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-201"><tt class="function">start</tt></a></b>(</nobr></td>
+  <td><var><var>storage</var>, <var>app</var>, </var><big>[</big><var>expire=14400,</var><big>]</big><big>[</big><var>sessionID=None,</var><big>]</big><big>[</big><var>cookie=cookieOptions</var><big>]</big><big>[</big><var>seed='Built with Python',</var><big>]</big><big>[</big><var>cleanup=1,</var><big>]</big><big>[</big><var>cursor=None,</var><big>]</big><big>[</big><var>table='Session',</var><big>]</big><big>[</big><var>dir=None,</var><big>]</big>)</td></tr></table>
+<dd>
+
+<P>
+<DL>
+<DT><STRONG><var>storage</var></STRONG></DT>
+<DD>Storage driver to use. Can be <code>'database'</code> or <code>'file'</code>
+</DD>
+<DT><STRONG><var>app</var></STRONG></DT>
+<DD>A srting containing the name of the application. Max length 255 characters.
+</DD>
+<DT><STRONG><var>expire</var></STRONG></DT>
+<DD>An integer specifying the minimum number of seconds a session should last
+</DD>
+<DT><STRONG><var>sessionID</var></STRONG></DT>
+<DD>The <code>sessionID</code> of the user if it is not to be obtained from a cookie
+</DD>
+<DT><STRONG><var>cookie</var></STRONG></DT>
+<DD>A dictionary of cookie options in the form:
+<div class="verbatim"><pre>
+{
+    'path':'/',     # The path for which the cookie is valid.
+    'domain':'',    # The domain for which the cookie is valid.
+    'comment': "Built in Python using web.session from pythonweb.org",
+    'secure':0,     # Use secure cookies.
+    'max-age':None, # Max Age.
+    'version':1     # Version is always 1
+}
+</pre></div>
+
+<P>
+If <code>max-age</code> is set to None, it is set to the value of <var>expires</var>. <span class="note"><b class="label">Note:</b>
+If you choose to use cookies you can set the expire time of the cookie independantly from that of the session. This means the cookie could expire well before the session and the information it contains are actually destroyed.</span>
+<span class="warning"><b class="label">Warning:</b>
+No error checking is done on the values set in the cookie options.</span>
+</DD>
+<DT><STRONG><var>seed</var></STRONG></DT>
+<DD>A string to use as a seed when generating session IDs
+</DD>
+<DT><STRONG><var>cleanup</var></STRONG></DT>
+<DD>Probablity of running the session cleanup code to remove expired sessions. <code>1</code> means the sessions are always cleaned up. <code>0</code> means they are never cleaned up. <code>0.01</code> means on average 1 in 100 times a the <tt class="method">session.start()</tt> function is called, the sessions will be cleaned.
+</DD>
+<DT><STRONG><var>cursor</var></STRONG></DT>
+<DD>The <tt class="module">web.database</tt> object to use to access the database. Only used when <code>storage='database'</code>.
+</DD>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>A string to add to the front of the database table names so that you can have more than one session store in the same database. Only used when <code>storage='database'</code>.
+</DD>
+<DT><STRONG><var>dir</var></STRONG></DT>
+<DD>The directory in which to store sessions when using <code>storage='file'</code>. The directory must have the correct read and write permissions.
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10 web.session  " 
+  rel="prev" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.2 Example" 
+  rel="next" title="1.10.2 Example" 
+  href="example-webserver-web-session-file.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-session-file.html">1.10.2 Example</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

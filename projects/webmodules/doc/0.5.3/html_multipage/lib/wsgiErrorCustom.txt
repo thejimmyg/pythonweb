@@ -1,0 +1,19 @@
+import web.wsgi, web.error
+
+def simpleApp(environ, start_response):
+    raise Exception('Test Exception')
+
+class myError(web.wsgi.error.Error):
+    def error(self):
+        "Generate an error report"
+        return (
+            '200 Error Handled', 
+            [('Content-type','text/plain')], 
+            [web.error.info(format='text')]
+        )
+
+application = myError(
+    simpleApp,
+)
+
+

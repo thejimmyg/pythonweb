@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="xml.html">
+<LINK REL="prev" href="template.html">
+<LINK REL="parent" href="web.html">
+<LINK REL="next" href="xml.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="web.util -- Useful utility functions that don't fit elsewhere">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.12 web.util -- Useful utility functions that don't fit elsewhere</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.11.3 Dreamweaver MX" 
+  href="example-file-web-template-dreamweaverMX.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.13 web.xml  " 
+  href="xml.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-file-web-template-dreamweaverMX.html">1.11.3 Dreamweaver MX</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="xml.html">1.13 web.xml  </A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0031200000000000000000">&nbsp;</A>
+<BR>
+1.12 <tt class="module">web.util</tt> -- Useful utility functions that don't fit elsewhere
+</H1>
+
+
+This module provides a number of functions which come in handy when programming web applications but that don't fit in elsewhere. It is a catch all module for useful leftovers.
+
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-222"><tt class="function">wrap</tt></a></b>(</nobr></td>
+  <td><var><var>text</var>, <var>width</var></var>)</td></tr></table>
+<dd>
+A word-wrap function that preserves existing line breaks and most spaces in the text. Expects that existing line breaks are posix newlines. (ie backslash n)
+<DL>
+<DT><STRONG><var>text</var></STRONG></DT>
+<DD>The text to wrap
+</DD>
+<DT><STRONG><var>width</var></STRONG></DT>
+<DD>The maximum number of characters in a line
+</DD>
+</DL>
+</dl>
+
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-223"><tt class="function">strip</tt></a></b>(</nobr></td>
+  <td><var><var>html</var>, </var><big>[</big><var>validTags=[]</var><big>]</big>)</td></tr></table>
+<dd>
+Strip illegal HTML tags from string
+<DL>
+<DT><STRONG><var>html</var></STRONG></DT>
+<DD>The HTML which needs some tags stripping
+</DD>
+<DT><STRONG><var>validTags</var></STRONG></DT>
+<DD>A list or tuple of tags to leave in place
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-224"><tt class="function">runWebServer</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>dir='/cgi-bin'</var><big>]</big>)</td></tr></table>
+<dd>
+Run a simple webserver on port 8080 on localhost. The files in <var>dir</var> can be executed. Once this command is run code execution stops as the webserver listens for requests so there is no point in writing code after this command as it will not be run.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+NOT SUITABLE FOR COMMERCIAL USE.</span>
+
+<DL>
+<DT><STRONG><var>dir</var></STRONG></DT>
+<DD>The only directory where scripts are allowed to run. Directory names should be the full URL path from the root of the webserver and therefore should begin with <code>/</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-225"><tt class="function">table</tt></a></b>(</nobr></td>
+  <td><var><var>values</var>, </var><big>[</big><var>width=80</var><big>]</big>)</td></tr></table>
+<dd>
+Pretty print a table of data
+<DL>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>The data to be displayed in the format:
+<div class="verbatim"><pre>
+(
+    (column1Heading, (column1value1, column1value2, column1value3)),
+    (column2Heading, (column2value1, column2value2, column2value3)),
+    (column3Heading, (column3value1, column3value2, column3value3)),
+)
+</pre></div>
+The values and column headings can be any object which can be converted to a string using <code>str()</code>.
+
+</DD>
+<DT><STRONG><var>width</var></STRONG></DT>
+<DD>The wrap width of the string produced. The default is <code>80</code> which means the table will we wrapped to the width of a standard terminla or command line prompt. If <var>width</var> is set to <code>0</code> no wrapping is produced.
+
+For example:
+<div class="verbatim">
+<pre>import sys; sys.path.append('../../../') # show python where the web modules are
+
+import web.util
+table = (
+    ('column1Heading', ('column1value1', 'column1value2', 'column1value3')),
+    ('column2Heading', ('column2value1', 'column2value2', 'column2value3')),
+    ('column3Heading', ('column3value1', 'column3value2', 'column3value3')),
+    ('column4Heading', ('column4value1', 'column4value2', 'column4value3')),
+
+)
+print "Printing the table with wrap width=0...&#92;n"
+print web.util.table(table, width=0)
+print "Printing the table with wrap width=60...&#92;n"
+print web.util.table(table, width=60)
+
+</pre>
+<div class="footer">
+<a href="command-web-util-table.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-util-table.py</span>).</a>
+</div></div>
+
+<div class="verbatim"><pre>
+The output produced is:
+
+Printing the table with wrap width=0...
+
++----------------+----------------+----------------+----------------+
+| column4Heading | column3Heading | column2Heading | column1Heading |
++----------------+----------------+----------------+----------------+
+| column4value1  | column3value1  | column2value1  | column1value1  |
+| column4value2  | column3value2  | column2value2  | column1value2  |
+| column4value3  | column3value3  | column2value3  | column1value3  |
++----------------+----------------+----------------+----------------+
+
+
+Printing the table with wrap width=60...
+
++----------------+----------------+----------------+--------
+| column4Heading | column3Heading | column2Heading | column1
++----------------+----------------+----------------+--------
+| column4value1  | column3value1  | column2value1  | column1
+| column4value2  | column3value2  | column2value2  | column1
+| column4value3  | column3value3  | column2value3  | column1
++----------------+----------------+----------------+--------
+
+--------+
+Heading |
+--------+
+value1  |
+value2  |
+value3  |
+--------+
+</pre></div>
+
+<span class="warning"><b class="label">Warning:</b>
+If you don't set the wrap width and your table is wider than the terminal then the terminal will wrap the table output itself. If this happens it will wrap each induvidual line of text rather than the whole table producing output that looks more like this:</span>
+
+<div class="verbatim"><pre>
++----------------+----------------+--------------
+--+----------------+
+| column4Heading | column3Heading | column2Headin
+g | column1Heading |
++----------------+----------------+--------------
+--+----------------+
+| column4value1  | column3value1  | column2value1
+| column1value1  |
+| column4value2  | column3value2  | column2value2
+| column1value2  |
+| column4value3  | column3value3  | column2value3
+| column1value3  |
++----------------+----------------+--------------
+--+----------------+
+</pre></div>
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.11.3 Dreamweaver MX" 
+  rel="prev" title="1.11.3 Dreamweaver MX" 
+  href="example-file-web-template-dreamweaverMX.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.13 web.xml  " 
+  rel="next" title="1.13 web.xml  " 
+  href="xml.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-file-web-template-dreamweaverMX.html">1.11.3 Dreamweaver MX</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="xml.html">1.13 web.xml  </A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

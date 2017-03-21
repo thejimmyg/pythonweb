@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node34.html">
+<LINK REL="prev" HREF="node32.html">
+<LINK REL="parent" HREF="node25.html">
+<LINK REL="next" HREF="node34.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Altering Tables">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.4.8 Altering Tables</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.7 Dropping Tables" 
+  HREF="node32.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node25.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.9 Functions" 
+  HREF="node34.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node32.html">1.4.4.7 Dropping Tables</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node25.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node34.html">1.4.4.9 Functions</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003448000000000000000">
+1.4.4.8 Altering Tables</A>
+</H3>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+The <tt class="method">alter()</tt> method is only available with the MySQL cursor. The other databases do not support the ALTER SQL command.</span>
+
+<P>
+The <tt class="method">alter()</tt> method is used to add or remove columns from a table. It looks like this:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-84"><tt class="method">alter</tt></a></b>(</nobr></td>
+  <td><var><var>table</var>, <var>mode</var>, <var>name</var>, <var>type</var>, </var><big>[</big><var>autoExecute=None</var><big>]</big><var>,</var>)</td></tr></table>
+<dd>
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The table to alter
+</DD>
+<DT><STRONG><var>mode</var></STRONG></DT>
+<DD>Can be <code>'add'</code> or <code>'drop'</code> depending on whether a column is to be added or dropped
+</DD>
+<DT><STRONG><var>name</var></STRONG></DT>
+<DD>The name of the column to add or drop
+</DD>
+<DT><STRONG><var>type</var></STRONG></DT>
+<DD>The type of the column to add or <code>None</code> if you are dropping a column. Should be a string representing any of the column types mentioned in the table at the start of this module's documentation.
+</DD>
+<DT><STRONG><var>autoExecute</var></STRONG></DT>
+<DD>If <code>False</code> the function returns the SQL string to perform the desired operations. If <code>True</code> the SQL is executed and the results converted and returned in the appropriate form. If not specified takes the value specifed in the cursor which by default is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+Here is an example where we add one column and drop another.
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; if cursor.type == 'mysql':
+...     cursor.alter('test', 'add', 'TestColumn', 'String')
+...     print "Added a String Column named 'TestColumn' to the 'test' table."
+...     cursor.alter('test', 'drop', 'TestFLOAT')
+...     print "Dropped the 'TestFLOAT' Column from the 'test' table."
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.7 Dropping Tables" 
+  rel="prev" title="1.4.4.7 Dropping Tables" 
+  HREF="node32.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node25.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.9 Functions" 
+  rel="next" title="1.4.4.9 Functions" 
+  HREF="node34.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node32.html">1.4.4.7 Dropping Tables</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node25.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node34.html">1.4.4.9 Functions</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

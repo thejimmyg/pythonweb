@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node40.html" />
+<link rel="prev" href="node38.html" />
+<link rel="parent" href="node38.html" />
+<link rel="next" href="node40.html" />
+<meta name='aesop' content='information' />
+<title>1.4.9.1 Starting the Prompt</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.9 Using the Interactive"
+  href="node38.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.9 Using the Interactive"
+  href="node38.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.9.2 Using the Prompt"
+  href="node40.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node38.html">1.4.9 Using the Interactive</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node38.html">1.4.9 Using the Interactive</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node40.html">1.4.9.2 Using the Prompt</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003491000000000000000">
+1.4.9.1 Starting the Prompt</A>
+</H3>
+
+<P>
+To see a list of all the available options for starting an Interactive Prompt session, load a command prompt and type the following at the command line:
+
+<P>
+<div class="verbatim"><pre>
+&gt; python sql.py -h
+</pre></div>
+
+<P>
+This will display all the options available to you for using the interactive prompt. For example to connect to an SQLite database named <span class="file">test.db</span> you might use the following command:
+
+<P>
+<div class="verbatim"><pre>
+&gt; python sql.py -a sqlite -d test.db
+</pre></div>
+
+<P>
+This will run the interactive prompt. You should see something similar to this:
+
+<P>
+<div class="verbatim"><pre>
+SQLite Interactive Prompt
+Type SQL or "exit" to quit, "help", "copyright" or "license" for information.
+sql&gt;
+</pre></div>
+
+<P>
+It looks a bit like the Python prompt only allows SQL queries to be entered.
+
+<P>
+When you connect to a database using the SnakeSQL or SQLite adapters the database specified is automatically created if it doesn't already exist.
+
+<P>
+Options which are specific to the underlying database and which are not handled through any of the options listed by using <code>sql.py -h</code> can be entered using the <code>-&#45;more</code> switch and specifying a string containing a Python dictionary. For example:
+
+<P>
+<div class="verbatim"><pre>
+&gt; python sql.py -a sqlite -d test.db --more "{'customOption1':5, 'customOption2': 'value'}"
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.9 Using the Interactive"
+  href="node38.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.9 Using the Interactive"
+  href="node38.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.9.2 Using the Prompt"
+  href="node40.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node38.html">1.4.9 Using the Interactive</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node38.html">1.4.9 Using the Interactive</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node40.html">1.4.9.2 Using the Prompt</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

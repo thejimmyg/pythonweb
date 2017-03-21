@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node178.html" />
+<link rel="parent" href="node173.html" />
+<link rel="next" href="reporting-bugs.html" />
+<meta name='aesop' content='information' />
+<title>1.15.4.6 web.wsgi.auth - User Permission Handling</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.4.5 web.wsgi.error - Error"
+  href="node178.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.4 The PythonWeb Middleware"
+  href="node173.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="A. Reporting Bugs"
+  href="reporting-bugs.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node178.html">1.15.4.5 web.wsgi.error - Error</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node173.html">1.15.4 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="reporting-bugs.html">A. Reporting Bugs</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031546000000000000000">
+1.15.4.6 <tt class="module">web.wsgi.auth</tt> - User Permission Handling</A>
+</H3>
+
+<P>
+Auth handling middleware determines which user is currently signed in and provides a <code>User</code> object which has information about that user. Auth sign in functionality is left to the application but is made extremely easy through the use of an sign in handler class.
+
+<P>
+The <tt class="module">web.wsgi.auth</tt> module provides one class <code>Auth</code> which adds the following information to the <code>environ</code> dictionary based on the parameters specified in the class constructor.
+
+<P>
+<DL>
+<DT><STRONG><code>environ['web.auth.username'] and environ['REMOTE_USER']</code> </STRONG></DT>
+<DD>The username of the user who is currently signed in.
+
+<P>
+</DD>
+<DT><STRONG><code>environ['web.auth.user']</code></STRONG></DT>
+<DD>A <code>User</code> for the user who is currently signed in.
+
+<P>
+</DD>
+<DT><STRONG><code>environ['web.auth.session']</code> </STRONG></DT>
+<DD>An <code>AuthSession</code> object as returned by <code>web.auth.session()</code> used to manage whether a user is currently signed in or not.
+
+<P>
+</DD>
+<DT><STRONG><code>environ['web.auth.manager']</code> </STRONG></DT>
+<DD>A session <code>UserManager</code> object as returned by <code>web.auth.manager()</code> used to manage applications and users.
+
+<P>
+</DD>
+</DL>
+
+<P>
+The example below demonstrates how to check if a user is signed in and if they are not signed in, provide them with a sign in form and handle the submissions until they are signed in.
+
+<P>
+<div class="verbatim">
+<pre>import sys; sys.path.append('../')
+from web.wsgi import *
+
+# Sign In Application
+class simpleApp(base.BaseApplication):
+    def start(self):
+        # Create some sample data
+        if not self.environ['web.auth.manager'].applicationExists('app'):
+            self.environ['web.auth.manager'].addApplication('app')
+            self.environ['web.auth.manager'].addUser(
+                'john',
+                'bananas',
+                'John',
+                'Smith',
+                'johnsmith@example.com',
+            )
+            self.environ['web.auth.manager'].setAccessLevel('john', 'app', 1)
+        # See if anyone is signed in
+        if self.environ.has_key('web.auth.user'):
+            self.output('Already signed in')
+        else: 
+            # Try to login
+            import web.auth.handler.signIn
+            signInHandler = web.auth.handler.signIn.SignInHandler(
+                session = self.environ['web.auth.session'], 
+                manager = self.environ['web.auth.manager'],
+                cgi = self.environ['web.cgi'],
+            )
+            error = signInHandler.handle()
+            if error:  
+                # Display the error form
+                self.output('&lt;html&gt;&lt;body&gt;&lt;h1&gt;Please Sign In&lt;/h1&gt;%s&lt;/body&gt;&lt;/html&gt;'%error)
+            else:
+                # We have just signed in
+                self.output('Signed in successfully')
+        self.environ['web.database.connection'].commit()
+
+# Middleware Setup
+application = error.Error(
+    database.Database(
+        environment.Environment(
+            session.Session(
+                cgi.CGI(
+                    auth.Auth(
+                        simpleApp(), 
+                        app='test', 
+                        setupEnvironment=1,
+                        expire=30,
+                        idle=10,
+                    ),
+                ),
+                app = 'testApp',
+                expire = 1000,
+                setupEnvironment = 1,
+            ),
+            name = 'testEnv',
+            storage = 'database',
+        ),
+        adapter = 'snakesql',
+        database = 'wsgi-auth',
+        autoCreate = 1,
+    ),
+)
+
+</pre>
+<div class="footer">
+<a href="wsgiAuth.txt" type="text/plain">Download as text (original file name: <span class="file">wsgiAuth.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by running the WSGI server <span class="file">scripts/WSGIServer.py</span> and visiting <a class="url" href="http://localhost:8000/auth">http://localhost:8000/auth</a>
+<P>
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.4.5 web.wsgi.error - Error"
+  href="node178.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.4 The PythonWeb Middleware"
+  href="node173.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="A. Reporting Bugs"
+  href="reporting-bugs.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node178.html">1.15.4.5 web.wsgi.error - Error</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node173.html">1.15.4 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="reporting-bugs.html">A. Reporting Bugs</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

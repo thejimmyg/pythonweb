@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+
+"""Auth Example. Username=john and Password=bananas (Case sensitive)"""
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web.error; web.error.enable()
+import web, web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="webserver-auth-simple",
+    autoCreate = 1,
+)
+cursor = connection.cursor() 
+
+import web.auth
+
+# If the auth environment is created, setup some information
+def setup(userManager):
+    userManager.addApplication('app')
+    userManager.addUser(
+        'john',
+        'bananas',
+        'John',
+        'Smith',
+        'johnsmith@example.com',
+    )
+    userManager.setAccessLevel('john', 'app', 1)
+    
+# Create the auth objects
+error, user = web.auth.start(
+    app='test',
+    environmentName='testEnv',
+    environmentType='database',
+    cursor = cursor,
+    expire=10, 
+    setupSessionEnvironment=1,
+    setupAuthEnvironment=1,
+    setup = setup, # using the setup function above
+    stickyData = {'testVar':'True'},
+    action = 'webserver-web-auth-simple.py',
+    redirect = '/'
+)
+# print some output
+if error:
+    print error # Error contains a form to display to allow users to sign in
+else:
+    print 'User %s is signed in.' % user.username
+
+connection.commit()
+connection.close()

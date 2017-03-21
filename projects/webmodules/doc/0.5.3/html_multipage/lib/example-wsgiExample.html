@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="example-command-program-flow.html" />
+<link rel="prev" href="node183.html" />
+<link rel="parent" href="wsgi.html" />
+<link rel="next" href="example-command-program-flow.html" />
+<meta name='aesop' content='information' />
+<title>1.14.4 Writing Applications</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.3.6 web.wsgi.auth - User"
+  href="example-wsgiAuth.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14 web.wsgi  "
+  href="wsgi.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.5 Writing Your Own"
+  href="example-command-program-flow.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiAuth.html">1.14.3.6 web.wsgi.auth - User</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="wsgi.html">1.14 web.wsgi  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-program-flow.html">1.14.5 Writing Your Own</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031440000000000000000">
+1.14.4 Writing Applications</A>
+</H2>
+
+<P>
+Below is a full example with a lot of functionality. It can be used as a base for your own applications.
+
+<P>
+<A NAME="example-wsgiExample"></A><div class="verbatim">
+<pre>import sys; sys.path.append('../')
+from web.wsgi import *
+import web.database.object, os
+
+links = """&lt;p&gt;&lt;a href="example?mode=signOut"&gt;Sign out&lt;/a&gt; | 
+&lt;a href="example?mode=view"&gt;View&lt;/a&gt; | 
+&lt;a href="example?mode=add"&gt;Add&lt;/a&gt;&lt;/p&gt;"""
+
+def simpleApp(environ, start_response):
+
+    person = web.database.object.Table("Person")
+    person.add(column="String", name='firstName', required=True)
+    person.addColumn(web.database.object.String(name="surname"))
+    person.addColumn(
+        web.database.object.StringSelect(
+            name="profession", 
+            options=[None, 'Developer', 'Web Developer'], 
+            displayNoneAs='Not Specified'
+        )
+    )
+    person.add(column="Bool", name='sex', displayTrueAs='Male', displayFalseAs='Female')
+    database = web.database.object.Database()
+    database.addTable(person)
+    
+    # Initialise the database
+    database.init(environ['web.database.cursor'])
+
+    if not database.tablesExist():
+        database.createTables()
+
+    mode = 'view'
+    if environ['web.cgi'].has_key('mode'):
+        mode = environ['web.cgi']['mode'].value
+
+    # signIn mode needed to allow for sign in handling
+    # you will be redirected to the correct place eventually
+    if mode == 'signIn':
+        start_response('403 User not signed in', [])
+        environ['web.database.connection'].commit()
+        return []
+    elif mode == 'signOut':
+        start_response('403 User not signed in', [])
+        environ['web.database.connection'].commit()
+        return []
+    elif mode == 'add':
+        if not environ.has_key('web.auth.user'): # No user signed in
+            start_response('403 User not signed in', [])
+            environ['web.database.connection'].commit()
+            return []
+        else:
+            result = []
+            form = database['Person'].form(stickyData={'mode':'add'}) 
+            if len(environ['web.cgi']) &gt; 1:             # Assume form submitted
+                form.populate(environ['web.cgi'])
+                if form.valid():      
+                    entry = database['Person'].insert(all=form.dict())
+                    result.append('''&lt;html&gt;&lt;h1&gt;Entry Added&lt;/h1&gt;%s
+                        &lt;p&gt;&lt;a href="example"&gt;Go Back&lt;/a&gt;&lt;/html&gt;'''%(form.frozen())
+                    )
+                else:
+                    result.append( """&lt;html&gt;%s&lt;h1&gt;Error&lt;/h1&gt;&lt;p&gt;There were some invalid fields. 
+                        Please correct them.&lt;/p&gt;%s&lt;/html&gt;"""%(links, form.html())
+                    )
+            else:
+                result.append("""&lt;html&gt;%s&lt;h1&gt;Add Entry&lt;/h1&gt;%s&lt;/html&gt;"""%(links, form.html()))
+            start_response('200 OK', [('Content-type','text/html')])
+            environ['web.database.connection'].commit()
+            return result
+    else:
+        entries = '&lt;table border="1"&gt;&lt;tr style="font-weight: bold;"&gt;&lt;td&gt;Firstname&lt;/td&gt;'
+        entries += '&lt;td&gt;Surname&lt;/td&gt;&lt;td&gt;Profession&lt;/td&gt;&lt;td&gt;Sex&lt;/td&gt;&lt;/tr&gt;'
+        for row in database['Person'].values():
+            entries += '&lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%(
+                row['firstName'],
+                row['surname'],
+                row['profession'],
+                row['sex']
+            )
+        entries += '&lt;/table&gt;'
+        info = """The table above shows people entries. To add an entry, click the add link above
+        but you will need to sign in using the username &lt;tt&gt;john&lt;/tt&gt; and the password &lt;tt&gt;bananas&lt;/tt&gt;. 
+        If you don't visit a page you will be signed out after 20 seconds and have to sign in again."""
+        start_response('200 OK', [('Content-type','text/html')])
+        environ['web.database.connection'].commit()
+        return ["&lt;html&gt;%s&lt;h1&gt;Entries&lt;/h1&gt;&lt;p&gt;%s&lt;/p&gt;&lt;p&gt;%s&lt;/p&gt;&lt;/html&gt;"%(links, entries,info)]
+
+# Middleware Setup
+application = error.Error(
+    database.Database(
+        session.Session(
+            cgi.CGI(
+                auth.Auth(
+                    simpleApp, 
+                    driver='database',
+                    autoCreate=1,
+                    expire=0,
+                    idle=20,
+                    template = """
+                        &lt;html&gt;
+                        &lt;head&gt;&lt;title&gt;Sign In&lt;/title&gt;&lt;/head&gt;
+                        &lt;body&gt;
+                        %s
+                        &lt;h1&gt;Sign In&lt;/h1&gt;
+                        %%(form)s
+                        &lt;p&gt;%%(message)s&lt;/p&gt;
+                        &lt;/body&gt;
+                        &lt;/html&gt;
+                    """%links,
+                    redirectMethod='metaRefresh'
+                ),
+            ),
+            expire = 1000,
+            autoCreate = 1,
+            driver='database',
+        ),
+        adapter = 'snakesql',
+        database = 'wsgi-example',
+        autoCreate = 1
+    ),
+)
+</pre>
+<div class="footer">
+<a href="wsgiExample.txt" type="text/plain">Download as text (original file name: <span class="file">wsgiExample.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by running the WSGI server <span class="file">scripts/WSGIServer.py</span> and visiting <a class="url" href="http://localhost:8000/example">http://localhost:8000/example</a>
+<P>
+<span class="note"><b class="label">Note:</b>
+The authour of the web modules is currently building a framework called Bricks which will automate many of the tasks involved in manually writing an application such as the one above.</span>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.3.6 web.wsgi.auth - User"
+  href="example-wsgiAuth.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14 web.wsgi  "
+  href="wsgi.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.5 Writing Your Own"
+  href="example-command-program-flow.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiAuth.html">1.14.3.6 web.wsgi.auth - User</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="wsgi.html">1.14 web.wsgi  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-program-flow.html">1.14.5 Writing Your Own</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

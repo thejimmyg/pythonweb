@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node82.html">
+<LINK REL="prev" href="module-web.form.html">
+<LINK REL="parent" href="module-web.form.html">
+<LINK REL="next" HREF="node82.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.7.1 Introduction</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.7.2 Form Objects" 
+  HREF="node82.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.form.html">1.7 web.form  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.form.html">1.7 web.form  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node82.html">1.7.2 Form Objects</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003710000000000000000">
+1.7.1 Introduction</A>
+</H2>
+
+<P>
+The <tt class="module">web.form</tt> module has three modules containg different types of fields. <tt class="module">web.form.field.basic</tt> provides the standard HTML fields such as <code>input</code> boxes or <code>CheckBoxGroup</code>s.  <tt class="module">web.form.field.typed</tt> provides fields which return typed data such as Dates and <tt class="module">web.form.field.extra</tt> provides fields such as email and URL.
+
+<P>
+The code below will create an <tt class="class">Integer</tt> field:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; import web.form, web.form.field.basic as field
+&gt;&gt;&gt; input = field.Input(name='box', default='Default Text', 
+...     description='Input Box:', size=14, maxlength=25)
+&gt;&gt;&gt; print input.html()
+&lt;input type="text" name="box" size="14" maxlength="25" value="Default Text"&gt;
+</pre></div>
+
+<P>
+This on its own doesn't seem overly useful but when combined with a <tt class="class">web.form.Form</tt> it becomes much more useful. Following on from the previous example:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; exampleForm = web.form.Form(name='form', action='forms.py', method='get')
+&gt;&gt;&gt; exampleForm.add(input)
+&gt;&gt;&gt; exampleForm.addAction('Submit')
+&gt;&gt;&gt; print exampleForm.html()
+&lt;form name="form" class="lemon" action="forms.py" method="get" enctype=""&gt;
+&lt;table border="0"&gt;
+&lt;tr&gt;&lt;td&gt;&lt;table border="0" cellpadding="3" cellspacing="0"&gt;
+&lt;tr&gt;
+  &lt;td valign="top"&gt;Input Box: &lt;/td&gt;
+  &lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;
+  &lt;td valign="top"&gt;&lt;input type="text" name="input" size="14" maxlength="25" valu
+e="Default Text"&gt;&lt;/td&gt;
+  &lt;td valign="top"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;/table&gt;
+&lt;/form&gt;
+</pre></div>
+
+<P>
+In this case a properly formatted form is produced with labels for the fields.
+
+<P>
+Now in order for this to be useful a mechanism is needed for displaying the form data to the user, validating it, re-displaying it with an error message if it is invalid and then finally accessing the data.
+
+<P>
+To populate the form with data we use the <tt class="class">web.cgi</tt> object which acts like a dictionary of submitted CGI variables. If the form is submitted then at least one cgi variable will be avaible so if <code>len(web.cgi)&gt;0</code> then we know someone is trying to submit form data.
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; if len(web.cgi) &gt; 0: 
+...    exampleForm.populate(web.cgi)
+</pre></div>
+
+<P>
+The form will now be populated with the information from the <tt class="class">web.cgi</tt> object. The values submitted to each field may not be of the appropriate types so in order to make sure the information is valid we call the <code>valid()</code> method of the form to validate each field.
+
+<P>
+Again, following on from the previous example:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; if exampleForm.valid():
+...     print "It validated"
+...
+&gt;&gt;&gt; else:
+...     print exampleForm.html()
+...
+</pre></div>
+
+<P>
+If the information entered into the form is not valid <code>exampleForm.html()</code> will return a form with the error marked on so that the user can change the field and resubmit the form. Once every field in the form is valid then we can go ahead and access the fields varaibles by their names like this:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; exampleForm['box']
+&lt;Input Class. Name='box'&gt;
+&gt;&gt;&gt; exampleForm['box'].value
+'Default Text'
+</pre></div>
+
+<P>
+If a valid value had been submitted then <code>exampleForm['box'].value</code> would have returned that value rather than the default.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.7 web.form  " 
+  rel="prev" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.7 web.form  " 
+  rel="parent" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.7.2 Form Objects" 
+  rel="next" title="1.7.2 Form Objects" 
+  HREF="node82.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.form.html">1.7 web.form  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.form.html">1.7 web.form  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node82.html">1.7.2 Form Objects</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node20.html" />
+<link rel="prev" href="node18.html" />
+<link rel="parent" href="node18.html" />
+<link rel="next" href="node20.html" />
+<meta name='aesop' content='information' />
+<title>1.2.10.1 The start() Function</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.10 Function Reference"
+  href="node18.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.10 Function Reference"
+  href="node18.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.10.2 Driver Objects"
+  href="node20.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node18.html">1.2.10 Function Reference</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node18.html">1.2.10 Function Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node20.html">1.2.10.2 Driver Objects</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0032101000000000000000">
+1.2.10.1 The start() Function</A>
+</H3>
+
+<P>
+The <tt class="function">web.auth.start()</tt> function has the following parameters:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-14' xml:id='l2h-14' class="function">start</tt></b>(</nobr></td>
+  <td><var><var>app</var>, <var>environmentName</var></var><big>[</big><var>, environmentType='database'</var><big>]</big><var></var><big>[</big><var>, sessionManager=None</var><big>]</big><var></var><big>[</big><var>, expire=0</var><big>]</big><var></var><big>[</big><var>, idle=0</var><big>]</big><var></var><big>[</big><var>, setupSessionEnvironment=0</var><big>]</big><var></var><big>[</big><var>, setupAuthEnvironment=0</var><big>]</big><var></var><big>[</big><var>, template</var><big>]</big><var></var><big>[</big><var>, templateDict = </var><big>]</big><var></var><big>[</big><var>, setup = None</var><big>]</big><var></var><big>[</big><var>, action = ''</var><big>]</big><var></var><big>[</big><var>, stickyData = </var><big>]</big><var></var><big>[</big><var>, redirect=None</var><big>]</big><var></var><big>[</big><var>, **environmentParams</var><big>]</big><var>
+</var>)</td></tr></table></dt>
+<dd>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+Because more options may be specified in future versions of this function you should not rely on the order of these parameters. Instead they should be specified with the parameter name and an <code>=</code> sign as is used in the examples in this documentation.</span>
+
+<P>
+<DL>
+<DT><STRONG><var>app</var></STRONG></DT>
+<DD>The name of the application. 
+
+<P>
+</DD>
+<DT><STRONG><var>environmentName</var></STRONG></DT>
+<DD>The name of the environment
+
+<P>
+</DD>
+<DT><STRONG><var>environmentType</var></STRONG></DT>
+<DD>The type of environment, currently can only be <code>'database'</code>.
+
+<P>
+</DD>
+<DT><STRONG><var>**environmentParams</var></STRONG></DT>
+<DD>Any other parameters needed to correctly specify the environment. For example, if you are using a <code>'database'</code> environment type you will also need to specify <var>cursor</var>. 
+
+<P>
+</DD>
+<DT><STRONG><var>sessionManager</var></STRONG></DT>
+<DD>A valid <tt class="class">web.session</tt> manager object. If not specified, one is created using the default options for a CGI environment.
+
+<P>
+</DD>
+<DT><STRONG><var>expire</var></STRONG></DT>
+<DD>An integer specifying the number of seconds before the user is signed out. A value of 0 disables the expire functionality and the user will be signed in until they sign out. <span class="note"><b class="label">Note:</b>
+If the underlying session expires, the cookie is removed or the sign in idles before the expire time specified in <var>expire</var> the user will be signed out.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>idle</var></STRONG></DT>
+<DD>An integer specifying the maximum number of seconds between requests before the user is automatically signed out. A value of 0 disables the idle functionality allowing an unlimited amount of time between user requests. <span class="note"><b class="label">Note:</b>
+If the underlying session expires, the cookie is removed or the sign in expires before the idle time specified in <var>idle</var> the user will be signed out.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>setupSessionEnvironment</var></STRONG></DT>
+<DD>Whether to automatically setup a session environment if one is not already present. <span class="warning"><b class="label">Warning:</b>
+ If set to <code>True</code> and only some of the required tables are present in the environment, all the session tables will be removed and recreated, losing all the contents. Currently no checking of whether the tables contain the correct fields is done.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>setupAuthEnvironment</var></STRONG></DT>
+<DD>Whether to automatically setup an auth environment if one is not already present. <span class="warning"><b class="label">Warning:</b>
+ If set to <code>True</code> and only some of the required tables are present in the environment, all the auth tables will be removed and recreated, losing all the contents. Currently no checking of whether the tables contain the correct fields is done.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>template</var></STRONG></DT>
+<DD>An HTML template in which to display the form. Must have %(form)s somewhere in the template.
+
+<P>
+</DD>
+<DT><STRONG><var>templateDict</var></STRONG></DT>
+<DD>A dictionary of other variables to be embedded into the template
+
+<P>
+</DD>
+<DT><STRONG><var>stickyData</var></STRONG></DT>
+<DD>A dictionary of key, value pairs to be stored as hidden fields in the sign in form.
+
+<P>
+</DD>
+<DT><STRONG><var>redirect</var></STRONG></DT>
+<DD>A URL to redirect to after sign in. XXX Currently not working?
+
+<P>
+</DD>
+<DT><STRONG><var>redirect</var></STRONG></DT>
+<DD>A URL to redirect to after sign in. XXX Currently not working?
+
+<P>
+</DD>
+<DT><STRONG><var>action</var></STRONG></DT>
+<DD>The action of the form. i.e. the URL of script to send the sign in data to.
+
+<P>
+</DD>
+<DT><STRONG><var>setup</var></STRONG></DT>
+<DD>A function definition taking a <code>AuthManager</code> object as its only parameter which can be used to setup auth data if the auth environment is created.
+
+<P>
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.10 Function Reference"
+  href="node18.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.10 Function Reference"
+  href="node18.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.10.2 Driver Objects"
+  href="node20.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node18.html">1.2.10 Function Reference</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node18.html">1.2.10 Function Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node20.html">1.2.10.2 Driver Objects</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

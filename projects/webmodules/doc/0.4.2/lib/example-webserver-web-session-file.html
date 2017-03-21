@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node97.html">
+<LINK REL="prev" HREF="node95.html">
+<LINK REL="parent" href="session.html">
+<LINK REL="next" HREF="node97.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Example">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.10.2 Example</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.1 Introduction" 
+  HREF="node95.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.3 Session Object Reference" 
+  HREF="node97.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node95.html">1.10.1 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node97.html">1.10.3 Session Object Reference</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031020000000000000000">&nbsp;</A>
+<BR>
+1.10.2 Example
+</H2>
+
+<P>
+The <tt class="method">session.start()</tt> method returns a session object for the storage driver you chose. The session object can be treated like a dictionary to set and get variables. Any python object whcih can be pickled using the <tt class="module">pickle</tt> module can be set in the session store.
+
+<P>
+Have a look at the example application below:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+# show python where the web modules are
+import sys
+sys.path.append('../')
+sys.path.append('../../../') 
+
+import web, web.session, os
+
+session = web.session.start(
+    storage='file',
+    app='test', 
+    dir='../doc/src/lib/example-web-session', 
+    expire=10,
+)
+
+print "Content-type: text/html&#92;n&#92;n"
+
+if session.created:
+    print """&lt;html&gt;
+                &lt;h1&gt;This is your first visit&lt;/h1&gt;
+                &lt;p&gt;Setting variable1 to 'Python Rules!'.&lt;/p&gt;
+                &lt;p&gt;Refresh this page...&lt;/p&gt;
+            &lt;/html&gt;"""
+    session['variable1'] = 'Python Rules!'
+else:
+    if web.cgi.has_key('destroy'):
+        session.destroy()
+        print """&lt;html&gt;&lt;h1&gt;Session Deleted&lt;/h1&gt;
+                &lt;p&gt;&lt;a href="%s"&gt;Start again&lt;/a&gt;.
+                &lt;/p&gt;&lt;/html&gt;"""%(os.environ['SCRIPT_NAME'])
+    else:
+        print """&lt;html&gt;&lt;h1&gt;Welcome back&lt;/h1&gt;&lt;p&gt;variable1: %s&lt;/p&gt;
+                &lt;p&gt;&lt;a href="%s?destroy=True"&gt;Destroy session&lt;/a&gt;.
+                &lt;/p&gt;&lt;/html&gt;"""%(session['variable1'],os.environ['SCRIPT_NAME'])</pre>
+<div class="footer">
+<a href="webserver-web-session-file.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-session-file.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by running the webserver <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-session-file.py">http://localhost:8080/doc/src/lib/webserver-web-session-file.py</a>
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.1 Introduction" 
+  rel="prev" title="1.10.1 Introduction" 
+  HREF="node95.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.3 Session Object Reference" 
+  rel="next" title="1.10.3 Session Object Reference" 
+  HREF="node97.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node95.html">1.10.1 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node97.html">1.10.3 Session Object Reference</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

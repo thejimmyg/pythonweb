@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node38.html" />
+<link rel="prev" href="node35.html" />
+<link rel="parent" href="module-web.database.html" />
+<link rel="next" href="node38.html" />
+<meta name='aesop' content='information' />
+<title>1.4.3 Connecting to a Database</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.2.1 Understanding Field Types"
+  href="node36.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.4 Using a Table"
+  href="node38.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node36.html">1.4.2.1 Understanding Field Types</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node38.html">1.4.4 Using a Table</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003430000000000000000">
+1.4.3 Connecting to a Database</A>
+</H2>
+
+<P>
+Connecting to a database is really very easy. The code below will connect to a MySQL database named 'test'.
+
+<P>
+<div class="verbatim"><pre>
+import web, web.database
+connection = web.database.connect(adapter="mysql", database="test")
+</pre></div>
+
+<P>
+Below is a description of the full range of parameters the <tt class="function">connect()</tt> function can take (Obviously not all of the database support all of the parameters):
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-80' xml:id='l2h-80' class="function">connect</tt></b>(</nobr></td>
+  <td><var><var>adapter</var>,</var><big>[</big><var>database,</var><big>]</big><var></var><big>[</big><var>user,</var><big>]</big><var></var><big>[</big><var>password,</var><big>]</big><var></var><big>[</big><var>host,</var><big>]</big><var></var><big>[</big><var>port,</var><big>]</big><var></var><big>[</big><var>socket,</var><big>]</big><var></var><big>[</big><var>**params</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+Constructor for creating a connection to a database. Returns a <code>Connection</code> object. Not all databases will use all the parameters, but databases should use the parameters specified and not abbreviated versions. Any more complex parameters are passed directly to the underlying driver's <code>connect()</code> method. 
+
+<P>
+<DL>
+<DT><STRONG><var>adapter</var></STRONG></DT>
+<DD>The type of database to connect to. Can currently be <code>'MySQL'</code>, <code>'PySQLite'</code> or <code>'<tt class="module">web.database</tt> '</code> but it is hoped that most database drivers will eventually be supported.
+</DD>
+<DT><STRONG><var>database</var></STRONG></DT>
+<DD>The database name to connect to.
+</DD>
+<DT><STRONG><var>user</var></STRONG></DT>
+<DD>The username to connect with.
+</DD>
+<DT><STRONG><var>password</var></STRONG></DT>
+<DD>The password to use.
+</DD>
+<DT><STRONG><var>prepend</var></STRONG></DT>
+<DD>A string to be transparantly used in front of all database tables.
+</DD>
+<DT><STRONG><var>host</var></STRONG></DT>
+<DD>The host to connect to if the database is running on a remote server.
+</DD>
+<DT><STRONG><var>port</var></STRONG></DT>
+<DD>The port to connect to if the database is running on a remote server.
+</DD>
+<DT><STRONG><var>socket</var></STRONG></DT>
+<DD>The socket to connect to if the database is running locally and requires a socket.
+</DD>
+<DT><STRONG><var>**params</var></STRONG></DT>
+<DD>Any other parameters to be passed to the driver
+</DD>
+</DL>
+</dl>
+
+<P>
+Here are some examples:
+
+<P>
+Connect to the unpassworded MySQL database <code>MyDatabase</code> on a local server connected through a socket <span class="file">/tmp/mysqld.sock</span>. Another common socket file used is <span class="file">/tmp/mysql.sock</span>.
+<div class="verbatim"><pre>
+connection = web.database.connect(
+    adapter="mysql", 
+    database="MyDatabase",
+    socket="/tmp/mysqld.sock",
+)
+</pre></div>
+
+<P>
+Connect to a the database <code>MyDatabase</code> as <code>username</code> with password <code>password</code>. The MySQL  server is runing remotely at <code>mysql.example.com</code> on port <code>3336</code>:
+<div class="verbatim"><pre>
+connection = web.database.connect(
+    adapter="mysql",
+    database="MyDatabase",
+    host="mysql.example.com",
+    port="3336",
+    user="username",
+    password="password",
+)
+</pre></div>
+
+<P>
+Connect to the <tt class="module">web.database</tt>  database in the directory <span class="file">C:/TestDirectory</span>
+<div class="verbatim"><pre>
+connection = web.database.connect(
+    adapter="SnakeSQL",
+    database="C:/TestDirectory",
+)
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ Windows users may find it easier to use forward slahes in paths to avoid having to quote backslashes. Both work equally well.</span>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.2.1 Understanding Field Types"
+  href="node36.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.4 Using a Table"
+  href="node38.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node36.html">1.4.2.1 Understanding Field Types</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node38.html">1.4.4 Using a Table</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

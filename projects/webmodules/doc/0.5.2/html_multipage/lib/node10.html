@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node14.html" />
+<link rel="prev" href="node9.html" />
+<link rel="parent" href="module-web.auth.html" />
+<link rel="next" href="node11.html" />
+<meta name='aesop' content='information' />
+<title>1.2.5 Administering The Auth Environment</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.4 Obtaining Access to"
+  href="node9.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.5.1 Adding Applications"
+  href="node11.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node9.html">1.2.4 Obtaining Access to</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node11.html">1.2.5.1 Adding Applications</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003250000000000000000">
+1.2.5 Administering The Auth Environment</A>
+</H2>
+
+<P>
+In order to access application and user information you need to create a <code>AuthManager</code> object. This can be done as follows:
+
+<P>
+<div class="verbatim"><pre>
+driver = web.auth.driver('database', environment='testEnv', cursor=cursor)
+authManager = web.auth.manager(driver=driver)
+</pre></div>
+
+<P>
+Once the object is created you can use its methods to add new users and applications. 
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ As well as creating an applicaiton and a user you <strong>must</strong> link the two by using the <tt class="method">setAccessLevel()</tt> method so that the user has access to the application.</span>
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node11.html">1.2.5.1 Adding Applications</a>
+<LI><A href="node12.html">1.2.5.2 Adding Users</a>
+<LI><A href="node13.html">1.2.5.3 Setting Access Levels</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.4 Obtaining Access to"
+  href="node9.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.5.1 Adding Applications"
+  href="node11.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node9.html">1.2.4 Obtaining Access to</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node11.html">1.2.5.1 Adding Applications</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

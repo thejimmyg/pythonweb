@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="image.html" />
+<link rel="parent" href="image.html" />
+<link rel="next" href="module-web.mail.html" />
+<meta name='aesop' content='information' />
+<title>1.9.1 web.image.graph -- Create graphs</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.9 web.image  "
+  href="image.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.9 web.image  "
+  href="image.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.10 web.mail  "
+  href="module-web.mail.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="image.html">1.9 web.image  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="image.html">1.9 web.image  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.mail.html">1.10 web.mail  </A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003910000000000000000"></A><A NAME="graph"></A>
+<BR>
+1.9.1 <tt class="module">web.image.graph</tt> -- Create graphs
+</H2>
+<A NAME="module-web.image"></A>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-273' xml:id='l2h-273' class="function">html2tuple</tt></b>(</nobr></td>
+  <td><var><var>htmlColorCode</var></var>)</td></tr></table></dt>
+<dd>
+Returns a colour tuple of <code>(R, G, B)</code> in hex from an HTML colour code such as <code>#ffffff</code>. The return value from this function can be used to specify colours in the <tt class="module">graph</tt> module.
+<DL>
+<DT><STRONG><var>htmlColorCode</var></STRONG></DT>
+<DD>The html colour code to convert.
+</DD>
+</DL>
+</dl>
+
+<P>
+The <tt class="module">web.image.graph</tt> module is used to create PNG or similar graphs for use on web pages.
+
+<P>
+Currently the module only works with positive values for the axes and requires the presence of the <span class="file">Arial.ttf</span> font by default. This modules should be considered an early implementation. You should ensure the values you choose produce a nice looking graph because there is very little error checking and the values you choose may not result in the graph displaying correctly.
+
+<P>
+Here as an example showing the useage of the three main classes:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the modules are
+import web.image.graph
+
+graph = web.image.graph.ScatterGraph(
+    xAxis={'max':200, 'unit':20, 'label':'Value 1 /cm^2'}, 
+    yAxis={'max':200, 'unit':20, 'label':'Value 2 /cm^2'},
+    points=[(0,0),(13,68),(200,200)],
+    size=(500, 300),
+    bgColor=(240,240,240),
+    title='Test Graph'
+)
+graph.save('scatter.ps')
+
+graph = web.image.graph.BarGraph(
+    xAxis={'max':200, 'unit':20, 'label':'Value 1 /cm^2'}, 
+    yAxis={'max':200, 'unit':20, 'label':'Value 2 /cm^2'},
+    points=[10,20,40,50,200,89, 30, 60, 70, 60],
+    size=(500, 300),
+    bgColor=(240,240,240),
+    title='Test Graph'
+)
+graph.save('bar.png')
+
+graph = web.image.graph.PieChart(
+    points={
+        'food':10,
+        'numbers':20,
+        'numbers2':30,
+    },
+    size=(500, 300),
+    bgColor=(240,240,240),
+    title='Test Graph'
+)
+graph.save('pie.jpg')
+
+graph = web.image.graph.BarGraph(
+    xAxis={'max':200, 'unit':20, 'label':'Value 1 /cm^2'}, 
+    yAxis={'max':200, 'unit':20, 'label':'Value 2 /cm^2'},
+    points=[10,20,40,50,200,89, 30, 60, 70, 60],
+    size=(500, 300),
+    bgColor=web.image.html2tuple('#F0F0F0'),
+    title='Test Graph'
+)
+fp = open('string.pdf','wb')
+fp.write(graph.toString('pdf'))
+fp.close()
+</pre>
+<div class="footer">
+<a href="command-web-image-graph.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-image-graph.py</span>).</a>
+</div></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+The format of the image saved depends on the extension used. Currently supported are <code>'.png'</code>, <code>'.jpg'</code>, <code>'.ps'</code>. JPEG is a lossy compression method and so the graphics produced as JPEGs may not be as good quality as the others. The receommended format to use is <code>'.png'</code>. ust save your files with a <code>.png</code> extension to have PNG output.</span>
+
+<P>
+It is useful to be able to produce graphs in a script and then return them. The example below generates a graph. It can be used in an HTML tage like this <code>&lt;img src="webserver-web-image-graph.py" alt="Graph" /&gt;</code>.
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+"""Graph Generation Example. 
+&lt;img src="webserver-web-image-graph-web.py" alt="Graph" /&gt;"""
+
+# show python where the web modules are
+import sys, os
+sys.path.append('../')
+sys.path.append('../../../') 
+
+import web.error; web.error.handle()
+import web.image, web.image.graph
+
+graph = web.image.graph.BarGraph(
+    xAxis={'max':10, 'unit':1, 'label':'Days Since Send'}, 
+    yAxis={'max':10, 'unit':1, 'label':'Number of Page Views'},
+    points=[1,5,7,8,4,3,6,8,0,1],
+    size=(500, 300),
+    bgColor=web.image.html2tuple('#ffffff'),
+    barColor=web.image.html2tuple('#000080'),
+    title='Page View Rate For Newsletter',
+)
+print web.header('image/png'), graph.toString('png')
+</pre>
+<div class="footer">
+<a href="webserver-web-image-graph.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-image-graph.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by starting the test webserver in <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-image-graph.py">http://localhost:8080/doc/src/lib/webserver-web-image-graph.py</a> on your local machine. You will need the <code>Arial.ttf</code> font somewhere on your system where Python can find it.
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.9 web.image  "
+  href="image.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.9 web.image  "
+  href="image.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.10 web.mail  "
+  href="module-web.mail.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="image.html">1.9 web.image  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="image.html">1.9 web.image  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.mail.html">1.10 web.mail  </A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

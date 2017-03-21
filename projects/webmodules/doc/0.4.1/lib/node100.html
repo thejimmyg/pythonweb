@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="example-command-web-session-create.html">
+<LINK REL="prev" HREF="node99.html">
+<LINK REL="parent" href="session.html">
+<LINK REL="next" href="example-command-web-session-create.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Session Destruction">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.10.6 Session Destruction</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.5 Writing a Module" 
+  HREF="node99.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.7 Setting up a" 
+  href="example-command-web-session-create.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node99.html">1.10.5 Writing a Module</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-session-create.html">1.10.7 Setting up a</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031060000000000000000">
+1.10.6 Session Destruction</A>
+</H2>
+
+<P>
+Every time a session is accessed or created there is a certain probability (specified by the cleanup parameter)
+that the session module will look through all sessions to see which ones have expired, removing session information
+as necessary. This means sessions don't necessarily get destroyed when they expire. Setting the cleanup parameter too high means unnecessary work is done checking expired session more than is needed. Too low and data may persist for a long time meaning that it takes a long time to cleanup the sessions once the cleanup process if finally begun.
+
+<P>
+Once a session has expired the data cannot be accessed by the session module. If a user tries to access an expired
+session, the session is destroyed immediately.
+
+<P>
+You can manually destroy the session using the <tt class="method">destroy()</tt> function.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.5 Writing a Module" 
+  rel="prev" title="1.10.5 Writing a Module" 
+  HREF="node99.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.7 Setting up a" 
+  rel="next" title="1.10.7 Setting up a" 
+  href="example-command-web-session-create.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node99.html">1.10.5 Writing a Module</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-session-create.html">1.10.7 Setting up a</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

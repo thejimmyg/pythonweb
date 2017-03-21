@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="whatsnew.css" type='text/css' />
+<link rel="first" href="whatsnew.html" title='New in Version 0.5' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="about.html" />
+<link rel="prev" href="node5.html" />
+<link rel="parent" href="whatsnew.html" />
+<link rel="next" href="about.html" />
+<meta name='aesop' content='information' />
+<title>3 Early Versions</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.2 0.4.1"
+  href="node7.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="New in Version 0.5"
+  href="whatsnew.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="About this document ..."
+  href="about.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">New in Version 0.5</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node7.html">2.2 0.4.1</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="whatsnew.html">New in Version 0.5</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="about.html">About this document ...</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION000400000000000000000">
+3 Early Versions</A>
+</H1>
+
+<P>
+This section documents the early histroy of the Python Web Modules and the changes that took place in each version.
+
+<P>
+<DL>
+<DT><STRONG>James's Modules</STRONG></DT>
+<DD>Many useful pieces of web code from various projects written by the authour gathered in a directory.
+
+<P>
+</DD>
+<DT><STRONG>Xecos Web Modules</STRONG></DT>
+<DD>Much more robust structuring of code, broad range of modules coverd.
+
+<P>
+</DD>
+<DT><STRONG>Lemon Modules</STRONG></DT>
+<DD>Total re-write of all code, all packaged up as lemon and hosted on sourceforge.net. The lemon modules made use of <code>distutils</code> to create a source zipfile. 
+
+<P>
+Lemon was written from 2002 until 10th November 2003 when the final version (0.2.10) was released. Some maintence updates may be released in the future but this is unlikely.
+
+<P>
+
+<P>
+<DL>
+<DT><STRONG>0.2.0</STRONG></DT>
+<DD><P>
+
+<UL>
+<LI>Total re-write of all code
+</LI>
+<LI>Complete DB interface rather than a few functions, DB-API 2.0 compatible.
+</LI>
+<LI>Custom date classes written
+</LI>
+<LI>Gadfly, Cheetah bundled with code.
+</LI>
+<LI>Session management implementation separated from interface allowing development of storage drivers.
+</LI>
+<LI>Code re-modelled in the light of the PHP way of doing things.
+</LI>
+<LI>Auth management features.
+</LI>
+<LI>Implementation of configuration file for default variable setting.
+</LI>
+<LI>All known bugs fixed.
+</LI>
+<LI>Renamed from Xecos to Lemon.
+</LI>
+<LI>Propriotary code removed.
+</LI>
+<LI>Simpler techniques discarded in favour of ones which Python programmers already use.
+</LI>
+<LI>Attribute style access to variables removed in favour of the more compatible dict-style access.
+</LI>
+</UL>
+
+<P>
+</DD>
+<DT><STRONG>0.2.1</STRONG></DT>
+<DD><P>
+
+<UL>
+<LI>Implementation of db.builder layer
+</LI>
+<LI>Re-write of form generation code and fields code to be compatible with the db.builder layer.
+</LI>
+<LI>Documentation started
+</LI>
+<LI>Code structured properly, distutils script working correctly
+</LI>
+</UL>
+
+<P>
+</DD>
+<DT><STRONG>0.2.2</STRONG></DT>
+<DD><P>
+
+<UL>
+<LI>Re-structuring of modules into interface/driver implementation
+</LI>
+<LI>Module documentation generated with EPyDoc
+</LI>
+</UL>
+
+<P>
+</DD>
+<DT><STRONG>0.2.3</STRONG></DT>
+<DD><P>
+
+<UL>
+<LI>Create a new auth driver which doesn't use Alter.. some databases don't support it hence avoid Gadfly Cursor Problem.
+</LI>
+<LI>Rename the old alter-based db driver dbalter.py
+</LI>
+<LI>Modify Gadfly Create Tables code to separate internal from normal db calls
+</LI>
+<LI>Implemenation of Gadfly ALTER code to allow ALTER. Must specify a default value.
+</LI>
+<LI>Completion of db.builder layer with many field options for each type.
+</LI>
+</UL>
+
+<P>
+</DD>
+<DT><STRONG>0.2.4</STRONG></DT>
+<DD><P>
+
+<UL>
+<LI>Complete module restructuring
+</LI>
+<LI>Basic documentation written
+</LI>
+<LI>generate.py script to perform common tasks including:
+
+<UL>
+<LI>Generate documentation.
+</LI>
+<LI>Create examples and gadfly databases.
+</LI>
+<LI>Precompile all modules.
+</LI>
+<LI>Generate a module reference.
+</LI>
+</UL>
+</LI>
+<LI>Inclusion of epydoc, docutils, reStructuredText, py2html, pyFontify
+</LI>
+<LI>Re-write of tools to give a python as well as command line interface.
+</LI>
+<LI>Alter SQL command
+</LI>
+<LI>Full and robust support for Gadfly
+</LI>
+<LI>Addition of BOOL Type to db and db.buider
+</LI>
+<LI>Separation of lemon into lemon.common
+</LI>
+</UL>
+
+<P>
+</DD>
+<DT><STRONG>0.2.6</STRONG></DT>
+<DD><P>
+
+<UL>
+<LI>Complete re-write of the database layer - now much more robust.
+
+<UL>
+<LI>Types engine to convert Python-&gt;SQL and SQL-&gt;Python using cursor.description information or by maintaing a types table.
+</LI>
+<LI>Autoconvert options available in the function calls for SQL statements
+</LI>
+<LI>Different fetchmodes: dict, tuple, attribute/dict/tuple accessed via a functional interface
+</LI>
+<LI>Debuging mode logs SQL and types information
+</LI>
+<LI>mx.ODBC.windows cursor written for MS Access useage
+</LI>
+</UL>
+</LI>
+<LI>Major additions to the auth module including automatic ability to send password reminders via email.
+</LI>
+<LI>All modules re-written for Python 2.3 date classes
+
+<UL>
+<LI>Features for standard date formatting.
+</LI>
+<LI>Basic implementation of Python 2.3 date classes for use with Python &lt; 2.3
+</LI>
+</UL>
+</LI>
+<LI>html.form module totally re-written using a much more defined structure
+
+<P>
+</LI>
+</UL>
+
+<P>
+</DD>
+<DT><STRONG>0.2.8</STRONG></DT>
+<DD>Versions a,b: Important tidying up of the 0.2.6 release.
+
+<P>
+</DD>
+<DT><STRONG>0.2.9</STRONG></DT>
+<DD><P>
+
+<UL>
+<LI>Re-write of the database layer again -&gt; split it up into connection and cursor objects.. more intuitive for the Python programmer and also compatible with the thinking behind the DB 2.0 API making the db layer a possible candiate for a future release of the DB API.
+</LI>
+<LI>Gadfly, ODBC and MySQL support now fully working.
+</LI>
+<LI>Re-write of code to enable different formats for the conversions etc.
+</LI>
+<LI>Re-write of the connect() method so that the classes stop faffing around with dictionaries.
+</LI>
+<LI>Removal of dependance on the lemon.conf module from session, db and auth modules.
+</LI>
+<LI>Re-write of the session module. Now uses two tables one for expiry information and one for the actual session store. It actually does clean up unwanted sessions and has a clearly defined role and interface. Also has the documentation written.
+</LI>
+</UL>
+
+<P>
+</DD>
+<DT><STRONG>0.2.10</STRONG></DT>
+<DD><P>
+This version was the first version to be used in commercial products. It is rather unstable though so you are advised to use the latest stable version.
+
+<P>
+
+<UL>
+<LI>Implementation of a traceback system entirely backwards compatible with cgitb but allowing custom error handling as well.
+</LI>
+<LI>Examples now all work.
+</LI>
+<LI>Minor bug fixes with the dbCreateTables and dbDroptables scripts.
+</LI>
+<LI>Fuller documentation in the autogenerated reference.
+</LI>
+</UL>
+
+<P>
+</DD>
+</DL>
+
+<P>
+<DL>
+<DT><STRONG>0.3 - 0.3.10</STRONG></DT>
+<DD><P>
+Rewrite the whole lot again learning from the errors of previous versions and properly integrating form and database.object.
+
+<P>
+Write file drivers for the auth and session modules and re-write the database layer
+
+<P>
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.2 0.4.1"
+  href="node7.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="New in Version 0.5"
+  href="whatsnew.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="About this document ..."
+  href="about.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">New in Version 0.5</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node7.html">2.2 0.4.1</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="whatsnew.html">New in Version 0.5</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="about.html">About this document ...</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 20, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

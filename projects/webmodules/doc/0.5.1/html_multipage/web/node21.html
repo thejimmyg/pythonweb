@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="web.css" type='text/css' />
+<link rel="first" href="web.html" title='Beginner's Guide' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node20.html" />
+<link rel="parent" href="node18.html" />
+<link rel="next" href="examples.html" />
+<meta name='aesop' content='information' />
+<title>4.3 Using PythonWeb</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="4.2 Hello world!"
+  href="node20.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="4. CGI Tutorial"
+  href="node18.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="5. Examples"
+  href="examples.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node20.html">4.2 Hello world!</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node18.html">4. CGI Tutorial</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="examples.html">5. Examples</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION005300000000000000000">
+4.3 Using PythonWeb</A>
+</H1>
+
+<P>
+Hopefully by now you have a functioning web server that is producing output to your web browser. You are now ready to start learning PythonWeb.
+
+<P>
+If you haven't already installed the web modules you should do so now. There are instructions in the <em class="citetitle"><a
+ href="../overview/index.html"
+ title="Getting Started"
+ >Getting Started</a></em> guide. Alternatively you can use <code>sys.path</code> to tell Python where the modules are installed.
+
+<P>
+Here is the same <code>Hello world!</code> example written with PythonWeb. 
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/bin/env python
+
+import sys; sys.path.append('../dir')
+import web
+print web.header()
+print "&lt;html&gt;Hello world!&lt;/html&gt;"
+</pre></div>
+
+<P>
+Agian you may have to change the first line to point to the Python interpreter and you should change <code>'../dir'</code> to point to the directory containing the <span class="file">web</span> directory as described in the installation section.
+
+<P>
+The next example prints a list of all the CGI variables your server is making available to CGI scripts.
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/bin/env python
+
+import sys; sys.path.append('../dir')
+import web
+print web.header('text/plain')
+for key, value in web.cgi.items():
+    print "%s: %s\n"%(key, value)
+</pre></div>
+
+<P>
+Note how this time we are sending the information as plain text using an HTTP header <code>web.header('text/plain')</code>.
+
+<P>
+Once you have this working you are ready to begin reading the <em class="citetitle"><a
+ href="../lib/index.html"
+ title="Module Reference"
+ >Module Reference</a></em> and looking at the examples in the next section.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="4.2 Hello world!"
+  href="node20.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="4. CGI Tutorial"
+  href="node18.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="5. Examples"
+  href="examples.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node20.html">4.2 Hello world!</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node18.html">4. CGI Tutorial</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="examples.html">5. Examples</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

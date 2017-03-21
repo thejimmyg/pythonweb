@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node69.html" />
+<link rel="parent" href="node64.html" />
+<link rel="next" href="node71.html" />
+<meta name='aesop' content='information' />
+<title>1.4.13.6 Converter Objects</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.13.5 Column Objects"
+  href="node69.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.13 API Reference"
+  href="node64.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.14 Developer's Guide"
+  href="node71.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node69.html">1.4.13.5 Column Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node64.html">1.4.13 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node71.html">1.4.14 Developer's Guide</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0034136000000000000000">
+1.4.13.6 Converter Objects</A>
+</H3>
+
+<P>
+<code>Converter</code> objects contain methods to convert values between SQL and Python objects and to convert values returned by the database driver into the correct Python type. <code>Converter</code> objects are accessed through the <code>converter</code> attribute of the corresponding <code>Column</code> object.
+
+<P>
+Example: convert a list of values selected from a database to their SQL encoded equivalents
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; cursor.select(columns=['table1.columnOne', 'table2.column2'], tables=['table1', 'table2'], execute=True)
+&gt;&gt;&gt; results = cursor.fetchall()
+&gt;&gt;&gt; record = results[0]
+&gt;&gt;&gt; newRecord = []
+&gt;&gt;&gt; for i in range(len(record)):
+...     newRecord.append(cursor.info[i].converter.valueToSQL(record[i]))
+</pre></div>
+
+<P>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-132' xml:id='l2h-132' class="class">Converter</tt></b>
+<dd>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-133' xml:id='l2h-133' class="method">valueToSQL</tt></b>(</nobr></td>
+  <td><var><var>value</var></var>)</td></tr></table></dt>
+<dd>
+Convert a Python object to an SQL string
+</dl>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-134' xml:id='l2h-134' class="method">sqlToValue</tt></b>(</nobr></td>
+  <td><var><var>value</var></var>)</td></tr></table></dt>
+<dd>
+Convert the an SQL string to a Python object
+</dl>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-135' xml:id='l2h-135' class="method">databaseToValue</tt></b>(</nobr></td>
+  <td><var><var>value</var></var>)</td></tr></table></dt>
+<dd>
+Convert the value stored in the database to a Python object
+</dl>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-136' xml:id='l2h-136' class="method">valueToDatabase</tt></b>(</nobr></td>
+  <td><var><var>value</var></var>)</td></tr></table></dt>
+<dd>
+Convert a Python object to the format needed to store it in the database
+
+<P>
+</dl>
+<dl><dt><b><tt id='l2h-137' xml:id='l2h-137' class="member">type</tt></b></dt>
+<dd>
+A string representing the column type
+</dl>
+<dl><dt><b><tt id='l2h-138' xml:id='l2h-138' class="member">sqlQuotes</tt></b></dt>
+<dd>
+<code>True</code> if the SQL representation should be quoted, <code>False</code> otherwise
+</dl>
+</dl>
+
+<P>
+<code>Converter</code> objects are also available as a dictionary with column types as the keys as the <code>converters</code> attribute of the <code>Connection</code> object.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.13.5 Column Objects"
+  href="node69.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.13 API Reference"
+  href="node64.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.14 Developer's Guide"
+  href="node71.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node69.html">1.4.13.5 Column Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node64.html">1.4.13 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node71.html">1.4.14 Developer's Guide</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

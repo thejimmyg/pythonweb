@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="module-web.database.html" />
+<link rel="prev" href="module-web.auth.html" />
+<link rel="parent" href="web.html" />
+<link rel="next" href="node30.html" />
+<meta name='aesop' content='information' />
+<title>1.3 datetime -- Compatibility code providing date and time classes for Python 2.2 users</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.7.5 Sign In Handler"
+  href="node28.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.3.1 Module-Level Functionality"
+  href="node30.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node28.html">1.2.7.5 Sign In Handler</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node30.html">1.3.1 Module-Level Functionality</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION003300000000000000000"></A><A NAME="datetime"></A>
+<BR>
+1.3 <tt class="module">datetime</tt> -- Compatibility code providing date and time classes for Python 2.2 users
+</H1>
+<A NAME="module-datetime"></A>
+
+<a id='l2h-78' xml:id='l2h-78'></a>
+
+<P>
+The following classes provide a subset of the functionality of the Python 2.3 <tt class="class">date</tt>, <tt class="class">time</tt> and <tt class="class">datetime</tt> Objects. If you want to do sophisticated date and time classes is it is reccommended that you use Python 2.3. These classes are designed only so that Python 2.2 users can still use date and time functionality in the <tt class="module">web.database</tt> module.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+It should be noted that although the <tt class="class">time</tt> and <tt class="class">datetime</tt> classes have the ability to support microseconds, the <tt class="module">web.database</tt> module only deals in whole seconds since some of the underlying databases do not support microseconds.</span>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-57' xml:id='l2h-57' class="class">date</tt></b>(</nobr></td>
+  <td><var><var>year</var>, <var>month</var>, <var>day</var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+A <tt class="class">date</tt> object represents a date (year, month and day) in an idealized calendar, the current Gregorian calendar indefinitely extended in both directions. January 1 of year 1 is called day number 1, January 2 of year 1 is called day number 2, and so on. This matches the definition of the "proleptic Gregorian" calendar in Dershowitz and Reingold's book <em>Calendrical Calculations</em>, where it's the base calendar for all computations. See the book for algorithms for converting between proleptic Gregorian ordinals and many other calendar systems. 
+
+<P>
+All arguments are required. Arguments may be ints or longs, in the following ranges: 
+
+<P>
+
+<UL>
+<LI><code>MINYEAR &lt;= </code><var>year</var><code> &lt;= MAXYEAR</code>
+</LI>
+<LI><code>1 &lt;= </code><var>month</var><code> &lt;= 12</code>
+</LI>
+<LI><code>1 &lt;= </code><var>day</var><code> &lt;= number of days in the given month and year </code>
+</LI>
+</UL>
+
+<P>
+If an argument outside those ranges is given, <code>ValueError</code> is raised. 
+
+<P>
+Instance Attributes:
+
+<P>
+<dl><dt><b><tt id='l2h-58' xml:id='l2h-58' class="member">year</tt></b></dt>
+<dd>
+Between <code>MINYEAR</code> and <code>MAXYEAR</code> inclusive.
+</dl>
+<dl><dt><b><tt id='l2h-59' xml:id='l2h-59' class="member">month</tt></b></dt>
+<dd>
+Between 1 and 12 inclusive. 
+</dl>
+<dl><dt><b><tt id='l2h-60' xml:id='l2h-60' class="member">day</tt></b></dt>
+<dd>
+Between 1 and the number of days in the given month of the given year. 
+</dl>
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-61' xml:id='l2h-61' class="class">time</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>hour=0</var><big>]</big><var></var><big>[</big><var>,minute=0</var><big>]</big><var></var><big>[</big><var>,second=0</var><big>]</big><var></var><big>[</big><var>,microsecond=0</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+A <tt class="class">time</tt> object represents a (local) time of day, independent of any particular day.
+
+<P>
+All arguments are required. Arguments may be ints or longs, in the following ranges: 
+
+<P>
+
+<UL>
+<LI><code>0 &lt;= </code><var>hour</var><code> &lt; 24 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>minute</var><code> &lt; 60 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>second</var><code> &lt; 60 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>microsecond</var><code> &lt; 1000000 </code>
+</LI>
+</UL>
+
+<P>
+If an argument outside those ranges is given, <code>ValueError</code> is raised. 
+
+<P>
+Instance Attributes:
+
+<P>
+<dl><dt><b><tt id='l2h-62' xml:id='l2h-62' class="member">hour</tt></b></dt>
+<dd>
+In <code>range(24)</code>. 
+</dl>
+<dl><dt><b><tt id='l2h-63' xml:id='l2h-63' class="member">minute</tt></b></dt>
+<dd>
+In <code>range(60)</code>. 
+</dl>
+<dl><dt><b><tt id='l2h-64' xml:id='l2h-64' class="member">second</tt></b></dt>
+<dd>
+In <code>range(60)</code>. 
+</dl>
+<dl><dt><b><tt id='l2h-65' xml:id='l2h-65' class="member">microsecond</tt></b></dt>
+<dd>
+In <code>range(1000000)</code>. 
+</dl>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-66' xml:id='l2h-66' class="class">datetime</tt></b>(</nobr></td>
+  <td><var><var>year</var>, <var>month</var>, <var>day</var></var><big>[</big><var>,hour=0</var><big>]</big><var></var><big>[</big><var>,minute=0</var><big>]</big><var></var><big>[</big><var>,second=0</var><big>]</big><var></var><big>[</big><var>,microsecond=0</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+A <tt class="class">datetime</tt> object is a single object containing all the information from a <tt class="class">date</tt> object and a <tt class="class">time</tt> object. Like a <tt class="class">date</tt> object, <tt class="class">datetime</tt> assumes the current Gregorian calendar extended in both directions; like a <tt class="class">time</tt> object, <tt class="class">datetime</tt> assumes there are exactly 3600*24 seconds in every day. 
+
+<P>
+All arguments are required. Arguments may be ints or longs, in the following ranges: 
+
+<P>
+
+<UL>
+<LI><code>MINYEAR &lt;= </code><var>year</var><code> &lt;= MAXYEAR</code>
+</LI>
+<LI><code>1 &lt;= </code><var>month</var><code> &lt;= 12</code>
+</LI>
+<LI><code>1 &lt;= </code><var>day</var><code> &lt;= number of days in the given month and year </code>
+</LI>
+<LI><code>0 &lt;= </code><var>hour</var><code> &lt; 24 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>minute</var><code> &lt; 60 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>second</var><code> &lt; 60 </code>
+</LI>
+<LI><code>0 &lt;= </code><var>microsecond</var><code> &lt; 1000000 </code>
+</LI>
+</UL>
+
+<P>
+If an argument outside those ranges is given, <code>ValueError</code> is raised. 
+
+<P>
+Instance Attributes:
+
+<P>
+<dl><dt><b><tt id='l2h-67' xml:id='l2h-67' class="member">year</tt></b></dt>
+<dd>
+Between <code>MINYEAR</code> and <code>MAXYEAR</code> inclusive.
+</dl>
+<dl><dt><b><tt id='l2h-68' xml:id='l2h-68' class="member">month</tt></b></dt>
+<dd>
+Between 1 and 12 inclusive. 
+</dl>
+<dl><dt><b><tt id='l2h-69' xml:id='l2h-69' class="member">day</tt></b></dt>
+<dd>
+Between 1 and the number of days in the given month of the given year. 
+</dl>
+<dl><dt><b><tt id='l2h-70' xml:id='l2h-70' class="member">hour</tt></b></dt>
+<dd>
+In <code>range(24)</code>. 
+</dl>
+<dl><dt><b><tt id='l2h-71' xml:id='l2h-71' class="member">minute</tt></b></dt>
+<dd>
+In <code>range(60)</code>. 
+</dl>
+<dl><dt><b><tt id='l2h-72' xml:id='l2h-72' class="member">second</tt></b></dt>
+<dd>
+In <code>range(60)</code>. 
+</dl>
+<dl><dt><b><tt id='l2h-73' xml:id='l2h-73' class="member">microsecond</tt></b></dt>
+<dd>
+In <code>range(1000000)</code>. 
+</dl>
+</dl>
+
+<P>
+All classes have the following class methods:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-74' xml:id='l2h-74' class="method">now</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Returns a <tt class="class">datetime.datetime</tt> object representing the current date and time
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-75' xml:id='l2h-75' class="method">strftime</tt></b>(</nobr></td>
+  <td><var><var>format</var></var>)</td></tr></table></dt>
+<dd>
+Format the date using standard time module string format strings:
+<div class="verbatim"><pre>
+%a Locale's abbreviated weekday name.   
+%A Locale's full weekday name.   
+%b Locale's abbreviated month name.   
+%B Locale's full month name.   
+%c Locale's appropriate date and time representation.   
+%d Day of the month as a decimal number [01,31].   
+%H Hour (24-hour clock) as a decimal number [00,23].   
+%I Hour (12-hour clock) as a decimal number [01,12].   
+%j Day of the year as a decimal number [001,366].   
+%m Month as a decimal number [01,12].   
+%M Minute as a decimal number [00,59].   
+%p Locale's equivalent of either AM or PM.   
+%S Second as a decimal number [00,61]. (1) 
+%U Week number of the year (Sunday as the first day of the week)
+   as a decimal number [00,53]. All days in a new year preceding
+   the first Sunday are considered to be in week 0.   
+%w Weekday as a decimal number [0(Sunday),6].   
+%W Week number of the year (Monday as the first day of the week)
+   as a decimal number [00,53]. All days in a new year preceding
+   the first Monday are considered to be in week 0.   
+%x Locale's appropriate date representation.   
+%X Locale's appropriate time representation.   
+%y Year without century as a decimal number [00,99].   
+%Y Year with century as a decimal number.   
+%Z Time zone name (no characters if no time zone exists).   
+%% A literal "%" character. 
+</pre></div>
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; datetime.datetime(2004,5,3,10,30,50).strftime('%x-%X')
+'05/03/04-10:30:50'
+</pre></div>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-76' xml:id='l2h-76' class="method">timetuple</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Returns a basic time tuple for the date. <span class="warning"><b class="label">Warning:</b>
+The last 6 entries in the tuple returned from this function are obtained from <code>time.localtime()</code> and do not represent anything.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-77' xml:id='l2h-77' class="method">isoformat</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Return the date as a standard SQL string of the format. <span class="warning"><b class="label">Warning:</b>
+<code>microseconds</code> are ignored.</span>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; import web, datetime
+&gt;&gt;&gt; datetime.date(2004,5,3).isoformat()
+'2004-05-03'
+&gt;&gt;&gt; datetime.time(10,30,50,9).isoformat() # Microseconds are ignored
+'10:30:50'
+&gt;&gt;&gt; datetime.datetime(2004,5,3,10,30,50).isoformat()
+'2004-05-03 10:30:50'
+</pre></div>
+</dl>
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node30.html">1.3.1 Module-Level Functionality</a>
+<LI><A href="node31.html">1.3.2 Compatibility with Python 2.3 and above</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.7.5 Sign In Handler"
+  href="node28.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.3.1 Module-Level Functionality"
+  href="node30.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node28.html">1.2.7.5 Sign In Handler</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node30.html">1.3.1 Module-Level Functionality</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

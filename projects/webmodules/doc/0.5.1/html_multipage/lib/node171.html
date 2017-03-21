@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node172.html" />
+<link rel="prev" href="node170.html" />
+<link rel="parent" href="node169.html" />
+<link rel="next" href="node172.html" />
+<meta name='aesop' content='information' />
+<title>1.15.1.2 What Are Middleware Components?</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.1.1 What is a"
+  href="node170.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.1 Introduction"
+  href="node169.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.1.3 Callables, Classes or"
+  href="node172.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node170.html">1.15.1.1 What is a</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node169.html">1.15.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node172.html">1.15.1.3 Callables, Classes or</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031512000000000000000">
+1.15.1.2 What Are Middleware Components?</A>
+</H3>
+
+<P>
+Consider the slightly more complicated example below using the imaginary session handling module <code>superSession</code>:
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/bin/env python
+
+import superSession
+session = superSession.session()
+print "Content-type: text/plain\n\n"
+if session.has_key('visited'):
+    print "You have already visited!"
+else:
+    session['visited'] = 1
+    print "This is your first visit."
+</pre></div>
+
+<P>
+We create a session object and display a different string depending on whether or not the user has visited the site before. We could follow the approach above and create the following WSGI application to do the same thing:
+
+<P>
+<div class="verbatim"><pre>
+def application(environ, start_response):
+    import superSession
+    session = superSession.session()
+    if session.has_key('visited'):
+        text = "You have already visited!"
+    else:
+        session['visited'] = 1
+        text = "This is your first visit."
+    start_response('200 OK', [('Content-type','text/plain')])
+    return [text]
+</pre></div>
+
+<P>
+This would be perfectly good and work perfectly well. We could now refactor the code again:
+
+<P>
+<div class="verbatim"><pre>
+def exampleApplication(environ, start_response):
+    if environ['superSession'].has_key('visited'):
+        text = "You have already visited!"
+    else:
+        environ['superSession']['visited'] = 1
+        text = "This is your first visit."
+    start_response('200 OK', [('Content-type','text/plain')])
+    return [text]
+    
+def session(application):
+    def app(environ, start_response):
+        if "superSession" not in environ:
+            import superSession
+            environ["superSession"] = superSession.session() # Options would obviously need specifying
+        return application(environ, start_response)
+    return app
+    
+application = session(exampleApplication)
+</pre></div>
+
+<P>
+We have separated out the session code into a different function and added a key to the <code>environ</code> dictionary called <code>"session"</code> which contains the session object. Our <code>exampleApplication</code> then accesses the session object through the <code>environ</code> dictionary. Note how we have renamed our <code>application</code> function to <code>exampleApplication</code> and mapped the name <code>application</code> to the <code>session(exampleApplication)</code> object. The WSGI server will still be able to find a callable named <code>application</code> and so will still be able to run our application. 
+
+<P>
+The <tt class="function">session</tt> function is now what we call a middleware component as it sits in between the server and the application. It gives the application new functionality but the result of calling <code>session(exampleApplication)</code> is also just a WSGI application (because the combined object still conforms to the rules listed earlier) and so the server can still run the code.
+
+<P>
+The huge advantage of refactoring code in this way is that the session functionality can now easily be added to any WSGI application using our <code>session</code> function. By chaining together these middleware components (which do not even have to be based on the Web Modules) WSGI applications can gain an enormous amount of functionality for very little programming effort by using existing middleware components. This helps make code easy to maintain and offers a very flexible programming methodology.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.1.1 What is a"
+  href="node170.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.1 Introduction"
+  href="node169.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.1.3 Callables, Classes or"
+  href="node172.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node170.html">1.15.1.1 What is a</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node169.html">1.15.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node172.html">1.15.1.3 Callables, Classes or</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+"""Graph Generation Example. 
+<img src="webserver-web-image-graph-web.py" alt="Graph" />"""
+
+# show python where the web modules are
+import sys, os
+sys.path.append('../')
+sys.path.append('../../../') 
+
+import web.error; web.error.handle()
+import web.image, web.image.graph
+
+graph = web.image.graph.BarGraph(
+    xAxis={'max':10, 'unit':1, 'label':'Days Since Send'}, 
+    yAxis={'max':10, 'unit':1, 'label':'Number of Page Views'},
+    points=[1,5,7,8,4,3,6,8,0,1],
+    size=(500, 300),
+    bgColor=web.image.html2tuple('#ffffff'),
+    barColor=web.image.html2tuple('#000080'),
+    title='Page View Rate For Newsletter',
+)
+print web.header('image/png'), graph.toString('png')

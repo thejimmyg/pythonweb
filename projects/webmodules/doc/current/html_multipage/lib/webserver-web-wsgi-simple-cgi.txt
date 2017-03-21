@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+# show python where the web modules are
+import sys; sys.path.append('../'); sys.path.append('../../../')
+
+def simpleApp(environ, start_response):
+    status = '200 OK'
+    headers = [('Content-type','text/plain')]
+    start_response(status, headers)
+    return ['Hello world from simple_application!\n']
+
+import web.wsgi
+web.wsgi.runCGI(simpleApp)

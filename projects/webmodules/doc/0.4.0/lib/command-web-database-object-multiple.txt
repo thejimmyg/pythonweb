@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the web modules are
+
+import web.database, web.database.object
+connection = web.database.connect(type="sqlite", database="object-multiple.db")
+cursor = connection.cursor() 
+
+person = web.database.object.Table("Person")
+person.addColumn(web.database.object.String(name="firstName"))
+person.addColumn(web.database.object.String(name="surname"))
+person.addMultiple(name="addresses", foreignTable="Address")
+
+address = web.database.object.Table("Address")
+address.addColumn(web.database.object.String(name="firstLine"))
+address.addColumn(web.database.object.String(name="postcode"))
+address.addSingle(name="person", foreignTable="Person")
+
+database = web.database.object.Database()
+database.addTable(person)
+database.addTable(address)
+database.init(cursor)
+
+if not database.tablesExist():
+    database.createTables()
+    print "Created Table"
+    
+john = database['Person'].insert(firstName='John', surname='Smith')
+print john['surname']
+print john['addresses']
+
+database['Address'].insert(person=john, firstLine='12 Friendly Place', postcode='OX4 1AB')
+database['Address'].insert(person=john, firstLine='3a Crazy Gardens', postcode='OX1 2ZX')
+
+for address in john['addresses'].values():
+    print address['firstLine']
+
+connection.commit()

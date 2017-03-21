@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node170.html" />
+<link rel="prev" href="node168.html" />
+<link rel="parent" href="node164.html" />
+<link rel="next" href="node170.html" />
+<meta name='aesop' content='information' />
+<title>1.15.1.5 The PythonWeb WSGI Server</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.1.4 Running WSGI Applications"
+  href="node168.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.1 Introduction"
+  href="node164.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.1.6 The runCGI() Method"
+  href="node170.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node168.html">1.15.1.4 Running WSGI Applications</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node164.html">1.15.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node170.html">1.15.1.6 The runCGI() Method</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031515000000000000000">
+1.15.1.5 The PythonWeb WSGI Server</A>
+</H3>
+
+<P>
+A WSGI server has to be able to convert a URL to a path on a drive, find the application named <code>application</code> within the file specified and call it, passing the application a dictionary of environmental variables and a <tt class="function">start_response</tt> function to set the status of the application and send the HTTP headers.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ As we have seen the object named <code>application</code> may not be an application at all, it may in fact be a chain of middleware components and an application, but the WSGI server treats it in the same way because, as we have already seen, applications with middleware stacks behave in exactly the same way as an application on its own.</span>
+
+<P>
+The Python Web Modules come with just such a WSGI server named <span class="file">WSGIServer.py</span> and available in the <span class="file">scripts</span> directory of the Web Modules distribution. 
+
+<P>
+To use the WSGI server simply run the <span class="file">WSGIServer.py</span> file from the command line by executing the following:
+
+<P>
+<div class="verbatim"><pre>
+&gt; python WSGIServer.py
+</pre></div>
+
+<P>
+A sample WSGI application should be available by <a class="url" href="http://localhost:8000/doc/src/lib/wsgi-simple.py">http://localhost:8000/doc/src/lib/wsgi-simple.py</a> with a web browser.
+
+<P>
+<span class="file">WSGIServer.py</span> also takes a series of arguments to customise its behaviour. These can be viewed by running <code>python WSGIServer.py -h</code> at the command line.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.1.4 Running WSGI Applications"
+  href="node168.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.1 Introduction"
+  href="node164.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.1.6 The runCGI() Method"
+  href="node170.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node168.html">1.15.1.4 Running WSGI Applications</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node164.html">1.15.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node170.html">1.15.1.6 The runCGI() Method</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

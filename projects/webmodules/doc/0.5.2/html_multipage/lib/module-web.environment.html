@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="module-web.form.html" />
+<link rel="prev" href="module-web.error.html" />
+<link rel="parent" href="web.html" />
+<link rel="next" href="node119.html" />
+<meta name='aesop' content='information' />
+<title>1.7 web.environment -- Tools for seting up an environment</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.6 Example"
+  href="example-webserver-web-error.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.7.1 Example"
+  href="node119.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-error.html">1.6.6 Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node119.html">1.7.1 Example</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION003700000000000000000">
+1.7 <tt class="module">web.environment</tt> -- Tools for seting up an environment</A>
+</H1>
+<A NAME="module-web.environment"></A>
+
+<a id='l2h-220' xml:id='l2h-220'></a> 
+
+<P>
+The <tt class="module">web.environment</tt> module provides a single function named <tt class="function">driver()</tt> used to obtain an environment driver to setup or remove an environment.
+
+<P>
+In the context of a PythonWeb application the environment describes the structures in place in the storage medium and mainly relates to the <tt class="module">web.auth</tt> and <tt class="module">web.session</tt> modules. 
+
+<P>
+Environments are best explained by an example. If you are using a database environment it means that you will be storing session and user information in a series of database tables. Before you can start using these tables they need to be created. The <tt class="module">web.environment</tt> module provides tools to setup the database tables needed. If you were using a file environment, you may need to create the necessary directory structure.
+
+<P>
+Within an environment, applications can share session and user tables and access each other's information. For example if you had two applications named <code>guestbook</code> and <code>news</code>, you might want a user named <code>james</code> to be able to access both of them without having to sign in to both applications. If the <code>guestbook</code> and <code>news</code> applications are both in the same environment this is easy since they both use the same session ID and user information.
+
+<P>
+Each environment has a name. In the context of a database environment the environment name is simply a string which is used to prepend all the environment tables so that multiple environments (with different names) can exist in the same database. This means that you can run all the PythonWeb environments you want to from the same database which is handy if your shared web hosting agreement only gives you access to one database. In the context of a file environment, the environment name might be the name of the directory holding the data files.
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node119.html">1.7.1 Example</a>
+<LI><A href="node120.html">1.7.2 API Reference</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.6 Example"
+  href="example-webserver-web-error.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.7.1 Example"
+  href="node119.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-error.html">1.6.6 Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node119.html">1.7.1 Example</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

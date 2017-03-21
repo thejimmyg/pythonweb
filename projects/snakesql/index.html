@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/main.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>SnakeSQL -- Pure Python SQL database supporting NULLs and Joins</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+<body>
+<!--
+Copyright 2002-2004 James Gardner All Rights Reserved.
+-->
+<div id="body1"> 
+  <div id="body2"> 
+    <div id="body3">
+	
+      <div id="header1"> 
+        <div id="header2"> 
+          <div id="header3"> 
+          
+            <div id="logo1"> 
+              <div id="logo2"> 
+                <div id="logo3"> <a href="http://www.xecos.com"><img src="../../img/xecosLogo.png" alt="Xecos Logo" width="1" /></a> 
+                </div>
+              </div>
+            </div>
+				  
+            <div id="nav1"> 
+              <div id="nav2"> 
+                <div id="nav3"> 
+				<!-- #BeginLibraryItem "/Library/mainLinks.lbi" --><ul>
+  <li id="active"><a href="../../index.html" id="current">Home</a></li>
+  <li><a href="../index.html">Projects</a></li>
+  <li><a href="../../contribute/index.html">Contribute</a></li>
+  <li><a href="../../technology/index.html">Technology</a></li>
+  <li><a href="../../about/index.html">About</a></li>
+  <li><a href="../../contact/index.html">Contact </a></li>
+</ul>
+<!-- #EndLibraryItem --></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+		
+      <div id="content1"> 
+        <div id="content2"> 
+          <div id="content3"> 
+
+
+            <!-- Begin Content -->
+            <div id="colFull1">
+              <div id="colFull2">
+                <div id="colFull3">
+								  
+                  <div id="title1">
+                    <div id="title2">
+                      <div id="title3"><h1><!-- InstanceBeginEditable name="Title" --> SnakeSQL 
+                          - 0.5.2<!-- InstanceEndEditable --></h1>
+                      </div>
+                    </div>
+                  </div>
+				  
+                  <div id="colThird1">
+                    <div id="colThird2">
+                      <div id="colThird3"> 
+                         <br />
+						 <div class="infoBox1">
+                          <div class="infoBox2">
+                            <div class="infoBox3">
+							  
+                              <!--h3>Navigation Links</h3-->
+							  <!-- InstanceBeginEditable name="Links" --> 
+                              <ul>
+                                <li><a href="#abstract">Abstract</a></li>
+                                <li><a href="#documentation">Documentation</a></li>
+                                <li><a href="#download">Download</a></li>
+                                <li><a href="#whatsnew">What's New?</a></li>
+                                <li><a href="../index.html">More projects</a></li>
+                              </ul>
+                              <!-- InstanceEndEditable -->
+							</div>
+                          </div>
+                        </div>
+						
+                      </div>
+                    </div>
+                  </div>
+				  
+                  <div id="colTwoThirds1">
+                    <div id="colTwoThirds2">
+                      <div id="colTwoThirds3">
+                     
+						 <div id="block1">
+                          <div id="block2">
+                            <div id="block3">
+							  <!-- InstanceBeginEditable name="Content" --> 
+                              <p><a name="abstract"></a><strong>SnakeSQL is a 
+                                pure Python SQL database written to remove the 
+                                dependence of the Python Web Modules on 3rd party 
+                                drivers for non-Python databases like MySQL but 
+                                designed to be a useful database in its own right.</strong></p>
+                              <p>The database supports the simplest possible subset 
+                                of ANSI SQL 92 including NULLs (something other 
+                                pure Python databases such as Gadfly do not currently 
+                                support) as well as more advanced features such 
+                                as foreign key constraints and simple joins.</p>
+                              <p>The database is fully DB-API 2.0 compliant and 
+                                is written in layers so that it can easily be 
+                                extended to support different storage mechanisms. 
+                                Currently implemented are a fast binary DBM driver 
+                                (default) and a slower CSV file driver (handy 
+                                for viewing table contents when designing and 
+                                developing an application or database structure).</p>
+                              <p> This is an alpha release designed to give interested 
+                                users the chance to feedback bug reports or comments. 
+                                The database appears stable on Windows XP Python 
+                                2.1 to 2.4 and successfully runs the test scripts 
+                                and test SQL in Interactive Prompt mode. It has 
+                                not been tested more extensively. If you use the 
+                                database and it doesn't work, please let me know.</p>
+                              <p>To report bugs please email <a href="mailto:bugs@pythonweb.org">bugs@pythonweb.org</a>. 
+                                quoting <tt>[SnakeSQL]</tt> at the start of the 
+                                subject line. </p>
+                              <h4><a name="whatsnew" id="whatsnew"></a>Whats New 
+                                In The Latest Version?</h4>
+                              <ul>
+                                <li>Foreign Key Constraints</li>
+                                <li>Simple Joins</li>
+                              </ul>
+                              <h4><a name="documentation" id="documentation"></a>Documentation</h4>
+                              <p>The documentation is included with the distribution 
+                                or available to browse online here in a <a href="doc/current/">number 
+                                of formats</a>:</p>
+                              <ul>
+                                <li><a href="doc/current/html/">Single Page HTML</a></li>
+                                <li><a href="doc/current/snakesql.txt">Plain Text</a></li>
+                              </ul>
+                              <h4><a name="download" id="download"></a>Download 
+                                the latest release</h4>
+                              <p><a href="release/current/"><img src="../../img/download.png" hspace="6" border="0" align="left" />Download 
+                                the latest release here.</a> Snake SQL will work 
+                                with nothing more than Python 2.1 or above installed. 
+                              </p>
+                              <!-- InstanceEndEditable -->
+							<p>&nbsp;</p></div>
+                          </div>
+                        </div>
+
+                        
+                      </div>
+                    </div>
+                  </div>
+                  
+				  <div id="footer1">
+                    <div id="footer2">
+                      <div id="footer3"><!-- InstanceBeginEditable name="Footer" --> 
+                        <!-- #BeginLibraryItem "/Library/footer.lbi" --><p class="footer">Coyright &copy; 2002-2004 James Gardner All Rights Reserved.<br />
+<i>62,561 page views since launch on 04th October 2004 until the end of 2004</i></p><!-- #EndLibraryItem --><!-- InstanceEndEditable --></div>
+                    </div>
+                  </div>
+				  
+                </div>
+              </div>
+            </div>
+
+            <!-- End Content -->
+                
+
+				
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+<!-- InstanceEnd --></html>

@@ -1,0 +1,14 @@
+import web.wsgi.error.documents
+
+def simpleApp(environ, start_response):
+    start_response('500 There was a server error', [('Content-type','text/html')])
+    return []
+ 
+application = web.wsgi.error.documents.Documents(
+    simpleApp,
+    text = {
+        500:"<html><body><h1>A server error occured</h1></body></html>"
+    }
+)
+
+

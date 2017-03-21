@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/main.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Style Guidelines</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+<body>
+<!--
+Copyright 2002-2004 James Gardner All Rights Reserved.
+-->
+<div id="body1"> 
+  <div id="body2"> 
+    <div id="body3">
+	
+      <div id="header1"> 
+        <div id="header2"> 
+          <div id="header3"> 
+          
+            <div id="logo1"> 
+              <div id="logo2"> 
+                <div id="logo3"> <a href="http://www.xecos.com"><img src="../../img/xecosLogo.png" alt="Xecos Logo" width="1" /></a> 
+                </div>
+              </div>
+            </div>
+				  
+            <div id="nav1"> 
+              <div id="nav2"> 
+                <div id="nav3"> 
+				<!-- #BeginLibraryItem "/Library/mainLinks.lbi" --><ul>
+  <li id="active"><a href="../../index.html" id="current">Home</a></li>
+  <li><a href="../../projects/index.html">Projects</a></li>
+  <li><a href="../index.html">Contribute</a></li>
+  <li><a href="../../technology/index.html">Technology</a></li>
+  <li><a href="../../about/index.html">About</a></li>
+  <li><a href="../../contact/index.html">Contact </a></li>
+</ul>
+<!-- #EndLibraryItem --></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+		
+      <div id="content1"> 
+        <div id="content2"> 
+          <div id="content3"> 
+
+
+            <!-- Begin Content -->
+            <div id="colFull1">
+              <div id="colFull2">
+                <div id="colFull3">
+								  
+                  <div id="title1">
+                    <div id="title2">
+                      <div id="title3">
+                        <h1><!-- InstanceBeginEditable name="Title" --> Style 
+                          Guidelines <!-- InstanceEndEditable --></h1>
+                      </div>
+                    </div>
+                  </div>
+				  
+                  <div id="colThird1">
+                    <div id="colThird2">
+                      <div id="colThird3"> 
+                         <br />
+						 <div class="infoBox1">
+                          <div class="infoBox2">
+                            <div class="infoBox3"> 
+                              <!--h3>Navigation Links</h3-->
+                              <!-- InstanceBeginEditable name="Links" --> 
+                              <ul>
+                                <li><span class="ToC"><a href="#Introduction">Introduction</a></span></li>
+                                <li><span class="ToC"> <a href="#Syntax">Syntax 
+                                  and Naming</a> </span> 
+                                  <ul>
+                                    <li><span class="ToC"><a href="#SynNaming_MethodsAndAttrs">Methods 
+                                      and Attributes</a></span></li>
+                                    <li><span class="ToC"> <a href="#SynNaming_Abbreviations">Abbreviations</a> 
+                                      </span></li>
+                                    <li><span class="ToC"> <a href="#SynNaming_CompoundNames">Compound 
+                                      Names</a></span></li>
+                                    <li><span class="ToC"><a href="#SynNaming_Rules">Rules</a> 
+                                      </span></li>
+                                  </ul>
+                                </li>
+                                <li><span class="ToC"><a href="#Structure">Structure 
+                                  and Patterns</a> </span> 
+                                  <ul>
+                                    <li><span class="ToC"><a href="#Structure_Classes">Classes</a></span></li>
+                                    <li><span class="ToC"> <a href="#Structure_NamedObjs">Dictionary 
+                                      Style Objects</a> </span></li>
+                                  </ul>
+                                </li>
+                                <li><span class="ToC"><a href="#MiscNotes">Miscellaneous 
+                                  Notes</a></span>
+                                  <ul>
+                                    <li><span class="ToC"><a href="#Misc_Permissions">Permissions</a> 
+                                      </span></li>
+                                    <li><span class="ToC"> <a href="#Misc_BreakingRules">Breaking 
+                                      the Rules</a></span></li>
+                                  </ul>
+                                </li>
+                              </ul>
+                              <!-- InstanceEndEditable --> </div>
+                          </div>
+                        </div>
+						
+                      </div>
+                    </div>
+                  </div>
+				  
+                  <div id="colTwoThirds1">
+                    <div id="colTwoThirds2">
+                      <div id="colTwoThirds3">
+                     
+						 <div id="block1">
+                          <div id="block2">
+                            <div id="block3"> <!-- InstanceBeginEditable name="Content" --> 
+                              <p>This document is based on the<a href="http://webware.sf.net"> 
+                                WebWare</a> style guidelines (however there are 
+                                some important differences in approach)</p>
+        
+                              <a name="Introduction"> 
+                              <h2>Introduction</h2>
+                              </a> 
+                              <p> Style refers to various aspects of coding including 
+                                indentation practices, naming conventions, use 
+                                of design patterns, treatment of constants, etc. 
+                                We aims to maintain fairly consistent coding style 
+                                with respect to certain basics as described in 
+                                this document. </p>
+                              <p> This document is therefore very important for 
+                                those who routinely develop using Python Web Project 
+                                libraries or who wish to contribute code.</p>
+                              <p> Consistent source code style conventions are 
+                                important for several reasons: </p>
+                              <ul>
+                                <li> Consistent conventions reduce the learning 
+                                  curve because users know what to expect from 
+                                  the API. </li>
+                                <li> Python Web Project code is open source resulting 
+                                  in many people reading the code in an attempt 
+                                  to understand it, extend it and debug it. </li>
+                                <li> The Python Web Project consists of tens of 
+                                  thousands of lines of source code and will undoubtedly 
+                                  continue to grow. </li>
+                              </ul>
+                              <p> This document divides the conventions into three 
+                                major categories: </p>
+                              <ol>
+                                <li> <a href="#Syntax">Syntax and Naming</a> </li>
+                                <li> <a href="#Structure">Structure and Patterns</a> 
+                                </li>
+                                <li> <a href="#MiscNotes">Miscellaneous</a> </li>
+                              </ol>
+                              <a name="Syntax"> 
+                              <h2>Syntax and Naming</h2>
+                              </a> <a name="SynNaming_MethodsAndAttrs"> 
+                              <h3>Methods and Attributes</h3>
+                              </a> 
+                              <p> Methods and attributes are an important topic 
+                                because they are used so frequently and therefore 
+                                have an impact on using the classes, learning 
+                                them, remembering them, etc. </p>
+                              <p> The first thing that is important to understand 
+                                is that Python Web Project code is constructed 
+                                in an object-oriented fashion. This means it is 
+                                esay to delve right into the heart of the code 
+                                and create your own classes with slightly different 
+                                functionality. Most of the time the interfaces 
+                                documented in the documentation are the easiest 
+                                to use.</p>
+                              <p> The primary advantages of using methods are: 
+                              </p>
+                              <ul>
+                                <li> Method implementations can be changed with 
+                                  minimal impact on the users of the class. </li>
+                                <li> Subclasses can customize methods to suit 
+                                  their needs and still be used in the usual fashion 
+                                  (as defined by the superclass). </li>
+                              </ul>
+                              <p>In the case of a method that returns a value, 
+                                that value may manifest in several ways: </p>
+                              <ol>
+                                <li> Stored as attribute. </li>
+                                <li> Stored as an attribute, only on demand. (e.g., 
+                                  lazy and cached) </li>
+                                <li> Computed upon every request. </li>
+                                <li> Delegated to another object. </li>
+                              </ol>
+                              <p> The Python Web Project code stores such information 
+                                in attributes. This is different from the approach 
+                                you would take in Java or using WebWare for example.</p>
+                              <p>The advantages of this approach is that code 
+                                is simpler. Writing <tt><code>form.name</code></tt> 
+                                is much more intuitive than <code>form.getName()</code> 
+                                for example and <code>form.name = 'myForm'</code> 
+                                is more intuitive than <code>form.setName('myForm')</code>.</p>
+                              <p>Validating the values being set or performing 
+                                other operations once a value is set can be done 
+                                using the Python 2.2 and above <code><a href="http://docs.python.org/lib/built-in-funcs.html">property()</a></code> 
+                                built-in function. In this way you gain the advantages 
+                                of all the options listed above.</p>
+                             
+                              <a name="SynNaming_Abbreviations"> 
+                              <h3>Abbreviations</h3>
+                              </a>
+                              <p> Using abbreviations is a common coding practice 
+                                to reduce typing and make lines shorter. However, 
+                                removing random characters to abbreviate is a 
+                                poor way to go about this. For example, <code>transaction</code> 
+                                could be abbreviated as <code>trnsact</code> or 
+                                <code>trnsactn</code>, but which letters are left 
+                                out is not obvious or easy to remember. </p>
+                              <p> In Python Web Project code the general rule 
+                                is don't abbreviate. If there isn't an extremly 
+                                obvious and well-used abbreviation for the word 
+                                to be abbreviated then no abbreviation is made. 
+                                It doesn't take long to type a few extra characters 
+                                but it does take time to think about which characters 
+                                need to be left out of an abbreviation.</p>
+                              <a name="SynNaming_CompoundNames"> 
+                              <h3>Compound Names</h3>
+                              </a> 
+                              <p> Identifiers often consist of multiple names. 
+                                There are three major styles for handling compound 
+                                names: </p>
+                              <ol>
+                                <li> <code>serverSidePath</code> - the Python 
+                                  Web Project convention</li>
+                                <li> <code>serversidepath</code> </li>
+                                <li> <code>server_side_path</code> </li>
+                              </ol>
+                              <p> Python itself uses all three styles (<code>has_key</code>, 
+                                <code>getattr</code>, <code>isSet</code>), but 
+                                the Python Web Project uses only the first which 
+                                is more readable than the second and easier to 
+                                type that the third. </p>
+                              <p> This rule also applies to class names such as 
+                                <code>AuthDatabase</code> and <code>SessionBase</code>. 
+                              <p>If identifiers contain an well known acronym 
+                                then the acronym should be considered a lower 
+                                case word not upper case as this would confuse 
+                                with class names which should always start with 
+                                a capital letter. For example<code> sqlToValue()</code> 
+                                would be a correct name for a method or function 
+                                but <code>SqlToValue()</code> and <code>SQLToValue()</code> 
+                                would not be correct. For a class name the acronym 
+                                can be used in uppercase eg <code>HTTPServer.</code>
+                              </p>
+							  <a name="SynNaming_Rules"> 
+                              <h3>Rules</h3>
+                              </a> 
+                              <ul>
+                                <li> 
+                                  <div class="what">Filenames are lowercase. This 
+                                    is in line with most unix command line utilities 
+                                    and makes imports look more natural.<br />
+                                    Examples: <code>myClass.py session.py<br />
+                                    </code>Negatives: <code>Session.py Template.cgi 
+                                    HTTPServlet.py</code></div>
+                                </li>
+                                <li> 
+                                  <div class="what"></div>
+                                  <div class="what">Line endings are always just 
+                                    POSIX \r and files should be uploaded from 
+                                    Windows in binary mode to make sure the linefeeds 
+                                    aren't tampered with by FTP software.</div>
+                                </li>
+                                <li> 
+                                  <div class="why">Spaces are used for all indentation, 
+                                    no tabs are used. All indentation should be 
+                                    done with 4 spaces.</div>
+                                  <div class="why">Class names start with a capital 
+                                    letter. For consistency and to make class 
+                                    names prominent in source code. This convention 
+                                    is used in almost every object-oriented language.<br />
+                                    Examples: <code>Servlet HTTPServlet ThreadedAppServer</code></div>
+                                  Negatives: <code>servlet myClass</code> </li>
+                                <li>Method names start with a lower case letter. 
+                                  For consistency and easy of typing. This convention 
+                                  is also used in almost every object-oriented 
+                                  language.<br />
+                                  Examples: <code>respond() isSecure() setTimeout() 
+                                  htForDict()</code><br />
+                                  Negatives: <code>Respond() IsSecure()</code></li>
+                                <li>Method names do not start with <b>get</b>.<br />
+                                  Examples: <code>status() numRequests()</code><br />
+                                  Negatives: <code>getStatus() getNumRequests()</code></li>
+                                <li> 
+                                  <div class="what">Data attributes and method 
+                                    attributes used in the internal workings of 
+                                    a class and which are not designed to be accessed 
+                                    by users of the class start with an underscore 
+                                    (_). attributes and methods do not end with 
+                                    an underscore and no functions or attributes 
+                                    use two leading underscores.<br />
+                                    Examples: <code>self._status self._numRequests()<br />
+                                    </code>Negatives: <code>self.status self.__numRequests()</code></div>
+                                </li>
+                                <li> 
+                                  <div class="what">Method and attribute names 
+                                    have no underscores after the first character. 
+                                    Capitalization is used instead.<br />
+                                    Examples: <code>self.numRequests() factory.servletForTransaction()<br />
+                                    </code>Negatives: <code>self.num_requests() 
+                                    factory.servlet_for_transaction()</code></div>
+                                  <div class="what"></div>
+                                </li>
+                                <li> 
+                                  <div class="what">Expressions following if, 
+                                    while and return are not enclosed in parentheses. 
+                                    Because this isn't C or Perl. <kbd>:-)<br />
+                                    </kbd>Examples: <code>if serialNum&gt;0:</code></div>
+                                  Negatives: <code>if (serialNum&gt;0):</code> 
+                                  <div class="what"></div>
+                                </li>
+                                <li> 
+                                  <div class="what">Class definitions and category 
+                                    comments, <code><br />
+                                    ###<br />
+                                    # Like this<br />
+                                    #<br />
+                                    </code> are preceded by 2 blank lines and 
+                                    followed by one (unless the class implementation 
+                                    is <code>pass</code> to help with spacing 
+                                    and readability.</div>
+                                </li>
+                              </ul>
+                              <a name="Structure"> 
+                              <h2>Structure and Patterns</h2>
+                              </a> <a name="Structure_Classes"> 
+                              <h3>Classes</h3>
+                              </a> 
+                              <p> Python Web Project Code use classes extensively 
+                                for the following reasons:</p>
+                              <ul>
+                                <li> Classes allow for subclassing and therefore, 
+                                  a proven method of software extension and customization. 
+                                </li>
+                                <li> Classes allow for creating multiple instances 
+                                  (or objects) to be used in various ways. Examples 
+                                  include caching created objects for increased 
+                                  performance and created multi-threaded servers. 
+                                </li>
+                                <li> Classes can provide for and encourage encapsulation 
+                                  of data, which gives implementers more freedom 
+                                  to improve their software without breaking what 
+                                  depends on it. </li>
+                              </ul>
+                              <p> By using classes, all three options above are 
+                                available to the developer on an on-going basis. 
+                                By using collections of functions, none of the 
+                                above are readily available. </p>
+                              <p> Note that making classes in Python is extraordinarily 
+                                easy. Doing so requires one line: </p>
+                              <code>class Foo(SuperFoo):</code>
+                              <p> and the use of <code>self</code> when accessing 
+                                attributes and methods. The difference in time 
+                                between creating a class with several methods 
+                                vs. a set of several functions is essentially 
+                                zero.<a name="Structure_ConfigFiles">  </a></p> 
+
+                             <a name="Structure_NamedObjs"> 
+                              <h3>Dictionary-Style Access</h3>
+                              </a> 
+                              <p> Several classes in the Python Web Project code 
+                                can be thought of in terms of objects keyed by 
+                                their name. These objects support dictionary-style 
+                                access but also support a functional interface 
+                                to the data.</p>
+                              <p>For example the <tt>web.form.Form</tt> class 
+                                allows the fields to be accessed in two ways <code>form['fieldName']</code> 
+                                or <code>form.get('fieldName').</code> Python 
+                                Web Project objects do not use attribute style 
+                                access. <code>form.fieldName</code> is not used 
+                                as it is ambigous whether <code>fieldName</code> 
+                                is to be interpreted as a field or an attribute.<a name="MiscNotes"> 
+                                </a></p>
+                              <a name="MiscNotes"> 
+                              <h2>Miscellaneous Notes</h2>
+                              </a> 
+                              <p>If it is obvious that a particular style is being 
+                                used in a particular source doucment and that 
+                                style doesn't contridict these style guidelines 
+                                then that style should be followed.</p>
+
+                              <a name="Misc_Permissions"> 
+                              <h3>Permissions</h3>
+                              </a> </p> 
+                              <p> When creating standalone Python programs, you 
+                                should make them executable by all (<code>chmod 
+                                a+X filename.py</code>) and must first check them 
+                                in on UNIX. Otherwise UNIX-based developers using 
+                                CVS will not have execute permissions by default. 
+                                Also, that problem cannot be fixed by changing 
+                                the permissions and committing. Instead, a support 
+                                request must be made to modify the CVS repository. </p> 
+                              
+							  <a name="Misc_BreakingRules"> 
+                              <h3>Breaking the Rules</h3>
+                              </a> 
+                              <p> Of course, there are times when the rules are 
+                                broken for good reason. To quote a cliche: "Part 
+                                of being an expert is knowing when to break the 
+                                rules." </p>
+                              <p> But regarding style, Python Web Project developers 
+                                do this very infrequently for the reasons stated 
+                                in the introduction. 
+                              <p></p>
+                              <!-- InstanceEndEditable --> 
+                              <p>&nbsp;</p></div>
+                          </div>
+                        </div>
+
+                        
+                      </div>
+                    </div>
+                  </div>
+                  
+				  <div id="footer1">
+                    <div id="footer2">
+                      <div id="footer3"><!-- InstanceBeginEditable name="Footer" --> 
+                        <!-- #BeginLibraryItem "/Library/footer.lbi" --><p class="footer">Coyright &copy; 2002-2004 James Gardner All Rights Reserved.<br />
+<i>62,561 page views since launch on 04th October 2004 until the end of 2004</i></p><!-- #EndLibraryItem --><!-- InstanceEndEditable --></div>
+                    </div>
+                  </div>
+				  
+                </div>
+              </div>
+            </div>
+
+            <!-- End Content -->
+                
+
+				
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+<!-- InstanceEnd --></html>

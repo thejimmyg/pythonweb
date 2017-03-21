@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node7.html" />
+<link rel="prev" href="module-web.auth.html" />
+<link rel="parent" href="module-web.auth.html" />
+<link rel="next" href="node7.html" />
+<meta name='aesop' content='information' />
+<title>1.2.1 Background Information</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.2 Drivers"
+  href="node7.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node7.html">1.2.2 Drivers</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003210000000000000000">
+1.2.1 Background Information</A>
+</H2>
+
+<P>
+The <tt class="module">web.auth</tt> module performs three main tasks and can be thought of as three separate parts in the same module. These tasks are:
+
+<P>
+
+<UL>
+<LI>Check whether a user is signed in and has permission to use an application.
+</LI>
+<LI>Provide tools to enable new users and applications to be setup and modified.
+</LI>
+<LI>Provide a mechanism where login attempts can be handled through a web based interface.
+</LI>
+</UL>
+
+<P>
+In order to fulfil these tasks four different types of object are provided by the <tt class="module">web.auth</tt> module. These are:
+
+<P>
+<DL>
+<DT><STRONG><code>Driver</code></STRONG></DT>
+<DD>These provide the interface to the storage medium for the <code>AuthSession</code> and <code>AuthManager</code> objects. For example the <code>DatabaseAuthDriver</code> object is used to allow auth information to be stored in SQL databases.
+</DD>
+<DT><STRONG><code>AuthSession</code></STRONG></DT>
+<DD>These objects use the <tt class="module">web.session</tt> session module to store and manage information about who is currently signed in.
+</DD>
+<DT><STRONG><code>AuthManager</code></STRONG></DT>
+<DD>These are the objects are used to manage the application and user information. For example to add applications and users, test if applications or users exist and change passwords.
+</DD>
+<DT><STRONG>Handlers</STRONG></DT>
+<DD>These objects are found in the <tt class="module">web.auth.handlers</tt> sub package and are designed to help to automate tasks such as providing a sign in form, checking details and signing in users to reduce the code needed to be written for each application.
+</DD>
+</DL>
+
+<P>
+If you simply want to password protect a CGI script there is also a <code>web.auth.start()</code> function to handle everything for you, but most of the time you will want control over the process yourself.
+
+<P>
+If you simply want to get started using the module quickly there is an example later on in the documentation demonstrating some important features and a full API reference.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.2 Drivers"
+  href="node7.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node7.html">1.2.2 Drivers</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

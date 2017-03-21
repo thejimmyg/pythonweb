@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node21.html" />
+<link rel="parent" href="node18.html" />
+<link rel="next" href="module-datetime.html" />
+<meta name='aesop' content='information' />
+<title>1.2.10.4 AuthManager Objects</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.10.3 AuthSession Objects"
+  href="node21.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.10 Function Reference"
+  href="node18.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.3 datetime  "
+  href="module-datetime.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node21.html">1.2.10.3 AuthSession Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node18.html">1.2.10 Function Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-datetime.html">1.3 datetime  </A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0032104000000000000000">
+1.2.10.4 AuthManager Objects</A>
+</H3>
+
+<P>
+The <tt class="function">web.auth.manager()</tt> function has the following parameters and is used to create a <code>AuthManager</code> onject:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-26' xml:id='l2h-26' class="function">manager</tt></b>(</nobr></td>
+  <td><var><var>driver</var>, <var>app</var> </var>)</td></tr></table></dt>
+<dd>
+
+<P>
+<DL>
+<DT><STRONG><var>driver</var></STRONG></DT>
+<DD>The <code>Driver</code> object.
+
+<P>
+</DD>
+<DT><STRONG><var>app</var></STRONG></DT>
+<DD>The name of the current application
+
+<P>
+</DD>
+</DL>
+</dl>
+
+<P>
+The <code>AuthManager</code> object returned by the <tt class="function">manager()</tt> function and has the following methods and attributes:
+
+<P>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-27' xml:id='l2h-27' class="class">AuthManager</tt></b>
+<dd>
+
+<P>
+Auth Manager for creating modifying and removing users and applications.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-28' xml:id='l2h-28' class="method">applicationExists</tt></b>(</nobr></td>
+  <td><var><var>app</var></var>)</td></tr></table></dt>
+<dd>
+Return <code>True</code> if there is an application named <var>app</var>, <code>False</code> otherwise.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-29' xml:id='l2h-29' class="method">addApplication</tt></b>(</nobr></td>
+  <td><var><var>app</var></var>)</td></tr></table></dt>
+<dd>
+Adds an application named <var>app</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-30' xml:id='l2h-30' class="method">removeApplication</tt></b>(</nobr></td>
+  <td><var><var>app</var></var>)</td></tr></table></dt>
+<dd>
+Removes the application named <var>app</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-31' xml:id='l2h-31' class="method">apps</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Return a list of application names.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-32' xml:id='l2h-32' class="method">userExists</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Return <code>True</code> if there is a user with the username <var>username</var>, <code>False</code> otherwise.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-33' xml:id='l2h-33' class="method">addUser</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>password</var></var><big>[</big><var>,firstname=''</var><big>]</big><var></var><big>[</big><var>,surname=''</var><big>]</big><var></var><big>[</big><var>email=''</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Adds a user with the username <var>username</var> and password <var>password</var> to the system. You can optionally also specify the firstname, surname and email address of the user.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-34' xml:id='l2h-34' class="method">removeUser</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Removes the user with the username <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-35' xml:id='l2h-35' class="method">getFirstname</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Returns the firstname of the user <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-36' xml:id='l2h-36' class="method">setFirstname</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>value</var></var>)</td></tr></table></dt>
+<dd>
+Sets the firstname of the user <var>username</var> to <var>value</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-37' xml:id='l2h-37' class="method">getSurname</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Returns the surname of the user <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-38' xml:id='l2h-38' class="method">setSurname</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>value</var></var>)</td></tr></table></dt>
+<dd>
+Sets the surname of the user <var>username</var> to <var>value</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-39' xml:id='l2h-39' class="method">getPassword</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Returns the password of the user <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-40' xml:id='l2h-40' class="method">setPassword</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>value</var></var>)</td></tr></table></dt>
+<dd>
+Sets the password of the user <var>username</var> to <var>value</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-41' xml:id='l2h-41' class="method">getEmail</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Returns the email address of the user <var>username</var>.
+
+<P>
+</dl>      
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-42' xml:id='l2h-42' class="method">setEmail</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>value</var></var>)</td></tr></table></dt>
+<dd>
+Sets the email address of the user <var>username</var> to <var>value</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-43' xml:id='l2h-43' class="method">users</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+Return a list of usernames.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-44' xml:id='l2h-44' class="method">getAccessLevel</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>app</var></var>)</td></tr></table></dt>
+<dd>
+Returns the access level of the user <var>username</var> for the application named <var>app</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-45' xml:id='l2h-45' class="method">setAccessLevel</tt></b>(</nobr></td>
+  <td><var><var>username</var>, <var>app</var>, <var>level</var></var>)</td></tr></table></dt>
+<dd>
+Sets the access level of the user <var>username</var> for the application named <var>app</var> to <var>level</var>.
+
+<P>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-46' xml:id='l2h-46' class="method">getAccessLevels</tt></b>(</nobr></td>
+  <td><var><var>username</var></var>)</td></tr></table></dt>
+<dd>
+Returns a dictionary of application name, access level pairs for the user with the username <var>username</var>.
+
+<P>
+</dl>
+
+<P>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.10.3 AuthSession Objects"
+  href="node21.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.10 Function Reference"
+  href="node18.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.3 datetime  "
+  href="module-datetime.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node21.html">1.2.10.3 AuthSession Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node18.html">1.2.10 Function Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-datetime.html">1.3 datetime  </A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

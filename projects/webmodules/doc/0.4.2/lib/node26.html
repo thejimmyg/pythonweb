@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node36.html">
+<LINK REL="prev" HREF="node25.html">
+<LINK REL="parent" href="module-web.database.html">
+<LINK REL="next" HREF="node27.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Using SQL Commands">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.4 Using SQL Commands</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.3 Cursor Options" 
+  HREF="node25.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.1 Understanding Field Types" 
+  HREF="node27.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node25.html">1.4.3 Cursor Options</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node27.html">1.4.4.1 Understanding Field Types</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003440000000000000000">
+1.4.4 Using SQL Commands</A>
+</H2>
+
+<P>
+This section describes how to use the following SQL methods of the <tt class="class">cursor</tt> object:
+
+<P>
+<tt class="method">select()</tt>, <tt class="method">insert()</tt>, <tt class="method">update()</tt>, <tt class="method">delete()</tt>, <tt class="method">create()</tt>, <tt class="method">alter()</tt>, <tt class="method">drop()</tt>, <tt class="method">function()</tt>
+
+<P>
+These functions are designed to reflect the SQL syntax you would use if you were writing the SQL directly. For example you might write:
+
+<P>
+<div class="verbatim"><pre>
+SELECT fieldName FROM tableName
+INSERT INTO tableName value1, value2
+</pre></div>
+
+<P>
+Accordingly the <tt class="method">select()</tt> and <tt class="method">insert()</tt> methods accept the <var>fields</var> and <var>table</var> parameters in a different order.
+
+<P>
+<div class="seealso">
+  <p class="heading"><b>See Also:</b></p>
+
+  <dl compact class="seetitle">
+    <dt><em class="citetitle"><a href="http://www.w3schools.com/sql/default.asp"
+        >w3schools SQL Tutorial</a></em>
+    <dd>A good introduction to SQL commands can be found on the w3schools website at  <a class="url" href="http://www.w3schools.com/sql/default.asp">http://www.w3schools.com/sql/default.asp</a>.
+  </dl>
+
+<P>
+</div>
+
+<P>
+
+<p><hr>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node27.html">1.4.4.1 Understanding Field Types</a>
+<LI><A href="node28.html">1.4.4.2 Selecting Data</a>
+<UL>
+<LI><A href="node28.html#SECTION003442100000000000000">1.4.4.2.1 The where Parameter</a>
+<LI><A href="node28.html#SECTION003442200000000000000">1.4.4.2.2 The order Parameter</a>
+<LI><A href="node28.html#SECTION003442300000000000000">1.4.4.2.3 The rest Parameter</a>
+<LI><A href="node28.html#SECTION003442400000000000000">1.4.4.2.4 Disabling autoExecute</a>
+<LI><A href="node28.html#SECTION003442500000000000000">1.4.4.2.5 Using Aliases</a>
+<LI><A href="node28.html#SECTION003442600000000000000">1.4.4.2.6 Using Joins</a>
+</ul>
+<LI><A href="node29.html">1.4.4.3 Inserting Data</a>
+<LI><A href="node30.html">1.4.4.4 Updating Data</a>
+<LI><A href="node31.html">1.4.4.5 Deleting Data</a>
+<LI><A href="node32.html">1.4.4.6 Creating Tables</a>
+<LI><A href="node33.html">1.4.4.7 Dropping Tables</a>
+<LI><A href="node34.html">1.4.4.8 Altering Tables</a>
+<LI><A href="node35.html">1.4.4.9 Functions</a>
+</ul>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.3 Cursor Options" 
+  rel="prev" title="1.4.3 Cursor Options" 
+  HREF="node25.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.1 Understanding Field Types" 
+  rel="next" title="1.4.4.1 Understanding Field Types" 
+  HREF="node27.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node25.html">1.4.3 Cursor Options</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node27.html">1.4.4.1 Understanding Field Types</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

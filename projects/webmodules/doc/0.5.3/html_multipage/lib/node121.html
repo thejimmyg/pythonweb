@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="example-webserver-web-error-mail.html" />
+<link rel="prev" href="node120.html" />
+<link rel="parent" href="module-web.error.html" />
+<link rel="next" href="example-webserver-web-error-mail.html" />
+<meta name='aesop' content='information' />
+<title>1.6.5 Creating Custom Handlers</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.4 Using The error()"
+  href="node120.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.6 Example"
+  href="example-webserver-web-error-mail.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node120.html">1.6.4 Using The error()</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-error-mail.html">1.6.6 Example</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003650000000000000000">
+1.6.5 Creating Custom Handlers</A>
+</H2>
+
+<P>
+If the built-in handlers don't provide the level of cutomisation you require you can create a custom handler.
+
+<P>
+Handlers are simply callables which take the info string to output as the first parameter and any parameters passed to the <tt class="function">handle()</tt> function as subsequent parameters. 
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; def myHandler(info, message):
+...     print message
+&gt;&gt;&gt;
+&gt;&gt;&gt; import web.error; web.error.handle(myHandler, message="An error occured")
+&gt;&gt;&gt; raise Exception('This is an error')
+An error occured
+</pre></div>
+
+<P>
+This example isn't too useful as it always displays the same output. To make it more useful 
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; def myHandler(info, message):
+...     print message
+...     print info
+&gt;&gt;&gt;
+&gt;&gt;&gt; import web.error
+&gt;&gt;&gt; web.error.handle(
+...     myHandler, 
+...     format='text', 
+...     output='traceback', 
+...     message='An error occured',
+... )
+&gt;&gt;&gt; raise Exception('This is an error')
+An error occured
+exceptions.Exception: This is an error
+    args = ('This is an error',)
+</pre></div>
+
+<P>
+<var>output</var> is used to obtain the error information from the <tt class="function">info()</tt> function which is then sent as the first parameter to the <tt class="function">myHandler</tt> function. <var>message</var> is also sent to the <tt class="function">myHandler</tt> function which prints the error message.
+
+<P>
+This structure allows building very powerful handlers. 
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.4 Using The error()"
+  href="node120.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.6 Example"
+  href="example-webserver-web-error-mail.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node120.html">1.6.4 Using The error()</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-error-mail.html">1.6.6 Example</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

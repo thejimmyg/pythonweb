@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node178.html" />
+<link rel="parent" href="wsgi.html" />
+<link rel="next" href="node180.html" />
+<meta name='aesop' content='information' />
+<title>1.15.4 The PythonWeb Middleware Components</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.3 Writing Middleware"
+  href="node178.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15 web.wsgi  "
+  href="wsgi.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.4.1 web.wsgi.cgi - CGI"
+  href="node180.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node178.html">1.15.3 Writing Middleware</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="wsgi.html">1.15 web.wsgi  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node180.html">1.15.4.1 web.wsgi.cgi - CGI</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031540000000000000000">
+1.15.4 The PythonWeb Middleware Components</A>
+</H2>
+
+<P>
+The <tt class="module">web.wsgi</tt> module contains middleware components to make use of all the functionality of the Python Web Modules.
+
+<P>
+All PythonWeb WSGI middleware components are classes which take another WSGI middleware component or an application as the first argument. Middleware components usually add entries to the <code>environ</code> dictionary so that the application can use their functionality by using values from the dictionary.
+
+<P>
+The subsequent arguments configure how the middleware behaves. The documentation for the <tt class="module">web.wsgi.cgi</tt> module is a good starting point.
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node180.html">1.15.4.1 <tt class="module">web.wsgi.cgi</tt> - CGI Variable Access</a>
+<LI><A href="node181.html">1.15.4.2 <tt class="module">web.wsgi.database</tt> - Database Access</a>
+<LI><A href="node182.html">1.15.4.3 <tt class="module">web.wsgi.environment</tt> - Environment Information</a>
+<LI><A href="node183.html">1.15.4.4 <tt class="module">web.wsgi.session</tt> - Session Handling</a>
+<LI><A href="node184.html">1.15.4.5 <tt class="module">web.wsgi.error</tt> - Error Handling</a>
+<LI><A href="node185.html">1.15.4.6 <tt class="module">web.wsgi.auth</tt> - User Permission Handling</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.3 Writing Middleware"
+  href="node178.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15 web.wsgi  "
+  href="wsgi.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.4.1 web.wsgi.cgi - CGI"
+  href="node180.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node178.html">1.15.3 Writing Middleware</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="wsgi.html">1.15 web.wsgi  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node180.html">1.15.4.1 web.wsgi.cgi - CGI</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

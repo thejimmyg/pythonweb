@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node18.html" />
+<link rel="prev" href="node16.html" />
+<link rel="parent" href="module-web.auth.html" />
+<link rel="next" href="node18.html" />
+<meta name='aesop' content='information' />
+<title>1.2.9 Examples</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.8 Using Roles"
+  href="node16.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.10 Function Reference"
+  href="node18.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node16.html">1.2.8 Using Roles</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node18.html">1.2.10 Function Reference</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003290000000000000000"></A>
+<A NAME="example-webserver-web-auth"></A>
+<BR>
+1.2.9 Examples
+</H2>
+Putting together everything in the previous sections gives us this full application:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+"""Auth Example. Username=john and Password=bananas (Case sensitive)"""
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web.error; web.error.enable()
+import web, web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="webserver-auth",
+    autoCreate = 1,
+)
+cursor = connection.cursor() 
+
+# Obtain a session store
+import web.session
+driver = web.session.driver('database', environment='testEnv', cursor=cursor)
+
+if not driver.completeSessionEnvironment():
+    driver.removeSessionEnvironment(ignoreErrors=True)
+    driver.createSessionEnvironment()
+
+manager = web.session.manager(driver=driver)
+if not manager.load():
+    manager.create()
+
+# Obtain Auth objects
+import web.auth
+authSession = web.auth.session(manager.store('auth'), expire=0, idle=10)
+driver = web.auth.driver('database', environment='testEnv', cursor=cursor)
+authManager = web.auth.manager(driver=driver, app='app')
+if not driver.completeAuthEnvironment():
+    driver.removeAuthEnvironment(ignoreErrors=True)
+    driver.createAuthEnvironment()
+    authManager.addApplication('app')
+    authManager.addUser(
+        'john',
+        'bananas',
+        'John',
+        'Smith',
+        'johnsmith@example.com',
+    )
+    authManager.setAccessLevel('john', 'app', 1)
+
+# Get the username of the current logged in user from the session
+print web.header()
+username = authSession.username()
+if username and authManager.userExists(username):
+    user = authManager.getUser(username)
+    print 'Username %s is signed in'%user.username
+else: 
+    # Try to login
+    import web.auth.handler.signIn
+    signInHandler = web.auth.handler.signIn.SignInHandler(
+        session = authSession, 
+        manager = authManager,
+    )
+    form = signInHandler.handle()
+    if form:  
+        # Display the error form
+        print '&lt;html&gt;&lt;body&gt;&lt;h1&gt;Please Sign In&lt;/h1&gt;%s&lt;/body&gt;&lt;/html&gt;'%form
+    else:
+        # We have just signed in
+        print 'Signed in successfully'
+
+connection.commit()
+connection.close()</pre>
+<div class="footer">
+<a href="webserver-web-auth.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-auth.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by starting the test webserver in <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-auth.py">http://localhost:8080/doc/src/lib/webserver-web-auth.py</a> on your local machine. The username is <code>john</code> and the password is <code>bananas</code>.
+
+<P>
+<A NAME="example-webserver-web-auth-simple"></A>A simpler version using the <tt class="function">web.auth.start()</tt> function is here:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+"""Auth Example. Username=john and Password=bananas (Case sensitive)"""
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web.error; web.error.enable()
+import web, web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="webserver-auth-simple",
+    autoCreate = 1,
+)
+cursor = connection.cursor() 
+
+import web.auth
+
+# If the auth environment is created, setup some information
+def setup(userManager):
+    userManager.addApplication('app')
+    userManager.addUser(
+        'john',
+        'bananas',
+        'John',
+        'Smith',
+        'johnsmith@example.com',
+    )
+    userManager.setAccessLevel('john', 'app', 1)
+    
+# Create the auth objects
+error, user = web.auth.start(
+    app='test',
+    environmentName='testEnv',
+    environmentType='database',
+    cursor = cursor,
+    expire=10, 
+    setupSessionEnvironment=1,
+    setupAuthEnvironment=1,
+    setup = setup, # using the setup function above
+    stickyData = {'testVar':'True'},
+    action = 'webserver-web-auth-simple.py',
+    redirect = '/'
+)
+# print some output
+if error:
+    print error # Error contains a form to display to allow users to sign in
+else:
+    print 'User %s is signed in.' % user.username
+
+connection.commit()
+connection.close()</pre>
+<div class="footer">
+<a href="webserver-web-auth-simple.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-auth-simple.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by starting the test webserver in <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-auth-simple.py">http://localhost:8080/doc/src/lib/webserver-web-auth-simple.py</a> on your local machine. The username is <code>john</code> and the password is <code>bananas</code>.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.8 Using Roles"
+  href="node16.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.10 Function Reference"
+  href="node18.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node16.html">1.2.8 Using Roles</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node18.html">1.2.10 Function Reference</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

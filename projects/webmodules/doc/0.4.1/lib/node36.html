@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node37.html">
+<LINK REL="prev" HREF="node26.html">
+<LINK REL="parent" href="module-web.database.html">
+<LINK REL="next" HREF="node37.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Cursor Methods">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.5 Cursor Methods</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.9 Functions" 
+  HREF="node35.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.6 Debugging" 
+  HREF="node37.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node35.html">1.4.4.9 Functions</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node37.html">1.4.6 Debugging</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003450000000000000000">
+1.4.5 Cursor Methods</A>
+</H2>
+
+<P>
+The cursor object has a number of methods which can be used if you want more control over how the database that you can get by using the SQL functions discussed earlier such as <tt class="method">select()</tt> or <tt class="method">insert()</tt> etc. 
+
+<P>
+One of the main reasons for writing this module was to avoid the conversion issues encountered with different databases when using these functions so there use should be avoided if possible.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-85"><tt class="method">execute</tt></a></b>(</nobr></td>
+  <td><var><var>sql</var></var><big>[</big><var>,values=None</var><big>]</big>)</td></tr></table>
+<dd>
+Execute an SQL string substituting ang values
+<DL>
+<DT><STRONG><var>sql</var></STRONG></DT>
+<DD>The SQL string
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A tuple or list of values to substitute into the SQL string
+</DD>
+</DL>
+</dl>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+It should be noted that different cursors may perform some conversions on the information returned by these functions</span>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-86"><tt class="method">fetchone</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Fetches one row of results from the current set of results as a tuple
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-87"><tt class="method">fetchall</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Fetches all rows of results from the cursor as a tuple of tuples
+</dl>
+
+<P>
+If you want the values correctly converted the <tt class="class">cursor</tt> object provides a <tt class="method">fetchRows</tt> method. This is the method called by the <tt class="method">select()</tt> method if <var>autoExecute</var> is <code>True</code> to return the results.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-88"><tt class="method">fetchRows</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>fetchMode=None</var><big>]</big><big>[</big><var>,types=None</var><big>]</big>)</td></tr></table>
+<dd>
+Return the results as properly converted values
+<DL>
+<DT><STRONG><var>fetchMode</var></STRONG></DT>
+<DD>The format of the results returned. Can be <code>'dict'</code> to return them as a tuple of dictionary objects, <code>'tuple'</code> to return them as a tuple of tuples or <code>'dtuple'</code> to return them as a tuple of dtuple objects which can be treated as a tuple or a dictionary. If not specified takes the value specifed in the cursor which by default is <code>'dtuple'</code>
+</DD>
+<DT><STRONG><var>types</var></STRONG></DT>
+<DD>A dictionary containing the table names with each table being the key to another dict containg the column names and type codes for each field of the table
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.9 Functions" 
+  rel="prev" title="1.4.4.9 Functions" 
+  HREF="node35.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.6 Debugging" 
+  rel="next" title="1.4.6 Debugging" 
+  HREF="node37.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node35.html">1.4.4.9 Functions</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node37.html">1.4.6 Debugging</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

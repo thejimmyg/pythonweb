@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node32.html">
+<LINK REL="prev" HREF="node30.html">
+<LINK REL="parent" HREF="node26.html">
+<LINK REL="next" HREF="node32.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Deleting Data">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.4.5 Deleting Data</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.4 Updating Data" 
+  HREF="node30.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node26.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.6 Creating Tables" 
+  HREF="node32.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node30.html">1.4.4.4 Updating Data</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node26.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node32.html">1.4.4.6 Creating Tables</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003445000000000000000">
+1.4.4.5 Deleting Data</A>
+</H3>
+
+<P>
+For example consider the table we created earlier:
+
+<P>
+<div class="verbatim"><pre>
+# table Person
++----------+-----------+------------------+-------------+
+| LastName | FirstName | Address          | DateOfBirth |
++----------+-----------+------------------+-------------+
+| Smith    | John      | 5 Friendly Place | 1980-01-01  |
+| Owen     | Jones     | 4 Great Corner   | 1990-01-01  |
++----------+-----------+------------------+-------------+
+</pre></div>
+
+<P>
+The SQL command to delete every address in the table is:
+
+<P>
+<div class="verbatim"><pre>
+DELETE FROM Person
+</pre></div>
+
+<P>
+To delete all the data using a <tt class="module">web.database</tt> cursor we would do the following:
+
+<P>
+<div class="verbatim"><pre>
+cursor.delete("Person")
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+This does not delete the table, it deletes all the data. To drop the table use the <tt class="method">drop()</tt> method.</span>
+
+<P>
+The table now looks like this:
+
+<P>
+<div class="verbatim"><pre>
++----------+-----------+---------+-------------+
+| LastName | FirstName | Address | DateOfBirth |
++----------+-----------+---------+-------------+
++----------+-----------+---------+-------------+
+</pre></div>
+
+<P>
+To delete only some of the data you need to specify the <var>where</var> parameter. For example to delete all people with the first name <code>'Owen'</code> we would use the SQL:
+
+<P>
+<div class="verbatim"><pre>
+DELETE FROM Person WHERE FirstName='Owen'
+</pre></div>
+
+<P>
+Similarly the function to use to execute this SQL command is:
+<div class="verbatim"><pre>
+cursor.delete("Person", where="FirstName='Owen'")
+</pre></div>
+
+<P>
+The table now looks like this:
+
+<P>
+<div class="verbatim"><pre>
++----------+-----------+------------------+-------------+
+| LastName | FirstName | Address          | DateOfBirth |
++----------+-----------+------------------+-------------+
+| Smith    | John      | 5 Friendly Place | 1980-01-01  |
++----------+-----------+------------------+-------------+
+</pre></div>
+
+<P>
+The <tt class="method">delete()</tt> method of a <tt class="module">web.database</tt> cursor looks like this:
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-79"><tt class="method">delete</tt></a></b>(</nobr></td>
+  <td><var> <var>table</var>, </var><big>[</big><var>where</var><big>]</big><big>[</big><var>, autoExecute</var><big>]</big>)</td></tr></table>
+<dd>
+<var>table</var> should be the table name as a string. <var>where</var> is an SQL where clause. <var>autoExecute</var> is optional and can be <code>True</code> or <code>False</code> and by default takes the value of the <code>cursor</code> object.
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.4 Updating Data" 
+  rel="prev" title="1.4.4.4 Updating Data" 
+  HREF="node30.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node26.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.6 Creating Tables" 
+  rel="next" title="1.4.4.6 Creating Tables" 
+  HREF="node32.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node30.html">1.4.4.4 Updating Data</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node26.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node32.html">1.4.4.6 Creating Tables</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

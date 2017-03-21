@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node110.html" />
+<link rel="prev" href="node108.html" />
+<link rel="parent" href="module-web.error.html" />
+<link rel="next" href="node110.html" />
+<meta name='aesop' content='information' />
+<title>1.6.4 Using The error() Function</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.3 Using The handler()"
+  href="node108.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.5 Creating Custom Handlers"
+  href="node110.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node108.html">1.6.3 Using The handler()</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node110.html">1.6.5 Creating Custom Handlers</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003640000000000000000">
+1.6.4 Using The error() Function</A>
+</H2>
+
+<P>
+Alternatively you can create an <code>ErrorInformation</code> object to display the error information:
+
+<P>
+<div class="verbatim"><pre>
+try:
+    raise Exception('This error will be caught and nicely displayed')
+except:
+    import web.error
+    errorInfo = web.error.error()
+    print error.textException()
+</pre></div>  
+
+<P>
+This would aproduce the same output described in the previous example.
+
+<P>
+The <tt class="function">web.error.error()</tt> function returns an <code>ErrorInformation</code> object which can be used to format exception tuples in a variety of useful ways. Below is the API reference for the <tt class="function">web.error.error()</tt> function and the <code>Information</code> objects returned.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-197' xml:id='l2h-197' class="function">web.error.error</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>error=sys.exc_info()</var><big>]</big><var>, </var><big>[</big><var>context=5</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+Return an <code>ErrorInformation</code> object representing the error.
+
+<P>
+<DL>
+<DT><STRONG><var>error</var></STRONG></DT>
+<DD>The traceback tuple you wish to display information for. If not specified the last exception is used.
+
+<P>
+</DD>
+<DT><STRONG><var>context</var></STRONG></DT>
+<DD>The default number of lines of code to display in traceback information. The default is <code>5</code>.
+
+<P>
+</DD>
+</DL>
+</dl>
+
+<P>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-198' xml:id='l2h-198' class="class">ErrorInformation</tt></b>
+<dd>
+
+<P>
+Error <code>Information</code> objects have the following attributes:
+
+<P>
+<dl><dt><b><tt id='l2h-199' xml:id='l2h-199' class="member">error</tt></b></dt>
+<dd>
+The error tuple specified in the <tt class="function">info()</tt> function or <code>sys.exc_info()</code> if no error was specified.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-200' xml:id='l2h-200' class="member">format</tt></b></dt>
+<dd>
+The default output format of the methods. Can currently be <code>'text'</code> or <code>'html'</code>.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-201' xml:id='l2h-201' class="member">pythonVersion</tt></b></dt>
+<dd>
+A string representing the version of Python being used.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-202' xml:id='l2h-202' class="member">errorType</tt></b></dt>
+<dd>
+The Exception raised
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-203' xml:id='l2h-203' class="member">errorValue</tt></b></dt>
+<dd>
+The error message.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-204' xml:id='l2h-204' class="member">date</tt></b></dt>
+<dd>
+A string representing the date and time the <code>Information</code> object was created. <span class="note"><b class="label">Note:</b>
+ This may not be the time the error occured.</span>
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-205' xml:id='l2h-205' class="member">context</tt></b></dt>
+<dd>
+The number of lines of code to display in error information.
+</dl>
+
+<P>
+Error <code>Information</code> objects have the following methods for displaying error information <span class="note"><b class="label">Note:</b>
+ Python 2.1 and below do not have the <tt class="module">cgitb</tt> module and so have slightly different implementations of the <tt class="method">html()</tt> and <tt class="method">text()</tt> methods so the output of those methods may be different to the output generated using Python 2.2 and above. </span>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-206' xml:id='l2h-206' class="method">ouput</tt></b>(</nobr></td>
+  <td><var><var>output</var>, </var><big>[</big><var>format</var><big>]</big><var>, </var><big>[</big><var>error</var><big>]</big><var>, </var><big>[</big><var>context</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+<var>output</var> can be <code>'traceback'</code> for a traceback, <code>'code'</code> for a code listing or <code>'debug'</code> for code and traceback listing suitable for script debugging. The method returns the result of calling the respective method below.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-207' xml:id='l2h-207' class="method">traceback</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>format</var><big>]</big><var>, </var><big>[</big><var>error</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns the traceback of the error in the format specified by <var>format</var> which can currently be <code>'text'</code> or <code>'html'</code>. If not specified <var>format</var> takes the value of <code>format</code>. <var>error</var> should be an error tuple as returned by <code>sys.exc_info()</code>. If not specified <code>error</code> is used.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-208' xml:id='l2h-208' class="method">code</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>format</var><big>]</big><var>, </var><big>[</big><var>error</var><big>]</big><var>, </var><big>[</big><var>context</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns relevant lines of code and variables from the traceback in the format specified by <var>format</var> which can currently be <code>'text'</code> or <code>'html'</code>. If not specified <var>format</var> takes the value of <code>format</code>. <var>context</var> is the number of lines of code to display at each stage in the traceback information. If not specified <code>context</code> is used. <var>error</var> should be an error tuple as returned by <code>sys.exc_info()</code>. If not specified <code>error</code> is used.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-209' xml:id='l2h-209' class="method">debug</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>format</var><big>]</big><var>, </var><big>[</big><var>error</var><big>]</big><var>, </var><big>[</big><var>context</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Returns the traceback of the error in the format specified by <var>format</var> together with relevant lines of code and variables. <var>format</var> can currently be <code>'text'</code> or <code>'html'</code>. If not specified <var>format</var> takes the value of <code>format</code>.  <var>context</var> is the number of lines of code to display at each stage in the traceback information. If not specified <code>context</code> is used. <var>error</var> should be an error tuple as returned by <code>sys.exc_info()</code>. If not specified <code>error</code> is used.
+</dl>
+
+<P>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.6.3 Using The handler()"
+  href="node108.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.6 web.error  "
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.6.5 Creating Custom Handlers"
+  href="node110.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node108.html">1.6.3 Using The handler()</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node110.html">1.6.5 Creating Custom Handlers</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

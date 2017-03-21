@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node177.html" />
+<link rel="prev" href="node175.html" />
+<link rel="parent" href="node175.html" />
+<link rel="next" href="node177.html" />
+<meta name='aesop' content='information' />
+<title>1.14.1.1 What is a WSGI application?</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.1 Introduction"
+  href="node175.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14.1 Introduction"
+  href="node175.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.1.2 What Are Middleware"
+  href="node177.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node175.html">1.14.1 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node175.html">1.14.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node177.html">1.14.1.2 What Are Middleware</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031411000000000000000">
+1.14.1.1 What is a WSGI application?</A>
+</H3>
+
+<P>
+The WSGI PEP can be quite confusing if all you want to do is write applications quickly and easily. The best way to explain the WSGI is to work through an example demonstrating how an application written as a CGI script has to be modified to work as a WSGI application.
+
+<P>
+Consider the CGI script code below:
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/bin/env python
+print 'Content-type: text/plain\n\n'
+print 'Hello world!'
+</pre></div>
+
+<P>
+This does nothing more than print the words <code>'Hello world!'</code> to a web browser in plain text. What we have done is sent an HTTP header <code>Content-type: text/plain&#92;n&#92;n</code> and then a text string to the browser. The webserver may also have sent a <code>'200 OK'</code> response if the application completed successfully. 
+
+<P>
+To create the same result using a WSGI application we would use this code:
+
+<P>
+<A NAME="example-wsgiSimple"></A><div class="verbatim">
+<pre>
+def simplestApp(environ, start_response):
+    start_response('200 OK',[('Content-type','text/plain')])
+    return ['Hello world!']
+
+application = simplestApp
+</pre>
+<div class="footer">
+<a href="wsgiSimple.txt" type="text/plain">Download as text (original file name: <span class="file">wsgiSimple.py</span>).</a>
+</div></div>
+
+<P>
+This is the most basic WSGI application. It is a function names <code>application</code> which a WSGI server will call and pass two parameters. The first is a dictionary named <var>environ</var> containing environmental variables and the second is a function named <var>start_response</var> which must be called before the application returns a value.
+
+<P>
+You may not be happy with the function <code>start_response</code> being passed as a parameter to our <code>application</code> callable. Whilst it is not possible to pass a function as a parameter in some languages it is allowed in Python. This ability to pass callables as function parameters is crucial to understanding how the WSGI works.
+
+<P>
+Here is an example to consider:
+
+<P>
+<div class="verbatim"><pre>
+def b(text):
+    print text
+    
+def a(print_response):
+    print_response("Hello World!")
+    return "It worked!"
+    
+print a(b)
+</pre></div>
+
+<P>
+In this case we are passing the function <tt class="function">b</tt> to the <tt class="function">a</tt> as the parameter <var>print_response</var>. We are then printing the value returned from <tt class="function">a</tt>. What do you think the result will be?
+
+<P>
+The answer is this:
+
+<P>
+<div class="verbatim"><pre>
+Hello World!
+It worked!
+</pre></div>
+
+<P>
+Make sure you understand this example before you read on.
+
+<P>
+A WSGI application must do two things, these are:
+
+<P>
+
+<OL>
+<LI>Call the <tt class="function">start_response</tt> function (passed to our <code>application</code> callable) with the parameters <var>status</var> and <var>headers</var> in the correct order. This will set the status of the application and send the HTTP headers. In our example the status is <code>'200 OK'</code> meaning everything has gone according to plan and we only send one header, the <code>Content-type</code> header with the value <code>text/plain</code>.
+</LI>
+<LI>Return an iterable containing nothing but strings. In this example the iterable is simply a list containing one string. The return value could equally well have been <code>['Hello', ' ', 'world!']</code> but there was no need to make things more complicated.
+</LI>
+</OL>
+
+<P>
+There are some big advantages in rewriting our code as a WSGI application:
+
+<P>
+
+<UL>
+<LI>Once a server has loaded our application it can execute it many times without having to reload it on each request. This makes for huge performance gains over a traditional CGI approach.
+
+<P>
+</LI>
+<LI>By using callables in this standard way it is possible to chain together applications called middleware components to provide applications with extra functionality passed in the <var>environ</var> dictionary with very little programming effort.
+
+<P>
+</LI>
+<LI>The application has control over its status. For example if the application encountered an error it could send an <code>'500 Error'</code> status message and the WSGI server would display its appropriate error page.
+
+<P>
+</LI>
+<LI>All HTTP headers are sent at the same time before the main content avoiding the possibility of sending HTTP headers at the wrong time.
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.1 Introduction"
+  href="node175.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14.1 Introduction"
+  href="node175.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.1.2 What Are Middleware"
+  href="node177.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node175.html">1.14.1 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node175.html">1.14.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node177.html">1.14.1.2 What Are Middleware</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

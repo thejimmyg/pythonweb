@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node64.html" />
+<link rel="prev" href="node62.html" />
+<link rel="parent" href="node58.html" />
+<link rel="next" href="node64.html" />
+<meta name='aesop' content='information' />
+<title>1.4.12.5 Creating Tables</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.4 Deleting Data"
+  href="node62.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 Cursor Abstraction Methods"
+  href="node58.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.6 Dropping Tables"
+  href="node64.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node62.html">1.4.12.4 Deleting Data</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node58.html">1.4.12 Cursor Abstraction Methods</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node64.html">1.4.12.6 Dropping Tables</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0034125000000000000000">
+1.4.12.5 Creating Tables</A>
+</H3>
+
+<P>
+To create a table in SQL you would use the following command:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE table_name
+(
+    column_name1 data_type,
+    column_name2 data_type,
+    etc...
+)
+</pre></div>
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE Person 
+(
+    LastName varchar,
+    FirstName varchar,
+    Address varchar,
+    Age int
+)
+</pre></div>
+
+<P>
+To create the table above using a <tt class="module">web.database</tt> cursor we would use the <code>cursor.column()</code> helper method:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-87' xml:id='l2h-87' class="method">column</tt></b>(</nobr></td>
+  <td><var><var>name</var>, <var>type</var></var><big>[</big><var>, required=0</var><big>]</big><var></var><big>[</big><var>, unique=0</var><big>]</big><var></var><big>[</big><var>, primaryKey=0</var><big>]</big><var></var><big>[</big><var>, foreignKey=None</var><big>]</big><var></var><big>[</big><var>, default=None</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Return a column tuple suitable for use in the columns tuple used in the <tt class="method">create()</tt> method. 
+
+<P>
+<code>Bool</code>, <code>Float</code>, <code>Binary</code> and <code>Text</code> columns cannot be used as primary keys or unique columns. <code>Binary</code> and <code>Text</code> columns cannot have default values.
+
+<P>
+<DL>
+<DT><STRONG><var>name</var></STRONG></DT>
+<DD>The name of the field as a string.
+</DD>
+<DT><STRONG><var>type</var></STRONG></DT>
+<DD>The field type. This can take one of the values: <code>'Bool'</code>, <code>'String'</code>, <code>'Text'</code>, <code>'Binary'</code>, <code>'Long'</code>, <code>'Integer'</code>, <code>'Float'</code>, <code>'Date'</code>, <code>'Time'</code>, <code>'Datetime'</code>
+</DD>
+<DT><STRONG><var>required</var></STRONG></DT>
+<DD>Whether or not the field is required. Setting to <code>True</code> means the field cannot have <code>NULL</code> values.
+</DD>
+<DT><STRONG><var>unique</var></STRONG></DT>
+<DD>Set to <code>True</code> if the value must be unique. Two fields in the column cannot have the same value unless that value is NULL
+</DD>
+<DT><STRONG><var>primaryKey</var></STRONG></DT>
+<DD>The field is to be used as a primary key, the field has the same behaviour as being unique and required but no default value can be set
+</DD>
+<DT><STRONG><var>foreignKey</var></STRONG></DT>
+<DD>The field is to be used as a foreign key, the value should be the name of the table for which this is a child table. <span class="note"><b class="label">Note:</b>
+There is no need to specify the column name as tables can only have one primary key.</span>
+</DD>
+<DT><STRONG><var>default</var></STRONG></DT>
+<DD>The default value for the field to be set to. If not specified the default is NULL 
+</DD>
+</DL>
+</dl>
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+cursor.create(
+    table = 'Person',
+    columns = [
+        cursor.column(name='LastName',  type='String' ),
+        cursor.column(name='FirstName', type='String' ),
+        cursor.column(name='Address',   type='String' ),
+        cursor.column(name='Age',       type='Integer'),
+    ],
+)
+</pre></div>
+
+<P>
+The <tt class="method">create()</tt> method takes the table name as the first argument and then a sequence column dictionaries returned from the <code>cursor.column()</code> method as the second argument. 
+
+<P>
+Here is a more complicated example:
+
+<P>
+<div class="verbatim"><pre>
+cursor.create(
+    table = 'Person',
+    columns = [
+        cursor.column(name='LastName',  type='String', required=True, unique=True),
+        cursor.column(name='FirstName', type='String', default='Not Specified'),
+        cursor.column(name='Address',   type='String' ),
+        cursor.column(name='Age',       type='Integer'),
+    ],
+)
+</pre></div>
+
+<P>
+In this example we specified that the <code>LastName</code> must always be entered, does not have a default value and must be unique so that no two people in the database can have the same <code>LastName</code>. We have also specified that <code>FirstName</code> is not required and is not unique. If no value is entered for <code>FirstName</code> the field  should be set to the string <code>Not Specified</code>.
+
+<P>
+In mysql This would create the following table:
+
+<P>
+<div class="verbatim"><pre>
+mysql&gt; describe Person;
++-------------+--------------+------+-----+---------------+-------+
+| Field       | Type         | Null | Key | Default       | Extra |
++-------------+--------------+------+-----+---------------+-------+
+| LastName    | varchar(255) |      | PRI |               |       |
+| FirstName   | varchar(255) | YES  |     | Not Specified |       |
+| Address     | varchar(255) | YES  |     | NULL          |       |
+| DateOfBirth | date         | YES  |     | NULL          |       |
++-------------+--------------+------+-----+---------------+-------+
+4 rows in set (0.00 sec)
+</pre></div>
+
+<P>
+The <tt class="method">create()</tt> method of a <tt class="module">web.database</tt> cursor looks like this:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-88' xml:id='l2h-88' class="method">create</tt></b>(</nobr></td>
+  <td><var> <var>table</var>, <var>columns</var> </var><big>[</big><var>, values=[]</var><big>]</big><var> </var><big>[</big><var>, execute</var><big>]</big><var> </var>)</td></tr></table></dt>
+<dd>
+<P>
+Create table with fields specified by fields. fields is a tuple of field tuples which can be obtained as follows:
+<div class="verbatim"><pre>
+columns = [
+    cursor.column( field options... ),
+    cursor.column( field options... ),
+    cursor.column( field options... ),
+    cursor.column( field options... ),
+]
+</pre></div>
+<DL>
+<DT><STRONG><var>table</var></STRONG></DT>
+<DD>The table name as a string. 
+</DD>
+<DT><STRONG><var>columns</var></STRONG></DT>
+<DD>A sequence of field tuples returned by <code>cursor.column()</code>
+</DD>
+<DT><STRONG><var>values</var></STRONG></DT>
+<DD>A sequence of values to substitute for default values in the columns
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>If <code>False</code> the method returns the SQL string to perform the desired operations. If <code>True</code> the SQL is executed. If not specified takes the value specified in the cursor which by default is <code>True</code>
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.4 Deleting Data"
+  href="node62.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 Cursor Abstraction Methods"
+  href="node58.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.6 Dropping Tables"
+  href="node64.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node62.html">1.4.12.4 Deleting Data</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node58.html">1.4.12 Cursor Abstraction Methods</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node64.html">1.4.12.6 Dropping Tables</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

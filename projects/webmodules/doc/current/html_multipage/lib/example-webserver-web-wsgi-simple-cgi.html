@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="example-wsgiDebug.html" />
+<link rel="parent" href="node175.html" />
+<link rel="next" href="node182.html" />
+<meta name='aesop' content='information' />
+<title>1.14.1.6 web.wsgi Functions</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.1.5 The PythonWeb WSGI"
+  href="example-wsgiDebug.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14.1 Introduction"
+  href="node175.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.2 Understanding Middleware"
+  href="node182.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiDebug.html">1.14.1.5 The PythonWeb WSGI</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node175.html">1.14.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node182.html">1.14.2 Understanding Middleware</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031416000000000000000">
+1.14.1.6 <tt class="module">web.wsgi</tt> Functions</A>
+</H3>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-323' xml:id='l2h-323' class="function">runCGI</tt></b>(</nobr></td>
+  <td><var><var>application</var></var>)</td></tr></table></dt>
+<dd>
+Wrapper function to enable WSGI applications to run in a CGI environment. <var>application</var> is the WSGI application or middleware to run in a CGI environment.
+</dl>
+
+<P>
+You may not be in a situation where you have access to a WSGI server. The Python web modules also come with a code to allow WSGI applications and middleware to be run in a CGI environment such as Apache. 
+
+<P>
+If you want to run a WSGI as a CGI application you need to turn it back into one. This can be done very simply by using the middleware component <code>web.wsgi.runCGI</code> as shown below:
+
+<P>
+<A NAME="example-webserver-web-wsgi-simple-cgi"></A><div class="verbatim">
+<pre>#!/usr/bin/env python
+
+# show python where the web modules are
+import sys; sys.path.append('../'); sys.path.append('../../../')
+
+def simpleApp(environ, start_response):
+    status = '200 OK'
+    headers = [('Content-type','text/plain')]
+    start_response(status, headers)
+    return ['Hello world from simple_application!&#92;n']
+
+import web.wsgi
+web.wsgi.runCGI(simpleApp)</pre>
+<div class="footer">
+<a href="webserver-web-wsgi-simple-cgi.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-wsgi-simple-cgi.py</span>).</a>
+</div></div>
+
+<P>
+The application can then be run in a normal CGI webserver. 
+
+<P>
+To test this approach run <span class="file">webserver.py</span> using <code>python webserver.py</code> in the <span class="file">scripts</span> directory and visit <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-wsgi-simple-cgi.py">http://localhost:8080/doc/src/lib/webserver-web-wsgi-simple-cgi.py</a> to see a sample CGI WSGI application running.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ It much faster to execute WSGI applications through a dedicated WSGI server than to run them as CGI scripts. When a CGI script is executed all the Python libraries and modules the script uses need to be loaded into memory and then removed once the script exists. This has to happen for every request so there is an unecessary delay before the WSGI application is even executed. When using a WSGI server the libraries and modules only need to be loaded once and are then available for any subsequent requests so simple web requests can be handled perhaps 10 times faster.</span>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-324' xml:id='l2h-324' class="function">currentURL</tt></b>(</nobr></td>
+  <td><var><var>environ</var></var>)</td></tr></table></dt>
+<dd>
+Return the current URL of the WSGI application from the environ dictionary <var>environ</var>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.1.5 The PythonWeb WSGI"
+  href="example-wsgiDebug.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14.1 Introduction"
+  href="node175.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.2 Understanding Middleware"
+  href="node182.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiDebug.html">1.14.1.5 The PythonWeb WSGI</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node175.html">1.14.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node182.html">1.14.2 Understanding Middleware</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

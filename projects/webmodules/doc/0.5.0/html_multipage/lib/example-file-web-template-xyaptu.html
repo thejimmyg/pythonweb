@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="example-file-web-template-dreamweaverMX.html" />
+<link rel="prev" href="example-file-web-template-cheetah.html" />
+<link rel="parent" href="template.html" />
+<link rel="next" href="example-file-web-template-dreamweaverMX.html" />
+<meta name='aesop' content='information' />
+<title>1.12.2 XYAPTU Templating</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.12.1 Cheetah Template"
+  href="example-file-web-template-cheetah.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.12 web.template  "
+  href="template.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.12.3 Dreamweaver MX"
+  href="example-file-web-template-dreamweaverMX.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-file-web-template-cheetah.html">1.12.1 Cheetah Template</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="template.html">1.12 web.template  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-file-web-template-dreamweaverMX.html">1.12.3 Dreamweaver MX</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031220000000000000000"></A><A NAME="example-file-web-template-xyaptu"></A>
+<BR>
+1.12.2 XYAPTU Templating
+</H2>
+
+<P>
+XYAPTU is an ASPN recipie based on YAPTU. Both modules are included with the web modules and can be imported directly:
+
+<P>
+<div class="verbatim"><pre>
+import web
+import xyaptu, yaptu
+</pre></div>
+
+<P>
+Here is an example xyaptu template:
+
+<P>
+<div class="verbatim">
+<pre>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+&lt;title&gt;$title&lt;/title&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;p&gt;$welcomeMessage&lt;/p&gt;
+    &lt;py-open code="if testVar:" /&gt;
+       The variable is: True
+    &lt;py-clause code="else:" /&gt;
+       The variable is: False
+    &lt;py-close/&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<div class="footer">
+<a href="file-web-template-xyaptu.txt" type="text/plain">Download as text (original file name: <span class="file">file-web-template-xyaptu.tmpl</span>).</a>
+</div></div>
+
+<P>
+Here is a program to manipulate it:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the web modules are
+import web.template
+
+dict =  {
+    'welcomeMessage':'Welcome to the test page!',
+    'testVar':True,
+    'title':'XYAPTU Example',
+}
+        
+print web.template.parse(
+    type='xyaptu', 
+    file='file-web-template-xyaptu.tmpl', 
+    dict=dict
+)</pre>
+<div class="footer">
+<a href="command-web-template-xyaptu.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-template-xyaptu.py</span>).</a>
+</div></div>
+
+<P>
+And here is the output produced:
+
+<P>
+<div class="verbatim"><pre>
+&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+&lt;title&gt;XYAPTU Example&lt;/title&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;p&gt;Welcome to the test page!&lt;/p&gt;
+    
+
+       The variable is: True
+    
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+
+<P>
+<div class="seealso">
+  <p class="heading">See Also:</p>
+
+  <dl compact="compact" class="seetitle">
+    <dt><em class="citetitle"><a href="http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/162292"
+        >XYAPTU Information on ASPN</a></em></dt>
+    <dd>This page is where the recipie first appeared and is where the most complete documentation can be found.</dd>
+  </dl>
+
+<P>
+</div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.12.1 Cheetah Template"
+  href="example-file-web-template-cheetah.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.12 web.template  "
+  href="template.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.12.3 Dreamweaver MX"
+  href="example-file-web-template-dreamweaverMX.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-file-web-template-cheetah.html">1.12.1 Cheetah Template</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="template.html">1.12 web.template  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-file-web-template-dreamweaverMX.html">1.12.3 Dreamweaver MX</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

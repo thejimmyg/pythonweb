@@ -1,0 +1,83 @@
+#!/usr/bin/env python
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web.error; web.error.enable()
+import os, time
+import web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="webserver-session",
+    autoCreate = 1,
+)
+cursor = connection.cursor() 
+
+# Create a session driver and make sure the database tables exist
+import web.session
+driver = web.session.driver('database', environment='testEnv', cursor=cursor)
+if not driver.completeSessionEnvironment():
+    driver.removeSessionEnvironment(ignoreErrors=True)
+    driver.createSessionEnvironment()
+    
+# Set up a session manager and load or create a new session
+manager = web.session.manager(driver=driver, expire=10)
+sessionID = manager.cookieSessionID()
+if not manager.load(sessionID):
+    manager.create(sendCookieHeaders=False)
+    manager.sendCookieHeaders()
+
+# Get the session store for this application
+store = manager.store('testApp')
+
+def printPage(title, url, link, url2, link2, data):
+    print """
+    <html>
+    <h1>%s</h1>
+    <p><a href="%s">%s</a></p>
+    <p><a href="%s">%s</a></p>
+    <p>%s</p>
+    </html>"""%(title, url, link, url2, link2, data)
+                
+# Write a simple application
+if not manager.created:
+    if web.cgi.has_key('destroy') and web.cgi['destroy'].value == 'True':
+        manager.destroy(ignoreWarning=True, sendCookieHeaders=False) 
+        manager.sendCookieHeaders()
+        print web.header('text/html')
+        printPage(
+            'Session Destroyed', 
+            os.environ['SCRIPT_NAME'], 
+            'Start Again', '','',''
+        )
+    else:
+        print web.header('text/html')
+        manager.setExpire(manager.expireTime+5)
+        data = []
+        data.append('SessionID:  ' +manager.sessionID)
+        data.append('Store Keys: '+str(store.keys()))
+        data.append('Store App:  '+store.app)
+        data.append('Variable1:  '+str(store['Variable1']))
+        data.append('ExpireTime: '+str(manager.expireTime))
+        printPage(
+            'Welcome back', 
+            os.environ['SCRIPT_NAME'], 
+            'Visit Again', 
+            os.environ['SCRIPT_NAME']+'?destroy=True', 
+            'Destroy Session', 
+            '<p>Every time you visit this page the expiry \
+            time increases 5 seconds</p>'+'</p><p>'.join(data)
+        )
+else:
+    print web.header('text/html')
+    store['Variable1'] = 'Python Rules!'
+    printPage(
+        'New Session Started',
+        os.environ['SCRIPT_NAME'], 
+        'Visit Again', '', '',
+        "Set variable1 to 'Python Rules!'"
+    )
+
+connection.commit() # Save changes
+connection.close()  # Close the database connection

@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node73.html">
+<LINK REL="prev" HREF="node71.html">
+<LINK REL="parent" HREF="node70.html">
+<LINK REL="next" HREF="node73.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="The Table Object">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.5.9.2 The Table Object</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.9.1 The Database Object" 
+  HREF="node71.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.9 Class Reference" 
+  HREF="node70.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.9.3 The Row Object" 
+  HREF="node73.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node71.html">1.5.9.1 The Database Object</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node70.html">1.5.9 Class Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node73.html">1.5.9.3 The Row Object</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003592000000000000000">
+1.5.9.2 The Table Object</A>
+</H3>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-109"><tt class="class">Database</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>ignoreCreateAndDrop=False</var><big>]</big>)</td></tr></table>
+<dd>
+If <var>ignoreCreateAndDrop</var> is <code>True</code> then the table is not created or dropped when the database methods <tt class="method">createTables()</tt> or <code>dropTables()</code> are called.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-110"><tt class="method">addColumn</tt></a></b>(</nobr></td>
+  <td><var><var>column</var></var>)</td></tr></table>
+<dd>
+Add a <tt class="class">web.database.object</tt> column object to the table.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-111"><tt class="method">addMultiple</tt></a></b>(</nobr></td>
+  <td><var><var>name</var>, <var>foreignTable</var></var>)</td></tr></table>
+<dd>
+Add a column named by the string <var>name</var> to the table. The column will be used to reference multiple rows from the table named by the string <var>foreignTable</var>. The foreign table will have a corresponding addSingle() entry for this table. 
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-112"><tt class="method">addSingle</tt></a></b>(</nobr></td>
+  <td><var><var>name</var>, <var>foreignTable</var></var>)</td></tr></table>
+<dd>
+Add a column named by the string <var>name</var> to the table. The column will contain a reference to a row in the foreign table named by the string <var>foreignTable</var>. The foreign table will have a corresponding addMultiple() entry for this table. 
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-113"><tt class="method">addRelated</tt></a></b>(</nobr></td>
+  <td><var><var>name</var>, <var>foreignTable</var></var>)</td></tr></table>
+<dd>
+Add a column named by the string <var>name</var> to the table. The column will contain a reference to any number of rows in the foreign table named by the string <var>foreignTable</var>. The foreign table will have a corresponding addRelated() entry for this table and will contain a reference to any number of rows from this table.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-114"><tt class="method">columns</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple of the column names of the table.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-115"><tt class="method">keys</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple containing the keys of the rows in the table.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-116"><tt class="method">values</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple containing the <code>web.database.object.Row</code> objects in the table.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-117"><tt class="method">items</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple containing 2-tuples of <code>(<tt class="function">str(<var>key</var>)</tt>, <var>value</var>)</code> pairs where the <var>key</var> is the <code>web.database.object.Row</code> key and the <var>value</var> is the <code>web.database.object.Row</code> object.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-118"><tt class="method">has_key</tt></a></b>(</nobr></td>
+  <td><var><var>key</var></var>)</td></tr></table>
+<dd>
+Returns <code>True</code> if the table has a row with a key <var>key</var>, <code>False</code> otherwise
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-119"><tt class="method">dict</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>rows=False</var><big>]</big>)</td></tr></table>
+<dd>
+Return the rows in the table as a dictionary indexed by string representations of their keys. If <var>rows</var> is <code>True</code> then each <tt class="class">Row</tt> object is made into a dictionary of column name : value pairs, except for single, multiple and related joins columns, since this could result in circular references.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-120"><tt class="method">create</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Create the table. <span class="note"><b class="label">Note:</b>
+Usually this is done automatically through the <tt class="method">createTables()</tt> method of the <tt class="class">Database</tt> class.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-121"><tt class="method">drop</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Drop the table. <span class="note"><b class="label">Note:</b>
+Usually this is done automatically through the <tt class="method">dropTables()</tt> method of the <tt class="class">Database</tt> class.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-122"><tt class="method">exists</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return <code>True</code> if the table exists in the database, <code>False</code> otherwise.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-123"><tt class="method">rowExists</tt></a></b>(</nobr></td>
+  <td><var><var>rowid</var></var>)</td></tr></table>
+<dd>
+Return <code>True</code> if the row specified by the integer <var>rowid</var> exists in the table, <code>False</code> otherwise.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-124"><tt class="method">columnExists</tt></a></b>(</nobr></td>
+  <td><var><var>name</var></var>)</td></tr></table>
+<dd>
+Return <code>True</code> if the column <var>name</var> exists in the table, <code>False</code> otherwise.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-125"><tt class="method">insert</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>all=None</var><big>]</big><var>, </var><big>[</big><var>**params</var><big>]</big>)</td></tr></table>
+<dd>
+Insert a new row to the table. Either specify the values as a dictionary as the <var>all</var> parameter with the column names as keys and the values as the column values <b>or</b> specify each column value pair in the form <code>colName=value,</code>. You must use one of the two methods. <span class="note"><b class="label">Note:</b>
+<code>all</code> is a reserved word so there should be no confusion between using the two notations.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-126"><tt class="method">delete</tt></a></b>(</nobr></td>
+  <td><var><var>rowid</var></var>)</td></tr></table>
+<dd>
+Delete a row by specifying the <code>rowid</code> of the row with the <var>rowid</var> parameter. <span class="warning"><b class="label">Warning:</b>
+This method does not delete corresponding rows in foreign tables. If you delete a row there will still be references to it in other tables if it contains any colums added by <tt class="method">addMultiple</tt> or <tt class="method">addSingle()</tt> for example. These should be deleted manually. XXX is this a bug or a useful feature?</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-127"><tt class="method">row</tt></a></b>(</nobr></td>
+  <td><var><var>rowid</var></var>)</td></tr></table>
+<dd>
+Return the <tt class="class">Row</tt> with the <code>rowid</code> specified by the <var>rowid</var> parameter.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-128"><tt class="method">__getitem__</tt></a></b>(</nobr></td>
+  <td><var><var>key</var></var>)</td></tr></table>
+<dd>
+Return the <tt class="class">Row</tt> with the <code>key</code> specified by the <var>key</var> parameter. <span class="note"><b class="label">Note:</b>
+Certain objects such as class objects cannot be used as dictionary keys. All keys are converted to strings using the <tt class="function">str()</tt> function so any object to be used as a key must return a unique value when its <tt class="method">__str__()</tt> is called. This also means that </span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-129"><tt class="method">select</tt></a></b>(</nobr></td>
+  <td><var><var>where</var></var><big>[</big><var>,order=None</var><big>]</big><big>[</big><var>,rowids=False</var><big>]</big>)</td></tr></table>
+<dd>
+Select the <tt class="class">Row</tt> objects specified by the <var>where</var> parameter in the oreder specified by the <var>order</var> parameter. If <var>rowids</var> is <code>True</code> then a list of <code>rowid</code>s is returned rather than a dictionary of <tt class="class">Row</tt> objects.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-130"><tt class="method">form</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>action=''</var><big>]</big><big>[</big><var>, method='post'</var><big>]</big><big>[</big><var>, stickyData={}</var><big>]</big><big>[</big><var>, enctype='multipart/form-data'</var><big>]</big><big>[</big><var>, submit='Submit'</var><big>]</big><big>[</big><var>, modeDict={'mode':'mode', 'table':'table', 'submode':'submode'}</var><big>]</big><big>[</big><var>,  submode='add'</var><big>]</big>)</td></tr></table>
+<dd>
+Return an empty <tt class="module">web.form</tt> <tt class="class">Form</tt> object to allow data to be added to the table.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-131"><tt class="method">max</tt></a></b>(</nobr></td>
+  <td><var><var>column</var></var><big>[</big><var>, rows='post'</var><big>]</big>)</td></tr></table>
+<dd>
+Returns the highest value of <var>column</var> in the current table. If <var>rows</var> is <code>True</code> returns a list of rows which have the maximum value of <var>column</var>.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-132"><tt class="method">min</tt></a></b>(</nobr></td>
+  <td><var><var>column</var></var><big>[</big><var>, rows='post'</var><big>]</big>)</td></tr></table>
+<dd>
+Returns the lowest value of <var>column</var> in the current table. If <var>rows</var> is <code>True</code> returns a list of rows which have the minimum value of <var>column</var>.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-133"><tt class="member">column</tt></a></b>
+<dd>
+Magic attribute which allows you to build SQL where clauses in natural Python language. For example:
+<div class="verbatim"><pre>
+&gt;&gt;&gt; print database['table'].column['column1'] == 23 \
+... &amp;&amp; database['table'].column['column2'] &lt; datetime.date(2004,12,04)
+column1=23 AND column2&lt;'2004-12-24'
+</pre></div>
+See the "Building Queries" section for more information.
+</dl>
+
+<P>
+</dl> 
+
+<P>
+Table rows can be accessed using the <tt class="method">row()</tt> method or by using the <tt class="method">__getitem__()</tt> method as follows. To return the row with where the <code>key</code> is <code>surname</code> and you want the row with surname <code>'Smith'</code> from the <code>'Person'</code> table of the database wrapped by <code>database</code> you would do this:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; database['Person']['Smith']
+&lt;web.database.object.Row from 'Person' Table, rowid=1, firstName='John', surname='Smith'&gt;
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.9.1 The Database Object" 
+  rel="prev" title="1.5.9.1 The Database Object" 
+  HREF="node71.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.9 Class Reference" 
+  rel="parent" title="1.5.9 Class Reference" 
+  HREF="node70.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.9.3 The Row Object" 
+  rel="next" title="1.5.9.3 The Row Object" 
+  HREF="node73.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node71.html">1.5.9.1 The Database Object</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node70.html">1.5.9 Class Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node73.html">1.5.9.3 The Row Object</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

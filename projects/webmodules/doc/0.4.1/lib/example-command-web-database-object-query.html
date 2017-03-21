@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node64.html">
+<LINK REL="parent" HREF="node61.html">
+<LINK REL="next" HREF="node66.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Full Code Listing">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.5.5.4 Full Code Listing</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.5.3 Supported Functions" 
+  HREF="node64.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.5 Building Queries" 
+  HREF="node61.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.6 Creating Forms/Tables" 
+  HREF="node66.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node64.html">1.5.5.3 Supported Functions</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node61.html">1.5.5 Building Queries</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node66.html">1.5.6 Creating Forms/Tables</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003554000000000000000">&nbsp;</A>
+<BR>
+1.5.5.4 Full Code Listing
+</H3>
+
+<P>
+Here is a complete code listing so that you can experiment:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the web modules are
+
+import web.database, web.database.object, datetime                                 
+ 
+connection = web.database.connect(type="sqlite",database="object-query.db")
+cursor = connection.cursor()                                                
+
+person = web.database.object.Table("Person")                                
+person.addColumn(web.database.object.String(name="firstName"))              
+person.addColumn(web.database.object.String(name="surname", unique=True, required=True, key=True))                
+
+queryExample = web.database.object.Table('QueryExample')
+queryExample.addColumn(web.database.object.Date(name="testDate"))
+queryExample.addColumn(web.database.object.Integer(name="testInteger"))
+queryExample.addColumn(web.database.object.Integer(name="testNumber"))
+queryExample.addColumn(web.database.object.Email(name="email"))
+
+database = web.database.object.Database()  
+database.addTable(person)  
+database.addTable(queryExample)                                                   
+database.init(cursor)
+
+if not database.tablesExist():
+    database.createTables()
+    print "Created Table"
+
+database['Person'].insert(firstName="John", surname="Smith")
+database['Person'].insert(firstName="Owen", surname="Jones")
+
+database['QueryExample'].insert(
+    testDate=datetime.date(2004,7,11),
+    testInteger = 10,
+    testNumber = 15,
+    email = 'james@example.com'
+)
+
+where = database['Person'].column['firstName'] == "John"
+print where
+
+rows = database['Person'].select(where=where)
+print rows
+
+column = database['queryExample'].column
+
+print column['testDate'] == datetime.date(2003,12,12)
+print column['testInteger'] &lt; 5
+
+print column.AND(column['email'] == 'james@jimmyg.org', column['testInteger'] &lt; 5)
+print column.NOT(column['email'] == 'james@jimmyg.org')
+
+print (column['email'] == 'james@jimmyg.org') &amp; (column['testInteger'] &lt; 5)
+print&nbsp;(column['email'] == 'james@jimmyg.org')
+
+connection.commit()</pre>
+<div class="footer">
+<a href="command-web-database-object-query.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-database-object-query.py</span>).</a>
+</div></div>
+
+<P>
+The output is:
+
+<P>
+<div class="verbatim"><pre>
+Created Table
+(Person.firstName = 'John')
+{'Smith': &lt;web.database.object.Row from Person table, rowid=1, firstName='John', surname='Smith'&gt;}
+(QueryExample.testDate = '2003-12-12')
+(QueryExample.testInteger &lt; 5)
+(QueryExample.email = 'james@jimmyg.org') AND (QueryExample.testInteger &lt; 5)
+NOT (QueryExample.email = 'james@jimmyg.org')
+((QueryExample.email = 'james@jimmyg.org')  AND  (QueryExample.testInteger &lt; 5))
+( NOT  (QueryExample.email = 'james@jimmyg.org'))
+</pre></div>
+
+<P>
+You will need to delete the database file <span class="file">object-related.db</span> each time you run the cose so that it can be recreated each time.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.5.3 Supported Functions" 
+  rel="prev" title="1.5.5.3 Supported Functions" 
+  HREF="node64.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.5 Building Queries" 
+  rel="parent" title="1.5.5 Building Queries" 
+  HREF="node61.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.6 Creating Forms/Tables" 
+  rel="next" title="1.5.6 Creating Forms/Tables" 
+  HREF="node66.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node64.html">1.5.5.3 Supported Functions</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node61.html">1.5.5 Building Queries</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node66.html">1.5.6 Creating Forms/Tables</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

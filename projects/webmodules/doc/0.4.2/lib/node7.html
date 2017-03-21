@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node6.html">
+<LINK REL="parent" HREF="node6.html">
+<LINK REL="next" HREF="node8.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Function Reference">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.2.1.1 Function Reference</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.1 Password Protecting Your" 
+  HREF="node6.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2.1 Password Protecting Your" 
+  HREF="node6.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.2 Administering The Auth" 
+  HREF="node8.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node6.html">1.2.1 Password Protecting Your</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node6.html">1.2.1 Password Protecting Your</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node8.html">1.2.2 Administering The Auth</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003211000000000000000">
+1.2.1.1 Function Reference</A>
+</H3>
+
+<P>
+The <tt class="function">web.auth.start()</tt> function has the following parameters:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-6"><tt class="function">start</tt></a></b>(</nobr></td>
+  <td><var><var>session</var></var><big>[</big><var>, storage='database'</var><big>]</big><big>[</big><var>, cursor=None</var><big>]</big><big>[</big><var>, expire=0</var><big>]</big><big>[</big><var>, idle=0</var><big>]</big><big>[</big><var>, signInForm=None</var><big>]</big><big>[</big><var>, autoSignIn=False</var><big>]</big><big>[</big><var>, autoRedirect=False</var><big>]</big><big>[</big><var>, redirect=None</var><big>]</big><big>[</big><var>, includeQuery=False</var><big>]</big><big>[</big><var>, stickyData=</var><big>]</big><big>[</big><var>, reminderForm=None</var><big>]</big><big>[</big><var>, email=None</var><big>]</big><big>[</big><var>, app=None</var><big>]</big><big>[</big><var>, accessDenied=None</var><big>]</big><big>[</big><var>, emailMessage=None</var><big>]</big><big>[</big><var>, htmlPage=None</var><big>]</big><big>[</big><var>, encryption=None</var><big>]</big><big>[</big><var>, table='Auth'</var><big>]</big><big>[</big><var>, dir=None</var><big>]</big><big>[</big><var>, debug=False</var><big>]</big><big>[</big><var>, checkSignInAttempt=False</var><big>]</big>)</td></tr></table>
+<dd>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+Because more options may be specified in future versions of this function you should not rely on the order of these parameters. Instead they should be specified with the parameter name and an <code>=</code> sign as is used in the examples in this documentation.</span>
+
+<P>
+<DL>
+<DT><STRONG><var>session</var></STRONG></DT>
+<DD>A valid <tt class="class">web.session</tt> object
+
+<P>
+</DD>
+<DT><STRONG><var>storage</var></STRONG></DT>
+<DD>The storage driver to use for the auth user, level and app information. <var>storage</var> can be <code>'database'</code> or <code>'file'</code>. 
+
+<P>
+If <var>storage</var> is <code>'database'</code> you must also specify <var>cursor</var> to be a valid <tt class="class">web.database</tt> cursor. By default the necessary database tables beign with <code>'Auth'</code>. If you want them to begin with something else, perhaps if you want two lots of auth storage in the same database, you can specify the table prepend string using <var>table</var>. For example <code>table='Auth2'</code> would create the tables <code>Auth2Level</code>, <code>Auth2User</code> and <code>Auth2App</code>. 
+
+<P>
+If <var>storage</var> is <code>'file'</code> you must also specify a directory <var>dir</var> which allows read and write access where the auth information is stored.
+
+<P>
+</DD>
+<DT><STRONG><var>expire</var></STRONG></DT>
+<DD>An integer specifying the number of seconds before the user is signed out. A value of 0 disables the expire functionality and the user will be signed in until they sign out. <span class="note"><b class="label">Note:</b>
+If the underlying session expires, the cookie is removed or the sign in idles before the expire time specified in <var>expire</var> the user will be signed out.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>idle</var></STRONG></DT>
+<DD>An integer specifying the maximum number of seconds between requests before the user is automatically signed out. A value of 0 disables the idle functionality allowing an unlimited amount of time between user requests. <span class="note"><b class="label">Note:</b>
+If the underlying session expires, the cookie is removed or the sign in expires before the idle time specified in <var>idle</var> the user will be signed out.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>app</var></STRONG></DT>
+<DD>The name of the application. 
+
+<P>
+</DD>
+<DT><STRONG><var>encryption</var></STRONG></DT>
+<DD>Can be <code>None</code> to disable encryption of the stored passwords or <code>'md5'</code> to generate md5 checksums of the passwords.
+
+<P>
+</DD>
+<DT><STRONG><var>autoSignIn</var></STRONG></DT>
+<DD>If <code>True</code> will automatically display a signInForm if the user is not signed in. <span class="note"><b class="label">Note:</b>
+If this is set to <code>False</code> you will need to implement your own sign in form system or no information will be displayed and the browser will show an empty page or think you are trying to download a file.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>signInForm</var></STRONG></DT>
+<DD>A tuple or list of the form <code>[templateType, templateString]</code> where <code>templateType</code> can be any template type supported by <tt class="module">web.template</tt>, for example <code>'python'</code>, <code>'cheetah'</code> etc. <code>templateString</code> should be a string containing the template text for the sign in form. The template should contain the keys <code>name</code> for the form name, <code>action</code> for the form action, <code>method</code> for the form method, <code>stickyData</code> for hidden fields specified in <var>stickyData</var>, <code>username</code> which is the current username, <code>message</code> for the error message and <code>error</code> for the error code which will be displayed in comments if <var>debug</var> is <code>True</code>. If not specified the template <code>web.auth.template.signForm</code> is used. The sign in form must have a hidden field named <code>signIn</code> with a value <code>True</code> for the module to work.
+
+<P>
+</DD>
+<DT><STRONG><var>reminderInForm</var></STRONG></DT>
+<DD>A tuple or list of the form <code>[templateType, templateString]</code> where <code>templateType</code> can be any template type supported by <tt class="module">web.template</tt>, for example <code>'python'</code>, <code>'cheetah'</code> etc. <code>templateString</code> should be a string containing the template text for the password email reminder form. The template should contain the keys <code>name</code> for the form name, <code>action</code> for the form action, <code>method</code> for the form method and <code>stickyData</code> for hidden fields specified in <var>stickyData</var>. If not specified the template <code>web.auth.template.reminderForm</code> is used.
+
+<P>
+</DD>
+<DT><STRONG><var>htmlPage</var></STRONG></DT>
+<DD>A tuple or list of the form <code>[templateType, templateString]</code> where <code>templateType</code> can be any template type supported by <tt class="module">web.template</tt>, for example <code>'python'</code>, <code>'cheetah'</code> etc. <code>templateString</code> should be a string containing html page. The template should contain the keys <code>title</code> for the page title and <code>content</code> for the position where the sign in form should be displayed. If not specified the template <code>web.auth.template.htmlPage</code> is used.
+
+<P>
+</DD>
+<DT><STRONG><var>errorCodes</var></STRONG></DT>
+<DD>A dictionary of error keys and the message to be displayed when those errors occur. The default is <code>web.auth.templates.errorCodes</code>:
+<div class="verbatim"><pre>
+errorCodes = {     
+    'LOGIN'             : ['Please Sign In',''],
+    'REMINDER'          : ['Enter Email Address',''],
+    'EXPIRED'           : ['Please Sign In','The session expired and you have been signed out.'],
+    'IDLED'             : ['Please Sign In','The session has been left idle for too long and you have been signed out.'],
+    'NO_USER'           : ['Please Sign In','The username specified in your session does not exist. Try signing in again.'],
+    'NO_SESSION'        : ['Please Sign In','There is no session information for the username you are using. This may be because you have been signed out.'],
+    'WRONG_USERNAME'    : ['Please Sign In','The username you have specified does not exist.'],
+    'WRONG_PASSWORD'    : ['Please Sign In','The password is incorrect.'],
+    'NO_USER_ENTERED'   : ['Please Sign In','Please enter a username.'],
+    'PASS_REMINDER_SENT': ['Reminder Sent','A password reminder has been sent. Please check your email.'],
+    'ACCESS_DENIED'     : ['Please Sign In','You do not have access rights to use this application.'],
+    'EMAIL_NOT_FOUND'   : ['Enter Email Address','Email address not found. Please enter the email address your account was registered with.'],
+    'NO_PASSWORD'       : ['Please Sign In','No password entered.'],
+    'NO_AUTO_SIGN_IN'   : ['Please Sign In','The user is not signed in and autoSignIn mode is not enabled.'], 
+}
+</pre></div>
+
+<P>
+</DD>
+<DT><STRONG><var>email</var></STRONG></DT>
+<DD>If specified, enables the user to be emailed a password if they forget theirs. 
+
+<P>
+<var>email</var> should be a dictionary with the keys: <code>'system'</code> which should be a string containing the name of the website, <code>'sender'</code> which is the name of the person the email should come from, <code>'reply'</code> which is the email address of the sender, <code>'method'</code> can be <code>'sendmail'</code> or <code>'smtp'</code> depending on how you want the mail delivered, <code>'sendmail'</code> is the path to sendmail and is only needed if <code>'method'</code> is <code>'sendmail'</code>, <code>'smtp'</code> is the SMTP server to use and is only needed if <code>'method'</code> is <code>'smtp'</code>, <code>'template'</code> is the template for the email message and <code>'type'</code> is the type of the template.
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+email = {
+    'system':'Python Web Login System',
+    'sender':'System Administrator',
+    'reply':'sysadmin@example.com',
+    'method':'sendmail',
+    'sendmail':'/usr/bin/sendmail',
+    'smtp':'smtp.ntlworld.com',
+    'type':'python',
+    'template':"""
+Dear %(firstname)s,
+                    
+Your password for the %(system)s is shown below.
+                    
+%(password)s
+                    
+You should be able to use this password to sign in.
+
+Best wishes,
+
+%(sender)s
+"""
+}
+</pre></div>
+
+<P>
+</DD>
+<DT><STRONG><var>autoRedirect</var></STRONG></DT>
+<DD>If specified as <code>True</code> will automatically redirect the user to the page they tried to visit before they signed in. If <var>redirect</var> and <var>includeQuery</var> are not specified the browser will redirect to the page for the sign in script without any query arguments. 
+
+<P>
+<span class="note"><b class="label">Note:</b>
+Doesn't work with the test webserver distributed with the web modules.</span>
+
+<P>
+</DD>
+<DT><STRONG><var>redirect</var></STRONG></DT>
+<DD>Only used if <var>autoRedirect</var> is <code>True</code>. If specified, <var>redirect</var> is the URL to redirect to.
+
+<P>
+</DD>
+<DT><STRONG><var>includeQuery</var></STRONG></DT>
+<DD>Only used if <var>autoRedirect</var> is <code>True</code>. If <var>includeQuery</var> is <code>True</code> the browser will redirect to the URL which was visited.
+
+<P>
+</DD>
+<DT><STRONG><var>stickyData</var></STRONG></DT>
+<DD>A dictionary of key, value pairs to be stored as hidden fields in the sign in and reminder forms.
+
+<P>
+</DD>
+<DT><STRONG><var>debug</var></STRONG></DT>
+<DD>If <var>debug</var> is <code>True</code> then the error code will be displayed in HTML comments in the source of each screen from the auth system.
+
+<P>
+</DD>
+<DT><STRONG><var>checkSignInAttempt</var></STRONG></DT>
+<DD>If <var>checkSignInAttempt</var> is <code>True</code> the code will check to see if a user is attempting to sign in before checking to see if a valid user is already signed in. This means that a user can sign in with a different username without first having to sign out. If <var>checkSignInAttempt</var> is <code>False</code> the module would not notice a user was signing in and would display the page ignoring the sign in attempt. 
+
+<P>
+The module makes the check by looking for the cgi key <code>username</code>. This means that you can't use <code>username</code> as a cgi key if <var>checkSignInAttempt</var> is <code>True</code> as the module will think a user is attempting to sign in.
+
+<P>
+</DD>
+<DT><STRONG><var>htmlPageRegions</var></STRONG></DT>
+<DD>Specifies what the page regions in the template specified by <var>htmlPage</var> are called so that your template doesn't have to have editable regions named <code>content</code> and <code>title</code>.
+
+<P>
+<div class="verbatim"><pre>
+htmlPageRegions = {'content':'customContentRegion','title':'customTitleRegion'}
+</pre></div>
+
+<P>
+</DD>
+</DL>
+</dl>
+
+<P>
+The <code>Auth</code> object returned by the <tt class="function">start()</tt> function has the following methods and attributes:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-7"><tt class="class">AuthDatabase, AuthFile</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-8"><tt class="method">check</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Checks to see if the current user is signed in. Returns <code>True</code> if they are. Does not provide any sign in functionality.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-9"><tt class="method">valid</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Checks to see if the current user is signed in. Returns <code>True</code> if they are. If the user is not signed in and <var>autoSignIn</var> is <code>True</code>, this function prints a sign in page and will handle subsequent sign in attempts automatically.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-10"><tt class="method">signOut</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Signs out the current user.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-11"><tt class="method">signInForm</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>error=''</var><big>]</big><big>[</big><var>,username=''</var><big>]</big><big>[</big><var>,stickyData={}</var><big>]</big>)</td></tr></table>
+<dd>
+Return a string for a sign in form specifying the error <var>error</var>, the username <var>username</var> and creating hidden fields for the key:value pairs in <var>stickyData</var>.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-12"><tt class="method">reminderForm</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>error=''</var><big>]</big><big>[</big><var>,stickyData={}</var><big>]</big>)</td></tr></table>
+<dd>
+Return a string for a reminder form specifying the error <var>error</var>, the username <var>username</var> and creating hidden fields for the key:value pairs in <var>stickyData</var>.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-13"><tt class="member">firstname</tt></a></b>
+<dd>
+The firstname of the user or <code>None</code> if there is no user.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-14"><tt class="member">surname</tt></a></b>
+<dd>
+The surname of the user or <code>None</code> if there is no user.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-15"><tt class="member">username</tt></a></b>
+<dd>
+The username of the user or <code>None</code> if there is no user.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-16"><tt class="member">password</tt></a></b>
+<dd>
+The user's password or <code>None</code> if there is no user. If encryption is being used, this is the encrypted password.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-17"><tt class="member">email</tt></a></b>
+<dd>
+The email address of the user or <code>None</code> if there is no user.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-18"><tt class="member">app</tt></a></b>
+<dd>
+The name of the application using this session object
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-19"><tt class="member">accessLevel</tt></a></b>
+<dd>
+The access level of this user for this application or <code>None</code> if there is no user.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-20"><tt class="member">level</tt></a></b>
+<dd>
+A dictionary where the keys are the application names and the values are the access levels of this user for the particular application. For example <code>user.level[user.app]</code> is the same as <code>user.accessLevel</code>
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-21"><tt class="member">expire</tt></a></b>
+<dd>
+The expire length in seconds
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-22"><tt class="member">idle</tt></a></b>
+<dd>
+The idle length in seconds
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-23"><tt class="member">signedIn</tt></a></b>
+<dd>
+<code>True</code> if a user is signed in, <code>False</code> otherwise.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-24"><tt class="member">error</tt></a></b>
+<dd>
+The current error code
+</dl>
+
+<P>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.2.1 Password Protecting Your" 
+  rel="prev" title="1.2.1 Password Protecting Your" 
+  HREF="node6.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.2.1 Password Protecting Your" 
+  rel="parent" title="1.2.1 Password Protecting Your" 
+  HREF="node6.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.2.2 Administering The Auth" 
+  rel="next" title="1.2.2 Administering The Auth" 
+  HREF="node8.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node6.html">1.2.1 Password Protecting Your</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node6.html">1.2.1 Password Protecting Your</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node8.html">1.2.2 Administering The Auth</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

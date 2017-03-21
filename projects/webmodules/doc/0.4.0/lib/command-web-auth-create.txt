@@ -1,0 +1,32 @@
+import sys
+sys.path.append('../../../') # show python where the web modules are
+
+import web.database, web.auth
+
+# Make cursor connection
+connection = web.database.connect(
+    type='sqlite',
+    database='example-web-auth.db'
+)
+cursor = connection.cursor()
+
+# Create authManager object and setup the environment
+authManager = web.auth.setup(storage='database', cursor=cursor)
+errors = authManager.createTables()
+connection.commit()
+if errors:
+    print '\n'.join(errors)
+else:
+    authManager.addApplication('app')
+    authManager.addUser('test', '123')
+    authManager.addUser(
+        'john',
+        'bananas',
+        'John',
+        'Smith',
+        'johnsmith@example.com'
+    )
+    authManager.setAccessLevel('john', 'app', 1)
+    print "All done!"
+
+connection.commit()

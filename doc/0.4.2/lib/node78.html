@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="example-webserver-web-error.html">
+<LINK REL="prev" HREF="node77.html">
+<LINK REL="parent" href="module-web.error.html">
+<LINK REL="next" href="example-webserver-web-error.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Creating Custom Handlers">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.6.3 Creating Custom Handlers</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.6.2 Using the built" 
+  HREF="node77.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.6 web.error  " 
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.6.4 Example" 
+  href="example-webserver-web-error.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node77.html">1.6.2 Using the built</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-error.html">1.6.4 Example</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003630000000000000000">
+1.6.3 Creating Custom Handlers</A>
+</H2>
+
+<P>
+If the built-in handlers don't provide the level of cutomisation you require you can create a custom handler.
+
+<P>
+Handlers are simply functions which take two dictionaries as parameters. The first parameter will be set as a dictionary containg useful traceback information. The second parameter should be a dictionary with a defualt value of <code>{}</code> which will contain any extra parameters passed to the <code>web.error.handle()</code> function.
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; def handler(dict, params={}):
+...     print "There was an error."
+&gt;&gt;&gt;
+&gt;&gt;&gt; import web.error; web.error.handle(handler)
+&gt;&gt;&gt; raise Exception('This is an error')
+There was an error.
+</pre></div>
+
+<P>
+This example isn't too useful. To make it more useful you can make use of the <var>dict</var> parameter as follows:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; def handler(dict, params={}):
+...     print "There was an error."
+...     print dict['textException']
+&gt;&gt;&gt;
+&gt;&gt;&gt; import web.error; web.error.handle(handler)
+&gt;&gt;&gt; raise Exception('This is an error')
+There was an error.
+Exception: This is an error
+    args = ('This is an error',)
+</pre></div>
+
+<P>
+As you can see this produces a representation of the exception as text. The <var>dict</var> paramter has the following keys which all do different things:
+
+<P>
+<DL>
+<DT><STRONG><code>'text'</code></STRONG></DT>
+<DD>Produce a full text output of the error
+</DD>
+<DT><STRONG><code>'html'</code></STRONG></DT>
+<DD>Produce a full HTML output of the error
+</DD>
+<DT><STRONG><code>'info'</code></STRONG></DT>
+<DD>A tuple of the exception objects <code>(etype, evalue, etb)</code>
+</DD>
+<DT><STRONG><code>'pythonVersion'</code></STRONG></DT>
+<DD>A string containing Python version information
+</DD>
+<DT><STRONG><code>'type'</code></STRONG></DT>
+<DD>A string containing the type of the exception, for example <code>'AttributeError'</code> or <code>'KeyError'</code>
+</DD>
+<DT><STRONG><code>'value'</code></STRONG></DT>
+<DD>The error message
+</DD>
+<DT><STRONG><code>'date'</code></STRONG></DT>
+<DD>The date and time the error occured
+</DD>
+<DT><STRONG><code>'textException'</code></STRONG></DT>
+<DD>The traceback as a multiline string
+</DD>
+<DT><STRONG><code>'htmlException'</code></STRONG></DT>
+<DD>The traceback as formatted HTML code
+</DD>
+<DT><STRONG><code>'textCode'</code></STRONG></DT>
+<DD>The line of code that produced the error and the neighbouring lines of code, formatted for plain text output
+</DD>
+<DT><STRONG><code>'htmlCode'</code></STRONG></DT>
+<DD>The line of code that produced the error and the neighbouring lines of code, formatted for HTML output
+</DD>
+</DL>
+
+<P>
+Any parameters of the the <code>web.error.handle()</code> function apart from <var>customHandler</var> and <var>context</var> which is used in the preparation of the <code>dict</code> parameter are passed to second parameter of the custom handler as a dictionary.
+
+<P>
+This means that you can build very powerful handlers. 
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.6.2 Using the built" 
+  rel="prev" title="1.6.2 Using the built" 
+  HREF="node77.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.6 web.error  " 
+  rel="parent" title="1.6 web.error  " 
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.6.4 Example" 
+  rel="next" title="1.6.4 Example" 
+  href="example-webserver-web-error.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node77.html">1.6.2 Using the built</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-error.html">1.6.4 Example</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

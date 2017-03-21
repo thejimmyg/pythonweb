@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node38.html" />
+<link rel="prev" href="node36.html" />
+<link rel="parent" href="node35.html" />
+<link rel="next" href="node38.html" />
+<meta name='aesop' content='information' />
+<title>1.4.8.2 In SQL</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.8.1 In Python"
+  href="node36.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.8 Special Characters"
+  href="node35.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.8.3 The Easy Way"
+  href="node38.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node36.html">1.4.8.1 In Python</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node35.html">1.4.8 Special Characters</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node38.html">1.4.8.3 The Easy Way</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003482000000000000000">
+1.4.8.2 In SQL</A>
+</H3>
+
+<P>
+In SQL all strings must be properly quoted using single quotes. To insert a string like <code>James</code> into the database, we use the SQL <code>'James'</code> but what if we want to insert the string <code>tail's</code>? Because it has a <code>'</code> character in it we can't simply do <code>'tail's'</code> as the SQL parser won't know which <code>'</code> ends the string. Instead we use <code>'tail''s'</code>. Double single quotes (<code>''</code>) in SQL mean a <code>'</code> character. 
+
+<P>
+The single quote character <code>'</code> is the only character which needs special treatment in SQL all the others like <code>&#92;n</code> behave exactly as they do in Python as described above. 
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+cursor.execute("INSERT INTO table (columnOne) VALUES ('James''s')")
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.8.1 In Python"
+  href="node36.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.8 Special Characters"
+  href="node35.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.8.3 The Easy Way"
+  href="node38.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node36.html">1.4.8.1 In Python</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node35.html">1.4.8 Special Characters</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node38.html">1.4.8.3 The Easy Way</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

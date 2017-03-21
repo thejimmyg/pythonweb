@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node36.html" />
+<link rel="prev" href="node34.html" />
+<link rel="parent" href="module-web.database.html" />
+<link rel="next" href="node36.html" />
+<meta name='aesop' content='information' />
+<title>1.4.6 Executing SQL</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.5 Cursor Options"
+  href="node34.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.7 Retrieving Results"
+  href="node36.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node34.html">1.4.5 Cursor Options</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node36.html">1.4.7 Retrieving Results</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003460000000000000000">
+1.4.6 Executing SQL</A>
+</H2>
+
+<P>
+The <tt class="method">execute()</tt> method is used to retrieve information from a database and looks like this:
+
+<P>
+<div class="verbatim"><pre>
+cursor.execute("SELECT * FROM Test")
+</pre></div>
+
+<P>
+or 
+
+<P>
+<div class="verbatim"><pre>
+cursor.execute("INSERT INTO Test (dateColumn, numberColumn) VALUES ('2004-11-8', 4)")
+</pre></div>
+
+<P>
+<tt class="module">web.database</tt> uses <code>?</code> style parameter substitution. This means the <tt class="method">execute()</tt> method can take a list of values to substitute for any unquoted <code>?</code> symbols in the SQL string.
+
+<P>
+<div class="verbatim"><pre>
+values = [datetime.date(2004,11,8), 4]
+cursor.execute("INSERT INTO Test (dateColumn, numberColumn) VALUES (?, ?)", values)
+</pre></div>
+
+<P>
+or 
+
+<P>
+<div class="verbatim"><pre>
+cursor.execute(
+    sql="UPDATE Test SET dateColumn=?, numberColumn=? WHERE stringColumn=?",
+    parameters=[datetime.date(2004,11,8), 4, "where string"]
+)
+</pre></div>
+
+<P>
+At first sight the parameter substitution doesn't seem to offer much of an advantage but in fact it is extremely useful because <tt class="module">web.database</tt>  will automatically convert the values to SQL for you so that you don't need to convert them yourself. 
+
+<P>
+<span class="note"><b class="label">Note:</b>
+Parameter substitution can be done for any value which needs conversion. This includes default values in <code>CREATE</code> statements and values in <code>INSERT</code> and <code>UPDATE</code> statements or <code>WHERE</code> clauses. Parameter substitutions are <strong>not</strong> available for strings which do not need conversions such as table names, column names etc.</span>
+
+<P>
+The module also supports <tt class="method">executemany()</tt>. This method does the same as <tt class="method">execute()</tt> except it executes once for each sequence in the values parameter. For example:
+
+<P>
+<div class="verbatim"><pre>
+cursor.executemany(
+    sql="UPDATE Test SET dateColumn=?, numberColumn=? WHERE stringColumn=?",
+    parameters=[
+       [datetime.date(2004,11,8), 4, "string1"],
+       [datetime.date(2004,11,8), 5, "string2"],
+       [datetime.date(2004,11,8), 6, "string3"],
+    ]
+)
+</pre></div>
+
+<P>
+In <tt class="module">web.database</tt> this is no more efficient than executing a number of normal <tt class="method">cursor.execute()</tt> methods.
+
+<P>
+<tt class="module">web.database</tt> also provides cursor abstraction methods which provide a functional interface to execute SQL. For example here we insert some values into a table.
+
+<P>
+<div class="verbatim"><pre>
+cursor.insert(
+    table   = 'testTable',
+    columns = ['col1','col2'],
+    values  = ['val1', 2],
+)
+</pre></div>
+
+<P>
+Cursor abstraction methods exist for all the SQL commands supported by <tt class="module">web.database</tt>. These are described later.
+
+<P>
+The <tt class="method">cursor()</tt> method takes the following options and will return the appropriate cursor object:
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-80' xml:id='l2h-80' class="function">cursor</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>execute=True</var><big>]</big><var>, </var><big>[</big><var>format='tuple'</var><big>]</big><var>, </var><big>[</big><var>convert=True</var><big>]</big><var>, </var><big>[</big><var>mode='portable'</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+The default values which the cursor abstraction methods will take for the values of <var>execute</var>, <var>format</var> and <var>convert</var> can be set using this method.
+
+<P>
+<DL>
+<DT><STRONG><var>format</var></STRONG></DT>
+<DD>This can be <code>'tuple'</code> to return the results as a tuples, <code>'text'</code> to return as text wrapped to 80 characters for display in a terminal, <code>'dict'</code> to return the results as dictionaries or <code>'object'</code> to return the results as result objects to be treated as dictionaries, tuples or via attribute access.
+</DD>
+<DT><STRONG><var>convert</var></STRONG></DT>
+<DD>Convert the results to standard formats (should be <code>True</code> for most users)
+</DD>
+<DT><STRONG><var>execute</var></STRONG></DT>
+<DD>Used in the cursor SQL methods. If <code>True</code> then rather than returning an SQL string, the methods execute the results
+</DD>
+<DT><STRONG><var>mode</var></STRONG></DT>
+<DD>The default mode for the <tt class="method">execute()</tt> method. Can be <code>'portable'</code> to use the SQL abstraction methods or <code>'direct'</code> to send the SQL directly to the underlying cursor.
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.5 Cursor Options"
+  href="node34.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.7 Retrieving Results"
+  href="node36.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node34.html">1.4.5 Cursor Options</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node36.html">1.4.7 Retrieving Results</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

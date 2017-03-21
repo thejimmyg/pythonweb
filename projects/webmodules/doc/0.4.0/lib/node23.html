@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node24.html">
+<LINK REL="prev" HREF="node20.html">
+<LINK REL="parent" href="module-web.database.html">
+<LINK REL="next" HREF="node24.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Connecting to a Database">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.2 Connecting to a Database</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.1.2 Supported Databases" 
+  HREF="node22.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.3 Cursor Options" 
+  HREF="node24.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node22.html">1.4.1.2 Supported Databases</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node24.html">1.4.3 Cursor Options</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003420000000000000000">
+1.4.2 Connecting to a Database</A>
+</H2>
+
+<P>
+Connecting to a database is really very easy. The code below will connect to a MySQL database named 'test'.
+
+<P>
+<div class="verbatim"><pre>
+import web, web.database
+connection = web.database.connect("mysql", database="test")
+</pre></div>
+
+<P>
+Below is a description of the full range of parameters the <tt class="function">connect()</tt> function can take (Obviously not all of the database support all of the parameters):
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-76"><tt class="function">connect</tt></a></b>(</nobr></td>
+  <td><var><var>type</var>,</var><big>[</big><var>database,</var><big>]</big><big>[</big><var>user,</var><big>]</big><big>[</big><var>password,</var><big>]</big><big>[</big><var>host,</var><big>]</big><big>[</big><var>port,</var><big>]</big><big>[</big><var>socket</var><big>]</big>)</td></tr></table>
+<dd>
+<DL>
+<DT><STRONG><var>type</var></STRONG></DT>
+<DD>The type of database to conncet to. Can currently be <code>'mysql'</code>, <code>'gadfly'</code> or <code>'odbc'</code>.
+</DD>
+<DT><STRONG><var>database</var></STRONG></DT>
+<DD>The database name to connect to.
+</DD>
+<DT><STRONG><var>user</var></STRONG></DT>
+<DD>The username to connect with.
+</DD>
+<DT><STRONG><var>password</var></STRONG></DT>
+<DD>The password to use.
+</DD>
+<DT><STRONG><var>host</var></STRONG></DT>
+<DD>The host to connect to if the database is running on a remote server.
+</DD>
+<DT><STRONG><var>port</var></STRONG></DT>
+<DD>The port to connect to if the database is running on a remote server.
+</DD>
+<DT><STRONG><var>socket</var></STRONG></DT>
+<DD>The socket to connect to if the database is running locally and requires a socket.
+</DD>
+<DT><STRONG><var>dir</var></STRONG></DT>
+<DD>The directory containing the database.
+</DD>
+<DT><STRONG><var>startup</var></STRONG></DT>
+<DD>Whether to connect to Gadfly in the special startup mode for creating tables. Can be <code>True</code> or <code>False</code>. Left blank is the same as <code>startup=False</code>.
+</DD>
+</DL>
+</dl>
+
+<P>
+Here are some examples:
+
+<P>
+Connect to the unpassworded MySQL database <code>MyDatabase</code> on a local server connected through a socket <span class="file">/tmp/mysqld.sock</span>. Another common socket file used is <span class="file">/tmp/mysql.sock</span>.
+<div class="verbatim"><pre>
+connection = web.database.connect(
+    type="mysql", 
+    database="MyDatabase",
+    socket="/tmp/mysqld.sock"
+)
+</pre></div>
+
+<P>
+Connect to a the database <code>MyDatabase</code> as <code>username</code> with password <code>password</code>. The MySQL  server is runing remotely at <code>mysql.example.com</code> on port <code>3336</code>:
+<div class="verbatim"><pre>
+connection = web.database.connect(
+    type="mysql",
+    database="MyDatabase",
+    host="mysql.example.com",
+    port="3336",
+    user="username",
+    password="password"
+)
+</pre></div>
+
+<P>
+Connect to the Gadfly database <code>TestDB</code> in the directory <span class="file">C:/TestDirectory</span>
+<div class="verbatim"><pre>
+connection = web.database.connect(
+    type="gadfly",
+    database="TestDB",
+    dir=r"C:/TestDirectory"
+)
+</pre></div>
+
+<P>
+Connect to the database <code>TestODBCDatabase</code> through an ODBC driver. The database could be an MS Access database on Windows for example.
+<div class="verbatim"><pre>
+connection = web.database.connect(
+    type="odbc",
+    database="TestODBCDatabase"
+)
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.1.2 Supported Databases" 
+  rel="prev" title="1.4.1.2 Supported Databases" 
+  HREF="node22.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.3 Cursor Options" 
+  rel="next" title="1.4.3 Cursor Options" 
+  HREF="node24.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node22.html">1.4.1.2 Supported Databases</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node24.html">1.4.3 Cursor Options</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

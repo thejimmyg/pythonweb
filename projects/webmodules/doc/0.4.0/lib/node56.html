@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node58.html">
+<LINK REL="prev" HREF="node52.html">
+<LINK REL="parent" href="object.html">
+<LINK REL="next" href="example-command-web-database-object-multiple.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="One-To-Many Mappings">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.5.3 One-To-Many Mappings</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.2.3 Available Columns" 
+  HREF="node55.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5 web.database.object  " 
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.3.1 Full Code Listing" 
+  href="example-command-web-database-object-multiple.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node55.html">1.5.2.3 Available Columns</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-database-object-multiple.html">1.5.3.1 Full Code Listing</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003530000000000000000">
+1.5.3 One-To-Many Mappings</A>
+</H2>
+
+<P>
+One of the features that distinguishes this module from many others is its ability to deal with more complex datastructures than just simple tables. As an example of a one-to-many mapping we will consider an address book.
+
+<P>
+In our address book each person can have many addresses but each address is only associated with one person. The data structure looks like this:
+
+<P>
+<div class="verbatim"><pre>
+            +--  Address 1
+Person 1 ---|
+            +--  Address 2
+</pre></div>
+
+<P>
+To create a database to describe this struture we need two tables, a Person table and an Address table.
+
+<P>
+<div class="verbatim"><pre>
+import web.database, web.database.object
+connection = web.database.connect(type="sqlite", database="object-multiple.db")
+cursor = connection.cursor() 
+
+person = web.database.object.Table("Person")
+person.addColumn(web.database.object.String(name="firstName"))
+person.addColumn(web.database.object.String(name="surname"))
+person.addMultiple(name="addresses", foreignTable="Address")
+
+address = web.database.object.Table("Address")
+address.addColumn(web.database.object.String(name="firstLine"))
+address.addColumn(web.database.object.String(name="postcode"))
+address.addSingle(name="person", foreignTable="Person")
+
+database = web.database.object.Database()
+database.addTable(person)
+database.addTable(address)
+database.init(cursor)
+</pre></div>
+
+<P>
+As in the introductory example we use the <tt class="method">addColumn()</tt> method to add <tt class="class">Column</tt> objects to the Address table. This time however we also use the <tt class="method">addSingle()</tt> method to add a column named <code>person</code> to the table. We have also used <tt class="method">addMultiple()</tt> method to add a multiple join called <code>addresses</code> from the Person foreign table to the Person table. The final change is that we have added the <tt class="class">Address</tt> table to the database.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+We in the <tt class="method">addSingle()</tt> and <tt class="method">addMultiple()</tt> methods we refer to the <code>foreignTable</code> by the string representing its name and not the object itself.</span>
+
+<P>
+When we access a person's <code>addresses</code> key, we will get back a list of all the Address objects associated with that person. Continuing the example above:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; john = database['Person'].insert(firstName='John', surname='Smith')
+&gt;&gt;&gt; print john['surname']
+Smith
+&gt;&gt;&gt; print john['addresses']
+{}
+&gt;&gt;&gt; database['Address'].insert(person=john, firstLine='12 Friendly Place', postcode='OX4 1AB')
+&gt;&gt;&gt; database['Address'].insert(person=john, firstLine='3a Crazy Gardens', postcode='OX1 2ZX')
+&gt;&gt;&gt; for address in john['addresses'].values:
+...    print address['firstLine']
+...
+12 Friendly Place
+3a Crazy Gardens
+</pre></div>
+
+<P>
+Note how we specify the person to add the address to using <code>person=john</code>. We could alternatively have specified the rowid of the person to add the address to. Just like the database, tables and rows, the value returned by john['addresses'] behaves like a dictionary. In this example we use the <tt class="method">values()</tt> method to return a list of the <code>Row</code> objects.
+
+<P>
+It should be noted that you cannot set the values of multiple columns like the <code>'addresses'</code> column directly. Instead you should set the values of each object induvidually.
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; john['addresses'] = something # XXX Doesn't work!
+</pre></div>
+
+<P>
+Again you muct use <code>cursor.commit()</code> to commit the changes to the database. 
+
+<P>
+Just for interest here is how the tables look in the live database. You can see that the person column in the Address table contains the rowid in the Person table of the person to associate the address with.
+
+<P>
+<div class="verbatim"><pre>
+# Tables in the 'test' database
++----------------+
+| Tables_in_test |
++----------------+
+| Address        |
+| Person         |
++----------------+
+
+# The Person table
++-------+-----------+---------+
+| rowid | firstName | surname |
++-------+-----------+---------+
+| 1     | John      | Smith   |
++-------+-----------+---------+
+
+# The Address table
++-------+-----------------------+----------+--------+
+| rowid | firstLine             | postcode | person |
++-------+-----------------------+----------+--------+
+| 1     | 12 Friendly Place     | OX4 1AB  | 1      |
++-------+-----------------------+----------+--------+
+| 2     | 3a Crazy Gardens      | OX1 2ZX  | 1      |
++-------+-----------------------+----------+--------+
+</pre></div>
+
+<P>
+
+<p><hr>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="example-command-web-database-object-multiple.html">1.5.3.1 Full Code Listing</a>
+</ul>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.2.3 Available Columns" 
+  rel="prev" title="1.5.2.3 Available Columns" 
+  HREF="node55.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5 web.database.object  " 
+  rel="parent" title="1.5 web.database.object  " 
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.3.1 Full Code Listing" 
+  rel="next" title="1.5.3.1 Full Code Listing" 
+  href="example-command-web-database-object-multiple.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node55.html">1.5.2.3 Available Columns</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-database-object-multiple.html">1.5.3.1 Full Code Listing</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

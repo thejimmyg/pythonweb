@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node72.html">
+<LINK REL="parent" HREF="node70.html">
+<LINK REL="next" HREF="node74.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="The Row Object">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.5.9.3 The Row Object</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.9.2 The Table Object" 
+  HREF="node72.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.9 Class Reference" 
+  HREF="node70.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.10 Future" 
+  HREF="node74.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node72.html">1.5.9.2 The Table Object</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node70.html">1.5.9 Class Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node74.html">1.5.10 Future</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003593000000000000000">
+1.5.9.3 The Row Object</A>
+</H3>
+
+<P>
+You don't need to create <tt class="class">Row</tt> objects directly. Instead they should be created by using the appropriate methods of the <tt class="class">Table</tt> class.
+
+<P>
+<tt class="class">Row</tt> objects support the standard comparison operators <code>&lt;,&lt;=,&gt;,&gt;=,==,&lt;&gt;</code> as well as the <code>len()</code> function.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-134"><tt class="class">Row</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-135"><tt class="method">form</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>action=''</var><big>]</big><big>[</big><var>, method='post'</var><big>]</big><big>[</big><var>, stickyData={}</var><big>]</big><big>[</big><var>, enctype='multipart/form-data'</var><big>]</big><big>[</big><var>, submit='Submit'</var><big>]</big><big>[</big><var>, modeDict={'mode':'mode', 'table':'table', 'submode':'submode'}</var><big>]</big><big>[</big><var>,  submode='add'</var><big>]</big>)</td></tr></table>
+<dd>
+Return a <tt class="module">web.form</tt> <tt class="class">Form</tt> object populated with the information from the <tt class="class">Row</tt>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-136"><tt class="method">relate</tt></a></b>(</nobr></td>
+  <td><var><var>row</var></var>)</td></tr></table>
+<dd>
+Relate this <tt class="class">Row</tt> to another <tt class="class">Row</tt> object specified by <var>row</var>. Both <tt class="class">Row</tt>s must be from tables related with <tt class="method">addRelated()</tt> columns and must not alread be related.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-137"><tt class="method">unrelate</tt></a></b>(</nobr></td>
+  <td><var><var>row</var></var>)</td></tr></table>
+<dd>
+Unrelate this <tt class="class">Row</tt> from another <tt class="class">Row</tt> object specified by <var>row</var>. Both <tt class="class">Row</tt>s must be from tables related with <tt class="method">addRelated()</tt> columns and must already be related.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-138"><tt class="method">isRelated</tt></a></b>(</nobr></td>
+  <td><var><var>row</var></var>)</td></tr></table>
+<dd>
+Returns <code>True</code> if the <tt class="class">Row</tt>s are already related, otherwise returns <code>False</code>.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-139"><tt class="method">update</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>all=None</var><big>]</big><var>,</var><big>[</big><var>**params</var><big>]</big>)</td></tr></table>
+<dd>
+Set multiple values of this row in one go. This currently not optimised so it makes an SQL call for each column set. Set either <var>all</var> as a dictionary of <code>column:values</code> pairs or set <var>**params</var> by using <code>column=value</code> pairs.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-140"><tt class="method">keys</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple containing the column names of the fields.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-141"><tt class="method">values</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple containing values of each field for the current row.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-142"><tt class="method">items</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return a tuple containing 2-tuples of <code>(<var>key</var>, <var>value</var>)</code> pairs where the <var>key</var> is the column name and the <var>value</var> is the value of each field for the current row.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-143"><tt class="method">has_key</tt></a></b>(</nobr></td>
+  <td><var><var>column</var></var>)</td></tr></table>
+<dd>
+Returns <code>True</code> if the row has a column named <var>column</var>, <code>False</code> otherwise
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-144"><tt class="method">dict</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Return the row as a dictionary of column name : value pairs, except for single, multiple and related joins columns, since this could result in circular references.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-145"><tt class="member">rowid</tt></a></b>
+<dd>
+The rowid of the row
+</dl>
+
+<P>
+</dl> 
+
+<P>
+Each column from the <tt class="class">Row</tt> can be accessed through a dictionary-like interface. For example to print the value of the column named <code>'firstName'</code> from the <tt class="class">Row</tt> with <code>rowid</code> <code>1</code> from the <code>'Person'</code> table in the database <code>database</code> you would use:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; print database['Person'][1]['firstName']
+John
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.9.2 The Table Object" 
+  rel="prev" title="1.5.9.2 The Table Object" 
+  HREF="node72.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.9 Class Reference" 
+  rel="parent" title="1.5.9 Class Reference" 
+  HREF="node70.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.10 Future" 
+  rel="next" title="1.5.10 Future" 
+  HREF="node74.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node72.html">1.5.9.2 The Table Object</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node70.html">1.5.9 Class Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node74.html">1.5.10 Future</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

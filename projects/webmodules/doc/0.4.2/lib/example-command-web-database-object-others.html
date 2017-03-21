@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node70.html">
+<LINK REL="prev" HREF="node68.html">
+<LINK REL="parent" href="object.html">
+<LINK REL="next" HREF="node70.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Other Useful Features">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.5.8 Other Useful Features</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.7 Creating Tables by" 
+  HREF="node68.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5 web.database.object  " 
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.9 Class Reference" 
+  HREF="node70.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node68.html">1.5.7 Creating Tables by</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node70.html">1.5.9 Class Reference</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003580000000000000000">&nbsp;</A>
+<BR>
+1.5.8 Other Useful Features
+</H2>
+
+<P>
+This example below demonstrates some other useful methods.
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the web modules are
+
+import web.database, web.database.object
+connection = web.database.connect(type="sqlite", database="object-others.db")
+cursor = connection.cursor() 
+
+person = web.database.object.Table("Person")
+person.addColumn(web.database.object.String(name="firstName"))
+person.addColumn(web.database.object.String(name="surname"))
+
+database = web.database.object.Database()
+database.addTable(person)
+database.init(cursor)
+
+if not database.tablesExist():
+    database.createTables()
+    print "Created Table"
+
+john = database['Person'].insert(firstName="John", surname="Smith")
+owen = database['Person'].insert(firstName="Owen", surname="Jones")
+
+print database['Person'].max('rowid')
+print database['Person'].max('firstName')
+print database['Person'].min('surname')
+
+print database.output()
+
+connection.commit()</pre>
+<div class="footer">
+<a href="command-web-database-object-others.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-database-object-others.py</span>).</a>
+</div></div>
+
+<P>
+The output is:
+<div class="verbatim"><pre>
+Created Table
+2
+Owen
+Jones
++---------------------+
+| Database 'Database' |
++---------------------+
+| Person              |
++---------------------+
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.7 Creating Tables by" 
+  rel="prev" title="1.5.7 Creating Tables by" 
+  HREF="node68.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5 web.database.object  " 
+  rel="parent" title="1.5 web.database.object  " 
+  href="object.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.9 Class Reference" 
+  rel="next" title="1.5.9 Class Reference" 
+  HREF="node70.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node68.html">1.5.7 Creating Tables by</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="object.html">1.5 web.database.object  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node70.html">1.5.9 Class Reference</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

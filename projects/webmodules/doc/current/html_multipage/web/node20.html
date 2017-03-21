@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="web.css" type='text/css' />
+<link rel="first" href="web.html" title='Beginner's Guide' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node21.html" />
+<link rel="prev" href="node19.html" />
+<link rel="parent" href="node18.html" />
+<link rel="next" href="node21.html" />
+<meta name='aesop' content='information' />
+<title>4.2 Hello world!</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="4.1 What is CGI?"
+  href="node19.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="4. CGI Tutorial"
+  href="node18.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="4.3 Using PythonWeb"
+  href="node21.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node19.html">4.1 What is CGI?</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node18.html">4. CGI Tutorial</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node21.html">4.3 Using PythonWeb</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION005200000000000000000">
+4.2 Hello world!</A>
+</H1>
+
+<P>
+The best way to demonstrate the basics is to create a "Hello world!" program. This tutorial uses Python and we will assume you are using the Apache Web Server. In a text editor type the following into a file called <span class="file">hello.py</span>:
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/bin/env python
+
+print "Content-type: text/html\n\n"
+print "&lt;html&gt;Hello world!&lt;/html&gt;"
+</pre></div>
+
+<P>
+The first line tells the web server where the Python program is on the server. It is usually in /usr/bin/python or /usr/local/bin/python so you must change the first line to suit your server but you must remember the #! at the start, the slashs are forward slashes, and that you must have a least one completely blank line before you start anything else.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+ One issue which sometimes casues problems is line endings. UNIX uses LF as a line feed, windows uses CR+LF. To confuse matters further some FTP clients try to automatically convert the line endings for you. My tip is to use a text editor such as <a class="ulink" href="http://scintilla.sourceforge.net/SciTE.html"
+  >SciTE</a> which supports both types of line endings. Set <code>Options-&gt;Line Ending Characters-&gt;LF</code> and then <code>Options-&gt;Convert Line Ending Characters</code> to make sure you are using LF line feeds. Then you can upload your file in Binary mode on the FTP client and you can guarantee your line endings are correct.</span>
+
+<P>
+Back to our Hello World! program. The line containing <code>text/html</code> is an HTTP header which tells the web browser to expect HTML to be sent to it. If your CGI script sent a GIF image, for example, you would use <code>image/gif</code>. Note that in this case we used two line ending characters <code>&#92;n&#92;n</code> after the HTTP header the second of these leaves a completely blank line which tells the server or browser the HTTP headers have finished and to expect some content. If we had many HTTP headers only the last would be sent with two blank lines. HTTP headers must be sent to the web browser before the main content of a page otherwise you are likely to get a message saying <code>"Server Error 500"</code>.
+
+<P>
+The last line prints the HTML body to the web browser and is what would be seen if you were to use your browser's View Source option.
+
+<P>
+Once you have written your script you need to upload it to a directory which supports execution of scripts using FTP software. This directory will normally be called <code>cgi-bin</code> or <code>cgi</code>. <span class="note"><b class="label">Note:</b>
+ In the case of the webserver which comes with PythonWeb the cgi directory is <code>doc/src/lib</code> so you should put your application in there. </span>
+
+<P>
+Next you will need to change the file permissions of your script using the UNIX command <code>chmod 755 hello.py</code> or using your FTP software to change the file permissions so that everyone can read and execute your file but only you, the owner, can write it. Now, using your web browser visit the hello.cgi script by typing <a class="url" href="http://www.yourservername.com/cgi-bin/hello.py">http://www.yourservername.com/cgi-bin/hello.py</a> or something equivalent for where your file is on the internet.
+
+<P>
+If all goes well you should see the text:
+
+<P>
+<div class="verbatim"><pre>
+Hello world
+</pre></div>
+
+<P>
+If not, check you have followed the instructions correctly. If you get an error message saying something like <code>"Error 500 there was an error in the script"</code> it is likely you have mis-typed something or the server cannot find the Python program. Error 404 means that you have typed the wrong address and that is not where the <span class="file">hello.py</span> script is. Error 403 means you do not have permission to execute the file and you need to change the file permissions. If you simply see the source code it means the server is treating the file as a plain text file and not as a computer program. Be sure you have put the put the script in an executable directory.
+
+<P>
+If you have problems you can access your script using telnet. Load telnet and type <code>open yourserver.com</code> enter your username and password and navigate to your cgi script using the following commands:
+
+<P>
+<code>ls</code> to give a list of directories
+<code>cd cgi-bin</code> to change directory to cgi-bin
+<code>cd ..</code> to go up a level. 
+
+<P>
+You can then type <code>python hello.py</code> and if there are errors in your script, the Python interpreter will find them. Correct the errors and then try to execute <code>./hello.py</code> If the script will not execute check the permisssions and check the first line correctly points to the python interpreter. You may also want to check you are using the correct line endings as mentioned earlier. Once this works the webserver should also be able to execute your script. Occasionally you may also need to change the user of the script but this is very rare. 
+
+<P>
+As a final resort if you cannot get Python to work you could try and write a CGI script in perl or rename the file <span class="file">hello.cgi</span> rather than <span class="file">hello.py</span>. If you are still having problems it would be worth contacting your ISP and asking for some help. 
+
+<P>
+It can be a complicated business to start with but once you have done it once you should be able to do it again with ease!
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="4.1 What is CGI?"
+  href="node19.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="4. CGI Tutorial"
+  href="node18.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="4.3 Using PythonWeb"
+  href="node21.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node19.html">4.1 What is CGI?</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node18.html">4. CGI Tutorial</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node21.html">4.3 Using PythonWeb</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 15, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

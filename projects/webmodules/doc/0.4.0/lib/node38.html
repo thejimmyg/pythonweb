@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node41.html">
+<LINK REL="prev" HREF="node37.html">
+<LINK REL="parent" href="module-web.database.html">
+<LINK REL="next" HREF="node39.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Developer Notes">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.8 Developer Notes</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.7 Utility Methods" 
+  HREF="node37.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.8.1 The Types Cache" 
+  HREF="node39.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node37.html">1.4.7 Utility Methods</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node39.html">1.4.8.1 The Types Cache</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003480000000000000000">
+1.4.8 Developer Notes</A>
+</H2>
+
+<P>
+When an SQL function is called it generates an SQL statement suitable for use with the particular database. If <code>autoExecute</code> is <code>True</code> the SQL statement is executed otherwise the SQL string is returned. 
+
+<P>
+Each field value is automatically converted using the appropriate <tt class="class">SQLFieldConverter</tt> class described later in this section. If the type of the field cannot be obtained from the <code>description</code> attribute, the cursor will have used a types cache table to store the type of each field. The types cahce is checked using a call to <tt class="method">checkTypes()</tt> to ensure that the cursor knows the type of every field to be returned from the database.
+
+<P>
+If any fields are missing from the cache <tt class="method">getTableData()</tt> is called to retrieve the information and then <tt class="method">mergeTypes()</tt> is called to merge the data into the types cache. If there are any discrepencies between what is already in the types cache and what has been retrieved from the database an Exception is raised. Only once the types data is complete is the SQL statement executed. 
+
+<P>
+Once the statement is executed a call is made to <tt class="method">fetchRows()</tt> to retrieve the data. The types cache is checked once more and then the data is decoded from SQL strings to Python objects otherwise it is left as strings.
+
+<P>
+The final stage is to convert the data into the approriate format as set by <code>fetchMode</code>. Once the data is converted to <code>tuple</code>s, <code>dictionary</code>s or <code>dtuple</code>s it is returned.
+
+<P>
+
+<p><hr>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node39.html">1.4.8.1 The Types Cache</a>
+<LI><A href="node40.html">1.4.8.2 Field Information</a>
+</ul>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.7 Utility Methods" 
+  rel="prev" title="1.4.7 Utility Methods" 
+  HREF="node37.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4 web.database  " 
+  rel="parent" title="1.4 web.database  " 
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.8.1 The Types Cache" 
+  rel="next" title="1.4.8.1 The Types Cache" 
+  HREF="node39.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node37.html">1.4.7 Utility Methods</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node39.html">1.4.8.1 The Types Cache</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

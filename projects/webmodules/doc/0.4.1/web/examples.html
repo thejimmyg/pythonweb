@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="web.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="web.html" title='Beginner's Guide'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node19.html">
+<LINK REL="prev" HREF="node13.html">
+<LINK REL="parent" HREF="web.html">
+<LINK REL="next" HREF="node19.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT=". Examples">
+<META NAME="keywords" CONTENT="web">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>4. Examples</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="3.2.2 Hello World!" 
+  HREF="node17.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="Beginner's Guide" 
+  HREF="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="5. Where Now" 
+  HREF="node19.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node17.html">3.2.2 Hello World!</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="web.html">Beginner's Guide</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node19.html">5. Where Now</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION005000000000000000000">&nbsp;</A>
+<BR>
+4. Examples
+</H1>
+
+<P>
+As you read through the Module Reference section of the documentation you will come across a number of examples. All the exmples from the Module Reference can be found in the <span class="file">doc/src/lib</span> directory of the distribution. 
+
+<P>
+The examples with a filename starting with <code>command-</code> are designed to be run from the command line. Those starting with <code>webserver-</code> are designed to be run by the test webserver. If you are using the test webserver you do not need to install the modules to test the examples. They will run directly from the source distribution.
+
+<P>
+The web modules distribution comes with a simple Python webserver, similar to the one described earlier in this document. The test webserver is designed to allow you to test the examples in this documentation on your own machine. To use it run the <span class="file">webserver.py</span> file in the <span class="file">scripts</span> directory of the source distribution. If you run the webserver and visit <a class="url" href="http://localhost:8080/doc/html/web/examples.html">http://localhost:8080/doc/html/web/examples.html</a> on your local machine you should see the examples index page. If this is the case you can test the examples on your own computer.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+For the webserver to work properly, the path to the webserver.py file should contain no spaces. One important point to note about the test webserver is that it treats all paths relative to the place where the webserver is running and not relative to the script it is executing. This means that if you want to run the examples on a different webserver you will have to change the paths to certain files.</span>
+
+<P>
+Please note the first line in each of the examples is the following:
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/bin/env python
+</pre></div>
+
+<P>
+You should change this line to whatever you use on your system to run Python. This doesn't apply if you are running Windows but on UNIX systems you may need to change it. Common values are:
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/bin/python
+</pre></div>
+
+<P>
+or 
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/local/bin/python
+</pre></div>
+
+<P>
+and there should be two blank lines after this line.
+
+<P>
+The examples use UNIX linefeeds. This means that if you use something like notepad.exe on Windows all the lines will look like they run into one. Instead use IDLE (included with Python) or WordPad to display the examples correctly.
+
+<P>
+Below is an index of examples from the module reference:
+
+<P>
+<DL>
+<DT><STRONG>web.auth</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-auth-create.html"
+ title="Creating the Auth Environment"
+ >Creating the Auth Environment</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-webserver-web-auth.html"
+ title="Password Protecting Code"
+ >Password Protecting Code</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-auth-create-file.html"
+ title="Using Alternative Drivers"
+ >Using Alternative Drivers</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.database</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-database.html"
+ title="Database Test Example"
+ >Database Test Example</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.database.object</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-database-object-simple.html"
+ title="Simple Example"
+ >Simple Example</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-database-object-multiple.html"
+ title="One-to-Many Mappings"
+ >One-to-Many Mappings</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-database-object-related.html"
+ title="Many-to-Many Mappings"
+ >Many-to-Many Mappings</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-database-object-query.html"
+ title="Building Queries"
+ >Building Queries</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-webserver-web-database-object-form.html"
+ title="Creating Forms"
+ >Creating Forms</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-database-object-others.html"
+ title="Other Features"
+ >Other Features</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.error</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/example-webserver-web-error.html"
+ title="Error Handling Example"
+ >Error Handling Example</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.form</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/example-webserver-web-form.html"
+ title="Basic Fields Example"
+ >Basic Fields Example</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-webserver-web-form-typed.html"
+ title="Typed Fields Example"
+ >Typed Fields Example</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.image.graph</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/module-web.image.html"
+ title="Graph Example"
+ >Graph Example</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.mail</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-mail.html"
+ title="Email Example"
+ >Email Example</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.session</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/example-webserver-web-session-file.html"
+ title="Introducory Example"
+ >Introducory Example</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-command-web-session-create.html"
+ title="Setting up a Session Environment"
+ >Setting up a Session Environment</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.template</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/example-file-web-template-cheetah.html"
+ title="Cheetah Template Example"
+ >Cheetah Template Example</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-file-web-template-xyaptu.html"
+ title="XYAPTU Template Example"
+ >XYAPTU Template Example</a></em>
+</LI>
+<LI><em class="citetitle"><a
+ href="../lib/example-file-web-template-dreamweaverMX.html"
+ title="Dreamweaver MX Template Example"
+ >Dreamweaver MX Template Example</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.util</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/util.html"
+ title="Table Output Example"
+ >Table Output Example</a></em>
+    
+</LI>
+</UL>
+</DD>
+<DT><STRONG>web.util</STRONG></DT>
+<DD><UL>
+<LI><em class="citetitle"><a
+ href="../lib/xml.html"
+ title="XSL Transform Example"
+ >XSL Transform Example</a></em>
+    
+</LI>
+</UL>
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="3.2.2 Hello World!" 
+  rel="prev" title="3.2.2 Hello World!" 
+  HREF="node17.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="Beginner's Guide" 
+  rel="parent" title="Beginner's Guide" 
+  HREF="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="5. Where Now" 
+  rel="next" title="5. Where Now" 
+  HREF="node19.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node17.html">3.2.2 Hello World!</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="web.html">Beginner's Guide</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node19.html">5. Where Now</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

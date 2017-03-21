@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node28.html" />
+<link rel="prev" href="node26.html" />
+<link rel="parent" href="node23.html" />
+<link rel="next" href="node28.html" />
+<meta name='aesop' content='information' />
+<title>1.2.7.4 AuthUser Objects</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.7.3 AuthManager Object"
+  href="node26.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.7 API Reference"
+  href="node23.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.7.5 Sign In Handler"
+  href="node28.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node26.html">1.2.7.3 AuthManager Object</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node23.html">1.2.7 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node28.html">1.2.7.5 Sign In Handler</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003274000000000000000">
+1.2.7.4 AuthUser Objects</A>
+</H3>
+
+<P>
+The user object is retuned by <code>AuthAdmin</code> and <code>AuthManager</code> objects' <tt class="method">user()</tt> method and should not be created directly. 
+
+<P>
+The attributes <code>firstname</code>, <code>surname</code>, <code>email</code>, <code>password</code>, <code>group</code> and <code>active</code> can all be directly set and their values will be updated in the database.
+
+<P>
+The class has the following properties:
+
+<P>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-43' xml:id='l2h-43' class="class">AuthUser</tt></b>
+<dd>
+
+<P>
+<dl><dt><b><tt id='l2h-44' xml:id='l2h-44' class="member">username</tt></b></dt>
+<dd>
+The username of the user. Usernames are case insensitive but are always stored and returned as lowercase. This means that if you want to compare a username from a database with a value entered by a user, you should first convert the value entered by a user to lowercase like this: <code>username = username.lower()</code>
+
+<P>
+The username of a user cannot be changed.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-45' xml:id='l2h-45' class="member">password</tt></b></dt>
+<dd>
+The user's password, 1-255 characters.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-46' xml:id='l2h-46' class="member">firstname</tt></b></dt>
+<dd>
+The user's firstname, 1-255 characters. Optional
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-47' xml:id='l2h-47' class="member">surname</tt></b></dt>
+<dd>
+The user's surname, 1-255 characters. Optional
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-48' xml:id='l2h-48' class="member">email</tt></b></dt>
+<dd>
+The user's email address, max 255 characters. Optional
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-49' xml:id='l2h-49' class="member">group</tt></b></dt>
+<dd>
+The user's group, max 255 characters or <code>None</code> if no group has been set. Optional
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-50' xml:id='l2h-50' class="member">active</tt></b></dt>
+<dd>
+<code>True</code> or <code>False</code> depending on whether the user is considered active.
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-51' xml:id='l2h-51' class="member">levels</tt></b></dt>
+<dd>
+The access levels for the applications the user has access to as a dictionary with application names as keys. Levels can only be set through the <tt class="method">setLevel()</tt> method of <code>AuthManager</code> or <code>AuthAdmin</code> objects. <span class="warning"><b class="label">Warning:</b>
+Changing the value stored in <code>levels</code> will not update the database.</span>
+</dl>
+
+<P>
+<dl><dt><b><tt id='l2h-52' xml:id='l2h-52' class="member">roles</tt></b></dt>
+<dd>
+The user's roles for each application as a dictionary with application names as keys. Roles can only be set through the <tt class="method">setRole()</tt> method of <code>AuthManager</code> or <code>AuthAdmin</code> objects. <span class="warning"><b class="label">Warning:</b>
+Changing the value stored in <code>roles</code> will not update the database.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-53' xml:id='l2h-53' class="method">authorise</tt></b>(</nobr></td>
+  <td><var></var><big>[</big><var>app=None</var><big>]</big><var>, </var><big>[</big><var>level=None</var><big>]</big><var>, </var><big>[</big><var>role=None</var><big>]</big><var>, </var><big>[</big><var>active=1</var><big>]</big><var>, </var><big>[</big><var>group=[]</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+Return <code>True</code> if the user is authorised for the options specified, <code>False</code> otherwise. 
+
+<P>
+If <var>active=0</var> only disabled accounts are authorised, if <var>active=None</var> both active and disabled accounts are authorised. If <var>group</var> is not specified all groups are authorised, if <var>group=None</var> only users not in a group are authorised, otherwise only users in the group specified are authorised. If <var>level</var> or <var>role</var> are specified, <var>app</var> must be specified too.
+</dl>
+
+<P>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2.7.3 AuthManager Object"
+  href="node26.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2.7 API Reference"
+  href="node23.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.7.5 Sign In Handler"
+  href="node28.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node26.html">1.2.7.3 AuthManager Object</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node23.html">1.2.7 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node28.html">1.2.7.5 Sign In Handler</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

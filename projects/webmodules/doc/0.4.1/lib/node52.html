@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node51.html">
+<LINK REL="parent" HREF="node50.html">
+<LINK REL="next" HREF="node53.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Compared To Other Database Wrappers">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.5.1.2 Compared To Other Database Wrappers</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.1.1 Requirements" 
+  HREF="node51.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.1 Introduction" 
+  HREF="node50.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.2 Introductory Example" 
+  HREF="node53.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node51.html">1.5.1.1 Requirements</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node50.html">1.5.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node53.html">1.5.2 Introductory Example</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003512000000000000000">
+1.5.1.2 Compared To Other Database Wrappers</A>
+</H3>
+
+<P>
+There are several object-relational mappers for Python and a series of basic database wrappers similar to <tt class="module">web.database</tt>. The authour cannot comment deeply on these.
+
+<P>
+<tt class="module">web.database.object</tt> is most similar to SQLObject available from <a class="url" href="http://www.sqlobject.org">http://www.sqlobject.org</a> in that it creates objects that feel similar to normal Python objects and can be accessed and manipulated in a familiar way. 
+
+<P>
+Modules like SQLObject and <tt class="module">web.database.object</tt> differ from modules such as PyDO or the <tt class="module">web.database</tt> module which simply provide more Python-like ways of executing SQL queries and then package up the database returns into more useable forms such as dictionaries. The <tt class="module">web.database.object</tt> completely removes any need to know any SQL. You just manipulate the objects themselves and the rest is done for you. This makes SQL programming extremely simple and still gives you full control over the information stored in the database.
+
+<P>
+What separates <tt class="module">web.database.object</tt> from some other software is the strong typing of the data. If you are accessing the property of a Date field the object will be a <tt class="class">datetime.Date</tt> object. If you are setting an Email field, only strings in the format of an email address will be allowed. The module also direct support for one-to-many and many-to-many mappings which means you can build complex data structures.
+
+<P>
+Because the software interfaces the database through a <tt class="module">web.database</tt> cursor (in principle it could interface to other drivers as well) the code written will be database independant and run on any database supported by the <tt class="module">web.database</tt> module.
+
+<P>
+<tt class="module">web.database.object</tt> uses classes derived from <code>Table</code>, <code>Database</code> and <code>web.form.field</code> classes to facilitate this integration. Some ORMs use code generation to create an interface, expressing the schema in a CSV or XML file (for example, MiddleKit, part of Webware). By using normal Python objects you are able to comfortably define your database in the Python source code. No code generation, no weird tools, no compilation step.
+
+<P>
+What truly separates <tt class="module">web.database.object</tt> from any other ORM in any language (to the authour's knowledge - correct me please if I am wrong) is that on top of all the features mentioned above, the columns used to store the SQL data are also instances of <tt class="module">web.form.field.typed</tt> and the tables have the ability to generate <tt class="module">web.form</tt> <code>Form</code> objects. This means it is possible to create HTML interfaces to edit the database data automatically and in such a way that the user can only enter valid data otherwise the user will be asked to make corrections. This functionality makes building complex web databases much simpler.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.5.1.1 Requirements" 
+  rel="prev" title="1.5.1.1 Requirements" 
+  HREF="node51.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.5.1 Introduction" 
+  rel="parent" title="1.5.1 Introduction" 
+  HREF="node50.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.2 Introductory Example" 
+  rel="next" title="1.5.2 Introductory Example" 
+  HREF="node53.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node51.html">1.5.1.1 Requirements</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node50.html">1.5.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node53.html">1.5.2 Introductory Example</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

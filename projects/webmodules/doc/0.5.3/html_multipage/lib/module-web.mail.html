@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="session.html" />
+<link rel="prev" href="image.html" />
+<link rel="parent" href="web.html" />
+<link rel="next" href="example-command-web-mail.html" />
+<meta name='aesop' content='information' />
+<title>1.10 web.mail -- Simple function to send email using email</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.9.3 Webserver Example"
+  href="example-webserver-web-image-graph.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.10.1 Example"
+  href="example-command-web-mail.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-image-graph.html">1.9.3 Webserver Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-mail.html">1.10.1 Example</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0031000000000000000000"></A><A NAME="mail"></A>
+<BR>
+1.10 <tt class="module">web.mail</tt> -- Simple function to send email using <tt class="module">email</tt>
+</H1>
+<A NAME="module-web.mail"></A>
+
+<P>
+The mail module provides a simple function <tt class="function">send()</tt> which can be used to send emails as shown in the example below:
+
+<P>
+<div class="verbatim"><pre>
+import web.mail
+web.mail.send(
+    msg        = "Hello James!",
+    to         = 'james@example.com',
+    replyName  = 'James Gardner',
+    replyEmail = 'james@example.com',
+    subject    = 'Test Email',
+    sendmail   = '/usr/bin/sendmail',
+    method     = 'sendmail'
+)
+</pre></div>
+
+<P>
+To send the same email via SMTP instead of using <span class="file">Sendmail</span> you would use:
+
+<P>
+<div class="verbatim"><pre>
+import web.mail
+web.mail.send(
+    msg        = "Hello James!",
+    to         = 'james@example.com',
+    replyName  = 'James Gardner',
+    replyEmail = 'james@example.com',
+    subject    = 'Test Email',
+    smtp       = 'smtp.ntlworld.com',
+    method     = 'smtp'
+)
+</pre></div>
+
+<P>
+If you get an error like <code>socket.error: (10060, 'Operation timed out')</code> it is likely that the SMTP address you specified either doesn't exist or will not give you access.
+
+<P>
+Function Definition:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-277' xml:id='l2h-277' class="function">mail</tt></b>(</nobr></td>
+  <td><var><var>msg</var>, <var>to</var>, </var><big>[</big><var>subject=''</var><big>]</big><var>, </var><big>[</big><var>method</var><big>]</big><var>, </var><big>[</big><var>smtp</var><big>]</big><var>, </var><big>[</big><var>sendmail</var><big>]</big><var>, </var><big>[</big><var>blind</var><big>]</big><var>, </var><big>[</big><var>reply</var><big>]</big><var>, </var><big>[</big><var>replyName</var><big>]</big><var>, </var><big>[</big><var>replyEmail</var><big>]</big><var>, </var><big>[</big><var>type</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+<DL>
+<DT><STRONG><var>msg</var></STRONG></DT>
+<DD>Text of the message
+
+<P>
+</DD>
+<DT><STRONG><var>to</var></STRONG></DT>
+<DD>A list of recipient addresses in the form: addr@addr.com separated by commas
+
+<P>
+</DD>
+<DT><STRONG><var>subject</var></STRONG></DT>
+<DD>Email subject line
+
+<P>
+</DD>
+<DT><STRONG><var>method</var></STRONG></DT>
+<DD>Describes which method to use to send the email. Can be <code>'smtp'</code> or <code>'sendmail'</code>. Only needs to be specified if both <code>smtp</code> and <code>sendmail</code> are specified otherwise the method that is defined is used.
+
+<P>
+</DD>
+<DT><STRONG><var>smtp</var></STRONG></DT>
+<DD>SMTP server address
+
+<P>
+</DD>
+<DT><STRONG><var>sendmail</var></STRONG></DT>
+<DD>Sendmail path
+
+<P>
+</DD>
+<DT><STRONG><var>blind</var></STRONG></DT>
+<DD><code>True</code> if recipients are to be blocked from seeing who else the email was sent to.
+
+<P>
+</DD>
+<DT><STRONG><var>replyName</var></STRONG></DT>
+<DD>The name of the person sending the email.
+
+<P>
+</DD>
+<DT><STRONG><var>replyEmail</var></STRONG></DT>
+<DD>The address of the person sending the email.
+
+<P>
+</DD>
+<DT><STRONG><var>reply</var></STRONG></DT>
+<DD>The name and address of the person sending the email in the form: <code>"sender name &lt;addr@example.com&gt;"</code>. Should only be specified if <var>replyName</var> and <var>replyEmail</var> are not specified.
+
+<P>
+The module also provides a method <tt class="method">buildReply()</tt> which can be used to put the name and email address into the format required for the <var>reply</var> parameter of the <tt class="method">send()</tt> method:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; import web.mail
+&gt;&gt;&gt; web.mail.buildReply('James Gardner, 'james@example.com')
+James Gardner &lt;james@example.com&gt;
+</pre></div>
+
+<P>
+</DD>
+<DT><STRONG><var>type</var></STRONG></DT>
+<DD>The second part of the content-type, eg <code>'plain'</code> for a plain text email, <code>'html'</code> for an HTML email.
+
+<P>
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="example-command-web-mail.html">1.10.1 Example</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.9.3 Webserver Example"
+  href="example-webserver-web-image-graph.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1. Web Modules"
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.10.1 Example"
+  href="example-command-web-mail.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-image-graph.html">1.9.3 Webserver Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-command-web-mail.html">1.10.1 Example</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

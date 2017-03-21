@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node38.html" />
+<link rel="prev" href="node36.html" />
+<link rel="parent" href="module-web.database.html" />
+<link rel="next" href="node38.html" />
+<meta name='aesop' content='information' />
+<title>1.4.8 Transactions, Rollbacks and Committing Changes</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.7 Retrieving Results"
+  href="node36.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.9 Exporting and Importing"
+  href="node38.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node36.html">1.4.7 Retrieving Results</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node38.html">1.4.9 Exporting and Importing</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003480000000000000000">
+1.4.8 Transactions, Rollbacks and Committing Changes</A>
+</H2>
+
+<P>
+Most databases supported by <tt class="module">web.database</tt> support basic transactions. This means that you can make a number of changes to the database but if your program crashes your changes will not be saved so that the database is not left in an unstable state where you have updated some tables but not others.
+
+<P>
+Changes are only saved (or committed) to the database when you call the <code>connection</code> object's <tt class="method">commit()</tt> method:
+
+<P>
+<div class="verbatim"><pre>
+connection.commit()
+</pre></div>
+
+<P>
+If you have made a mistake and want to lose all the changes you have made, you can rollback the database to its previous state using the <code>connection</code> object's <tt class="method">rollback()</tt> method:
+
+<P>
+<div class="verbatim"><pre>
+connection.rollback()
+</pre></div>
+
+<P>
+Finally, if you have finished using a connection you can close it using the <code>connection</code> object's <tt class="method">close()</tt> method. This will also rollback the database to the time you last committed your changes so if you want to save your changes you should call <tt class="method">commit()</tt> first.
+
+<P>
+<div class="verbatim"><pre>
+connection.commit()
+connection.close()
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+Please note that making these changes to the <code>connection</code> object will automatically affect all <code>cursor</code> objects of that connection as well since they all share the same connection object.</span>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+ The MySQL adapter does <strong>not</strong> support transactions. Results are automatically committed. If anyone can suggest an effective way around this please let me know!</span>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.7 Retrieving Results"
+  href="node36.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.9 Exporting and Importing"
+  href="node38.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node36.html">1.4.7 Retrieving Results</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node38.html">1.4.9 Exporting and Importing</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node7.html" />
+<link rel="prev" href="module-web.auth.html" />
+<link rel="parent" href="module-web.auth.html" />
+<link rel="next" href="node7.html" />
+<meta name='aesop' content='information' />
+<title>1.2.1 Background Information</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.2 Creating a basic"
+  href="node7.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node7.html">1.2.2 Creating a basic</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003210000000000000000">
+1.2.1 Background Information</A>
+</H2>
+
+<P>
+An auth system has to perform two main tasks:
+
+<P>
+<DL>
+<DT><STRONG>Authentication</STRONG></DT>
+<DD>Finding out if the user is who he claims to be
+</DD>
+<DT><STRONG>Authorisation</STRONG></DT>
+<DD>Checking the authenticated user has sufficient access priviledges to perform the task
+</DD>
+</DL>
+
+<P>
+In order to authenticate a user a username and password is usually entered and if the password matches the username the user is authenticated. This process involves several steps:
+
+<P>
+
+<UL>
+<LI>Displaying a sign in form
+</LI>
+<LI>Checking the username and password
+</LI>
+<LI>Displaying the form again if the details are not correct
+</LI>
+<LI>Storing the information that the user is signed in
+</LI>
+</UL>
+
+<P>
+Before this can happen a mechanism is required to be able to add users to the system and set their access priveledges and a mechainsm is required to store information about the signed in user so that they remain signed in.
+
+<P>
+The <tt class="module">web.auth</tt> module provides the following classes to achieve all these tasks in a simple and yet flexible way.
+
+<P>
+<DL>
+<DT><STRONG>admin objects (<code>AuthAdmin</code> class)</STRONG></DT>
+<DD>This class is used to administer the auth environment, add users, set access levels etc.
+</DD>
+<DT><STRONG>session objects (<code>AuthSession</code> class)</STRONG></DT>
+<DD>This class is used to store information about who is signed in, when they signed in and when thry should be signed out
+</DD>
+<DT><STRONG>manager objects (<code>AuthManager</code> class)</STRONG></DT>
+<DD>Used to manage the auth functions, has all the functionality of the admin and session objects
+</DD>
+<DT><STRONG>user objects (<code>AuthUser</code> class)</STRONG></DT>
+<DD>Contain all the information about a particular user and can be used to set simple user properties
+</DD>
+<DT><STRONG>handler objects</STRONG></DT>
+<DD>Are used to automatically handle tasks such as user sign in
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.2 web.auth  "
+  href="module-web.auth.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.2.2 Creating a basic"
+  href="node7.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.auth.html">1.2 web.auth  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node7.html">1.2.2 Creating a basic</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

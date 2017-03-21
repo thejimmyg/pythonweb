@@ -1,0 +1,64 @@
+import sys; sys.path.append('../')
+from web.wsgi import *
+
+# Sign In Application
+class simpleApp(base.BaseApplication):
+    def start(self):
+        # Create some sample data
+        if not self.environ['web.auth.manager'].applicationExists('app'):
+            self.environ['web.auth.manager'].addApplication('app')
+            self.environ['web.auth.manager'].addUser(
+                'john',
+                'bananas',
+                'John',
+                'Smith',
+                'johnsmith@example.com',
+            )
+            self.environ['web.auth.manager'].setAccessLevel('john', 'app', 1)
+        # See if anyone is signed in
+        if self.environ.has_key('web.auth.user'):
+            self.output('Already signed in')
+        else: 
+            # Try to login
+            import web.auth.handler.signIn
+            signInHandler = web.auth.handler.signIn.SignInHandler(
+                session = self.environ['web.auth.session'], 
+                manager = self.environ['web.auth.manager'],
+                cgi = self.environ['web.cgi'],
+            )
+            error = signInHandler.handle()
+            if error:  
+                # Display the error form
+                self.output('<html><body><h1>Please Sign In</h1>%s</body></html>'%error)
+            else:
+                # We have just signed in
+                self.output('Signed in successfully')
+        self.environ['web.database.connection'].commit()
+
+# Middleware Setup
+application = error.Error(
+    database.Database(
+        environment.Environment(
+            session.Session(
+                cgi.CGI(
+                    auth.Auth(
+                        simpleApp(), 
+                        app='test', 
+                        setupEnvironment=1,
+                        expire=30,
+                        idle=10,
+                    ),
+                ),
+                app = 'testApp',
+                expire = 1000,
+                setupEnvironment = 1,
+            ),
+            name = 'testEnv',
+            storage = 'database',
+        ),
+        adapter = 'snakesql',
+        database = 'wsgi-auth',
+        autoCreate = 1,
+    ),
+)
+

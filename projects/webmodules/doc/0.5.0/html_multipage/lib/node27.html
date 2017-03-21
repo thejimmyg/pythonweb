@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node28.html" />
+<link rel="prev" href="module-web.database.html" />
+<link rel="parent" href="module-web.database.html" />
+<link rel="next" href="node28.html" />
+<meta name='aesop' content='information' />
+<title>1.4.1 Background</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.2 Introduction"
+  href="node28.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node28.html">1.4.2 Introduction</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003410000000000000000">
+1.4.1 Background</A>
+</H2>
+
+<P>
+Most database engines currently have many common features but their differences are such that Python code written for one database engine using the DB-API 2.0 is unlikely to work with another database engine without some degree of modification. To complicate matters further many DB-API 2.0 drivers are not actually fully DB-API 2.0 compliant. 
+
+<P>
+Variation between database engines occurs in SQL syntax, choice of field types and choice of which Python object to use to represent field values. 
+
+<P>
+The DB-API 2.0 specification was designed with these differences in mind so that module implementers could make full use of the features of their particular database engine. This module provides a simple, standardised and portable API and SQL dialect which also exposes the interface components of the underlying DB-API 2.0 cursor.  In this way users can access a database in a simplified and portable fashion for simple operations whilst exposing the DB-API 2.0 interface for more complex operations.
+
+<P>
+The drawback of this approach is that some of the fields available in a particular database will not be available through this module. Also there is no support for complex SQL commands including indexes or views since not all databases support them. The approach is only to support what is available to all databases being used.
+
+<P>
+If a database-specific feature is needed for a specific call you can always use the underlying cursor object directly. By using the <tt class="module">web.database</tt> module as much as possible you will still make your code more portable across databases should you ever need to change servers and by using the <tt class="module">web.database</tt> module exclusively you can gain true database portability.
+
+<P>
+One of the major advantages of using <tt class="module">web.database</tt> is that it comes with a pure Python SQL engine named SnakeSQL which fully implements the specification (albeit slowly) so if you use <tt class="module">web.database</tt> in your own code you can guarantee your users will be able to run your application even if they do not have access to a better known database engine.
+
+<P>
+Comments and questions about this specification may be directed to James Gardner at docs at pythonweb.org. 
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.2 Introduction"
+  href="node28.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node28.html">1.4.2 Introduction</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

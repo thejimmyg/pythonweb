@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+
+import web.error; web.error.handle('debug')
+
+print "Setting value to 5"
+value = 5
+print "Raising a Breakpoint so you can inspect value"
+raise web.error.Breakpoint
+print "The program has exited so this will not be printed"

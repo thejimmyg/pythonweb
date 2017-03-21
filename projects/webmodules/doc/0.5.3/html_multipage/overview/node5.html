@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="overview.css" type='text/css' />
+<link rel="first" href="overview.html" title='Getting Started' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node6.html" />
+<link rel="prev" href="node4.html" />
+<link rel="parent" href="node2.html" />
+<link rel="next" href="node6.html" />
+<meta name='aesop' content='information' />
+<title>3 Quick Installation</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2 Required Software"
+  href="node4.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1 Getting Started"
+  href="node2.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="4 Further Options"
+  href="node6.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Getting Started</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node4.html">2 Required Software</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node2.html">1 Getting Started</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node6.html">4 Further Options</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002300000000000000000">
+3 Quick Installation</A>
+</H1>
+
+<P>
+The Python Web Modules do not need formally installing although it is eaiest if you do install them. All the examples, tests and scripts will run straight from the distribution once it is unzipped (see note above about optional components).
+
+<P>
+If you wish to use the web modulest the only requirement is that Python can find the <span class="file">web</span> directory containg the web modules. This can be achieved in a number of ways:
+
+<P>
+
+<OL>
+<LI><strong>Easiest:</strong> Execute the command below to install the modules to your Python <span class="file">Lib/site-packages</span> directory where Python looks for new modules:
+<div class="verbatim"><pre>
+python setup.py install
+</pre></div>
+</LI>
+<LI>Place the <span class="file">web</span> directory of the distribution in the same directory as the script which uses the modules since Python always searches the directory containing a script when looking for modules.
+</LI>
+<LI>Modify your <code>PYTHONPATH</code> by:
+
+<UL>
+<LI>Adding the following code in every file using the modules before you import the web modules:
+<div class="verbatim"><pre>
+import sys
+sys.path.insert(0,'C:/path/to/distribution/directory')
+</pre></div>
+replacing <span class="file">C:/path/to/distribution/directory</span> with the path to the directory containing the <span class="file">web</span> directory.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ You should not include the <span class="file">web</span> directory in the path otherwise Python will look for a directory called <span class="file">web</span> inside the <span class="file">web</span> directory and will not find it!</span>
+</LI>
+<LI>Alternatively, append the path to the directory containing the <span class="file">web</span> directory to the PYTHONPATH variable in the standard way for your operating system.
+</LI>
+</UL>
+</LI>
+</OL>
+
+<P>
+Once the web modules are imported, internal paths are setup so that you can import <tt class="module">Cheetah</tt> or <tt class="module">pdbc</tt> for example, but you must import the <tt class="module">web</tt> module first.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2 Required Software"
+  href="node4.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1 Getting Started"
+  href="node2.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="4 Further Options"
+  href="node6.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Getting Started</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node4.html">2 Required Software</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node2.html">1 Getting Started</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node6.html">4 Further Options</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 15, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

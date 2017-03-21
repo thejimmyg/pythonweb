@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="web.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="web.html" title='Beginner's Guide'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node16.html">
+<LINK REL="parent" HREF="node15.html">
+<LINK REL="next" href="examples.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Hello World!">
+<META NAME="keywords" CONTENT="web">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>3.2.2 Hello World!</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="3.2.1 What is CGI?" 
+  HREF="node16.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="3.2 Simple Tutorial" 
+  HREF="node15.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="4. Examples" 
+  href="examples.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node16.html">3.2.1 What is CGI?</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node15.html">3.2 Simple Tutorial</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="examples.html">4. Examples</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004220000000000000000">
+3.2.2 Hello World!</A>
+</H2>
+
+<P>
+The best way to demonstrate the basics is to create a "hello world!" program. This tutorial uses Python and we will assume you are using the Apache Web Server. In a text editor type the following into a file called hello.cgi:
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/bin/env python
+
+print "Content-type: text/html\n\n"
+print "&lt;html&gt;Hello world!&lt;/html&gt;"
+</pre></div>
+
+<P>
+The first line tells the web server where the Python program is on the server. It is usually in /usr/bin/python or /usr/local/bin/python so you must change the first line to suit your server but you must remember the #! at the start, the slashs are forward slashes, and that you must have a least one completely blank line before you start anything else.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+The other thing which sometimes casues problems is line endings. UNIX uses LF as a line feed, windows doesn't. To confuse matters further some FTP clients try to automatically convert the line endings for you. My tip is to use a text editor such as <a class="ulink" href="http://scintilla.sourceforge.net/SciTE.html"
+  >SciTE</a> which supports both types of line endings. Set <code>Options-&gt;Line Ending Characters-&gt;LF</code> and then <code>Options-&gt;Convert Line Ending Characters</code> to make sure you are using LF line feeds. Then you can upload your file in Binary mode on the FTP client and you can guarantee your line endings are correct</span>
+
+<P>
+Back to our Hello World! program. The line containing <code>text/html</code> is an HTTP header which tells the web browser to expect HTML to be sent to it. If your CGI script sent a GIF image, for example, you would use <code>image/gif</code>.
+
+<P>
+The last line prints the HTML code to the web browser.
+
+<P>
+Once you have written your script you will then need to upload it to a directory which supports execution of scripts using FTP software. This directory will normally be called cgi-bin or cgi. Next you will need to change the file permissions of your script using the UNIX command <code>chmod 755 hello.cgi</code> or using your FTP software to change the file permissions so that everyone can read and execute your file but only you, the owner, can write it. Now, using your web browser visit the hello.cgi script by typing <a class="url" href="http://www.yourservername.com/cgi-bin/hello.cgi">http://www.yourservername.com/cgi-bin/hello.cgi</a> or something equivalent for where your file is on the internet.
+
+<P>
+If all goes well you should see the text:
+
+<P>
+<div class="verbatim"><pre>
+Hello world
+</pre></div>
+
+<P>
+If not, check you have followed the instructions correctly. If you get an error message saying something like Error 500 there was an error in the script it means you have mis-typed something or the server cannot find the Python program. Error 404 means that you have typed the wrong address and that is not where the hello.cgi script is. Error 403 means you do not have permission to execute the file and you need to change the file permissions.
+
+<P>
+If you have problems you can often access your script using telnet. Load telnet and type <code>open yourserver.com</code> enter your username and password and navigate to your cgi script using the following commands:
+
+<P>
+<code>ls</code> to give a list of directories
+<code>cd cgi-bin</code> to change directory to cgi-bin
+<code>cd ..</code> to go up a level. 
+
+<P>
+You can then type <code>python hello.cgi</code> and if there are errors in your script, the Python interpreter will find them. Also you can type <code>which python</code> to find out about the Python version you are using.
+
+<P>
+It can be a complicated business to start with but once you have done it once you should be able to do it again with ease!
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="3.2.1 What is CGI?" 
+  rel="prev" title="3.2.1 What is CGI?" 
+  HREF="node16.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="3.2 Simple Tutorial" 
+  rel="parent" title="3.2 Simple Tutorial" 
+  HREF="node15.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="4. Examples" 
+  rel="next" title="4. Examples" 
+  href="examples.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node16.html">3.2.1 What is CGI?</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node15.html">3.2 Simple Tutorial</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="examples.html">4. Examples</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="util.html">
+<LINK REL="prev" href="session.html">
+<LINK REL="parent" href="web.html">
+<LINK REL="next" href="example-file-web-template-cheetah.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="web.template -- For the easy display of data as HTML/XML">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.11 web.template -- For the easy display of data as HTML/XML</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.8 Future" 
+  HREF="node102.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.11.1 Cheetah Template" 
+  href="example-file-web-template-cheetah.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node102.html">1.10.8 Future</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-file-web-template-cheetah.html">1.11.1 Cheetah Template</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0031100000000000000000">&nbsp;</A>
+<BR>
+1.11 <tt class="module">web.template</tt> -- For the easy display of data as HTML/XML
+</H1>
+
+
+<P>
+The <tt class="module">web.template</tt> module currently only provides one function, <tt class="function">pasrse()</tt>, used to parse a template.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-220"><tt class="function">parse</tt></a></b>(</nobr></td>
+  <td><var><var>type='python'</var>, <var>dict=None</var> </var><big>[</big><var>,file=None</var><big>]</big><big>[</big><var>,template=None</var><big>]</big><big>[</big><var>,useCompiled='auto'</var><big>]</big><big>[</big><var>,swapTemplatePaths=None</var><big>]</big>)</td></tr></table>
+<dd>
+Simple wrapper method to load and parse a template from the options given.
+    <DL>
+<DT><STRONG><var>type</var></STRONG></DT>
+<DD>The type of template to parse. Can be <code>'python'</code>, <code>'cheetah'</code>, <code>'xyaptu'</code> or <code>'dreamweaverMX'</code>. A <code>'python'</code> template is a string using the dictionary filling format.
+    
+</DD>
+<DT><STRONG><var>dict</var></STRONG></DT>
+<DD>A dictionary of values used to fill the template
+    
+</DD>
+<DT><STRONG><var>file</var></STRONG></DT>
+<DD>The file containing the template. If not specified or <code>None</code>, <var>template</var> must be specified.
+    
+</DD>
+<DT><STRONG><var>template</var></STRONG></DT>
+<DD>The template as a string. If not specified or <code>None</code>, <var>file</var> must be specified.
+    
+</DD>
+<DT><STRONG><var>useCompiled</var></STRONG></DT>
+<DD>Only used for Cheetah. Specifies whether or not a compiled version of the template should be used.
+    
+</DD>
+<DT><STRONG><var>swapTemplatePaths</var></STRONG></DT>
+<DD>Only used for DreamweaverMX. If <code>None</code> nothing is done. Otherwise can be set to <code>(oldPath, newPath)</code> to swap paths in the template itself before the parsing is done.
+    
+</DD>
+</DL>
+</dl>
+
+<P>
+Simple example:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; import web.template
+&gt;&gt;&gt; print web.template.parse(dict={'w':'World!'}, template="Hello %(w)s")
+Hello World!
+</pre></div>
+
+<P>
+This is the same as doing this in Python:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; print "Hello %(w)s"%{'w':'World!'}
+Hello World!
+</pre></div>
+
+<P>
+
+<p><hr>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="example-file-web-template-cheetah.html">1.11.1 Cheetah Template</a>
+<LI><A href="example-file-web-template-xyaptu.html">1.11.2 XYAPTU Templating</a>
+<LI><A href="example-file-web-template-dreamweaverMX.html">1.11.3 Dreamweaver MX</a>
+</ul>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.8 Future" 
+  rel="prev" title="1.10.8 Future" 
+  HREF="node102.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.11.1 Cheetah Template" 
+  rel="next" title="1.11.1 Cheetah Template" 
+  href="example-file-web-template-cheetah.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node102.html">1.10.8 Future</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-file-web-template-cheetah.html">1.11.1 Cheetah Template</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

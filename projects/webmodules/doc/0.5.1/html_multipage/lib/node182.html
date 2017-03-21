@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node183.html" />
+<link rel="prev" href="node181.html" />
+<link rel="parent" href="node178.html" />
+<link rel="next" href="node183.html" />
+<meta name='aesop' content='information' />
+<title>1.15.4.4 web.wsgi.session - Session Handling</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.4.3 web.wsgi.environment - Environment"
+  href="node181.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.4 The PythonWeb Middleware"
+  href="node178.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.4.5 web.wsgi.error - Error"
+  href="node183.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node181.html">1.15.4.3 web.wsgi.environment - Environment</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node178.html">1.15.4 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node183.html">1.15.4.5 web.wsgi.error - Error</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031544000000000000000">
+1.15.4.4 <tt class="module">web.wsgi.session</tt> - Session Handling</A>
+</H3>
+
+<P>
+The <tt class="module">web.wsgi.session</tt> module provides one class <code>Session</code> which adds the following information to the <code>environ</code> dictionary based on the parameters specified in the class constructor.
+
+<P>
+<DL>
+<DT><STRONG><code>environ['web.session.driver']</code> </STRONG></DT>
+<DD>A <code>Driver</code> object as returned by <code>web.session.driver()</code>
+
+<P>
+</DD>
+<DT><STRONG><code>environ['web.session.manager']</code> </STRONG></DT>
+<DD>A <code>Manager</code> object as returned by <code>web.session.manager()</code>
+
+<P>
+</DD>
+<DT><STRONG><code>environ['web.session.store']</code> </STRONG></DT>
+<DD>A session <code>Store</code> object as returned by <code>environ['web.session.manager'].store(<var>app</var></code>. This is only created if the parameter <var>app</var> is specified in the constructor of the middleware class.
+
+<P>
+</DD>
+</DL>
+
+<P>
+The <code>web.wsgi.session.Session</code> middleware requires the presence of the <code>Database</code> and <code>Environment</code> middleware and can be used as shown in the example below:
+
+<P>
+<div class="verbatim">
+<pre>from web.wsgi import *
+
+class simpleApp(base.BaseApplication):
+
+    def printPage(self, title, url, link, url2, link2, data):
+        self.output("""
+            &lt;html&gt;
+            &lt;h1&gt;%s&lt;/h1&gt;
+            &lt;p&gt;&lt;a href="%s"&gt;%s&lt;/a&gt;&lt;/p&gt;
+            &lt;p&gt;&lt;a href="%s"&gt;%s&lt;/a&gt;&lt;/p&gt;
+            &lt;p&gt;%s&lt;/p&gt;
+            &lt;/html&gt;"""%(title, url, link, url2, link2, data)
+        )
+    def start(self):
+        # Write a simple application
+        if not self.environ['web.session.manager'].created:
+            if self.environ['web.cgi'].has_key('destroy') and self.environ['web.cgi']['destroy'].value == 'True':
+                self.environ['web.session.manager'].destroy(ignoreWarning=True, sendCookieHeaders=False) 
+                self.headers.append(self.environ['web.session.manager'].response_headers[-1])
+                self.printPage(
+                    'Session Destroyed', 
+                    self.environ['SCRIPT_NAME'], 
+                    'Start Again', '','',''
+                )
+            else:
+                self.environ['web.session.manager'].setExpire(self.environ['web.session.manager'].expireTime+5)
+                self.environ['web.session.manager'].setCookie()
+                self.headers.append(self.environ['web.session.manager'].response_headers[-1])
+                data = []
+                data.append('SessionID:  ' +self.environ['web.session.manager'].sessionID)
+                data.append('Store Keys: '+str(self.environ['web.session.store'].keys()))
+                data.append('Store App:  '+self.environ['web.session.store'].app)
+                data.append('Variable1:  '+str(self.environ['web.session.store']['Variable1']))
+                data.append('ExpireTime: '+str(self.environ['web.session.manager'].expireTime))
+                self.printPage(
+                    'Welcome back', 
+                    self.environ['SCRIPT_NAME'], 
+                    'Visit Again', 
+                    self.environ['SCRIPT_NAME']+'?destroy=True', 
+                    'Destroy Session', '&lt;p&gt;Every time you visit this page the expiry time increases 5 seconds&lt;/p&gt;'+
+                    '&lt;/p&gt;&lt;p&gt;'.join(data)
+                )
+        else:
+            self.environ['web.session.store']['Variable1'] = 'Python Rules!'
+            self.printPage(
+                'New Session Started',
+                self.environ['SCRIPT_NAME'], 
+                'Visit Again', '', '',
+                "Set variable1 to 'Python Rules!'"
+            )
+        # Save changes
+        self.environ['web.database.connection'].commit()
+
+application = error.Error(
+    database.Database(
+        environment.Environment(
+            session.Session(
+                cgi.CGI(
+                    simpleApp(),
+                ),
+                app = 'testApp',
+                expire = 10,
+                setupEnvironment = 1
+            ),
+            name = 'testEnv',
+            storage = 'database',
+        ),
+        adapter = 'snakesql',
+        database = 'wsgi-session',
+        autoCreate = 1
+    ),
+)
+
+</pre>
+<div class="footer">
+<a href="wsgiSession.txt" type="text/plain">Download as text (original file name: <span class="file">wsgiSession.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by running the WSGI server <span class="file">scripts/WSGIServer.py</span> and visiting <a class="url" href="http://localhost:8000/session">http://localhost:8000/session</a>
+<P>
+You can also specify the <var>maxAge</var> parameter which is the same as the <var>maxAge</var> parameter in <tt class="function">web.session.manager()</tt>.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.4.3 web.wsgi.environment - Environment"
+  href="node181.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.4 The PythonWeb Middleware"
+  href="node178.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.4.5 web.wsgi.error - Error"
+  href="node183.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node181.html">1.15.4.3 web.wsgi.environment - Environment</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node178.html">1.15.4 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node183.html">1.15.4.5 web.wsgi.error - Error</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

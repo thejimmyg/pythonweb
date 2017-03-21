@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="example-command-web-util-table.html" />
+<link rel="parent" href="util.html" />
+<link rel="next" href="wsgi.html" />
+<meta name='aesop' content='information' />
+<title>1.13.2 Calendar Tools</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.13.1 Creating Tables"
+  href="example-command-web-util-table.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.13 web.util  "
+  href="util.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14 web.wsgi  "
+  href="wsgi.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-util-table.html">1.13.1 Creating Tables</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="util.html">1.13 web.util  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="wsgi.html">1.14 web.wsgi  </A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031320000000000000000"></A><A NAME="example-webserver-web-util-calendar"></A>
+<BR>
+1.13.2 Calendar Tools
+</H2>
+
+<P>
+The <tt class="module">web.util.calendarTools</tt> module provides two functions <tt class="function">month()</tt> to display an HTML calendar for the specified month and <tt class="function">calendar()</tt> to display a range of months in HTML.
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web.error; web.error.enable()
+import web.util.calendarTools
+
+print web.header()
+
+calendars = [
+'web.util.calendarTools.month(year=2004,month=12)',
+"""web.util.calendarTools.month(
+    year=2004,
+    month=12,
+    dayNameLength=0,
+    firstDay=5
+)""",
+"""web.util.calendarTools.month(
+    year=2004,
+    month=12,
+    dayNameLength=3,
+    monthURL = 'month.py?month=%(month)s&amp;amp;year=%(year)s',
+    previousURL = 'previous.py?month=%(month)s&amp;amp;year=%(year)s',
+    nextURL = 'next.py?month=%(month)s&amp;amp;year=%(year)s',
+    previousHTML = 'prev',
+    nextHTML = 'next',
+)""",
+"""web.util.calendarTools.month(
+    year=2004,
+    month=12,
+    daysURL = 'day.py?day=%(day)s&amp;amp;month=%(month)s&amp;amp;year=%(year)s',
+    days = {
+        12:['day.py?day=12', 'twelve', 'style="background: #eee"']
+    }
+)""",
+"""web.util.calendarTools.month(
+    year=2004,
+    month=12,
+    tableColor = '#eeeecc',
+    barColor = '#eeeeee',
+    cellPadding = 16,
+)""",
+
+]
+
+fullCal="""web.util.calendarTools.calendar(
+    startYear=2004, 
+    startMonth=9, 
+    months=12, 
+    cols=3, 
+    dayNameLength=1, 
+    barColor="#eeeeee"
+)
+"""
+output = ''
+for cal in calendars:
+    output += """&lt;hr&gt;&lt;table border="0" cellPadding=10 width="100%%"&gt;
+    &lt;tr&gt;&lt;td width="1%%"&gt;%s&lt;/td&gt;&lt;td width="99%%"&gt;&lt;pre&gt;%s&lt;/pre&gt;&lt;/td&gt;
+    &lt;/tr&gt;&lt;/table&gt;"""%(eval(cal), web.encode(cal, mode='form'))
+print """
+&lt;html&gt;
+&lt;style&gt;
+.calendarTools-month-header{
+    font-family: sans-serif;
+    font-weight: bold;
+}
+&lt;/style&gt;
+&lt;body&gt;
+&lt;h1&gt;Example Calendars&lt;/h1&gt;
+&lt;p&gt;This page demonstrates the parameters used to generate HTML 
+calendars. They can also be styled using CSS stylesheets. For 
+example the following is uses in this HTML page to make all the
+calendar headings a sans serif font:&lt;/p&gt;
+&lt;pre&gt;
+&amp;lt;style&amp;gt;
+.calendarTools-month-header{
+    font-family: sans-serif;
+    font-weight: bold;
+}
+&amp;lt;/style&amp;gt;
+&lt;/pre&gt;
+
+%s
+
+&lt;hr&gt;
+&lt;p&gt;The next calendar is generated using the following code:
+&lt;pre&gt;
+%s
+&lt;/pre&gt;
+
+%s
+&lt;/body&gt;
+&lt;/html&gt;"""%(output, fullCal, eval(fullCal))</pre>
+<div class="footer">
+<a href="webserver-web-util-calendar.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-util-calendar.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by starting the test webserver in <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-util-calendar.py">http://localhost:8080/doc/src/lib/webserver-web-util-calendar.py</a> on your local machine. 
+
+<P>
+XXX Full function reference
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.13.1 Creating Tables"
+  href="example-command-web-util-table.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.13 web.util  "
+  href="util.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14 web.wsgi  "
+  href="wsgi.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-command-web-util-table.html">1.13.1 Creating Tables</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="util.html">1.13 web.util  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="wsgi.html">1.14 web.wsgi  </A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

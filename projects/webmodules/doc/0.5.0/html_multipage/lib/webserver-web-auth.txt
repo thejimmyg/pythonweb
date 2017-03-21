@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+
+"""Auth Example. Username=john and Password=bananas (Case sensitive)"""
+
+# show python where the modules are
+import sys; sys.path.append('../'); sys.path.append('../../../') 
+import web.error; web.error.enable()
+import web, web.database
+
+# Setup a database connection
+connection = web.database.connect(
+    adapter="snakesql", 
+    database="webserver-auth",
+    autoCreate = 1,
+)
+cursor = connection.cursor() 
+
+# Obtain a session store
+import web.session
+driver = web.session.driver('database', environment='testEnv', cursor=cursor)
+
+if not driver.completeSessionEnvironment():
+    driver.removeSessionEnvironment(ignoreErrors=True)
+    driver.createSessionEnvironment()
+
+manager = web.session.manager(driver=driver)
+if not manager.load():
+    manager.create()
+
+# Obtain Auth objects
+import web.auth
+authSession = web.auth.session(manager.store('auth'), expire=0, idle=10)
+driver = web.auth.driver('database', environment='testEnv', cursor=cursor)
+authManager = web.auth.manager(driver=driver, app='app')
+if not driver.completeAuthEnvironment():
+    driver.removeAuthEnvironment(ignoreErrors=True)
+    driver.createAuthEnvironment()
+    authManager.addApplication('app')
+    authManager.addUser(
+        'john',
+        'bananas',
+        'John',
+        'Smith',
+        'johnsmith@example.com',
+    )
+    authManager.setAccessLevel('john', 'app', 1)
+
+# Get the username of the current logged in user from the session
+print web.header()
+username = authSession.username()
+if username and authManager.userExists(username):
+    user = authManager.getUser(username)
+    print 'Username %s is signed in'%user.username
+else: 
+    # Try to login
+    import web.auth.handler.signIn
+    signInHandler = web.auth.handler.signIn.SignInHandler(
+        session = authSession, 
+        manager = authManager,
+    )
+    form = signInHandler.handle()
+    if form:  
+        # Display the error form
+        print '<html><body><h1>Please Sign In</h1>%s</body></html>'%form
+    else:
+        # We have just signed in
+        print 'Signed in successfully'
+
+connection.commit()
+connection.close()

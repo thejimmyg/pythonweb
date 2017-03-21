@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="example-webserver-web-session.html" />
+<link rel="prev" href="node155.html" />
+<link rel="parent" href="session.html" />
+<link rel="next" href="example-webserver-web-session.html" />
+<meta name='aesop' content='information' />
+<title>1.11.12 Implementing a new Driver</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.11 Web Server Gateway"
+  href="node155.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.13 Example"
+  href="example-webserver-web-session.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node155.html">1.11.11 Web Server Gateway</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-session.html">1.11.13 Example</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00311120000000000000000">
+1.11.12 Implementing a new Driver</A>
+</H2>
+
+<P>
+To implement a new driver you need to create a new module in <span class="file">web/session/drivers/</span> with the name of the driver as the file name and <span class="file">.py</span> as the extension.
+
+<P>
+The file should define two classes named in a similar way to the database driver classes, one of which implements the checking, creation and removal if the driver environment and the other implements the <tt class="module">web.session</tt> module API and inherits from the first class.
+
+<P>
+The <span class="file">web/session/drivers/database.py</span> can be used as an example. If you implement all the methods in the same manner as the database driver and each method returns variables of the same type in the same order and raises the same extensions you will have a valid driver. 
+
+<P>
+Please forward any such drivers to the developers who may wish to include your driver if it is of a sufficiently high standard and does not require any API changes to any of the other web modules.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.11 Web Server Gateway"
+  href="node155.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.13 Example"
+  href="example-webserver-web-session.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node155.html">1.11.11 Web Server Gateway</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-webserver-web-session.html">1.11.13 Example</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

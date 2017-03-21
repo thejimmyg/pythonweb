@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" HREF="node77.html">
+<LINK REL="parent" href="module-web.error.html">
+<LINK REL="next" href="module-web.form.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Example">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.6.4 Example</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.6.3 Creating Custom Handlers" 
+  HREF="node77.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.6 web.error  " 
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node77.html">1.6.3 Creating Custom Handlers</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.form.html">1.7 web.form  </A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003640000000000000000">&nbsp;</A>
+<BR>
+1.6.4 Example
+</H2>
+
+<P>
+Take a look at the example below:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+# show python where the web modules are
+import sys
+sys.path.append('../')
+sys.path.append('../../../') 
+
+def handler(dict, params={}):
+    p = {
+        'email':None,
+        'message':"""&lt;html&gt;
+                       &lt;head&gt;&lt;title&gt;An Error Occured&lt;/title&gt;&lt;/head&gt;
+                       &lt;body&gt;&lt;h1&gt;An Error Occured&lt;/h1&gt;
+                       &lt;p&gt;The devlopers have been informed&lt;/p&gt;&lt;/body&gt;
+                    &lt;/html&gt;""",
+        'reply':'Website Error &lt;none@example.com&gt;'
+    }
+    for k,v in params.items():
+        p[k] = v
+    
+    if not p.has_key('email'):
+        raise Exception('You must specify the email parameter.')
+        
+    import web, web.mail
+    web.mail.send(
+        msg="There was an exception in the code of the website.&#92;n&#92;n"+dict['text'],
+        to=p['email'],
+        reply=p['reply'],
+        subject='Error in website',
+        sendmail='usr/bin/sendmail',
+        smtp='smtp.ntlworld.com',
+        method='smtp',# could use method='sendmail' to send using sendmail.
+    )
+    print web.header()
+    print p['message']
+
+import web.error
+web.error.handle(
+    handler, 
+    email = 'james@example.com',
+    message = """&lt;html&gt;
+           &lt;head&gt;&lt;title&gt;An Error Occured&lt;/title&gt;&lt;/head&gt;
+           &lt;body&gt;&lt;h1&gt;Internal Error&lt;/h1&gt;
+           &lt;p&gt;The devlopers have been informed.&lt;/p&gt;&lt;/body&gt;
+        &lt;/html&gt;""",
+    reply = 'Developer &lt;devloper@example.com&gt;'
+)
+
+raise Exception('This is a test exception')
+</pre>
+<div class="footer">
+<a href="webserver-web-error.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-error.py</span>).</a>
+</div></div>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+If you run this example please make sure you replace the email addresses with your own email address in. You may need to change the path of sendmail or use an SMTP server instead. See the <tt class="module">web.mail</tt> module documentation for help with this.</span>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+If an exception occurs in your custom error handling function it may be difficult to track down. You can put your code inside a <code>try</code> <code>except</code> block and make sure some sensible output is returned in the event of an Exception being raised.</span>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.6.3 Creating Custom Handlers" 
+  rel="prev" title="1.6.3 Creating Custom Handlers" 
+  HREF="node77.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.6 web.error  " 
+  rel="parent" title="1.6 web.error  " 
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.7 web.form  " 
+  rel="next" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node77.html">1.6.3 Creating Custom Handlers</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.form.html">1.7 web.form  </A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

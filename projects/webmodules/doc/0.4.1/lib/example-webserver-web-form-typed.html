@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" href="example-webserver-web-form.html">
+<LINK REL="parent" href="module-web.form.html">
+<LINK REL="next" href="image.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Typed Fields Example">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.7.6 Typed Fields Example</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.7.5 Basic Fields Example" 
+  href="example-webserver-web-form.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.8 web.image  " 
+  href="image.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-form.html">1.7.5 Basic Fields Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.form.html">1.7 web.form  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="image.html">1.8 web.image  </A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003760000000000000000">&nbsp;</A>
+<BR>
+1.7.6 Typed Fields Example
+</H2>
+
+<P>
+As an example showing the how to use the typed fields, not the use of <code>None</code> values.
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+"Forms example."
+
+import sys, re, os
+sys.path.append('../')
+sys.path.append('../../')
+import web.error; web.error.handle()
+import web, web.form, web.form.field.basic, web.util
+import web.form.field.typed
+
+class ExampleForm(web.form.Form):
+
+    def setup(self):
+        self.addField(web.form.field.basic.Input('input', 'Default Text', 'Input Box:', size=14, maxlength=25))
+        self.addField(web.form.field.typed.String('string', default=None, treatNullStringAsNone=False))
+        self.addField(web.form.field.typed.String('string None', default=None, treatNullStringAsNone=True))
+        self.addField(web.form.field.typed.Char('char', default=None, treatNullStringAsNone=False))
+        self.addField(web.form.field.typed.Char('char None', default=None, treatNullStringAsNone=True))
+        self.addField(web.form.field.typed.Text('text', default=None, treatNullStringAsNone=False))
+        self.addField(web.form.field.typed.Text('text None', default=None, treatNullStringAsNone=True))
+        self.addField(web.form.field.typed.Integer('integer', default=None, required=True))
+        self.addField(web.form.field.typed.DateTime('datetime', default=None, required=True))
+        self.addField(web.form.field.typed.StringSelect('stringselect', options=[None, 'String'], displayNoneAs=''))
+        self.addField(web.form.field.typed.CharSelect('charselect', options=[None, 'C'], displayNoneAs='N'))
+        self.addField(web.form.field.typed.FloatSelect('floatselect', options=[None, 1]))
+        self.addField(web.form.field.typed.FloatCheckBoxGroup('floatcheckboxgroup', options=[1,5.89]))
+        # The preffered way of adding submit buttons is as actions so Submit buttons are normally not used.
+        self.addAction('Validate This Form')
+
+    def valid(self):
+        if web.form.Form.valid(self):
+            validates = True
+            if self.get('input').value == 'Default Text':
+                self.get('input').setError("ERROR: You must change the text in the input box.")
+                validates = False
+            return validates
+        else:
+            return False
+
+# Print the HTTP Header
+print web.header('text/html')
+
+# Create a form
+exampleForm = ExampleForm('form', os.environ['SCRIPT_NAME'], 'get')
+
+if len(web.cgi) &gt; 0: # Form submitted
+    # Populate form with the values from get.
+    
+    # Prepare form values:
+    values = {}
+    
+    for k in web.cgi.keys():
+        values[k] = [k,str(web.cgi[k])]
+        if exampleForm.has_key(k):
+            values[k].append(exampleForm[k].value)
+            values[k].append(exampleForm[k].error())
+    exampleForm.populate(web.cgi)
+
+    for k in web.cgi.keys():
+        if exampleForm.has_key(k):
+            values[k].append(exampleForm[k].value)
+            values[k].append(exampleForm[k].error())
+            
+    if exampleForm.valid():
+        for k in web.cgi.keys():
+            if exampleForm.has_key(k):
+                values[k].append(exampleForm[k].value)
+                values[k].append(exampleForm[k].error())
+        valueText = ''
+        for k in exampleForm.keys():
+            if web.cgi.has_key(k):
+                valueText += '&lt;strong&gt;%s&lt;/strong&gt;&lt;br&gt;'%values[k][0]
+                valueText += '&lt;table border="0"&gt;'
+                valueText += '&lt;tr&gt;&lt;td&gt;Create&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][2]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Error&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][3]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Populate&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][4]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Error&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][5]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Validate&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][6]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Error&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][7]))
+                valueText += '&lt;/table&gt;&lt;br&gt;&lt;br&gt;'
+        print "&lt;html&gt;&lt;head&gt;&lt;title&gt;Form Test - Validated&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&#92;n&lt;h1&gt;It Validated!&lt;/h1&gt;%s&#92;n&lt;hr&gt;&#92;n&lt;h2&gt;Values&lt;/h2&gt;%s&lt;/body&gt;&lt;/html&gt;"%(exampleForm.frozen(), valueText)
+    else:
+        for k in web.cgi.keys():
+            if exampleForm.has_key(k):
+                values[k].append(exampleForm[k].value)
+                values[k].append(exampleForm[k].error())
+        valueText = ''
+        for k in exampleForm.keys():
+            if web.cgi.has_key(k):
+                valueText += '&lt;strong&gt;%s&lt;/strong&gt;&lt;br&gt;'%values[k][0]
+                valueText += '&lt;table border="0"&gt;'
+                valueText += '&lt;tr&gt;&lt;td&gt;Create&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][2]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Error&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][3]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Populate&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][4]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Error&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][5]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Validate&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][6]))
+                valueText += '&lt;tr&gt;&lt;td&gt;Error&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;'%web.encode(repr(values[k][7]))
+                valueText += '&lt;/table&gt;&lt;br&gt;&lt;br&gt;'
+        print "&lt;html&gt;&lt;head&gt;&lt;title&gt;Form Test - Errors&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&#92;n&lt;h1&gt;Please Check Entries&lt;/h1&gt;%s&#92;n&lt;hr&gt;&#92;n&lt;h2&gt;Values&lt;/h2&gt;%s&lt;/body&gt;&lt;/html&gt;"%(exampleForm.html(), valueText)
+else:
+    print "&lt;html&gt;&lt;head&gt;&lt;title&gt;Form Test&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&#92;n&lt;h1&gt;Welcome Please Fill In The Form&lt;/h1&gt;%s&#92;n&lt;hr&gt;&lt;/body&gt;&lt;/html&gt;"%(exampleForm.html())</pre>
+<div class="footer">
+<a href="webserver-web-form-typed.txt" type="text/plain">Download as text (original file name: <span class="file">webserver-web-form-typed.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by starting the test webserver in <span class="file">scripts/webserver.py</span> and visiting <a class="url" href="http://localhost:8080/doc/src/lib/webserver-web-form-typed.py">http://localhost:8080/doc/src/lib/webserver-web-form-typed.py</a> on your local machine.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.7.5 Basic Fields Example" 
+  rel="prev" title="1.7.5 Basic Fields Example" 
+  href="example-webserver-web-form.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.7 web.form  " 
+  rel="parent" title="1.7 web.form  " 
+  href="module-web.form.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.8 web.image  " 
+  rel="next" title="1.8 web.image  " 
+  href="image.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-form.html">1.7.5 Basic Fields Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.form.html">1.7 web.form  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="image.html">1.8 web.image  </A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="web.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="web.html" title='Beginner's Guide'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node15.html">
+<LINK REL="prev" HREF="node13.html">
+<LINK REL="parent" HREF="node13.html">
+<LINK REL="next" HREF="node15.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="What Do I Need?">
+<META NAME="keywords" CONTENT="web">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>3.1 What Do I Need?</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="3. Tutorials" 
+  HREF="node13.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="3. Tutorials" 
+  HREF="node13.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="3.2 Simple Tutorial" 
+  HREF="node15.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node13.html">3. Tutorials</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node13.html">3. Tutorials</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node15.html">3.2 Simple Tutorial</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION004100000000000000000">
+3.1 What Do I Need?</A>
+</H1>
+
+<P>
+You will need to <a class="ulink" href="http://www.python.org/release/"
+  >download</a> and install Python as described in the Installation guide.
+
+<P>
+You will need some sort of web server on which to run your application. <a class="ulink" href="http://httpd.apache.org"
+  >Apache</a> is the reference web server for the Web Modules and it is available for many platforms including Windows.
+
+<P>
+If you don't have a web server you can easily write one in Python. The code below is a simple threaded CGI server which will allow you to test the samples. When you run the script the directory in which you run it will become the root directory. You should create a folder called <span class="file">cgi-bin</span> in this directory and this will become the directory where you can run <span class="file">.py</span> files.
+
+<P>
+<div class="verbatim"><pre>
+#!/usr/bin/env python
+
+"""Simple Python webserver. NOT SUITABLE FOR PRODUCTION USE."""
+    
+import sys; sys.path.append('../')
+import web.util
+
+if __name__ == '__main__':
+    print __doc__
+    web.util.runWebServer('/cgi-bin')
+</pre></div>
+
+<P>
+Once the server is running you should be able to access it at <a class="url" href="http://localhost:8080/">http://localhost:8080/</a> and run scripts in the <span class="file">cgi-bin</span> directory at <a class="url" href="http://localhost:8080/cgi-bin/">http://localhost:8080/cgi-bin/</a>.
+
+<P>
+You will need to install the Web Modules as described in the Installation guide. Once you have done all that you should be ready to start testing the examples or following the tutorials below.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="3. Tutorials" 
+  rel="prev" title="3. Tutorials" 
+  HREF="node13.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="3. Tutorials" 
+  rel="parent" title="3. Tutorials" 
+  HREF="node13.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="3.2 Simple Tutorial" 
+  rel="next" title="3.2 Simple Tutorial" 
+  HREF="node15.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Beginner's Guide</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node13.html">3. Tutorials</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node13.html">3. Tutorials</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node15.html">3.2 Simple Tutorial</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

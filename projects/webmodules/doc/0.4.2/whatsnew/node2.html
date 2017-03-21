@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="whatsnew.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="whatsnew.html" title='New in Version 0.4'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node3.html">
+<LINK REL="prev" href="contents.html">
+<LINK REL="parent" HREF="whatsnew.html">
+<LINK REL="next" HREF="node3.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="whatsnew">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1 Introduction</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="Contents" 
+  href="contents.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="New in Version 0.4" 
+  HREF="whatsnew.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="2 Previous Versions" 
+  HREF="node3.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">New in Version 0.4</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="contents.html">Contents</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="whatsnew.html">New in Version 0.4</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node3.html">2 Previous Versions</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node2.html#SECTION000210000000000000000">1.1 0.4.1</a>
+</ul>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION000200000000000000000">
+1 Introduction</A>
+</H1>
+
+<P>
+Version 0.4 is the first release to have proper documentation written in LaTeX with the Python documentation tools. Writing the documentation has brought up a few issues and simpler ways of doing things and this has resulted in almost all of the code being re-written again.
+
+<P>
+Version 0.4 also has a complete feature set and should be relatively stable. 
+
+<P>
+Deveopment will continue on the 0.4 branch and new features will be added to this branch since the code is not quite mature enough to warrant stable and unstable release branches.
+
+<P>
+New features include loads of bug fixes, ability to use keys in the web.database.object code, enhanced error handling, choice of how to handle NULL strings in web.form, lots of examples.
+
+<P>
+
+<H2><A NAME="SECTION000210000000000000000">
+1.1 0.4.1</A>
+</H2>
+<div class="verbatim"><pre>
+2004-09-10
+- Fixed the web.util.strip() function
+
+2004-09-08
+- Added ignoreCreateAndDrop parameter to the web.database.object.Database object
+- Changed the datetime and database.date classes to make them compatible with 
+  Python 2.3. NB datetime.datetime(2003,12,12).now() The time and date fields 
+  need testing.
+
+2004-09-06
+- Added a toString method to image.graph
+- Added a html2tuple function for converting html colors
+
+2004-09-05
+- Changed web.encode() to encode for forms or URLs
+- Removed automatically using table names in forms
+- Fixed bugs with mixing web.database.object and ordinary fields
+
+2004-08-29
+- ODBC driver changed type of int from SMALLINT to INTEGER
+- web.mail.send supports replyName and replyEmail
+- Row.update() now doesn't complain about unique values when updating a unique
+  column with the same value a field already contains.
+- Removed "Programming Error: This field was not submitted." errors.
+- Row.form() now accepts as valid unique columns being updated with values they
+  already contain.
+- File upload field works - error raised if incorrect method or enctype are 
+  used. (sort out maxLength)
+- Fixed web.encode() to properly encode everything it needs to.
+
+2004-08-16
+- cursor.select() has a distinct keyword.
+
+2004-07-25
+- Added swapTemplatePaths to dreamweaverMX templates
+- Changed webserver to support and root or cgi dir
+- Keys for datbase.object rows are converted to strings 
+- Max and min can return arrays of rows matching the value
+- web.auth htmlPageRegions, check()
+
+Need to unautocommit MySQL
+Need a more sensible auth method offering custom options.
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="Contents" 
+  rel="prev" title="Contents" 
+  href="contents.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="New in Version 0.4" 
+  rel="parent" title="New in Version 0.4" 
+  HREF="whatsnew.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="2 Previous Versions" 
+  rel="next" title="2 Previous Versions" 
+  HREF="node3.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">New in Version 0.4</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><img src='../icons/blank.png'
+  border='0' height='32'  alt='' width='32'></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="contents.html">Contents</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="whatsnew.html">New in Version 0.4</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node3.html">2 Previous Versions</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

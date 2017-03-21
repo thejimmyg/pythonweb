@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node78.html">
+<LINK REL="prev" HREF="node76.html">
+<LINK REL="parent" href="module-web.error.html">
+<LINK REL="next" HREF="node78.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Using the built in handlers">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.6.2 Using the built in handlers</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.6.1 Basic Usage" 
+  HREF="node76.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.6 web.error  " 
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.6.3 Creating Custom Handlers" 
+  HREF="node78.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node76.html">1.6.1 Basic Usage</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node78.html">1.6.3 Creating Custom Handlers</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003620000000000000000">
+1.6.2 Using the built in handlers</A>
+</H2>
+
+<P>
+If you want more control over the format of the error messages you can use one of the handlers in <tt class="module">web.error.handler</tt>.
+
+<P>
+The <tt class="function">web.error.handle()</tt> function has the following parameters:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-148"><tt class="function">handle</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>customHandler=None</var><big>]</big><var>, </var><big>[</big><var>context=5</var><big>]</big><var>, </var><big>[</big><var>**params</var><big>]</big>)</td></tr></table>
+<dd>
+    The <var>customHandler</var> parameter can be any error handler function including those in the <tt class="module">web.error.handler</tt> module. <var>context</var> which sets how many lines of code to display in tracebacks and can be set independantly of your error handler and the values will be built into the values in the <var>dict</var> parameter. All other parameters are passed to the second parameter of the customHandler as a dictionary.
+</dl>
+
+<P>
+In the example below we specify <var>customHandler</var> as the <tt class="function">web.error.handler.text</tt> handler to ouput a text representation of the error:
+
+<P>
+<div class="verbatim"><pre>
+import web.error, web.error.handler; web.error.handle(web.error.handler.text)
+# This is line 2
+# This is line 3
+# This is line 4
+# This is line 5
+raise Exception('This error will be caught and nicely displayed')
+# This is line 7
+# This is line 8
+# This is line 9
+# This is line 10
+</pre></div>
+
+<P>
+This produces the output:
+
+<P>
+<div class="verbatim"><pre>
+Content-type: text/plain
+
+
+Exception
+Python 2.2.3 : C:\WINDOWS\Python22\pythonw.exe
+Sat Jul 10 17:43:09 2004
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ C:\Work\PythonWeb.org\CVS Branches\PythonWeb.org 0.4\doc\src\lib\test.py 
+    4 # This is line 4
+    5 # This is line 5
+    6 raise Exception('This error will be caught and nicely displayed')
+    7 # This is line 7
+    8 # This is line 8
+Exception undefined
+Exception: This error will be caught and nicely displayed
+    args = ('This error will be caught and nicely displayed',)
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File "test.py", line 6, in ?
+    raise Exception('This error will be caught and nicely displayed')
+Exception: This error will be caught and nicely displayed
+</pre></div>
+
+<P>
+Note that the handler printed Content-type HTTP header. This is so that the output could be displayed in a web browser. If this header wasn't displayed you would see an <code>Internal Server Error 500</code> message in the browser.
+
+<P>
+If you are not writing a web application you can configure the error handler not to display the HTTP header. You can pass parameters to all of the handlers by specifying them as <var>param=value</var> pairs in the <tt class="function">web.error.handle()</tt> function after the first parameter as shown in the example below.
+
+<P>
+The example below would produce the same output but without the HTTP header:
+
+<P>
+<div class="verbatim"><pre>
+import web.error, web.error.handler; web.error.handle(web.error.handler.text, header=False)
+</pre></div>
+
+<P>
+If you want to control the number of lines of code displayed in the error output you can set the <var>context</var> parameter. This is the number of lines to be displayed around each line of the traceback. In the example below we set <code>context=3</code> to reduce the amount of output:
+
+<P>
+<div class="verbatim"><pre>
+import web.error, web.error.handler; web.error.handle(web.error.handler.text, header=False, context=3)
+</pre></div>
+
+<P>
+The output is:
+
+<P>
+<div class="verbatim"><pre>
+Exception
+Python 2.2.3 : C:\WINDOWS\Python22\pythonw.exe
+Sat Jul 10 17:47:18 2004
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ C:\Work\PythonWeb.org\CVS Branches\PythonWeb.org 0.4\doc\src\lib\test.py 
+    5 # This is line 5
+    6 raise Exception('This error will be caught and nicely displayed')
+    7 # This is line 7
+Exception undefined
+Exception: This error will be caught and nicely displayed
+    args = ('This error will be caught and nicely displayed',)
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File "test.py", line 8, in ?
+    raise Exception('This error will be caught and nicely displayed')
+Exception: This error will be caught and nicely displayed
+</pre></div>
+
+<P>
+Note that there are fewer lines of code in the code display of the traceback than before. 
+
+<P>
+There are three built-in handlers besides <code>web.error.handler.text</code> used in the examples so far. All of the built-in handlers support the <var>context</var> parameter to adjust the number of lines of code displayed in the output.
+
+<P>
+<DL>
+<DT><STRONG><tt class="function">web.error.handler.text</tt></STRONG></DT>
+<DD>Produces a text output of the code and the traceback. By default an HTTP header is produced but this can be disabled by setting <var>header</var> to <code>False</code>.
+
+<P>
+</DD>
+<DT><STRONG><tt class="function">web.error.handler.html</tt></STRONG></DT>
+<DD>Produces an HTML output of the code and the traceback. By default an HTTP header is produced but this can be disabled by setting <var>header</var> to <code>False</code>.
+
+<P>
+</DD>
+<DT><STRONG><tt class="function">web.error.handler.textfile</tt></STRONG></DT>
+<DD>Writes a text output of the code and the traceback to the file specified by the <code>file</code> parameter. By default a line is printed to inform the user that the error occured. This can be disabled by setting <code>print</code> to <code>False</code>. 
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+Every time an error occurs the file is over-written.</span>
+
+<P>
+</DD>
+<DT><STRONG><tt class="function">web.error.handler.htmlfile</tt></STRONG></DT>
+<DD>Writes an HTML output of the code and the traceback to the file specified by the <code>file</code> parameter. By default a line is printed to inform the user that the error occured. This can be disabled by setting <code>print</code> to <code>False</code>.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+Every time an error occurs the file is over-written.</span>
+
+<P>
+</DD>
+</DL>
+
+<P>
+All of the handlers are used in the same way.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.6.1 Basic Usage" 
+  rel="prev" title="1.6.1 Basic Usage" 
+  HREF="node76.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.6 web.error  " 
+  rel="parent" title="1.6 web.error  " 
+  href="module-web.error.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.6.3 Creating Custom Handlers" 
+  rel="next" title="1.6.3 Creating Custom Handlers" 
+  HREF="node78.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node76.html">1.6.1 Basic Usage</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.error.html">1.6 web.error  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node78.html">1.6.3 Creating Custom Handlers</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

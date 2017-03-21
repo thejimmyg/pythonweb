@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="module-web.form.field.extra.html">
+<LINK REL="prev" href="module-web.form.field.basic.html">
+<LINK REL="parent" HREF="node83.html">
+<LINK REL="next" href="module-web.form.field.extra.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="web.form.field.typed -- Typed fields for use with web.form and web.database.object">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.7.4.2 web.form.field.typed -- Typed fields for use with web.form and web.database.object</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.7.4.1 web.form.field.basic  " 
+  href="module-web.form.field.basic.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.7.4 Fields" 
+  HREF="node83.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.7.4.3 web.form.field.extra  " 
+  href="module-web.form.field.extra.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.form.field.basic.html">1.7.4.1 web.form.field.basic  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node83.html">1.7.4 Fields</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.form.field.extra.html">1.7.4.3 web.form.field.extra  </A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003742000000000000000">&nbsp;</A>
+<BR>
+1.7.4.2 <tt class="module">web.form.field.typed</tt> -- Typed fields for use with <tt class="module">web.form</tt> and <tt class="module">web.database.object</tt>
+</H3>
+
+
+<P>
+This module provides fields to support the following data types:
+
+<P>
+<table border align="center" style="border-collapse: collapse">
+  <thead>
+    <tr class="tableheader">
+      <th align="left"><b>Type</b>&nbsp;</th>
+      <th align="left"><b>Description</b>&nbsp;</th>
+      </tr>
+    </thead>
+  <tbody valign="baseline">
+    <tr><td align="left" valign="baseline"><code><code>Char</code></code></td>
+        <td align="left">A character field taking strings of length 1</td>
+    <tr><td align="left" valign="baseline"><code><code>String</code></code></td>
+        <td align="left">A string field taking strings of up to 255 characters</td>
+    <tr><td align="left" valign="baseline"><code><code>Text</code></code></td>
+        <td align="left">A text field for storing large amounts of text (up to 16k characters)</td>
+    <tr><td align="left" valign="baseline"><code><code>Integer</code></code></td>
+        <td align="left">An integer field taking any integer that is a valid Python integer (but <b>not</b> long)</td>
+    <tr><td align="left" valign="baseline"><code><code>Float</code></code></td>
+        <td align="left">A float field taking Python float values</td>
+    <tr><td align="left" valign="baseline"><code><code>Date</code></code></td>
+        <td align="left">A date field. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores days, months and years, any other information is trunkated. Dates from <code>0001-01-01</code> to <code>9999-12-31</code>.</td>
+    <tr><td align="left" valign="baseline"><code><code>Time</code></code></td>
+        <td align="left">A time field. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores hours, minutes and seconds, any other information is trunkated.</td>
+    <tr><td align="left" valign="baseline"><code><code>DateTime</code></code></td>
+        <td align="left">A datetime field. Takes values in the form of python <tt class="module">datetime</tt> objects. Only stores days, months, years, hours, minutes and seconds, any other information is trunkated.</td></tbody>
+</table>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+These <tt class="class">Field</tt> objects correspond to the fields used by the <tt class="module">web.database</tt> module. There is a reason for this; the <tt class="class">Column</tt> objects in the <tt class="module">web.database.object</tt> module are each derived from a <tt class="module">web.form.field.typed</tt> <tt class="class">Field</tt>. This means that columns from a <tt class="class">web.database.object.Row</tt> are also valid form fields. This is used in the <tt class="class">web.database.object</tt> classes to automatically generate and validate forms which can be used seamlessly and easily submit and edit data in a database.</span>
+
+<P>
+Each of the data types listed below has three types of field specified:
+
+<P>
+<DL>
+<DT><STRONG><code>Free</code></STRONG></DT>
+<DD>Allows the user to specify any value
+</DD>
+<DT><STRONG><code>Select</code></STRONG></DT>
+<DD>Allows the user to choose one value from a number of values specified
+</DD>
+<DT><STRONG><code>CheckBoxGroup</code></STRONG></DT>
+<DD>Allows the user to choose more than one option
+</DD>
+</DL>
+
+<P>
+The typed field classes have the same interface as their basic equivalents except that:
+
+<P>
+1. The Select and CheckBoxGroup classes take lists of their respective data types rather than <code>value, label</code> pairs.
+
+<P>
+2. The fields return their repsective Python object (or list of objects) when their <code>.value</code> attribute is called.
+
+<P>
+All the fields can either take their respective data type or the value <code>None</code> as possible values for the field. The only complications are the <tt class="class">web.form.field.typed.String</tt>, <tt class="class">web.form.field.typed.Text</tt> and classweb.form.field.typed.Char objects. 
+
+<P>
+If someone enters no information into a String field there is a choice of whether to treat this as a null string <code>''</code> or a NULL value <code>None</code>. To specify which behaviour you would like the <code>web.form.field.typed.String</code> object accepts the parameter <var>treatNullStringAsNone</var> which takes a default value of <code>True</code>. The <code>web.form.field.typed.Char</code> and <code>web.form.field.typed.Text</code> fields also accept the <var>treatNullStringAsNone</var> parameter.
+
+<P>
+The <code>web.form.field.typed.Integer</code> field also takes the parameters <var>min</var> and <var>max</var> to specify the minimum and maximum values and the parameters <var>minError</var> and <var>maxError</var> to specify the errors to display if the values are outside the specified minimum and maximum.
+
+<P>
+One more complication is how to display <code>None</code> values in the <tt class="class">web.form.field.typed.StringSelect</tt> and classweb.form.field.typed.CharSelect objects. If you choose the string <code>'None'</code> to display it how do you distinguish <code>None</code> from <code>'None'</code>? Any value you choose could be confused with another string. The solution is to set a string value to dispaly <code>None</code> that isn't another value in the <var>options</var>. You can set this using the <var>displayNoneAs</var> parameter. <code>None</code> values for the other Select fields are just displayed as <code>''</code>.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.7.4.1 web.form.field.basic  " 
+  rel="prev" title="1.7.4.1 web.form.field.basic  " 
+  href="module-web.form.field.basic.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.7.4 Fields" 
+  rel="parent" title="1.7.4 Fields" 
+  HREF="node83.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.7.4.3 web.form.field.extra  " 
+  rel="next" title="1.7.4.3 web.form.field.extra  " 
+  href="module-web.form.field.extra.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="module-web.form.field.basic.html">1.7.4.1 web.form.field.basic  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node83.html">1.7.4 Fields</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="module-web.form.field.extra.html">1.7.4.3 web.form.field.extra  </A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

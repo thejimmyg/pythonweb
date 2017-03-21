@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="module-web.error.html">
+<LINK REL="prev" href="module-web.database.html">
+<LINK REL="parent" href="web.html">
+<LINK REL="next" HREF="node50.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="web.database.object -- An object relation mapper built on the web.database and web.form modules">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.5 web.database.object -- An object relation mapper built on the web.database and web.form modules</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.11 Future" 
+  HREF="node48.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.1 Introduction" 
+  HREF="node50.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node48.html">1.4.11 Future</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node50.html">1.5.1 Introduction</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION003500000000000000000">&nbsp;</A>
+<BR>
+1.5 <tt class="module">web.database.object</tt> -- An object relation mapper built on the <tt class="module">web.database</tt> and <tt class="module">web.form</tt> modules
+</H1>
+
+
+<P>
+The <tt class="module">web.database.object</tt> module is an object-relational mapper. It allows you to simply define complex database structures in Python code and then create the necessary tables automatically. It then allows you to manipulate the Python objects you have defined to transparently manipulate the underlying database including the facility to use multiple joins without knowing any SQL. 
+
+<P>
+Furthermore the table column classes are derived from <tt class="module">web.form.field</tt> objects which means you can transparently create HTML interfaces to edit the data structures through a web browser. This makes <tt class="module">web.database.object</tt> module ideal as a middle layer for writing data-driver websites although it has broader uses as well.
+
+<P>
+A database object can in theory have any storage driver (text, XML, SQL Datbase, DBM) although currently only a driver for the <tt class="module">web.database</tt> module has been written. This means that any storage system with 
+a driver for <tt class="module">web.database</tt> can be used with <tt class="module">web.database.object</tt>. This currently includes MySQL, ODBC, SQLite and, to an extent, Gadlfy.
+
+<P>
+
+<p><hr>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node50.html">1.5.1 Introduction</a>
+<UL>
+<LI><A href="node51.html">1.5.1.1 Requirements</a>
+<LI><A href="node52.html">1.5.1.2 Compared To Other Database Wrappers</a>
+</ul>
+<LI><A href="node53.html">1.5.2 Introductory Example</a>
+<UL>
+<LI><A href="example-command-web-database-object-simple.html">1.5.2.1 Full Code Listing</a>
+<LI><A href="node55.html">1.5.2.2 Using Alternative Keys</a>
+<LI><A href="node56.html">1.5.2.3 Available Columns</a>
+</ul>
+<LI><A href="node57.html">1.5.3 One-To-Many Mappings</a>
+<UL>
+<LI><A href="example-command-web-database-object-multiple.html">1.5.3.1 Full Code Listing</a>
+</ul>
+<LI><A href="node59.html">1.5.4 Many-To-Many Mappings</a>
+<UL>
+<LI><A href="example-command-web-database-object-related.html">1.5.4.1 Full Code Listing</a>
+</ul>
+<LI><A href="node61.html">1.5.5 Building Queries</a>
+<UL>
+<LI><A href="node62.html">1.5.5.1 How It Works</a>
+<LI><A href="node63.html">1.5.5.2 Supported Operators</a>
+<LI><A href="node64.html">1.5.5.3 Supported Functions</a>
+<LI><A href="example-command-web-database-object-query.html">1.5.5.4 Full Code Listing</a>
+</ul>
+<LI><A href="node66.html">1.5.6 Creating Forms/Tables</a>
+<UL>
+<LI><A href="example-webserver-web-database-object-form.html">1.5.6.1 Full Code Listing</a>
+</ul>
+<LI><A href="node68.html">1.5.7 Creating Tables by Defining Classes</a>
+<LI><A href="example-command-web-database-object-others.html">1.5.8 Other Useful Features</a>
+<LI><A href="node70.html">1.5.9 Class Reference</a>
+<UL>
+<LI><A href="node71.html">1.5.9.1 The Database Object</a>
+<LI><A href="node72.html">1.5.9.2 The Table Object</a>
+<LI><A href="node73.html">1.5.9.3 The Row Object</a>
+</ul>
+<LI><A href="node74.html">1.5.10 Future</a>
+</ul>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.11 Future" 
+  rel="prev" title="1.4.11 Future" 
+  HREF="node48.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.5.1 Introduction" 
+  rel="next" title="1.5.1 Introduction" 
+  HREF="node50.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node48.html">1.4.11 Future</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node50.html">1.5.1 Introduction</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

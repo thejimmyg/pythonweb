@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node22.html">
+<LINK REL="prev" HREF="node20.html">
+<LINK REL="parent" HREF="node20.html">
+<LINK REL="next" HREF="node22.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Overview of Approach">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.1.1 Overview of Approach</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.1 Introduction" 
+  HREF="node20.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.1 Introduction" 
+  HREF="node20.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.1.2 Supported Databases" 
+  HREF="node22.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node20.html">1.4.1 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node20.html">1.4.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node22.html">1.4.1.2 Supported Databases</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003411000000000000000">
+1.4.1.1 Overview of Approach</A>
+</H3>
+
+<P>
+The approach taken in the <tt class="module">web.database</tt> module is to take the lowest common demoniator of features across databases and implement them in a way that provides consistent returns from the same SQL call across different databases. 
+
+<P>
+The drawback of this approach is that some of the fields available in a particular database will not be available in the module. Also there is no support for complex SQL commands including indexes or views since not all databases support them. The approach is only to support what is available to all databases being used.
+
+<P>
+These drawbacks do not pose a significant problem because many projects will use the basic commands almost exclusively and will never need any of the features included in the SQL 92 specification but not supported by the modules.
+
+<P>
+If a database-specific feature is needed for a specific call you can always use SQL directly. By using the <tt class="module">web.database</tt> module as much as possible you will still make your code more portable across databases should you ever need to change servers.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.1 Introduction" 
+  rel="prev" title="1.4.1 Introduction" 
+  HREF="node20.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.1 Introduction" 
+  rel="parent" title="1.4.1 Introduction" 
+  HREF="node20.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.1.2 Supported Databases" 
+  rel="next" title="1.4.1.2 Supported Databases" 
+  HREF="node22.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node20.html">1.4.1 Introduction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node20.html">1.4.1 Introduction</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node22.html">1.4.1.2 Supported Databases</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

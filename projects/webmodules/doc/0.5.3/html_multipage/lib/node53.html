@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node54.html" />
+<link rel="prev" href="node52.html" />
+<link rel="parent" href="node52.html" />
+<link rel="next" href="node54.html" />
+<meta name='aesop' content='information' />
+<title>1.4.12.1 The SELECT Statement</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12 SQL Reference"
+  href="node52.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node52.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.2 The WHERE Clause"
+  href="node54.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node52.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node52.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node54.html">1.4.12.2 The WHERE Clause</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node53.html#SECTION0034121100000000000000">1.4.12.1.1 Select Some Columns</a>
+<LI><A href="node53.html#SECTION0034121200000000000000">1.4.12.1.2 Select All Columns</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+<HR>
+
+<H3><A NAME="SECTION0034121000000000000000">
+1.4.12.1 The SELECT Statement</A>
+</H3>
+
+<P>
+The SELECT statement is used to select data from a table. The tabular result is stored in a result table (called the result-set).
+
+<P>
+<div class="verbatim"><pre>
+SELECT column_name(s) FROM table_name
+</pre></div>
+
+<P>
+
+<H4><A NAME="SECTION0034121100000000000000">
+1.4.12.1.1 Select Some Columns</A>
+</H4>
+
+<P>
+To select the columns named <code>LastName</code> and <code>FirstName</code>, use a SELECT statement like this:
+
+<P>
+SELECT LastName, FirstName FROM Person
+
+<P>
+Table Person:
+<div class="verbatim"><pre>
++----------+-----------+--------+-------------+
+| LastName | FirstName | Number | DateOfBirth |
++----------+-----------+--------+-------------+
+| Smith    | John      | 10     | 1980-01-01  |
++----------+-----------+--------+-------------+
+| Doe      | John      | 3      | 1981-12-25  |
++----------+-----------+--------+-------------+
+</pre></div>
+
+<P>
+Result Set:
+<div class="verbatim"><pre>
++----------+-----------+
+| LastName | FirstName |
++----------+-----------+
+| Smith    | John      |
++----------+-----------+
+| Doe      | John      |
++----------+-----------+
+</pre></div>
+
+<P>
+The order of the columns in the result is the same as the order of the columns in the query.
+
+<P>
+
+<H4><A NAME="SECTION0034121200000000000000">
+1.4.12.1.2 Select All Columns</A>
+</H4>
+
+<P>
+To select all columns from the <code>Person</code> table, use a <code>*</code> symbol instead of column names, like this: 
+
+<P>
+<div class="verbatim"><pre>
+SELECT * FROM Person
+</pre></div>
+
+<P>
+Result Set:
+<div class="verbatim"><pre>
++----------+-----------+--------+-------------+
+| LastName | FirstName | Number | DateOfBirth |
++----------+-----------+--------+-------------+
+| Smith    | John      | 10     | 1980-01-01  |
++----------+-----------+--------+-------------+
+| Doe      | John      | 3      | 1981-12-25  |
++----------+-----------+--------+-------------+
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12 SQL Reference"
+  href="node52.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node52.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.2 The WHERE Clause"
+  href="node54.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node52.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node52.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node54.html">1.4.12.2 The WHERE Clause</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

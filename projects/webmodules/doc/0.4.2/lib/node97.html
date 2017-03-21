@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node98.html">
+<LINK REL="prev" href="example-webserver-web-session-file.html">
+<LINK REL="parent" href="session.html">
+<LINK REL="next" HREF="node98.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Session Object Reference">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.10.3 Session Object Reference</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.2 Example" 
+  href="example-webserver-web-session-file.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.4 Multiple Applications" 
+  HREF="node98.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-session-file.html">1.10.2 Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node98.html">1.10.4 Multiple Applications</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031030000000000000000">
+1.10.3 Session Object Reference</A>
+</H2>
+
+<P>
+The session object supports the following methods:
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-202"><tt class="class">session</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-203"><tt class="method">get</tt></a></b>(</nobr></td>
+  <td><var><var>key</var>, </var><big>[</big><var>block=True</var><big>]</big>)</td></tr></table>
+<dd>
+Get the value of <var>key</var> from the session store. If <var>block</var> is <code>True</code> reserved keys will be blocked otherwise the method will return their value.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-204"><tt class="method">set</tt></a></b>(</nobr></td>
+  <td><var><var>key</var>, <var>key</var>, </var><big>[</big><var>block=True</var><big>]</big>)</td></tr></table>
+<dd>
+Set the value of <var>key</var> to the value <var>value</var> in the session store. If <var>block</var> is <code>True</code> reserved keys will be blocked otherwise they will be set.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-205"><tt class="method">delete</tt></a></b>(</nobr></td>
+  <td><var><var>key</var>, </var><big>[</big><var>block=True</var><big>]</big>)</td></tr></table>
+<dd>
+Remove the variable <var>key</var> from the session store. If <var>block</var> is <code>True</code> reserved keys will be blocked.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-206"><tt class="method">has_key</tt></a></b>(</nobr></td>
+  <td><var><var>key</var>, </var><big>[</big><var>block=True</var><big>]</big>)</td></tr></table>
+<dd>
+Returns <code>True</code> if <var>key</var> exists on the session store otherwise <code>False</code>. If <var>Key</var> is a blocked variable and <var>block</var> is <code>True</code> the method will return <code>False</code>.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-207"><tt class="method">destroy</tt></a></b>(</nobr></td>
+  <td><big>[</big><var>removeCookie=False</var><big>]</big>)</td></tr></table>
+<dd>
+Destroy the session and remove all session data. If <var>removeCookie</var> is <code>True</code> an HTTP header is produced to remove the cookie.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+If you set <var>removeCookie</var> to <code>True</code> then you have to be sure you haven't already output the Content-type HTTP header or the cookie HTTP header will just be displayed as plain text.</span>
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-208"><tt class="method">valid</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+Returns <code>True</code> if the session is still valid, <code>False</code> otherwise.
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-209"><tt class="method">reserve</tt></a></b>(</nobr></td>
+  <td><var><var>key</var></var>)</td></tr></table>
+<dd>
+Add a reserved key
+</dl>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-210"><tt class="method">release</tt></a></b>(</nobr></td>
+  <td><var><var>key</var></var>)</td></tr></table>
+<dd>
+Release a reserved key so that it can be used again.
+</dl>
+
+<P>
+All session objects also have the read only member variables which you should not set:
+
+<P>
+<dl><dt><b><a name="l2h-211"><tt class="member">sessionID</tt></a></b>
+<dd>
+The session ID for the current session. This is a 32 character string.
+</dl>
+<dl><dt><b><a name="l2h-212"><tt class="member">app</tt></a></b>
+<dd>
+The name of the application using this session object
+</dl>
+<dl><dt><b><a name="l2h-213"><tt class="member">expire</tt></a></b>
+<dd>
+The expire length in seconds (the minimum length of the session) 
+</dl>
+<dl><dt><b><a name="l2h-214"><tt class="member">cookie</tt></a></b>
+<dd>
+A dictionary containing the cookie parameters. <span class="warning"><b class="label">Warning:</b>
+Setting the values of the cookie dictionary will have no effect since the cookie is only set if no session is present and only in the <tt class="method">start()</tt> method of the <tt class="module">session</tt> module.</span>
+</dl>
+<dl><dt><b><a name="l2h-215"><tt class="member">seed</tt></a></b>
+<dd>
+The seed used to generate the session ID
+</dl>
+<dl><dt><b><a name="l2h-216"><tt class="member">cleanup</tt></a></b>
+<dd>
+The probability of checking for expired sessions
+</dl>
+<dl><dt><b><a name="l2h-217"><tt class="member">reserved</tt></a></b>
+<dd>
+A list of reserved sessio variable keys.
+</dl>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.2 Example" 
+  rel="prev" title="1.10.2 Example" 
+  href="example-webserver-web-session-file.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.4 Multiple Applications" 
+  rel="next" title="1.10.4 Multiple Applications" 
+  HREF="node98.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-webserver-web-session-file.html">1.10.2 Example</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node98.html">1.10.4 Multiple Applications</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

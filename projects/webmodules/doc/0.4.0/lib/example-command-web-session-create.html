@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node101.html">
+<LINK REL="prev" HREF="node99.html">
+<LINK REL="parent" href="session.html">
+<LINK REL="next" HREF="node101.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Setting up a Session Environment">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.10.7 Setting up a Session Environment</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.6 Session Destruction" 
+  HREF="node99.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.8 Future" 
+  HREF="node101.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node99.html">1.10.6 Session Destruction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node101.html">1.10.8 Future</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031070000000000000000">&nbsp;</A>
+<BR>
+1.10.7 Setting up a Session Environment
+</H2>
+
+<P>
+The <tt class="module">session</tt> module has another function, <tt class="module">session.setup()</tt>. This is used to setup the environment in which sessions are stored so that you can separate your session related code from the code which sets up the environment.
+
+<P>
+To use the database session driver, for example, a number of tables must be setup in the database.
+
+<P>
+Quick example to setup the sessions database using SQLite:
+
+<P>
+<div class="verbatim">
+<pre>import sys; sys.path.append('../../../') # show python where the web modules are
+
+import web
+import web.database
+import web.session
+
+connection = web.database.connect(type='sqlite', database='example-web-session.db')
+cursor = connection.cursor()
+
+sessionSetup = web.session.setup(storage='database', cursor=cursor)
+errors = sessionSetup.createTables()
+if errors:
+    print '&#92;n'.join(errors)
+        
+connection.commit() </pre>
+<div class="footer">
+<a href="command-web-session-create.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-session-create.py</span>).</a>
+</div></div>
+
+<P>
+The <tt class="class">SessionDatabaseSetup</tt> object has the following methods:
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<a name="l2h-218"><tt class="class">SessionDatabaseSetup</tt></a></b>(</nobr></td>
+  <td>)</td></tr></table>
+<dd>
+<DL>
+<DT><STRONG><tt class="method">createTables()</tt></STRONG></DT>
+<DD>Create the necessary tables
+</DD>
+<DT><STRONG><tt class="method">dropTables()</tt></STRONG></DT>
+<DD>Remove the session tables
+</DD>
+<DT><STRONG><tt class="method">tablesExist()</tt></STRONG></DT>
+<DD>Returns <code>True</code> if all the tables exist, <code>False</code> if any are missing
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.10.6 Session Destruction" 
+  rel="prev" title="1.10.6 Session Destruction" 
+  HREF="node99.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.10 web.session  " 
+  rel="parent" title="1.10 web.session  " 
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.10.8 Future" 
+  rel="next" title="1.10.8 Future" 
+  HREF="node101.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node99.html">1.10.6 Session Destruction</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.10 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node101.html">1.10.8 Future</A>
+<hr>
+<span class="release-info">Documentation released on 24th July 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

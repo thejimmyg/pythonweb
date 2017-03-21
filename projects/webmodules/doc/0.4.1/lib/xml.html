@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="prev" href="util.html">
+<LINK REL="parent" href="web.html">
+<LINK REL="next" href="reporting-bugs.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="web.xml -- XSLT Transform">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.13 web.xml -- XSLT Transform</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.12 web.util  " 
+  href="util.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="A. Reporting Bugs" 
+  href="reporting-bugs.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="util.html">1.12 web.util  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="reporting-bugs.html">A. Reporting Bugs</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0031300000000000000000">&nbsp;</A>
+<BR>
+1.13 <tt class="module">web.xml</tt> -- XSLT Transform
+</H1>
+
+
+<P>
+The <tt class="module">web.xml</tt> module currently only provides one function, <tt class="function">transform()</tt>, used to apply an XSL Stylesheet to an XML document.
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-227"><tt class="function">transform</tt></a></b>(</nobr></td>
+  <td><var><var>input</var>, <var>stylesheet</var>, <var>output</var></var>)</td></tr></table>
+<dd>
+    <DL>
+<DT><STRONG><var>input</var></STRONG></DT>
+<DD>The path to the XML file
+    
+</DD>
+<DT><STRONG><var>stylesheet</var></STRONG></DT>
+<DD>The path to the stylesheet file
+    
+</DD>
+<DT><STRONG><var>output</var></STRONG></DT>
+<DD>The file where the output should be written
+    
+</DD>
+</DL>
+</dl>
+
+<P>
+For Example:
+
+<P>
+<span class="file">file-web-xml.xml</span>
+<div class="verbatim">
+<pre>&lt;source&gt;
+
+&lt;title&gt;XSL&lt;/title&gt;
+&lt;author&gt;John Smith&lt;/author&gt;
+
+&lt;/source&gt;</pre>
+<div class="footer">
+<a href="file-web-xml.txt" type="text/plain">Download as text (original file name: <span class="file">file-web-xml.xml</span>).</a>
+</div></div>
+
+<P>
+<span class="file">file-web-xml.xsl</span>
+<div class="verbatim">
+<pre>&lt;xsl:stylesheet version = '1.0'
+     xmlns:xsl='http://www.w3.org/1999/XSL/Transform'&gt;
+&lt;xsl:template match="/"&gt;
+     &lt;h1&gt;
+          &lt;xsl:value-of select="//title"/&gt;
+     &lt;/h1&gt;
+     &lt;h2&gt;
+          &lt;xsl:value-of select="//author"/&gt;
+     &lt;/h2&gt;
+&lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;</pre>
+<div class="footer">
+<a href="file-web-xml-xsl.txt" type="text/plain">Download as text (original file name: <span class="file">file-web-xml.xsl</span>).</a>
+</div></div>
+
+<P>
+And the code to transform it:
+
+<P>
+<span class="file">command-web-xml.py</span>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the web modules are
+import web.xml
+web.xml.transform("file-web-xml.xml","file-web-xml.xsl","xml.html")</pre>
+<div class="footer">
+<a href="command-web-xml.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-xml.py</span>).</a>
+</div></div>
+
+<P>
+This creates the output file <span class="file">test.html</span>:
+
+<P>
+<div class="verbatim"><pre>
+&lt;?xml version="1.0"?&gt;
+&lt;h1&gt;XSL&lt;/h1&gt;&lt;h2&gt;John Smith&lt;/h2&gt;
+</pre></div>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.12 web.util  " 
+  rel="prev" title="1.12 web.util  " 
+  href="util.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1. Web Modules" 
+  rel="parent" title="1. Web Modules" 
+  href="web.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="A. Reporting Bugs" 
+  rel="next" title="A. Reporting Bugs" 
+  href="reporting-bugs.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="util.html">1.12 web.util  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="web.html">1. Web Modules</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="reporting-bugs.html">A. Reporting Bugs</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

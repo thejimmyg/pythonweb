@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node187.html" />
+<link rel="prev" href="example-wsgiError.html" />
+<link rel="parent" href="node183.html" />
+<link rel="next" href="node187.html" />
+<meta name='aesop' content='information' />
+<title>1.14.3.3 web.wsgi.error.documents - Error Documents</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.3.2 web.wsgi.error - Error"
+  href="example-wsgiError.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14.3 The PythonWeb Middleware"
+  href="node183.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.3.4 web.wsgi.database - Database"
+  href="node187.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiError.html">1.14.3.2 web.wsgi.error - Error</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node183.html">1.14.3 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node187.html">1.14.3.4 web.wsgi.database - Database</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031433000000000000000">
+1.14.3.3 <tt class="module">web.wsgi.error.documents</tt> - Error Documents</A>
+</H3>
+
+<P>
+An error document is simply a web page which is used to let the user know that an error occured. 
+
+<P>
+<span class="note"><b class="label">Note:</b>
+You will often see "Internal Server Error" error documents if you are using Apache and a CGI script does not have the correct permissions for example. This is an error document. In Apache you can change the error page displayed using a .htaccess file. In WSGI you can use the error document middleware to provide custom error documents.</span>
+
+<P>
+If a WSGI application or calls <tt class="function">start_response()</tt> with a <code>status</code> which is not <code>200</code> and is not handled by any middleware, the server will need to display an error message or handle the error in appropriate way, usually by displaying an error document in a similar way to the way Apache would.
+
+<P>
+The error document middleware lets you intercept these status messages before they are sent to the server to display a custom error document.
+
+<P>
+The <code>Documents</code> class lets you specify error documents in three ways, as files, text, or by calling a function. Each of the three methods involves specifying the status code as an integer key to the dictionary and the object as the item.
+
+<P>
+For example, to specify a file <span class="file">error/500.html</span> to be displayed if a <code>500</code> server error occurs you could specify <code>files={500:'error/500.html'}</code>. To specify a the error document as a text you could use the following: <code>text={500:'&lt;html&gt;&lt;h1&gt;Internal Server Error&lt;/h1&gt;&lt;/html&gt;'}</code>.
+
+<P>
+Here is a full example:
+
+<P>
+<A NAME="example-wsgiDocuments"></A><div class="verbatim">
+<pre>import web.wsgi.error.documents
+
+def simpleApp(environ, start_response):
+    start_response('500 There was a server error', [('Content-type','text/html')])
+    return []
+ 
+application = web.wsgi.error.documents.Documents(
+    simpleApp,
+    text = {
+        500:"&lt;html&gt;&lt;body&gt;&lt;h1&gt;A server error occured&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;"
+    }
+)
+
+</pre>
+<div class="footer">
+<a href="wsgiDocuments.txt" type="text/plain">Download as text (original file name: <span class="file">wsgiDocuments.py</span>).</a>
+</div></div>
+
+<P>
+You can test this example by running the WSGI server <span class="file">scripts/WSGIServer.py</span> and visiting <a class="url" href="http://localhost:8000/documents">http://localhost:8000/documents</a>
+<P>
+You can also provide more advanced error document handling by specifying a function to handle the error. For example:
+
+<P>
+<div class="verbatim"><pre>
+def serverError(environ):
+    import wsgi
+    return """&lt;html&gt;&lt;h1&gt;Internal Server Error&lt;/h1&gt;
+    &lt;p&gt;The page %s caused an error&lt;\p&gt;&lt;/html&gt;"""%wsgi.currentURL(environ)
+</pre></div>
+
+<P>
+You could then specify <code>functions={500:serverError}</code>. The <var>environ</var> paramter is the full WSGI environ dictionary passed to all WSGI applications, and as such can be used for advanced dynamic error document generation.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+You cannot specify different types of document for the same error. For example if you specify a text server error document for error <code>500</code>, you cannot also specify a function server error document for error <code>500</code>.</span>
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-326' xml:id='l2h-326' class="class">Documents</tt></b>(</nobr></td>
+  <td><var><var>application</var>, </var><big>[</big><var>files={}</var><big>]</big><var>, </var><big>[</big><var>text={}</var><big>]</big><var>, </var><big>[</big><var>functions={}</var><big>]</big><var></var>)</td></tr></table></dt>
+<dd>
+
+<P>
+<DL>
+<DT><STRONG><var>application</var></STRONG></DT>
+<DD>A WSGI application or middleware component
+
+<P>
+</DD>
+<DT><STRONG><var>files={}</var></STRONG></DT>
+<DD>Any errors which should trigger the display of an error document from a file.
+
+<P>
+</DD>
+<DT><STRONG><var>text={}</var></STRONG></DT>
+<DD>Any errors which should trigger the display of an error document from a specified Python string.
+
+<P>
+</DD>
+<DT><STRONG><var>functions={}</var></STRONG></DT>
+<DD>Any errors which should trigger the display of an error document from a function.
+
+<P>
+</DD>
+</DL>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.14.3.2 web.wsgi.error - Error"
+  href="example-wsgiError.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.14.3 The PythonWeb Middleware"
+  href="node183.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.14.3.4 web.wsgi.database - Database"
+  href="node187.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="example-wsgiError.html">1.14.3.2 web.wsgi.error - Error</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node183.html">1.14.3 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node187.html">1.14.3.4 web.wsgi.database - Database</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

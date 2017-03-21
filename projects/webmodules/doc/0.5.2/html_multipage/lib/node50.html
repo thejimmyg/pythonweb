@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node51.html" />
+<link rel="prev" href="node49.html" />
+<link rel="parent" href="node47.html" />
+<link rel="next" href="node51.html" />
+<meta name='aesop' content='information' />
+<title>1.4.12.3 The INSERT INTO Statement</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.2 The WHERE Clause"
+  href="node49.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node47.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.4 The UPDATE Statement"
+  href="node51.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node49.html">1.4.12.2 The WHERE Clause</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node47.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node51.html">1.4.12.4 The UPDATE Statement</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node50.html#SECTION0034123100000000000000">1.4.12.3.1 Insert a New Row</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+<HR>
+
+<H3><A NAME="SECTION0034123000000000000000">
+1.4.12.3 The INSERT INTO Statement</A>
+</H3>
+
+<P>
+The INSERT INTO statement is used to insert new rows into a table.
+
+<P>
+Syntax
+<div class="verbatim"><pre>
+INSERT INTO table_name (column1, column2,...) VALUES (value1, value2,....)
+</pre></div>
+
+<P>
+
+<H4><A NAME="SECTION0034123100000000000000">
+1.4.12.3.1 Insert a New Row</A>
+</H4>
+
+<P>
+This Person table:
+<div class="verbatim"><pre>
++----------+-----------+--------+-------------+
+| LastName | FirstName | Number | DateOfBirth |
++----------+-----------+--------+-------------+
+| 'Smith'  | 'John'    | 10     | 1980-01-01  |
+| 'Doe'    | 'John'    | 3      | 1981-12-25  |
++----------+-----------+--------+-------------+
+</pre></div>
+
+<P>
+And this SQL statement:
+<div class="verbatim"><pre>
+INSERT INTO Person (LastName, FirstName, Number, DateOfBirth)
+VALUES ('Blair', 'Tony', 8, '1953-05-06')
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+<tt class="module">web.database</tt> expects the SQL to all be on one line. The line break here is for formatting</span>
+
+<P>
+Will give this result:
+
+<P>
+<div class="verbatim"><pre>
++----------+-----------+--------+-------------+
+| LastName | FirstName | Number | DateOfBirth |
++----------+-----------+--------+-------------+
+| 'Smith'  | 'John'    | 10     | 1980-01-01  |
+| 'Doe'    | 'John'    | 3      | 1981-12-25  |
+| 'Blair'  | 'Tony'    | 8      | 1953-05-06  |
++----------+-----------+--------+-------------+
+</pre></div>
+
+<P>
+If you are extremely careful, the column names can be omitted as long as the values are specified in the same order as the columns when the table was created.
+
+<P>
+The SQL below would achieve the same result as the previous SQL statement: 
+
+<P>
+<div class="verbatim"><pre>
+INSERT INTO Person VALUES ('Blair', 'Tony', 8, '1953-05-06')
+</pre></div>
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+ It is very easy to make a mistake with the shortened syntax so it is recommended you use the full version and specify the column names.</span>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.2 The WHERE Clause"
+  href="node49.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node47.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.4 The UPDATE Statement"
+  href="node51.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node49.html">1.4.12.2 The WHERE Clause</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node47.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node51.html">1.4.12.4 The UPDATE Statement</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on March 22, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

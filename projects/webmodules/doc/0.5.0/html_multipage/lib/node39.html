@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node51.html" />
+<link rel="prev" href="node35.html" />
+<link rel="parent" href="module-web.database.html" />
+<link rel="next" href="node40.html" />
+<meta name='aesop' content='information' />
+<title>1.4.9 SQL Reference</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.8.3 The Easy Way"
+  href="node38.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.9.1 The SELECT Statement"
+  href="node40.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node38.html">1.4.8.3 The Easy Way</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node40.html">1.4.9.1 The SELECT Statement</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION003490000000000000000">
+1.4.9 SQL Reference</A>
+</H2>
+
+<P>
+The SQL parser to parse <code>cursor.execute(sql, mode='portable')</code> statements has already been written and is available as a standalone module named <tt class="module">SQLParserTools</tt>. The approach of parsing an SQL statement just to rebuild it again in an abstraction layer function might sound unnecessary but the advantage is that the SQL written in this manner is guaranteed to function in the same way across all <tt class="module">web.database</tt> databases.
+
+<P>
+This specification implements what is considered the lowest possible useful SQL feature set which is commonly used and which all databases will support. A balance has had to be made between including useful features and excluding features which only some database engines support. Also no duplication of features has been included. For example <code>BETWEEN</code> can be implemented using <code>&gt;</code> and <code>&lt;</code> operators in the <code>WHERE</code> clause so has not been included but the <code>LIKE</code> operator has.
+
+<P>
+The specification includes:
+<DL>
+<DT><STRONG>SQL SELECT</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>SQL WHERE</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>SQL INSERT</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>SQL UPDATE</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>SQL DELETE</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>SQL ORDER BY</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>SQL AND &amp; OR</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>Simple Joins</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>SQL CREATE</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>SQL DROP</STRONG></DT>
+<DD>
+</DD>
+<DT><STRONG>NULL values</STRONG></DT>
+<DD>
+</DD>
+</DL>
+
+<P>
+
+<H4><A NAME="SECTION003490100000000000000">
+1.4.9.0.1 Database Tables</A>
+</H4>
+
+<P>
+A database most often contains one or more tables. Each table is identified by a name (e.g. <code>Customers</code> or <code>Orders</code>). Tables contain records (rows) with data.
+
+<P>
+Below is an example of a table called <code>Person</code>:
+<div class="verbatim"><pre>
++----------+-----------+--------+-------------+
+| LastName | FirstName | Number | DateOfBirth |
++----------+-----------+--------+-------------+
+| Smith    | John      | 10     | 1980-01-01  |
++----------+-----------+--------+-------------+
+| Doe      | John      | 3      | 1981-12-25  |
++----------+-----------+--------+-------------+
+</pre></div>
+
+<P>
+The table above contains two records (one for each person) and four columns (LastName, FirstName, Address, and DateOfBirth).
+
+<P>
+
+<H4><A NAME="SECTION003490200000000000000">
+1.4.9.0.2 Queries</A>
+</H4>
+
+<P>
+With SQL, we can query a database and have a result set returned.
+
+<P>
+A query looks like this:
+
+<P>
+<div class="verbatim"><pre>
+SELECT LastName FROM Person
+</pre></div>
+
+<P>
+Gives a result set like this:
+<div class="verbatim"><pre>
++----------+
+| LastName |
++----------+
+| Smith    |
++----------+
+| Doe      |
++----------+
+</pre></div>
+
+<P>
+<span class="note"><b class="label">Note:</b>
+Some database systems require a semicolon at the end of the SQL statement. <tt class="module">web.database</tt> does not.</span>
+
+<P>
+
+<p><br /></p><hr class='online-navigation' />
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><UL>
+<LI><A href="node39.html#SECTION003490100000000000000">1.4.9.0.1 Database Tables</a>
+<LI><A href="node39.html#SECTION003490200000000000000">1.4.9.0.2 Queries</a>
+</ul>
+<LI><A href="node40.html">1.4.9.1 The SELECT Statement</a>
+<UL>
+<LI><A href="node40.html#SECTION003491100000000000000">1.4.9.1.1 Select Some Columns</a>
+<LI><A href="node40.html#SECTION003491200000000000000">1.4.9.1.2 Select All Columns</a>
+</ul>
+<LI><A href="node41.html">1.4.9.2 The WHERE Clause</a>
+<UL>
+<LI><A href="node41.html#SECTION003492100000000000000">1.4.9.2.1 Using the WHERE Clause</a>
+<LI><A href="node41.html#SECTION003492200000000000000">1.4.9.2.2 Using Quotes</a>
+<LI><A href="node41.html#SECTION003492300000000000000">1.4.9.2.3 The LIKE Condition</a>
+</ul>
+<LI><A href="node42.html">1.4.9.3 The INSERT INTO Statement</a>
+<UL>
+<LI><A href="node42.html#SECTION003493100000000000000">1.4.9.3.1 Insert a New Row</a>
+</ul>
+<LI><A href="node43.html">1.4.9.4 The UPDATE Statement</a>
+<UL>
+<LI><A href="node43.html#SECTION003494100000000000000">1.4.9.4.1 Update one Column in a Row</a>
+<LI><A href="node43.html#SECTION003494200000000000000">1.4.9.4.2 Update several Columns in a Row</a>
+</ul>
+<LI><A href="node44.html">1.4.9.5 The DELETE Statement</a>
+<UL>
+<LI><A href="node44.html#SECTION003495100000000000000">1.4.9.5.1 Delete a Row</a>
+<LI><A href="node44.html#SECTION003495200000000000000">1.4.9.5.2 Delete All Rows</a>
+</ul>
+<LI><A href="node45.html">1.4.9.6 ORDER BY</a>
+<UL>
+<LI><A href="node45.html#SECTION003496100000000000000">1.4.9.6.1 Sort the Rows</a>
+</ul>
+<LI><A href="node46.html">1.4.9.7 AND &amp; OR</a>
+<LI><A href="node47.html">1.4.9.8 NULL Values</a>
+<LI><A href="node48.html">1.4.9.9 CREATE</a>
+<UL>
+<LI><A href="node48.html#SECTION003499100000000000000">1.4.9.9.1 REQUIRED</a>
+<LI><A href="node48.html#SECTION003499200000000000000">1.4.9.9.2 UNIQUE</a>
+<LI><A href="node48.html#SECTION003499300000000000000">1.4.9.9.3 PRIMARY KEY</a>
+<LI><A href="node48.html#SECTION003499400000000000000">1.4.9.9.4 DEFAULT</a>
+<LI><A href="node48.html#SECTION003499500000000000000">1.4.9.9.5 FOREIGN KEY</a>
+</ul>
+<LI><A href="node49.html">1.4.9.10 DROP Table</a>
+<UL>
+<LI><A href="node49.html#SECTION0034910100000000000000">1.4.9.10.1 Delete a Table</a>
+</ul>
+<LI><A href="ForeignKeys.html">1.4.9.11 FOREIGN KEY and Joins</a>
+<UL>
+<LI><A href="ForeignKeys.html#SECTION0034911100000000000000">1.4.9.11.1 FOREIGN KEY</a>
+</ul></ul>
+<!--End of Table of Child-Links-->
+</div>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.8.3 The Easy Way"
+  href="node38.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4 web.database  "
+  href="module-web.database.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.9.1 The SELECT Statement"
+  href="node40.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node38.html">1.4.8.3 The Easy Way</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="module-web.database.html">1.4 web.database  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node40.html">1.4.9.1 The SELECT Statement</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

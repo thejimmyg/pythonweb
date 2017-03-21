@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node139.html" />
+<link rel="prev" href="node137.html" />
+<link rel="parent" href="session.html" />
+<link rel="next" href="node139.html" />
+<meta name='aesop' content='information' />
+<title>1.11.4 The Environment</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.3 Drivers"
+  href="node137.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.5 Obtaining a Session"
+  href="node139.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node137.html">1.11.3 Drivers</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node139.html">1.11.5 Obtaining a Session</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031140000000000000000">
+1.11.4 The Environment</A>
+</H2>
+
+<P>
+Environments are described in the documentation for the <tt class="module">web.environment</tt> module but are effectively groups of applications which share users and sessions. Specifically the name specified in <var>environment</var> parameter of the <tt class="function">web.session.driver()</tt> function is the name prepended to all database tables using that environment so that multiple environments can be used in the same database (useful if you are using a shared web host and only have access to one database). It is also the name used to identify the session ID in any cookies the <tt class="module">web.session</tt> module uses.
+
+<P>
+In order to use the <tt class="module">web.session</tt> module the environment must be setup correctly. In the case of database drivers this simply means the relevant session tables must exist. If you intend to use the <tt class="module">web.auth</tt> module you can setup the environments for the <tt class="module">web.auth</tt> and <tt class="module">web.session</tt> modules at the same time using the <tt class="module">web.environment</tt> module. If you just want to setup a session environment you can so do through the <code>Driver</code> object.
+
+<P>
+Our <code>Driver</code> object from the previous section is named <code>driver</code> and we have already created a <tt class="module">web.database</tt> cursor named <code>cursor</code>. Have a look at this example:
+
+<P>
+<div class="verbatim"><pre>
+if not driver.completeSessionEnvironment():
+    driver.removeSessionEnvironment(ignoreErrors=True)
+    errors = driver.createSessionEnvironment()
+    if errors:
+        raise Exception('The environment was not sucessfully created')
+connection.commit()
+</pre></div>
+
+<P>
+If none or only some of the tables are present we drop all the existing tables (ignoring errors produced because of missing tables) losing any information they contain and recreate all the tables. 
+
+<P>
+<span class="note"><b class="label">Note:</b>
+ We need to check to see if any errors occured since they are not automatically raised.</span>
+
+<P>
+We also need to commit our changes to the database so that they are saved using <code>connection.commit()</code>.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.11.3 Drivers"
+  href="node137.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.11 web.session  "
+  href="session.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.11.5 Obtaining a Session"
+  href="node139.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node137.html">1.11.3 Drivers</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="session.html">1.11 web.session  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node139.html">1.11.5 Obtaining a Session</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

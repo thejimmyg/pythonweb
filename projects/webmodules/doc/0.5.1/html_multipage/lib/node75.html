@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node76.html" />
+<link rel="prev" href="node74.html" />
+<link rel="parent" href="node71.html" />
+<link rel="next" href="node76.html" />
+<meta name='aesop' content='information' />
+<title>1.4.15.4 Table Objects</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.15.3 Cursor Objects"
+  href="node74.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.15 API Reference"
+  href="node71.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.15.5 Column Objects"
+  href="node76.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node74.html">1.4.15.3 Cursor Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node71.html">1.4.15 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node76.html">1.4.15.5 Column Objects</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0034154000000000000000">
+1.4.15.4 Table Objects</A>
+</H3>
+
+<P>
+<code>Table</code> objects can be accessed through the <code>tables</code> attribute of the <code>Connection</code> object like this:
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; print connection.tables['tableName'].name
+tableName
+&gt;&gt;&gt; print connection.tables['tableName']['columnName'].name
+columnName
+</pre></div>
+
+<P>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-119' xml:id='l2h-119' class="class">Table</tt></b>
+<dd>
+
+<P>
+<code>Table</code> objects store all the meta data there is to know about an SQL table. They are created by the <tt class="module">web.database</tt> module and should not be created manually. They are simply structures to hold table information. The values should not be changed. 
+
+<P>
+<code>Table</code> objects have the following attributes:
+
+<P>
+<dl><dt><b><tt id='l2h-120' xml:id='l2h-120' class="member">name</tt></b></dt>
+<dd>
+The name of the table correctly capitalised
+</dl>
+<dl><dt><b><tt id='l2h-121' xml:id='l2h-121' class="member">columns</tt></b></dt>
+<dd>
+A list of <code>Column</code> objects describing each column of the table
+</dl>
+<dl><dt><b><tt id='l2h-122' xml:id='l2h-122' class="member">primaryKey</tt></b></dt>
+<dd>
+The name of the primary key column of the table or <code>None</code> if no primary key is specified
+</dl>
+<dl><dt><b><tt id='l2h-123' xml:id='l2h-123' class="member">parentTables</tt></b></dt>
+<dd>
+A list of the names of any tables for which the table has foreign key fields
+</dl>
+<dl><dt><b><tt id='l2h-124' xml:id='l2h-124' class="member">childTables</tt></b></dt>
+<dd>
+A list of the names of any tables for which the table is a parent table
+</dl>
+
+<P>
+and the following methods:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-125' xml:id='l2h-125' class="method">has_key</tt></b>(</nobr></td>
+  <td><var><var>columnName</var></var>)</td></tr></table></dt>
+<dd>
+</dl>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-126' xml:id='l2h-126' class="method">columnExists</tt></b>(</nobr></td>
+  <td><var><var>columnName</var></var>)</td></tr></table></dt>
+<dd>
+Returns <code>True</code> if <var>columnName</var> is the name of a column in the table
+</dl>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-127' xml:id='l2h-127' class="method">column</tt></b>(</nobr></td>
+  <td><var><var>columnName</var></var>)</td></tr></table></dt>
+<dd>
+</dl>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-128' xml:id='l2h-128' class="method">__getitem__</tt></b>(</nobr></td>
+  <td><var><var>columnName</var></var>)</td></tr></table></dt>
+<dd>
+Returns the column object for <var>columnName</var>
+</dl>
+</dl>
+
+<P>
+<code>Table</code> objects can also contain any other useful methods which the module implementer feels are appropriate.
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.15.3 Cursor Objects"
+  href="node74.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.15 API Reference"
+  href="node71.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.15.5 Column Objects"
+  href="node76.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node74.html">1.4.15.3 Cursor Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node71.html">1.4.15 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node76.html">1.4.15.5 Column Objects</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

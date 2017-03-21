@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/main.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" --> 
+<title>Project Plan</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+<body>
+<!--
+Copyright 2002-2004 James Gardner All Rights Reserved.
+-->
+<div id="body1"> 
+  <div id="body2"> 
+    <div id="body3">
+	
+      <div id="header1"> 
+        <div id="header2"> 
+          <div id="header3"> 
+          
+            <div id="logo1"> 
+              <div id="logo2"> 
+                <div id="logo3"> <a href="http://www.xecos.com"><img src="../img/xecosLogo.png" alt="Xecos Logo" width="1" /></a> 
+                </div>
+              </div>
+            </div>
+				  
+            <div id="nav1"> 
+              <div id="nav2"> 
+                <div id="nav3"> 
+				<!-- #BeginLibraryItem "/Library/mainLinks.lbi" --><ul>
+  <li id="active"><a href="../index.html" id="current">Home</a></li>
+  <li><a href="index.html">Projects</a></li>
+  <li><a href="../contribute/index.html">Contribute</a></li>
+  <li><a href="../technology/index.html">Technology</a></li>
+  <li><a href="../about/index.html">About</a></li>
+  <li><a href="../contact/index.html">Contact </a></li>
+</ul>
+<!-- #EndLibraryItem --></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+		
+      <div id="content1"> 
+        <div id="content2"> 
+          <div id="content3"> 
+
+
+            <!-- Begin Content -->
+            <div id="colFull1">
+              <div id="colFull2">
+                <div id="colFull3">
+								  
+                  <div id="title1">
+                    <div id="title2">
+                      <div id="title3"><h1><!-- InstanceBeginEditable name="Title" --> Project 
+                          Plan <!-- InstanceEndEditable --></h1>
+                      </div>
+                    </div>
+                  </div>
+				  
+                  <div id="colThird1">
+                    <div id="colThird2">
+                      <div id="colThird3"> 
+                         <br />
+						 <div class="infoBox1">
+                          <div class="infoBox2">
+                            <div class="infoBox3">
+							  
+                              <!--h3>Navigation Links</h3-->
+							  <!-- InstanceBeginEditable name="Links" -->
+                              <ul>
+                                <li><a href="news.html">Latest News</a></li>
+                                <li><a href="plan.html">Project Plan</a></li>
+                              </ul>
+                              <!-- InstanceEndEditable -->
+							</div>
+                          </div>
+                        </div>
+						
+                      </div>
+                    </div>
+                  </div>
+				  
+                  <div id="colTwoThirds1">
+                    <div id="colTwoThirds2">
+                      <div id="colTwoThirds3">
+                     
+						 <div id="block1">
+                          <div id="block2">
+                            <div id="block3">
+							  <!-- InstanceBeginEditable name="Content" --> 
+                              <p>Here is a summary of the project plan for the 
+                                Python Web Project.</p>
+                              <p>The basic aim is to create a set of modules that 
+                                make it simple to create data driven websites 
+                                and produce documentation and tutorials to make 
+                                it easy to learn.</p>
+                              <p>There are three main parts to programming side 
+                                of things:</p>
+                              <ol>
+                                <li> Creating the libraries for session handling, 
+                                  templating authorisation handling etc</li>
+                                <li>Developing a poweful database layer that is 
+                                  both simple to use and still gives the developer 
+                                  full control at the SQL level if required.</li>
+                                <li>Developing a simple, flexible framework of 
+                                  applications so that users don't have to re-implement 
+                                  basic features such as adding or removing users 
+                                  or changing passwords.</li>
+                              </ol>
+                              <h4>Creating the Libraries</h4>
+                              <p>This is complete. Cheetah is used for the templating, 
+                                libxml and libxslt used for the XML layer, Python 
+                                Imaging Library is used for the image support. 
+                                Form, session, auth, error handling and email 
+                                sending modules have been written. There are also 
+                                utilities for stripping HTML, prinitng tables 
+                                of data to a console and more. There is also a 
+                                <tt>datetime</tt> module for compatibility with 
+                                Python &lt; 2.3.</p>
+                              <h4>Developing the Database Layer</h4>
+                              <p>The database layer is a core component of the 
+                                system. A natural choice would be SQLObject but 
+                                instead a new database layer has been written 
+                                with both an Object-Relational Mapper and a Database 
+                                Abstraction Layer. The ORM integrates with the 
+                                <tt>web.form</tt> module to automatically produce 
+                                HTML forms for manipulating database information 
+                                making developing data-driven websites extrememly 
+                                easy.</p>
+                              <h4>Developing the Framework</h4>
+                              <p>The next major stage is to refactor the existing 
+                                modules to make use of the Web Server Gateway 
+                                Interface. This should be completed fairly soon 
+                                and then work can begin on producing core-applications 
+                                that developers can simply drop into their own 
+                                applications to add functionality. Examples include 
+                                code to add or remove users or to components that 
+                                let you add/edit/remove data from a databse handling 
+                                all the necessary stages for you.</p>
+                              <p>&nbsp;</p>
+                              <table width="98%" border="0" cellspacing="0" cellpadding="5">
+                                <tr bgcolor="#CCCCCC"> 
+                                  <td><strong>Description</strong></td>
+                                  <td><strong>Progress</strong></td>
+                                </tr>
+                                <tr valign="top" bgcolor="#eeeeee"> 
+                                  <td> <p>First technology release of the modules:</p>
+                                    <ul>
+                                      <li>Specification of the modules completed 
+                                        with the intention that the API should 
+                                        not change too much in future versions</li>
+                                      <li>Complete draft of Module Reference and 
+                                        start of the rest of the documentation 
+                                      </li>
+                                      <li>Announcement of the project to the Python 
+                                        web-sig and db-sig mailing lists for feedback 
+                                        and comments</li>
+                                    </ul></td>
+                                  <td> Complete</td>
+                                </tr>
+                                <tr valign="top"> 
+                                  <td>With the help of the Python community, implement 
+                                    <tt>web.database</tt> drivers for most current 
+                                    DB-API 2.0 compliant modules. Develop a pure 
+                                    Python SQL Database and a layer similar to 
+                                    JDBC to make database programming simple.</td>
+                                  <td>Currently MySQL, SQLite, ODBC and Gadfly 
+                                    are supported. Version one of the Python Database 
+                                    Interface Specification has been implemented. 
+                                    Version two is being designed. The pure Python 
+                                    SQL database engine is in alpha.</td>
+                                </tr>
+                                <tr valign="top" bgcolor="#eeeeee"> 
+                                  <td><p><s>Define an API similar to that planned 
+                                      for Zope/Quixote to enable simple component 
+                                      programming in a CGI environment</s></p>
+                                    <p>Implement the WSGI and refactor applications 
+                                      for the WSGI.</p></td>
+                                  <td>Work completed on a basic servlet architecture 
+                                    for the 0.5.0 release. This has been stopped 
+                                    in favour of implementing the WSGI PEP. Work 
+                                    has started on refactoring the modules for 
+                                    this approach.</td>
+                                </tr>
+                                <tr valign="top"> 
+                                  <td>Use the modules to write a CMS, Wiki, Photo 
+                                    gallary, address book system, web mail client 
+                                    etc to be distributed with the modules.</td>
+                                  <td>Certain components already exist, others 
+                                    are being planned.</td>
+                                </tr>
+                                <tr valign="top" bgcolor="#eeeeee"> 
+                                  <td>Collate binary distributions created by 
+                                    users of the 0.5 release, package up as a 
+                                    0.6 stable release in rpm/tgz/zip/exe. Also 
+                                    create the PythonWeb.org Python distribution 
+                                    to allow users to install Python, the modules, 
+                                    the documentation and necessary tools all 
+                                    in one go.</td>
+                                  <td>Being planned</td>
+                                </tr>
+                               
+                              </table>
+        <p>&nbsp;</p>
+        <!-- InstanceEndEditable -->
+							<p>&nbsp;</p></div>
+                          </div>
+                        </div>
+
+                        
+                      </div>
+                    </div>
+                  </div>
+                  
+				  <div id="footer1">
+                    <div id="footer2">
+                      <div id="footer3"><!-- InstanceBeginEditable name="Footer" --> 
+                        <!-- #BeginLibraryItem "/Library/footer.lbi" --><p class="footer">Coyright &copy; 2002-2005 James Gardner All Rights Reserved.<br />
+<i>62,561 page views since launch on 04th October 2004 until the end of 2004</i></p><!-- #EndLibraryItem --><!-- InstanceEndEditable --></div>
+                    </div>
+                  </div>
+				  
+                </div>
+              </div>
+            </div>
+
+            <!-- End Content -->
+                
+
+				
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+<!-- InstanceEnd --></html>

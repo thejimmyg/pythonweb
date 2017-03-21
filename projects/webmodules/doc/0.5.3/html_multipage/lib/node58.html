@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node59.html" />
+<link rel="prev" href="node57.html" />
+<link rel="parent" href="node52.html" />
+<link rel="next" href="node59.html" />
+<meta name='aesop' content='information' />
+<title>1.4.12.6 ORDER BY</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.5 The DELETE Statement"
+  href="node57.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node52.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.7 AND &amp; OR"
+  href="node59.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node57.html">1.4.12.5 The DELETE Statement</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node52.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node59.html">1.4.12.7 AND &amp; OR</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node58.html#SECTION0034126100000000000000">1.4.12.6.1 Sort the Rows</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+<HR>
+
+<H3><A NAME="SECTION0034126000000000000000">
+1.4.12.6 ORDER BY</A>
+</H3>
+
+<P>
+The ORDER BY keyword is used to sort the result.
+
+<P>
+
+<H4><A NAME="SECTION0034126100000000000000">
+1.4.12.6.1 Sort the Rows</A>
+</H4>
+
+<P>
+The ORDER BY clause is used to sort the rows.
+
+<P>
+Orders:
+<div class="verbatim"><pre>
++-------------+-------------+
+| Company     | OrderNumber |
++-------------+-------------+
+| 'Asda'      | 5678        |
+| 'Morrisons' | 1234        |
+| 'Tesco'     | 2345        |
+| 'Morrisons' | 7654        |
++-------------+-------------+
+</pre></div>
+
+<P>
+To display the companies in alphabetical order:
+<div class="verbatim"><pre>
+SELECT Company, OrderNumber FROM Orders ORDER BY Company
+</pre></div>
+
+<P>
+Result:
+<div class="verbatim"><pre>
++-------------+-------------+
+| Company     | OrderNumber |
++-------------+-------------+
+| 'Asda'      | 5678        |
+| 'Morrisons' | 1234        |
+| 'Morrisons' | 7654        |
+| 'Tesco'     | 2345        |
++-------------+-------------+
+</pre></div>
+
+<P>
+<strong>Example</strong>
+
+<P>
+To display the companies in alphabetical order AND the order numbers in numerical order:
+<div class="verbatim"><pre>
+SELECT Company, OrderNumber FROM Orders ORDER BY Company, OrderNumber
+</pre></div>
+
+<P>
+Result:
+<div class="verbatim"><pre>
++-------------+-------------+
+| Company     | OrderNumber |
++-------------+-------------+
+| 'Asda'      | 5678        |
+| 'Morrisons' | 1234        |
+| 'Morrisons' | 7654        |
+| 'Tesco'     | 2345        |
++-------------+-------------+
+</pre></div>
+
+<P>
+<strong>Example</strong>
+
+<P>
+To display the companies in reverse alphabetical order:
+
+<P>
+<div class="verbatim"><pre>
+SELECT Company, OrderNumber FROM Orders ORDER BY Company DESC
+</pre></div>
+
+<P>
+Result:
+<div class="verbatim"><pre>
++-------------+-------------+
+| Company     | OrderNumber |
++-------------+-------------+
+| 'Tesco'     | 2345        |
+| 'Morrisons' | 1234        |
+| 'Morrisons' | 7654        |
+| 'Asda'      | 5678        |
++-------------+-------------+
+</pre></div>
+
+<P>
+<strong>Example</strong>
+
+<P>
+To display the companies in alphabetical order AND the order numbers in reverse numerical order:
+<div class="verbatim"><pre>
+SELECT Company, OrderNumber FROM Orders ORDER BY Company ASC, OrderNumber DESC
+</pre></div>
+
+<P>
+Result:
+<div class="verbatim"><pre>
++-------------+-------------+
+| Company     | OrderNumber |
++-------------+-------------+
+| 'Asda'      | 5678        |
+| 'Morrisons' | 7654        |
+| 'Morrisons' | 1234        |
+| 'Tesco'     | 2345        |
++-------------+-------------+
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.5 The DELETE Statement"
+  href="node57.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node52.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.12.7 AND &amp; OR"
+  href="node59.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node57.html">1.4.12.5 The DELETE Statement</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node52.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node59.html">1.4.12.7 AND &amp; OR</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+"""Auth Example. Username=john and Password=bananas (Case sensitive)"""
+
+# show python where the web modules are
+import sys, os
+sys.path.append('../')
+sys.path.append('../../../') 
+
+import web, web.database, web.auth, web.session
+import web.error; web.error.handle() # Automatically display errors
+
+session = web.session.start(
+    storage='file',
+    dir='../doc/src/lib/example-web-auth-session',
+    app='app'
+)
+user = web.auth.start(
+    session, storage='file',
+    dir='../doc/src/lib/example-web-auth', 
+    idle=100, expire=200
+)
+
+# No HTTP content-type headers should be printed before the user.valid() method
+# if the autoLogin feature is enabled as this will print its own header. 
+
+if user.valid():   # See if the User is signed in else present sign in form.
+    print web.header() 
+    if web.cgi.has_key('signOut'):
+        user.signOut()
+        print """<html><h1>Signed Out Now</h1><p><a href="%s">Sign in again</a>.
+              </p></html>"""%os.environ['SCRIPT_NAME']
+    else:
+        
+        print """
+            <html>
+            <h1>Welcome - You Signed In</h1>
+            <p> Visiting this page again will result in you 
+            seeing this page until you logout or the session expires.</p>
+            <p> <b>Some Variables:</b><br>
+            
+            Username:       %s<br>
+            Access Level:   %s<br>
+            </p>
+            <p>
+            <a href="%s">Visit page again</a> |
+            <a href="%s?signOut=True">Sign Out</a>
+            </p>
+            </html>"""%(
+                user.username, 
+                user.level['app'],
+                os.environ['SCRIPT_NAME'],
+                os.environ['SCRIPT_NAME']
+            )
+
+

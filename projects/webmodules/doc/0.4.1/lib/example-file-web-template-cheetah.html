@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" href="example-file-web-template-xyaptu.html">
+<LINK REL="prev" href="template.html">
+<LINK REL="parent" href="template.html">
+<LINK REL="next" href="example-file-web-template-xyaptu.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Cheetah Template">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.11.1 Cheetah Template</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.11 web.template  " 
+  href="template.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.11 web.template  " 
+  href="template.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.11.2 XYAPTU Templating" 
+  href="example-file-web-template-xyaptu.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="template.html">1.11 web.template  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="template.html">1.11 web.template  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-file-web-template-xyaptu.html">1.11.2 XYAPTU Templating</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0031110000000000000000">&nbsp;</A>
+<BR>
+1.11.1 Cheetah Template
+</H2>
+
+<P>
+Cheetah is a powerful, stable and well documented templating system. It works by parsing the template into a Python script and then executing that script with the dictionary to produce output. The performance of Cheetah can be improved by writing this script to a file and executing it each time Cheetah is run rather than re-generating it every time.
+
+<P>
+The <var>useCompiled</var> parameter of the <tt class="function">parse()</tt> function can be used to determine the behaviour of this compilation. If <var>useCompiled</var> is <code>False</code> the template is parsed every time. This is the slowest but simplest option. If <var>useCompiled</var> is <code>True</code> the compiled template is used even if the original template has changed. This is the fastest option but you must manually tell Cheetah to recompile the template if it changes. If <var>useCompiled</var> is <code>'auto'</code> then Cheetah will use the compiled file as long as the template has not been modified. If it has it will automatically recompile the template.
+
+<P>
+<span class="warning"><b class="label">Warning:</b>
+This is the best comprimise. If <var>useCompiled</var> is <code>True</code> or <code>'auto'</code> then Cheetah must have write access to the directory containing the templates. If it doesn't you may get Internal Server Errors, particularly if you are using <tt class="module">web.error</tt> with Cheetah templates to catch errors as an error will be thrown in the error catching code and this will lead to an error that is hard to track down.</span>
+
+<P>
+You can also use Cheetah directly by importing it as follows:
+
+<P>
+<div class="verbatim"><pre>
+import web
+import Cheetah
+</pre></div>
+
+<P>
+Here is an example Cheetah template:
+
+<P>
+<div class="verbatim">
+<pre>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+&lt;title&gt;$title&lt;/title&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;$title&lt;/h1&gt;
+$welcomeMessage
+#if $testVar == True
+The test variable is True
+#else
+The test variable is not True
+#end if
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<div class="footer">
+<a href="file-web-template-cheetah.txt" type="text/plain">Download as text (original file name: <span class="file">file-web-template-cheetah.tmpl</span>).</a>
+</div></div>
+
+<P>
+Here is a program to manipulate it:
+
+<P>
+<div class="verbatim">
+<pre>#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the web modules are
+
+import web.template
+
+dict =  {
+    'welcomeMessage':'Welcome to the test page!',
+    'testVar':True,
+    'title':'Cheetah Example',
+}
+
+print web.template.parse(type='cheetah', file='file-web-template-cheetah.tmpl', dict=dict)
+</pre>
+<div class="footer">
+<a href="command-web-template-cheetah.txt" type="text/plain">Download as text (original file name: <span class="file">command-web-template-cheetah.py</span>).</a>
+</div></div>
+
+<P>
+And here is the output produced:
+
+<P>
+<div class="verbatim"><pre>
+&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+&lt;title&gt;Cheetah Example&lt;/title&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Cheetah Example&lt;/h1&gt;
+Welcome to the test page!
+The test variable is True
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+
+<P>
+<div class="seealso">
+  <p class="heading"><b>See Also:</b></p>
+
+  <dl compact class="seetitle">
+    <dt><em class="citetitle"><a href="http://cheetahtemplate.org/"
+        >Cheetah Template Homepage</a></em>
+    <dd>The Cheetah homepage has full documentation for using Cheeath and explains the full syntax available and the range of options that can be used.
+  </dl>
+
+<P>
+</div>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.11 web.template  " 
+  rel="prev" title="1.11 web.template  " 
+  href="template.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.11 web.template  " 
+  rel="parent" title="1.11 web.template  " 
+  href="template.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.11.2 XYAPTU Templating" 
+  rel="next" title="1.11.2 XYAPTU Templating" 
+  href="example-file-web-template-xyaptu.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="template.html">1.11 web.template  </A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="template.html">1.11 web.template  </A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="example-file-web-template-xyaptu.html">1.11.2 XYAPTU Templating</A>
+<hr>
+<span class="release-info">Documentation released on 13th September 2004.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

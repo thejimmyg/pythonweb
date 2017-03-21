@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="node62.html" />
+<link rel="parent" href="node52.html" />
+<link rel="next" href="node64.html" />
+<meta name='aesop' content='information' />
+<title>1.4.12.11 FOREIGN KEY and Joins</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.10 DROP Table"
+  href="node62.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node52.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13 Cursor Abstraction Methods"
+  href="node64.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node62.html">1.4.12.10 DROP Table</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node52.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node64.html">1.4.13 Cursor Abstraction Methods</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+<div class='online-navigation'>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="ForeignKeys.html#SECTION00341211100000000000000">1.4.12.11.1 FOREIGN KEY</a>
+</ul>
+<!--End of Table of Child-Links-->
+</div>
+<HR>
+
+<H3><A NAME="SECTION00341211000000000000000">
+1.4.12.11 FOREIGN KEY and Joins</A>
+</H3>
+
+<P>
+Sometimes we have to select data from two or more tables to make our result complete. We have to perform a join. Joins and the use of primary and foreign keys are inter-related. 
+
+<P>
+
+<H4><A NAME="SECTION00341211100000000000000"></A><A NAME="ForeignKeys"></A>
+<BR>
+1.4.12.11.1 FOREIGN KEY
+</H4>
+
+<P>
+Tables in a database can be related to each other with keys. A primary key is a column with a unique value for each row. The purpose is to bind data together, across tables, without repeating all of the data in every table.
+
+<P>
+In the <code>People</code> table below, the <code>LastName</code> column is the primary key, meaning that no two rows can have the same <code>LastName</code>. The <code>LastName</code> distinguishes two persons even if they have the same name.
+
+<P>
+When you look at the example tables below, notice that: 
+
+<UL>
+<LI>The <code>LastName</code> column is the primary key of the <code>People</code> table
+</LI>
+<LI>The <code>House</code> column is the primary key of the <code>Houses</code> table
+</LI>
+<LI>The <code>Owner</code> column in the <code>House</code> table is used to refer to the people in the <code>People</code> table. <code>Owner</code> is a foreign key field.
+</LI>
+</UL>
+
+<P>
+<div class="verbatim"><pre>
+People
++----------+-----------+--------+-------------+
+| LastName | FirstName | Number | DateOfBirth |
++----------+-----------+--------+-------------+
+| Smith    | John      | 10     | 1980-01-01  |
++----------+-----------+--------+-------------+
+| Doe      | James     | 3      | 1981-12-25  |
++----------+-----------+--------+-------------+
+
+Houses
++-------+-------+
+| House | Owner |
++-------+-------+
+| 1     | Smith |
++-------+-------+
+| 2     | Smith |
++-------+-------+
+| 3     | Doe   |
++-------+-------+
+</pre></div>
+
+<P>
+People may own more than one house. In our example John Smith owns both House <code>1</code> and <code>2</code>. In order to keep the database consistent you would not want to remove <code>Smith</code> from the <code>People</code> table or drop the <code>People</code> table because the <code>Houses</code> table would still contain a reference to <code>Smith</code>. Similarly you wouldn't want to insert or update a value in the <code>Owner</code> column of the <code>Houses</code> table which didn't exist as a primary key for the <code>People</code> table.
+
+<P>
+By specifying the <code>Owner</code> column of the <code>Houses</code> table as a foregin key these constraints are enforced by <tt class="module">web.database</tt>.
+
+<P>
+The SQL for the tables is below. <span class="note"><b class="label">Note:</b>
+The line breaks in the first <code>CREATE</code> statement are for formatting; <tt class="module">web.database</tt> doesn't support line breaks in SQL.</span>
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE People (
+    LastName String PRIMARY KEY, FirstName String, 
+    Number Integer, DateOfBirth Date
+)
+CREATE TABLE Houses (House Integer, Owner String FOREIGN KEY=People)
+</pre></div>
+
+<P>
+If a column is specified <code>FOREIGN KEY</code> it cannot have any other options. The table specified as providing the foreign key must have a primary key. It is the primary key value which is used as a foreign key in the other table.
+
+<P>
+Bool, Float, Text and Binary fields cannot be foreign key fields.
+
+<P>
+We can select data from two tables by referring to two tables, using the SQL below. <span class="note"><b class="label">Note:</b>
+The line breaks are just for formatting; <tt class="module">web.database</tt> doesn't support line breaks in SQL.</span>
+
+<P>
+<div class="verbatim"><pre>
+SELECT Houses.House, People.FirstName, Houses.Owner 
+FROM People, Houses 
+WHERE People.LastName=Houses.Owner
+</pre></div>
+
+<P>
+Here is the result
+<div class="verbatim"><pre>
++--------------+------------------+--------------+
+| Houses.House | People.FirstName | Houses.Owner |
++--------------+------------------+--------------+
+| 1            | 'John'           | 'Smith'      |
+| 2            | 'John'           | 'Smith'      |
+| 3            | 'James'          | 'Doe'        |
++--------------+------------------+--------------+
+</pre></div>
+
+<P>
+and another example:
+
+<P>
+<div class="verbatim"><pre>
+SELECT Houses.House, People.FirstName, Houses.Owner 
+FROM People, Houses 
+WHERE People.LastName=Houses.Owner  and People.DateOfBirth&lt;'1981-01-01'
+</pre></div>
+
+<P>
+Here is the result
+<div class="verbatim"><pre>
++--------------+------------------+--------------+
+| Houses.House | People.FirstName | Houses.Owner |
++--------------+------------------+--------------+
+| 1            | 'John'           | 'Smith'      |
+| 2            | 'John'           | 'Smith'      |
++--------------+------------------+--------------+
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.12.10 DROP Table"
+  href="node62.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.12 SQL Reference"
+  href="node52.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13 Cursor Abstraction Methods"
+  href="node64.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node62.html">1.4.12.10 DROP Table</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node52.html">1.4.12 SQL Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node64.html">1.4.13 Cursor Abstraction Methods</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on April 10, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

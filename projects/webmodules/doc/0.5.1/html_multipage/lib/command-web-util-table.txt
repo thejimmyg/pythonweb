@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+import sys; sys.path.append('../../../') # show python where the web modules are
+
+import web.util
+columns = [
+    'column1Heading', 
+    'column2Heading', 
+    'column3Heading', 
+    'column4Heading'
+]
+values = [
+    ['column1value1', 'column2value1', 'column3value1', 'column4value1'],
+    ['column1value2', 'column2value2', 'column3value2', 'column4value2'],
+    ['column1value3', 'column2value3', 'column3value3', 'column4value3'],
+]
+print "Printing the table with wrap width=0...\n"
+print web.util.table(columns, values, width=0)
+print "Printing the table with wrap width=60...\n"
+print web.util.table(columns, values, width=60)

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node176.html" />
+<link rel="prev" href="node174.html" />
+<link rel="parent" href="node173.html" />
+<link rel="next" href="node176.html" />
+<meta name='aesop' content='information' />
+<title>1.15.4.2 web.wsgi.database - Database Access</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.4.1 web.wsgi.cgi - CGI"
+  href="node174.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.4 The PythonWeb Middleware"
+  href="node173.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.4.3 web.wsgi.environment - Environment"
+  href="node176.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node174.html">1.15.4.1 web.wsgi.cgi - CGI</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node173.html">1.15.4 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node176.html">1.15.4.3 web.wsgi.environment - Environment</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0031542000000000000000">
+1.15.4.2 <tt class="module">web.wsgi.database</tt> - Database Access</A>
+</H3>
+
+<P>
+The <tt class="module">web.wsgi.database</tt> module provides one class <code>Database</code> which adds the keys <code>'web.database.connection'</code> and <code>'web.database.cursor'</code> to the <code>environ</code> dictionary based on the parameters specified in the class constructor.
+
+<P>
+<DL>
+<DT><STRONG><code>environ['web.database.connection']</code></STRONG></DT>
+<DD>contains the <code>connection</code> object
+
+<P>
+</DD>
+<DT><STRONG><code>environ['web.database.cursor']</code></STRONG></DT>
+<DD>contains the <code>cursor</code> object
+
+<P>
+</DD>
+</DL>
+
+<P>
+Middleware or applications further down the chain can access the database through these objects as follows:
+
+<P>
+<div class="verbatim"><pre>
+import web.wsgi.base, web.wsgi.cgi
+
+class Application(web.wsgi.base.BaseApplication):
+    def start(self):
+        self.output('&lt;html&gt;')
+        self.environ['web.database.cursor'].execute('SELECT * FROM test')
+        results = self.environ['web.database.cursor'].fetchall()
+        for result in results:
+            self.output('&lt;p&gt;%s&lt;/p&gt;'%result)
+        self.output('&lt;/html&gt;')
+
+application = web.wsgi.database.Database(
+    Application(),
+    type='MySQLdb',
+    database='test',
+)
+</pre></div>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.15.4.1 web.wsgi.cgi - CGI"
+  href="node174.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.15.4 The PythonWeb Middleware"
+  href="node173.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.15.4.3 web.wsgi.environment - Environment"
+  href="node176.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node174.html">1.15.4.1 web.wsgi.cgi - CGI</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node173.html">1.15.4 The PythonWeb Middleware</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node176.html">1.15.4.3 web.wsgi.environment - Environment</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

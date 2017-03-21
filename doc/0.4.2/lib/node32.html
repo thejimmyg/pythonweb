@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css'>
+<link rel="SHORTCUT ICON" href="../icons/pyfav.png">
+<link rel='start' href='../index.html' title='Web Modules Documentation Index'>
+<link rel="first" href="lib.html" title='Module Reference'>
+<link rel='contents' href='contents.html' title="Contents">
+<link rel='index' href='genindex.html' title='Index'>
+<link rel='last' href='about.html' title='About this document...'>
+<link rel='help' href='about.html' title='About this document...'>
+<LINK REL="next" HREF="node33.html">
+<LINK REL="prev" HREF="node31.html">
+<LINK REL="parent" HREF="node26.html">
+<LINK REL="next" HREF="node33.html">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name='aesop' content='information'>
+<META NAME="description" CONTENT="Creating Tables">
+<META NAME="keywords" CONTENT="lib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<title>1.4.4.6 Creating Tables</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.5 Deleting Data" 
+  HREF="node31.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node26.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.7 Dropping Tables" 
+  HREF="node33.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node31.html">1.4.4.5 Deleting Data</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node26.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node33.html">1.4.4.7 Dropping Tables</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003446000000000000000">
+1.4.4.6 Creating Tables</A>
+</H3>
+
+<P>
+To create a table in SQL you would use the following command:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE table_name
+(
+    column_name1 data_type,
+    column_name2 data_type,
+    etc...
+)
+</pre></div>
+
+<P>
+For example:
+
+<P>
+<div class="verbatim"><pre>
+CREATE TABLE Person 
+(
+    LastName varchar,
+    FirstName varchar,
+    Address varchar,
+    Age int
+)
+</pre></div>
+
+<P>
+To create the table above using a <tt class="module">web.database</tt> cursor we would use the following code:
+
+<P>
+<div class="verbatim"><pre>
+cursor.create(
+    'Person',
+    (
+        ('LastName', 'String'),
+        ('FirstName', 'String'),
+        ('Address', 'String'),
+        ('Age', 'Integer'),
+    ) 
+)
+</pre></div>
+
+<P>
+The <tt class="method">create()</tt> method takes the table name as the first argument and then a tuple of <i>field tuples</i> as the second argument. Each one of these field tuples can have the entries <code>(name, type, required, default, unique)</code>. 
+
+<P>
+The first entry is the name of the column and the second entry is the <i>column field code</i>. Column field codes are different for different databases but you can always get the correct one of the cursor variables. There are eight field types available and these are listed in the previous section.
+
+<P>
+The next three entries of the field tuples are optional. <code>required</code> specifies whether the field is required. If it set to <code>True</code> then the field cannot take the value <code>NULL</code>. <code>default</code> is the value to be used if no value is specifed for the field and if <code>unique</code> is set to <code>True</code> all values in the column have to be different. Specifying these values as <code>None</code> is the same as leaving them out.
+
+<P>
+Here is a more complicated example:
+
+<P>
+<div class="verbatim"><pre>
+cursor.create(
+    'Person',
+    (
+        ('LastName', 'String', True, None, True),
+        ('FirstName', 'String', False, cursor.StringConverter().sql('Not Specified'), False),
+        ('Address', 'String'),
+        ('DateOfBirth', 'Date'),
+    ) 
+)
+</pre></div>
+
+<P>
+In this example we specified that the <code>LastName</code> must always be entered, does not have a default value and must be unique so that no two people in the database can have the same <code>LastName</code>. We have also specified that <code>FirstName</code> is not required and is not unique. If no value is entered for <code>FirstName</code> the field  should be set to the string <code>Not Specified</code>.
+
+<P>
+<span class="note"><b class="label">Note:</b>
+Note the use of the <code>cursor.StringConverter()</code> object to encode the string <code>'Not Specified'</code> to sql to be used in the create statement. All of the field types have a corresponding encode() and decode() method.</span>
+
+<P>
+In mysql This would create the following table:
+
+<P>
+<div class="verbatim"><pre>
+mysql&gt; describe Person;
++-------------+--------------+------+-----+---------------+-------+
+| Field       | Type         | Null | Key | Default       | Extra |
++-------------+--------------+------+-----+---------------+-------+
+| LastName    | varchar(255) |      | PRI |               |       |
+| FirstName   | varchar(255) | YES  |     | Not Specified |       |
+| Address     | varchar(255) | YES  |     | NULL          |       |
+| DateOfBirth | date         | YES  |     | NULL          |       |
++-------------+--------------+------+-----+---------------+-------+
+4 rows in set (0.00 sec)
+</pre></div>
+
+<P>
+The <tt class="method">create()</tt> method of a <tt class="module">web.database</tt> cursor looks like this:
+
+<P>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><a name="l2h-80"><tt class="method">create</tt></a></b>(</nobr></td>
+  <td><var> <var>table</var>, <var>fields</var> </var><big>[</big><var>, autoExecute</var><big>]</big>)</td></tr></table>
+<dd>
+<var>table</var> should be the table name as a string. <var>fields</var> should be a tuple of field tuples in the form <code>(name, type, required, default, unique)</code>. <var>autoExecute</var> is optional and can be <code>True</code> or <code>False</code> and by default takes the value of the <code>cursor</code> object.
+
+<P>
+The fields tuple can take a number of options. Only the options <code>field</code> and <code>type</code> are required, the others are optional:
+
+<P>
+<DL>
+<DT><STRONG><code>name</code></STRONG></DT>
+<DD>The name of the field as a string.
+</DD>
+<DT><STRONG><code>type</code></STRONG></DT>
+<DD>The fieldCode for the field. This can take one of the values: <code>'Char'</code>, <code>'String'</code>, <code>'Text'</code>, <code>'Integer'</code>, <code>'Float'</code>, <code>'Date'</code>, <code>'Time'</code>, <code>'DateTime'</code>
+</DD>
+<DT><STRONG><code>required</code></STRONG></DT>
+<DD>Whether or not the field is required. Setting to <code>True</code> means the field cannot have <code>NULL</code> values.
+</DD>
+<DT><STRONG><code>default</code></STRONG></DT>
+<DD>The default value of the field (can be <code>None</code> to represent a NULL value)
+</DD>
+<DT><STRONG><code>unique</code></STRONG></DT>
+<DD>Set to <code>True</code> if the value must be unique
+
+<P>
+</DD>
+</DL>
+
+<P>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><a rel="prev" title="1.4.4.5 Deleting Data" 
+  rel="prev" title="1.4.4.5 Deleting Data" 
+  HREF="node31.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32'></A></td>
+<td><a rel="parent" title="1.4.4 Using SQL Commands" 
+  rel="parent" title="1.4.4 Using SQL Commands" 
+  HREF="node26.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32'></A></td>
+<td><a rel="next" title="1.4.4.7 Dropping Tables" 
+  rel="next" title="1.4.4.7 Dropping Tables" 
+  HREF="node33.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32'></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td><a rel="contents" title="Table of Contents" 
+  rel="contents" title="Table of Contents" 
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32'></A></td>
+<td><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32'></a></td>
+<td><a rel="index" title="Index" 
+  rel="index" title="Index" 
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32'></A></td>
+</tr></table>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" HREF="node31.html">1.4.4.5 Deleting Data</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" HREF="node26.html">1.4.4 Using SQL Commands</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" HREF="node33.html">1.4.4.7 Dropping Tables</A>
+<hr>
+<span class="release-info">Documentation released on November 18, 2004
+.</span>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+See <i><a href="about.html">About this document...</a></i> for information on suggesting changes.
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="lib.css" type='text/css' />
+<link rel="first" href="lib.html" title='Module Reference' />
+<link rel='contents' href='contents.html' title="Contents" />
+<link rel='index' href='genindex.html' title='Index' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="node70.html" />
+<link rel="prev" href="node68.html" />
+<link rel="parent" href="node64.html" />
+<link rel="next" href="node70.html" />
+<meta name='aesop' content='information' />
+<title>1.4.13.5 Column Objects</title>
+</head>
+<body>
+<DIV CLASS="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.13.4 Table Objects"
+  href="node68.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.13 API Reference"
+  href="node64.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13.6 Converter Objects"
+  href="node70.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node68.html">1.4.13.4 Table Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node64.html">1.4.13 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node70.html">1.4.13.6 Converter Objects</A>
+</div>
+<hr /></div>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION0034135000000000000000">
+1.4.13.5 Column Objects</A>
+</H3>
+
+<P>
+<code>Column</code> objects store all the information there is to know about a particular column. <code>Column</code> objects can be accessed through the <code>connection.tables</code> dictionary which contains all columns or through <code>cursor.info</code> which contains a tuple corresponding to the <code>Column</code> objects selected after a <code>SELECT</code> statement has been executed in portable mode (or <code>None</code> after any other SQL operation).
+
+<P>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; cursor.select(columns=['columnName'], tables=['tableName'], execute=True)
+&gt;&gt;&gt; print cursor.info[0].name
+columnName
+&gt;&gt;&gt; print cursor.info[0].table
+tableName
+</pre></div>
+
+<P>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-121' xml:id='l2h-121' class="class">Column</tt></b>
+<dd>
+<dl><dt><b><tt id='l2h-122' xml:id='l2h-122' class="member">name</tt></b></dt>
+<dd>      
+The name of the column
+</dl>
+<dl><dt><b><tt id='l2h-123' xml:id='l2h-123' class="member">type</tt></b></dt>
+<dd>   
+The capitalised string representing the column type
+</dl>
+<dl><dt><b><tt id='l2h-124' xml:id='l2h-124' class="member">baseType</tt></b></dt>
+<dd>    
+The capitalised string representing the column type of the base type
+</dl>
+<dl><dt><b><tt id='l2h-125' xml:id='l2h-125' class="member">table</tt></b></dt>
+<dd>     
+The table of which the column is a part
+</dl>
+<dl><dt><b><tt id='l2h-126' xml:id='l2h-126' class="member">required</tt></b></dt>
+<dd>
+Can be <code>True</code> or <code>False</code> depending on whether or not the column value is required (i.e. cannot be NULL)
+</dl>
+<dl><dt><b><tt id='l2h-127' xml:id='l2h-127' class="member">unique</tt></b></dt>
+<dd>      
+<code>True</code> if the field should be unique, <code>False</code> otherwise
+</dl>
+<dl><dt><b><tt id='l2h-128' xml:id='l2h-128' class="member">key</tt></b></dt>
+<dd>      
+<code>True</code> if the field is a primary key, <code>False</code> otherwise
+</dl>
+<dl><dt><b><tt id='l2h-129' xml:id='l2h-129' class="member">default</tt></b></dt>
+<dd> 
+The default value of the field
+</dl>
+<dl><dt><b><tt id='l2h-130' xml:id='l2h-130' class="member">converter</tt></b></dt>
+<dd>    
+A reference to the <code>Converter</code> object for the field type
+</dl>
+<dl><dt><b><tt id='l2h-131' xml:id='l2h-131' class="member">position</tt></b></dt>
+<dd>
+The position of the field in the tuple returned by <code>SELECT * FROM table</code>
+</dl>
+</dl>
+
+<P>
+
+<DIV CLASS="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="1.4.13.4 Table Objects"
+  href="node68.html"><img src='../icons/previous.png'
+  border='0' height='32'  alt='Previous Page' width='32' /></A></td>
+<td class='online-navigation'><a rel="parent" title="1.4.13 API Reference"
+  href="node64.html"><img src='../icons/up.png'
+  border='0' height='32'  alt='Up One Level' width='32' /></A></td>
+<td class='online-navigation'><a rel="next" title="1.4.13.6 Converter Objects"
+  href="node70.html"><img src='../icons/next.png'
+  border='0' height='32'  alt='Next Page' width='32' /></A></td>
+<td align="center" width="100%">Module Reference</td>
+<td class='online-navigation'><a rel="contents" title="Table of Contents"
+  href="contents.html"><img src='../icons/contents.png'
+  border='0' height='32'  alt='Contents' width='32' /></A></td>
+<td class='online-navigation'><a href="modindex.html" title="Module Index"><img src='../icons/modules.png'
+  border='0' height='32'  alt='Module Index' width='32' /></a></td>
+<td class='online-navigation'><a rel="index" title="Index"
+  href="genindex.html"><img src='../icons/index.png'
+  border='0' height='32'  alt='Index' width='32' /></A></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="node68.html">1.4.13.4 Table Objects</A>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="node64.html">1.4.13 API Reference</A>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="node70.html">1.4.13.6 Converter Objects</A>
+</div>
+</div>
+<hr />
+<span class="release-info">Documentation released on January 31, 2005.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>
